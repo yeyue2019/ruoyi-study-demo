@@ -1,6 +1,6 @@
 package yeyue.ruoyi.study.common.util.date;
 
-import yeyue.ruoyi.study.common.enums.DateTimeFormatEnum;
+import yeyue.ruoyi.study.common.enums.DateTimeFormatterEnum;
 import yeyue.ruoyi.study.common.exception.ServiceException;
 import yeyue.ruoyi.study.common.exception.common.GlobalErrorCode;
 import yeyue.ruoyi.study.common.util.object.ObjectUtils;
@@ -34,16 +34,16 @@ public abstract class DateUtils {
         return ObjectUtils.convert(string, null, str -> LocalDateTime.parse(str, format));
     }
 
-    public static LocalDateTime stringToLocalDateTime(String string, @NotNull DateTimeFormatEnum formatEnum) {
-        return stringToLocalDateTime(string, formatEnum.getFormat());
+    public static LocalDateTime stringToLocalDateTime(String string, @NotNull DateTimeFormatterEnum formatterEnum) {
+        return stringToLocalDateTime(string, formatterEnum.getFormatter());
     }
 
     public static String localDateTimeToString(LocalDateTime localDateTime, @NotNull DateTimeFormatter formatter) {
         return ObjectUtils.convert(localDateTime, null, ldt -> ldt.format(formatter));
     }
 
-    public static String localDateTimeToString(LocalDateTime localDateTime, @NotNull DateTimeFormatEnum formatEnum) {
-        return ObjectUtils.convert(localDateTime, null, ldt -> ldt.format(formatEnum.getFormat()));
+    public static String localDateTimeToString(LocalDateTime localDateTime, @NotNull DateTimeFormatterEnum formatterEnum) {
+        return ObjectUtils.convert(localDateTime, null, ldt -> ldt.format(formatterEnum.getFormatter()));
     }
 
     // Date 和 字符串 转化
@@ -52,16 +52,16 @@ public abstract class DateUtils {
         return localDateTimeToDate(stringToLocalDateTime(string, format));
     }
 
-    public static Date stringToDate(String string, @NotNull DateTimeFormatEnum formatEnum) {
-        return localDateTimeToDate(stringToLocalDateTime(string, formatEnum));
+    public static Date stringToDate(String string, @NotNull DateTimeFormatterEnum formatterEnum) {
+        return localDateTimeToDate(stringToLocalDateTime(string, formatterEnum));
     }
 
     public static String dateToString(Date date, @NotNull DateTimeFormatter format) {
         return localDateTimeToString(dateToLocalDateTime(date), format);
     }
 
-    public static String dateToString(Date date, @NotNull DateTimeFormatEnum formatEnum) {
-        return localDateTimeToString(dateToLocalDateTime(date), formatEnum);
+    public static String dateToString(Date date, @NotNull DateTimeFormatterEnum formatterEnum) {
+        return localDateTimeToString(dateToLocalDateTime(date), formatterEnum);
     }
 
     // 时间戳 和 Date 转化
@@ -122,16 +122,16 @@ public abstract class DateUtils {
         return dateToString(timeStampToDate(timeStamp), format);
     }
 
-    public static String timeStampToString(Long timeStamp, @NotNull DateTimeFormatEnum formatEnum) {
-        return dateToString(timeStampToDate(timeStamp), formatEnum);
+    public static String timeStampToString(Long timeStamp, @NotNull DateTimeFormatterEnum formatterEnum) {
+        return dateToString(timeStampToDate(timeStamp), formatterEnum);
     }
 
     public static Long stringToTimeStamp(String string, @NotNull DateTimeFormatter format, int timeStampSize) {
         return dateToTimeStamp(stringToDate(string, format), timeStampSize);
     }
 
-    public static Long stringToTimeStamp(String string, @NotNull DateTimeFormatEnum formatEnum, int timeStampSize) {
-        return dateToTimeStamp(stringToDate(string, formatEnum), timeStampSize);
+    public static Long stringToTimeStamp(String string, @NotNull DateTimeFormatterEnum formatterEnum, int timeStampSize) {
+        return dateToTimeStamp(stringToDate(string, formatterEnum), timeStampSize);
     }
 
 }

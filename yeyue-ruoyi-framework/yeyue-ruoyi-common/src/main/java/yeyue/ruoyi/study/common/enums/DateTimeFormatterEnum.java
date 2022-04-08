@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
  */
 @Getter
 @AllArgsConstructor
-public enum DateTimeFormatEnum {
+public enum DateTimeFormatterEnum {
 
     LOCAL_DATE_DEFAULT(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
     LOCAL_DATE_TIME_DEFAULT(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
@@ -20,5 +20,5 @@ public enum DateTimeFormatEnum {
     // TODO 其余时间格式等待使用的场景再进行补充
     ;
 
-    private final DateTimeFormatter format;
+    private final DateTimeFormatter formatter;
 }

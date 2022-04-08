@@ -13,11 +13,13 @@
     <description>
         项目基础pom文件，统一管理项目引用的所有依赖和版本
     </description>
-    <url>https://gitee.com/fredyangyeyue/ruoyi-study-demo</url>
 
     <properties>
+        <!-- 配置和项目pom需要保持一致 -->
         <demo.version>1.0.0</demo.version>
         <spring.boot.version>2.5.10</spring.boot.version>
+        <fastjson.version>1.2.79</fastjson.version>
+        <swagger-annotations.version>1.5.22</swagger-annotations.version>
     </properties>
 
     <dependencyManagement>
@@ -34,6 +36,16 @@
                         <artifactId>mysql-connector-java</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>${swagger-annotations.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

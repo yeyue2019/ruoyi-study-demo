@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: yeyue-ruoyi-server
+server:
+  port: 40080

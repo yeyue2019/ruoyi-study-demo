@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>yeyue.ruoyi.study.boot</groupId>
+    <artifactId>yeyue-ruoyi-dependencies</artifactId>
+    <version>${demo.version}</version>
+    <packaging>pom</packaging>
+
+    <name>${project.artifactId}</name>
+    <description>
+        项目基础pom文件，统一管理项目引用的所有依赖和版本
+    </description>
+    <url>https://gitee.com/fredyangyeyue/ruoyi-study-demo</url>
+
+    <properties>
+        <demo.version>1.0.0</demo.version>
+        <spring.boot.version>2.5.10</spring.boot.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+                <exclusions>
+                    <exclusion>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>

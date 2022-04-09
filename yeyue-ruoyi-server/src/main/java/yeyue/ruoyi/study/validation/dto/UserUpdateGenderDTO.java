@@ -1,10 +1,14 @@
 package yeyue.ruoyi.study.validation.dto;
 
+import lombok.Data;
+import yeyue.ruoyi.study.framework.validation.annotation.InEnum;
+
 import javax.validation.constraints.NotNull;
 
 /**
  * 用户更新性别 DTO
  */
+@Data
 public class UserUpdateGenderDTO {
 
     /**
@@ -17,8 +21,8 @@ public class UserUpdateGenderDTO {
      * 性别
      */
     @NotNull(message = "性别不能为空")
-    // @InEnum(value = GenderEnum.class, message = "性别必须是 {value}")
-    private Integer gender;
+    @InEnum(value = GenderEnum.class, message = "性别必须是 %s")
+    private String gender;
 
     public Integer getId() {
         return id;
@@ -29,21 +33,5 @@ public class UserUpdateGenderDTO {
         return this;
     }
 
-    public Integer getGender() {
-        return gender;
-    }
-
-    public UserUpdateGenderDTO setGender(Integer gender) {
-        this.gender = gender;
-        return this;
-    }
-
-    @Override
-    public String toString() {
-        return "UserUpdateGenderDTO{" +
-                "id=" + id +
-                ", gender=" + gender +
-                '}';
-    }
 
 }

@@ -26,6 +26,7 @@
         <module>yeyue-ruoyi-common</module>
         <module>yeyue-ruoyi-validation</module>
         <module>yeyue-ruoyi-web-starter</module>
+        <module>yeyue-ruoyi-redis-starter</module>
     </modules>
 
 </project>

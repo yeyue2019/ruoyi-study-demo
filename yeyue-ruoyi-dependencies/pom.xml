@@ -18,6 +18,7 @@
         <!-- 配置和项目pom需要保持一致 -->
         <demo.version>1.0.0</demo.version>
         <spring.boot.version>2.5.10</spring.boot.version>
+        <redisson.version>3.16.6</redisson.version>
         <fastjson.version>1.2.79</fastjson.version>
         <knife4j.version>3.0.2</knife4j.version>
         <swagger-annotations.version>1.5.22</swagger-annotations.version>
@@ -42,6 +43,11 @@
                         <groupId>org.springframework.boot</groupId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson-spring-boot-starter</artifactId>
+                <version>${redisson.version}</version>
             </dependency>
             <!-- fastjson -->
             <dependency>

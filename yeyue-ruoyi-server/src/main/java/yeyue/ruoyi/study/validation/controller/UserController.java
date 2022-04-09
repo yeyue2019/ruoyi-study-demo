@@ -4,10 +4,12 @@ import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import yeyue.ruoyi.study.framework.common.pojo.CommonResult;
 import yeyue.ruoyi.study.validation.dto.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
+import java.time.*;
 
 @Slf4j
 @RestController
@@ -51,5 +53,17 @@ public class UserController {
     public void update(@Valid UserUpdateDTO updateDTO) {
         log.info("[update][updateDTO: {}]", updateDTO);
     }
+
+    @GetMapping("/info")
+    @ApiOperation("随机返回用户")
+    public CommonResult<UserVO> getUser() {
+        UserVO vo = new UserVO();
+        vo.setId(20L);
+        vo.setName("夜月");
+        vo.setGender(GenderEnum.男);
+        vo.setBirthday(LocalDateTime.now());
+        return CommonResult.success(vo);
+    }
+
 
 }

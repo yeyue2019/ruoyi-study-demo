@@ -1,5 +1,14 @@
 spring:
   application:
     name: yeyue-ruoyi-server
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+    default-property-inclusion: non_null
+    serialization:
+      write-enums-using-to-string: true
+      fail-on-empty-beans: false
+    deserialization:
+      fail-on-unknown-properties: false
 server:
   port: 40080

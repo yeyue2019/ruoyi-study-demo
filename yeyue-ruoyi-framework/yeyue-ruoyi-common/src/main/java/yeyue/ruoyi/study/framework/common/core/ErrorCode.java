@@ -1,8 +1,5 @@
 package yeyue.ruoyi.study.framework.common.core;
 
-import com.alibaba.fastjson.annotation.JSONField;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.Assert;
 
@@ -52,20 +49,14 @@ public interface ErrorCode extends Serializable {
     /**
      * 是否成功
      */
-    @JsonIgnore
-    @JSONField(serialize = false, deserialize = false)
-    @ApiModelProperty(hidden = true)
-    default boolean isSuccess() {
+    default boolean ifSuccess() {
         return !isSuccess(getCode());
     }
 
     /**
      * 是否失败
      */
-    @JsonIgnore
-    @JSONField(serialize = false, deserialize = false)
-    @ApiModelProperty(hidden = true)
-    default boolean isError() {
-        return !isSuccess();
+    default boolean ifError() {
+        return !ifSuccess();
     }
 }

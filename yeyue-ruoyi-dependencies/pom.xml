@@ -19,6 +19,7 @@
         <demo.version>1.0.0</demo.version>
         <spring.boot.version>2.5.10</spring.boot.version>
         <redisson.version>3.16.6</redisson.version>
+        <mybatis-plus.version>3.4.3.4</mybatis-plus.version>
         <fastjson.version>1.2.79</fastjson.version>
         <knife4j.version>3.0.2</knife4j.version>
         <swagger-annotations.version>1.5.22</swagger-annotations.version>
@@ -33,21 +34,16 @@
                 <version>${spring.boot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
-                <exclusions>
-                    <exclusion>
-                        <groupId>mysql</groupId>
-                        <artifactId>mysql-connector-java</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <artifactId>spring-boot-starter-logging</artifactId>
-                        <groupId>org.springframework.boot</groupId>
-                    </exclusion>
-                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.redisson</groupId>
                 <artifactId>redisson-spring-boot-starter</artifactId>
                 <version>${redisson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
             </dependency>
             <!-- fastjson -->
             <dependency>
@@ -100,6 +96,11 @@
             <dependency>
                 <groupId>yeyue.ruoyi.study.boot</groupId>
                 <artifactId>yeyue-ruoyi-web-starter</artifactId>
+                <version>${demo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>yeyue.ruoyi.study.boot</groupId>
+                <artifactId>yeyue-ruoyi-mybatis-starter</artifactId>
                 <version>${demo.version}</version>
             </dependency>
         </dependencies>

@@ -16,8 +16,20 @@ import java.util.stream.Collectors;
  */
 public abstract class CollectionUtils extends org.springframework.util.CollectionUtils {
 
-    public static boolean isEmpty(PageResult<?> result) {
-        return result == null || isEmpty(result.getList());
+    public static boolean isNotEmpty(Collection<?> collection) {
+        return !isEmpty(collection);
+    }
+
+    public static boolean isNotEmpty(Map<?, ?> map) {
+        return !isEmpty(map);
+    }
+
+    public static boolean isEmpty(PageResult<?> pageResult) {
+        return pageResult == null || isEmpty(pageResult.getList());
+    }
+
+    public static boolean isNotEmpty(PageResult<?> pageResult) {
+        return !isEmpty(pageResult);
     }
 
     public static <T> Collection<T> singleton(T data) {

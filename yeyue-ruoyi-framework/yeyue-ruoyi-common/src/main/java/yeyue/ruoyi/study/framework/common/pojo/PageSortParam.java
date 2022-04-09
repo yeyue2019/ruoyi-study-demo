@@ -2,6 +2,7 @@ package yeyue.ruoyi.study.framework.common.pojo;
 
 import io.swagger.annotations.*;
 import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
 
@@ -51,4 +52,11 @@ public class PageSortParam implements Serializable {
         return s;
     }
 
+    public boolean ifAsc() {
+        return StringUtils.equals(this.order, ORDER_ASC);
+    }
+
+    public boolean ifDesc() {
+        return StringUtils.equals(this.order, ORDER_DESC);
+    }
 }

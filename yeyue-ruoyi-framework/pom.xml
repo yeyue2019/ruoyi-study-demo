@@ -27,6 +27,7 @@
         <module>yeyue-ruoyi-validation</module>
         <module>yeyue-ruoyi-web-starter</module>
         <module>yeyue-ruoyi-redis-starter</module>
+        <module>yeyue-ruoyi-mybatis-starter</module>
     </modules>
 
 </project>

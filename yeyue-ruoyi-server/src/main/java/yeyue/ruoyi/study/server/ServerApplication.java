@@ -11,7 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @date 2022-04-08 14:05:24
  */
 @Slf4j
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"yeyue.ruoyi.study"})
 public class ServerApplication implements CommandLineRunner {
 
     public static void main(String[] args) {

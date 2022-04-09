@@ -10,5 +10,8 @@ spring:
       fail-on-empty-beans: false
     deserialization:
       fail-on-unknown-properties: false
+  redis:
+    password: yeyue2019
+    database: 0
 server:
   port: 40080

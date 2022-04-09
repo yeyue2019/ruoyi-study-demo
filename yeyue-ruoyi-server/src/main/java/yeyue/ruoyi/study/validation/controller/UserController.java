@@ -5,11 +5,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import yeyue.ruoyi.study.framework.common.pojo.CommonResult;
+import yeyue.ruoyi.study.framework.redis.core.RedisRepository;
+import yeyue.ruoyi.study.framework.redis.domain.RedisDomainDefine;
 import yeyue.ruoyi.study.validation.dto.*;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
-import java.time.*;
+import java.time.LocalDateTime;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @RestController
@@ -57,13 +61,20 @@ public class UserController {
     @GetMapping("/info")
     @ApiOperation("随机返回用户")
     public CommonResult<UserVO> getUser() {
-        UserVO vo = new UserVO();
-        vo.setId(20L);
-        vo.setName("夜月");
-        vo.setGender(GenderEnum.男);
-        vo.setBirthday(LocalDateTime.now());
+        UserVO vo = redisRepository.get("test", "user");
+        if (vo == null) {
+            vo = new UserVO();
+            vo.setId(20L);
+            vo.setName("夜月");
+            vo.setGender(GenderEnum.男);
+            vo.setBirthday(LocalDateTime.now());
+            redisRepository.save("test", new RedisDomainDefine<>("user", vo, 5, TimeUnit.SECONDS));
+        }
         return CommonResult.success(vo);
     }
+
+    @Resource
+    RedisRepository redisRepository;
 
 
 }

@@ -13,7 +13,11 @@ import yeyue.ruoyi.study.framework.common.core.ErrorCode;
 @AllArgsConstructor
 public enum GlobalErrorCode implements ErrorCode {
 
-    ENUM_VALUE_CANNOT_DEFAULT("901", "条件不在枚举筛选范围内"),
+    REDIS_CLIENT_COMMAND_FAIL("601", "Redis操作行为异常"),
+
+    ENUM_VALUE_CANNOT_DEFAULT("701", "条件不在枚举筛选范围内"),
+
+
     ;
 
     private final String code;

@@ -2,7 +2,6 @@ package yeyue.ruoyi.study.framework.common.pojo;
 
 import io.swagger.annotations.*;
 import lombok.Data;
-import org.apache.commons.lang3.StringUtils;
 import yeyue.ruoyi.study.framework.common.core.ErrorCode;
 
 /**
@@ -22,7 +21,7 @@ public class CommonResult<T> implements ErrorCode {
     private T data;
 
     @ApiModelProperty(value = "错误信息")
-    private String msg = StringUtils.EMPTY;
+    private String msg;
 
     /**
      * 成功结果

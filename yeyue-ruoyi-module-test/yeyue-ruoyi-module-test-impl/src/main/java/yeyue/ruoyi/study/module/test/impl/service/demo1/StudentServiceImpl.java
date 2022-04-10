@@ -19,7 +19,7 @@ import java.time.*;
  * @date 2022-04-10 14:27:16
  */
 @Slf4j
-@Validated
+@Validated({Student.StudentModify.class})
 @Component
 public class StudentServiceImpl implements StudentService {
 

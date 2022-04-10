@@ -1,4 +1,4 @@
-package yeyue.ruoyi.study.validation.dto;
+package yeyue.ruoyi.study.module.test.api.enums;
 
 import lombok.*;
 import yeyue.ruoyi.study.framework.common.core.ValidEnum;

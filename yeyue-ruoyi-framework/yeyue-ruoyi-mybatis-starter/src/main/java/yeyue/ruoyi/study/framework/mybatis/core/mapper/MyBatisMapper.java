@@ -24,7 +24,7 @@ public interface MyBatisMapper<T> extends BaseMapper<T> {
      * @param queryWrapper 查询条件
      * @return 结果
      */
-    default PageResult<T> selectPage(PageQueryParam queryParam, @Param("ew") Wrapper<T> queryWrapper) {
+    default PageResult<T> selectPage(PageParam queryParam, @Param("ew") Wrapper<T> queryWrapper) {
         IPage<T> mpPage = MyBatisUtils.buildPage(queryParam);
         selectPage(mpPage, queryWrapper);
         return new PageResult<>(mpPage.getRecords(), mpPage.getTotal());

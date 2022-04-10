@@ -14,7 +14,7 @@ import java.io.Serializable;
  */
 @Data
 @ApiModel
-public class PageSortParam implements Serializable {
+public class SortedParam implements Serializable {
 
     /**
      * 顺序 - 升序
@@ -35,8 +35,8 @@ public class PageSortParam implements Serializable {
     /**
      * 指定正序排序字段
      */
-    public static PageSortParam asc(String field) {
-        PageSortParam s = new PageSortParam();
+    public static SortedParam asc(String field) {
+        SortedParam s = new SortedParam();
         s.field = field;
         s.order = ORDER_ASC;
         return s;
@@ -45,8 +45,8 @@ public class PageSortParam implements Serializable {
     /**
      * 指定倒序排序字段
      */
-    public static PageSortParam desc(String field) {
-        PageSortParam s = new PageSortParam();
+    public static SortedParam desc(String field) {
+        SortedParam s = new SortedParam();
         s.field = field;
         s.order = ORDER_DESC;
         return s;

@@ -1,6 +1,11 @@
+server:
+  port: 40080
+---
 spring:
   application:
     name: yeyue-ruoyi-server
+---
+spring:
   jackson:
     time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss
@@ -10,8 +15,23 @@ spring:
       fail-on-empty-beans: false
     deserialization:
       fail-on-unknown-properties: false
+---
+spring:
   redis:
     password: yeyue2019
     database: 0
-server:
-  port: 40080
+---
+knife4j:
+  enable: true
+  setting:
+    enableSwaggerModels: false
+    enableFooter: false
+    enableFooterCustom: true
+    footerCustomContent: Apache License 2.0 | Copyright  2022-[夜月](https://gitee.com/fredyangyeyue/ruoyi-study-demo)
+swagger:
+  enable: true
+  title: 夜月后端接口文档
+  description: 芋艿若依增强脚手架学习接口文档
+  author: 夜月
+  version: 1.0.0
+

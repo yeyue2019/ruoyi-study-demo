@@ -3,35 +3,32 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>yeyue-ruoyi-framework</artifactId>
+        <artifactId>yeyue-ruoyi-module-test</artifactId>
         <groupId>yeyue.ruoyi.study.boot</groupId>
         <version>${demo.version}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>yeyue-ruoyi-mybatis-starter</artifactId>
+    <artifactId>yeyue-ruoyi-module-test-impl</artifactId>
     <packaging>jar</packaging>
-
     <name>${project.artifactId}</name>
     <description>
-        mysql 数据库访问模块
+        API的实现模块
     </description>
 
     <dependencies>
         <dependency>
             <groupId>yeyue.ruoyi.study.boot</groupId>
-            <artifactId>yeyue-ruoyi-common</artifactId>
+            <artifactId>yeyue-ruoyi-module-test-api</artifactId>
+            <version>${demo.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-            <exclusions>
-                <exclusion>
-                    <artifactId>spring-boot-starter-logging</artifactId>
-                    <groupId>org.springframework.boot</groupId>
-                </exclusion>
-            </exclusions>
+            <groupId>yeyue.ruoyi.study.boot</groupId>
+            <artifactId>yeyue-ruoyi-redis-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>yeyue.ruoyi.study.boot</groupId>
+            <artifactId>yeyue-ruoyi-web-starter</artifactId>
         </dependency>
     </dependencies>
-
 </project>

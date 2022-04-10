@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
+import yeyue.ruoyi.study.framework.common.exception.common.GlobalErrorCode;
 import yeyue.ruoyi.study.framework.common.pojo.CommonResult;
 
 import javax.servlet.http.HttpServletRequest;
@@ -78,7 +79,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = MissingServletRequestParameterException.class)
     public CommonResult<?> missingServletRequestParameterExceptionHandler(MissingServletRequestParameterException ex) {
         log.warn("[missingServletRequestParameterExceptionHandler]", ex);
-        return CommonResult.error(HttpStatus.BAD_REQUEST.value(), String.format("请求参数缺失:%s", ex.getParameterName()));
+        return CommonResult.error(GlobalErrorCode.BAD_REQUEST.getCode(), String.format("请求参数缺失:%s", ex.getParameterName()));
     }
 
     /**
@@ -89,7 +90,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public CommonResult<?> methodArgumentTypeMismatchExceptionHandler(MethodArgumentTypeMismatchException ex) {
         log.warn("[missingServletRequestParameterExceptionHandler]", ex);
-        return CommonResult.error(HttpStatus.BAD_REQUEST.value(), String.format("请求参数类型错误:%s", ex.getMessage()));
+        return CommonResult.error(GlobalErrorCode.BAD_REQUEST.getCode(), String.format("请求参数类型错误:%s", ex.getMessage()));
     }
 
     /**
@@ -100,7 +101,7 @@ public class GlobalExceptionHandler {
         log.warn("[methodArgumentNotValidExceptionExceptionHandler]", ex);
         FieldError fieldError = ex.getBindingResult().getFieldError();
         assert fieldError != null;
-        return CommonResult.error(HttpStatus.BAD_REQUEST.value(), String.format("请求参数不正确:%s", fieldError.getDefaultMessage()));
+        return CommonResult.error(GlobalErrorCode.BAD_REQUEST.getCode(), String.format("请求参数不正确:%s", fieldError.getDefaultMessage()));
     }
 
     /**
@@ -111,7 +112,7 @@ public class GlobalExceptionHandler {
         log.warn("[handleBindException]", ex);
         FieldError fieldError = ex.getFieldError();
         assert fieldError != null;
-        return CommonResult.error(HttpStatus.BAD_REQUEST.value(), String.format("请求参数不正确:%s", fieldError.getDefaultMessage()));
+        return CommonResult.error(GlobalErrorCode.BAD_REQUEST.getCode(), String.format("请求参数不正确:%s", fieldError.getDefaultMessage()));
     }
 
     /**
@@ -121,7 +122,7 @@ public class GlobalExceptionHandler {
     public CommonResult<?> constraintViolationExceptionHandler(ConstraintViolationException ex) {
         log.warn("[constraintViolationExceptionHandler]", ex);
         ConstraintViolation<?> constraintViolation = ex.getConstraintViolations().iterator().next();
-        return CommonResult.error(HttpStatus.BAD_REQUEST.value(), String.format("请求参数不正确:%s", constraintViolation.getMessage()));
+        return CommonResult.error(GlobalErrorCode.BAD_REQUEST.getCode(), String.format("请求参数不正确:%s", constraintViolation.getMessage()));
     }
 
     /**
@@ -131,7 +132,7 @@ public class GlobalExceptionHandler {
     public CommonResult<?> validationException(ValidationException ex) {
         log.warn("[constraintViolationExceptionHandler]", ex);
         // 无法拼接明细的错误信息，因为 Dubbo Consumer 抛出 ValidationException 异常时，是直接的字符串信息，且人类不可读
-        return CommonResult.error(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase());
+        return CommonResult.error(GlobalErrorCode.BAD_REQUEST.getCode(), HttpStatus.BAD_REQUEST.getReasonPhrase());
     }
 
     /**
@@ -144,7 +145,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NoHandlerFoundException.class)
     public CommonResult<?> noHandlerFoundExceptionHandler(NoHandlerFoundException ex) {
         log.warn("[noHandlerFoundExceptionHandler]", ex);
-        return CommonResult.error(HttpStatus.NOT_FOUND.value(), String.format("请求地址不存在:%s", ex.getRequestURL()));
+        return CommonResult.error(GlobalErrorCode.NOT_FOUND.getCode(), String.format("请求地址不存在:%s", ex.getRequestURL()));
     }
 
     /**
@@ -155,7 +156,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public CommonResult<?> httpRequestMethodNotSupportedExceptionHandler(HttpRequestMethodNotSupportedException ex) {
         log.warn("[httpRequestMethodNotSupportedExceptionHandler]", ex);
-        return CommonResult.error(HttpStatus.METHOD_NOT_ALLOWED.value(), String.format("请求方法不正确:%s", ex.getMessage()));
+        return CommonResult.error(GlobalErrorCode.METHOD_NOT_ALLOWED.getCode(), String.format("请求方法不正确:%s", ex.getMessage()));
     }
 
     // /**
@@ -196,6 +197,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     public CommonResult<?> defaultExceptionHandler(HttpServletRequest req, Throwable ex) {
         log.error("[defaultExceptionHandler]", ex);
-        return CommonResult.error(HttpStatus.INTERNAL_SERVER_ERROR.value(), HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase());
+        return CommonResult.error(GlobalErrorCode.INTERNAL_SERVER_ERROR.getCode(), ex.getMessage());
     }
 }

@@ -13,6 +13,14 @@ import yeyue.ruoyi.study.framework.common.core.ErrorCode;
 @AllArgsConstructor
 public enum GlobalErrorCode implements ErrorCode {
 
+    SUCCESS("0", "SUCCESS"),
+
+    BAD_REQUEST("400", "请求参数存在错误"),
+    NOT_FOUND("404", "请求路径不存在"),
+    METHOD_NOT_ALLOWED("405", "不被支持的请求方法"),
+
+    INTERNAL_SERVER_ERROR("500", "服务器异常"),
+
     REDIS_CLIENT_COMMAND_FAIL("601", "Redis操作行为异常"),
 
     ENUM_VALUE_CANNOT_DEFAULT("701", "条件不在枚举筛选范围内"),

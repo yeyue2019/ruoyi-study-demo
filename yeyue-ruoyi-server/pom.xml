@@ -27,11 +27,8 @@
     <dependencies>
         <dependency>
             <groupId>yeyue.ruoyi.study.boot</groupId>
-            <artifactId>yeyue-ruoyi-redis-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>yeyue.ruoyi.study.boot</groupId>
-            <artifactId>yeyue-ruoyi-web-starter</artifactId>
+            <artifactId>yeyue-ruoyi-module-test-impl</artifactId>
+            <version>${demo.version}</version>
         </dependency>
     </dependencies>
 

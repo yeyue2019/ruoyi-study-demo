@@ -1,10 +1,10 @@
-package yeyue.ruoyi.study.module.test.api.service.demo1.dto;
+package yeyue.ruoyi.study.module.test.api.demo1.service.dto;
 
 import io.swagger.annotations.*;
 import lombok.Data;
 import yeyue.ruoyi.study.framework.common.pojo.PageParam;
 import yeyue.ruoyi.study.framework.validation.annotation.InEnum;
-import yeyue.ruoyi.study.module.test.api.enums.GenderEnum;
+import yeyue.ruoyi.study.module.test.api.demo1.enums.GenderEnum;
 
 import java.time.LocalDateTime;
 

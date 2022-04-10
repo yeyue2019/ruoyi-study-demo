@@ -1,11 +1,12 @@
-package yeyue.ruoyi.study.module.test.api.domain.demo1;
+package yeyue.ruoyi.study.module.test.api.demo1.domain;
 
 import io.swagger.annotations.*;
 import lombok.Data;
 import yeyue.ruoyi.study.framework.validation.annotation.InEnum;
-import yeyue.ruoyi.study.module.test.api.enums.GenderEnum;
+import yeyue.ruoyi.study.module.test.api.demo1.enums.GenderEnum;
 
 import javax.validation.constraints.*;
+import javax.validation.groups.Default;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.*;
@@ -18,17 +19,18 @@ import java.time.*;
  */
 @Data
 @ApiModel(description = "学生领域对象")
-public class Student implements Serializable {
+public class StudentDomain implements Serializable {
 
-    public interface StudentCreate {
+    public interface StudentCreate extends Default {
     }
 
-    public interface StudentModify {
+    public interface StudentUpdate extends Default {
 
     }
 
     @ApiModelProperty(value = "学生编号")
-    @NotNull(groups = StudentModify.class, message = "学生Id不能为空")
+    @NotNull(groups = StudentUpdate.class, message = "学生Id不能为空")
+    @Null(groups = StudentCreate.class, message = "学生Id不能传值")
     private Long id;
 
     @ApiModelProperty(value = "学生姓名")

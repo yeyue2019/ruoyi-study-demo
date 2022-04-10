@@ -14,7 +14,7 @@ import yeyue.ruoyi.study.framework.mybatis.core.injector.MyBatisSqlInjector;
  * @date 2022-04-09 23:36:50
  */
 @Configuration
-@MapperScan(basePackages = {"yeyue.ruoyi.study.server"})
+@MapperScan(basePackages = {"yeyue.ruoyi.study.**.mapper.**"})
 public class YeyueMyBatisAutoConfiguration {
 
     /**

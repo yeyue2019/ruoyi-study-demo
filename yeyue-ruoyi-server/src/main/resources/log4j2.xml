@@ -6,12 +6,14 @@
     <Properties>
         <!-- 格式化输出：%date表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度 %msg：日志消息，%n是换行符-->
         <!-- %logger{36} 表示 Logger 名字最长36个字符 -->
-        <Property name="FILE_PATTERN" value="[%d{HH:mm:ss,SSS}][%highlight{%-5level}{ERROR=Bright RED, WARN=Bright Yellow, INFO=Bright Green, DEBUG=Bright Cyan, TRACE=Bright White}][%-5T][%t][%c]:%m%ex%n"/>
-        <Property name="CONSOLE_PATTERN" value="[%d{HH:mm:ss,SSS}][%highlight{%-5level}{ERROR=Bright RED, WARN=Bright Yellow, INFO=Bright Green, DEBUG=Bright Cyan, TRACE=Bright White}][%-5T][%t][%l]:%m%ex%n"/>
-<!--        &lt;!&ndash; 定义日志存储的路径 &ndash;&gt;-->
-<!--        <Property name="FILE_PATH" value="logs"/>-->
-<!--        &lt;!&ndash; TODO 项目启动时需要用参数指定 &ndash;&gt;-->
-<!--        <Property name="FILE_NAME" value="yeyue-ruoyi-server"/>-->
+        <Property name="FILE_PATTERN"
+                  value="[%d{HH:mm:ss,SSS}][%highlight{%-5level}{ERROR=Bright RED, WARN=Bright Yellow, INFO=Bright Green, DEBUG=Bright Cyan, TRACE=Bright White}][%-5T][%t][%c]:%m%ex%n"/>
+        <Property name="CONSOLE_PATTERN"
+                  value="[%d{HH:mm:ss,SSS}][%highlight{%-5level}{ERROR=Bright RED, WARN=Bright Yellow, INFO=Bright Green, DEBUG=Bright Cyan, TRACE=Bright White}][%-5T][%t][%c]:%m%ex%n"/>
+        <!--        &lt;!&ndash; 定义日志存储的路径 &ndash;&gt;-->
+        <!--        <Property name="FILE_PATH" value="logs"/>-->
+        <!--        &lt;!&ndash; TODO 项目启动时需要用参数指定 &ndash;&gt;-->
+        <!--        <Property name="FILE_NAME" value="yeyue-ruoyi-server"/>-->
     </Properties>
 
     <Appenders>
@@ -22,8 +24,11 @@
     </Appenders>
 
     <Loggers>
-        <root level="DEBUG">
+        <root level="INFO">
             <Appender-Ref ref="Console"/>
         </root>
+        <logger name="druid.sql.Statement" level="DEBUG" additivity="false">
+            <Appender-Ref ref="Console"/>
+        </logger>
     </Loggers>
 </Configuration>

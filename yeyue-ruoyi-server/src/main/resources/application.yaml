@@ -64,21 +64,29 @@ spring:
           slow-sql-log-level: info
           slow-sql-millis: 100
         wall:
-          enabled: true
           config:
             truncate-allow: false
             multi-statement-allow: true
-          log-violation: true
+            drop-table-allow: false
         slf4j:
           enabled: true
           statement-executable-sql-log-enable: true
-          statement-create-after-log-enabled: false
           statement-close-after-log-enabled: false
-          result-set-open-after-log-enabled: false
-          result-set-close-after-log-enabled: false
+          statement-create-after-log-enabled: false
+          statement-parameter-set-log-enabled: false
+          statement-parameter-clear-log-enable: false
+          statement-prepare-call-after-log-enabled: false
+          statement-prepare-after-log-enabled: false
       stat-view-servlet:
         enabled: true
         url-pattern: /druid/*
+---
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: false
+    log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
+  global-config:
+    banner: false
 
 
 

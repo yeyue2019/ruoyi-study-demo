@@ -28,6 +28,10 @@
         </dependency>
         <dependency>
             <groupId>yeyue.ruoyi.study.boot</groupId>
+            <artifactId>yeyue-ruoyi-mybatis-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>yeyue.ruoyi.study.boot</groupId>
             <artifactId>yeyue-ruoyi-druid-starter</artifactId>
         </dependency>
         <dependency>

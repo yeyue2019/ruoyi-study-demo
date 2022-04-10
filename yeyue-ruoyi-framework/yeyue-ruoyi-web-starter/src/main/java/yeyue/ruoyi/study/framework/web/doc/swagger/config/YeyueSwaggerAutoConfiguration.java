@@ -49,7 +49,7 @@ public class YeyueSwaggerAutoConfiguration {
                 .globalResponses(HttpMethod.DELETE, globalResponses())
                 .globalResponses(HttpMethod.PUT, globalResponses())
                 .useDefaultResponseMessages(false)
-                // 设置扫描指定 package 包下的
+                // default配置默认读取所有接口
                 .select()
                 .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
                 .paths(PathSelectors.any())
@@ -61,6 +61,9 @@ public class YeyueSwaggerAutoConfiguration {
                 ;
     }
 
+    /**
+     * 主页根据配置文件读取
+     */
     private static ApiInfo apiInfo(YeyueSwaggerProperties properties) {
         return new ApiInfoBuilder()
                 .title(properties.getTitle())

@@ -71,6 +71,8 @@ public class GlobalExceptionHandler {
         return defaultExceptionHandler(request, ex);
     }
 
+    // 全局使用GlobalErrorCode 便于Swagger管理
+
     /**
      * 处理 SpringMVC 请求参数缺失
      * <p>

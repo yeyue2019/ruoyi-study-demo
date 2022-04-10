@@ -11,7 +11,7 @@
 
     <name>${project.artifactId}</name>
     <description>
-        项目基础pom文件，统一管理项目引用的所有依赖和版本
+        项目基础pom文件，学习若依项目结果，使用单独的pom管理所有的依赖以及依赖的版本（dependencyManagement）
     </description>
 
     <properties>

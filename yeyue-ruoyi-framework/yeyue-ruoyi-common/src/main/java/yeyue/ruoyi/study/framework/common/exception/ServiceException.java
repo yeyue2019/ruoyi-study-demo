@@ -10,7 +10,6 @@ import yeyue.ruoyi.study.framework.common.core.ErrorCode;
  * @author yeyue
  * @date 2022-04-08 20:08:08
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
 public class ServiceException extends RuntimeException implements ErrorCode {
 

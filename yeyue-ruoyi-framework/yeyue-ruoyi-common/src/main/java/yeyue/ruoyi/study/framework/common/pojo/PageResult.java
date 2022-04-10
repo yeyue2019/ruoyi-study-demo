@@ -46,6 +46,8 @@ public class PageResult<T> implements Serializable {
         return new PageResult<>(total);
     }
 
+    // 防止字段被序列化 / 反序列化
+
     @JsonIgnore
     @JSONField(serialize = false, deserialize = false)
     @ApiModelProperty(hidden = true)

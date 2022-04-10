@@ -46,6 +46,8 @@ public interface ErrorCode extends Serializable {
         Assert.notNull(code, "code 不能为空！");
     }
 
+    // 不使用Is作为实例方法输出，防止被序列化和反序列化
+
     /**
      * 是否成功
      */

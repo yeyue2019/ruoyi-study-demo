@@ -28,6 +28,7 @@
         <module>yeyue-ruoyi-web-starter</module>
         <module>yeyue-ruoyi-redis-starter</module>
         <module>yeyue-ruoyi-mybatis-starter</module>
+        <module>yeyue-ruoyi-druid-starter</module>
     </modules>
 
 </project>

@@ -22,7 +22,7 @@
     </Appenders>
 
     <Loggers>
-        <root level="INFO">
+        <root level="DEBUG">
             <Appender-Ref ref="Console"/>
         </root>
     </Loggers>

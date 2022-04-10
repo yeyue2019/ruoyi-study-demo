@@ -1,7 +1,10 @@
 package yeyue.ruoyi.study.framework.common.pojo;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.*;
 import lombok.Data;
+import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
 
 import java.io.Serializable;
 import java.util.*;
@@ -36,11 +39,24 @@ public class PageResult<T> implements Serializable {
     }
 
     public static <T> PageResult<T> empty() {
-        return new PageResult<>(0L);
+        return empty(0L);
     }
 
     public static <T> PageResult<T> empty(Long total) {
         return new PageResult<>(total);
     }
 
+    @JsonIgnore
+    @JSONField(serialize = false, deserialize = false)
+    @ApiModelProperty(hidden = true)
+    public boolean isEmpty() {
+        return CollectionUtils.isEmpty(this.list);
+    }
+
+    @JsonIgnore
+    @JSONField(serialize = false, deserialize = false)
+    @ApiModelProperty(hidden = true)
+    public boolean isNotEmpty() {
+        return !isEmpty();
+    }
 }

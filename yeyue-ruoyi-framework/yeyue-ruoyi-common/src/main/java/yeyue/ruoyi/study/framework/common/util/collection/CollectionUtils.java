@@ -24,12 +24,12 @@ public abstract class CollectionUtils extends org.springframework.util.Collectio
         return !isEmpty(map);
     }
 
-    public static boolean isEmpty(PageResult<?> pageResult) {
-        return pageResult == null || isEmpty(pageResult.getList());
+    public static boolean isEmpty(Object... array) {
+        return array == null || array.length == 0;
     }
 
-    public static boolean isNotEmpty(PageResult<?> pageResult) {
-        return !isEmpty(pageResult);
+    public static boolean isNotEmpty(Object... array) {
+        return !isEmpty(array);
     }
 
     public static <T> Collection<T> singleton(T data) {
@@ -52,6 +52,10 @@ public abstract class CollectionUtils extends org.springframework.util.Collectio
             return new ArrayList<>();
         }
         return from.stream().map(function).filter(Objects::nonNull).collect(Collectors.toList());
+    }
+
+    public static <T, R> PageResult<R> convertPage(PageResult<T> from, Function<T, R> function) {
+        return new PageResult<>(convertList(from.getList(), function), from.getTotal());
     }
 
     /**

@@ -19,14 +19,14 @@ import java.time.LocalDateTime;
 public class StudentPage extends PageParam {
 
     @ApiModelProperty(value = "名称模糊匹配")
-    private String nameLike;
+    private String name;
 
     @ApiModelProperty(value = "手机号查找")
-    private String mobileEq;
+    private String mobile;
 
     @ApiModelProperty(value = "性别筛选")
     @InEnum(value = GenderEnum.class, message = "性别不在可选氛围内:%s")
-    private String genderEq;
+    private String gender;
 
     @ApiModelProperty(value = "添加开始时间")
     private LocalDateTime createTimeStart;

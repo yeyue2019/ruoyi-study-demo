@@ -3,6 +3,7 @@ package yeyue.ruoyi.study.module.test.impl.demo1.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import yeyue.ruoyi.study.framework.common.pojo.PageResult;
+import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
 import yeyue.ruoyi.study.framework.redis.core.RedisRepository;
 import yeyue.ruoyi.study.module.test.api.demo1.domain.StudentDomain;
 import yeyue.ruoyi.study.module.test.api.demo1.service.StudentService;
@@ -52,7 +53,6 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public PageResult<StudentDomain> list(StudentPage page) {
-        log.info("接口调用成功：list");
-        return PageResult.empty();
+        return CollectionUtils.convertPage(mapper.selectPage(page), StudentConvert::toStudentDomain);
     }
 }

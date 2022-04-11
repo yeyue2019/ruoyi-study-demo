@@ -31,14 +31,14 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Long create(StudentDomain create) {
-        StudentEntity entity = StudentConvert.toStudentEntity(create);
+        StudentEntity entity = StudentConvert.INSTANCE.convert(create);
         mapper.insert(entity);
         return entity.getId();
     }
 
     @Override
     public void update(StudentDomain update) {
-        StudentEntity entity = StudentConvert.toStudentEntity(update);
+        StudentEntity entity = StudentConvert.INSTANCE.convert(update);
         mapper.updateById(entity);
         redisRepository.delete("test", "user");
     }
@@ -48,7 +48,7 @@ public class StudentServiceImpl implements StudentService {
         StudentDomain domain = redisRepository.get("test", "user");
         if (domain == null) {
             StudentEntity entity = mapper.selectById(id);
-            domain = StudentConvert.toStudentDomain(entity);
+            domain = StudentConvert.INSTANCE.convert(entity);
             if (domain != null) {
                 redisRepository.save("test", new RedisDomainDefine<>("user", domain, 1, TimeUnit.MINUTES));
             }
@@ -65,6 +65,6 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public PageResult<StudentDomain> list(StudentPage page) {
-        return CollectionUtils.convertPage(mapper.selectPage(page), StudentConvert::toStudentDomain);
+        return CollectionUtils.convertPage(mapper.selectPage(page), StudentConvert.INSTANCE::convert);
     }
 }

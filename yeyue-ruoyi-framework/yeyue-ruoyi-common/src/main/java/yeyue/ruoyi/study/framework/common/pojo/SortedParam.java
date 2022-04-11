@@ -3,8 +3,13 @@ package yeyue.ruoyi.study.framework.common.pojo;
 import io.swagger.annotations.*;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
+import yeyue.ruoyi.study.framework.common.enums.QuerySortOrderEnum;
+import yeyue.ruoyi.study.framework.common.validation.annotation.InEnum;
 
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
+
+import static yeyue.ruoyi.study.framework.common.constants.CommonConstants.*;
 
 /**
  * 分页排序参数
@@ -16,20 +21,14 @@ import java.io.Serializable;
 @ApiModel
 public class SortedParam implements Serializable {
 
-    /**
-     * 顺序 - 升序
-     */
-    public static final String ORDER_ASC = "asc";
-    /**
-     * 顺序 - 降序
-     */
-    public static final String ORDER_DESC = "desc";
-
 
     @ApiModelProperty(value = "字段")
+    @NotEmpty(message = "查询字段不可为空")
     private String field;
 
     @ApiModelProperty(value = "顺序")
+    @NotEmpty(message = "查询顺序不可为空")
+    @InEnum(value = QuerySortOrderEnum.class, message = "查询顺序可选值为%s")
     private String order;
 
     /**

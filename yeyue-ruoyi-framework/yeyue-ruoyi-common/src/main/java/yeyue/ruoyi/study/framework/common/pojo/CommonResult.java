@@ -4,6 +4,8 @@ import io.swagger.annotations.*;
 import lombok.Data;
 import yeyue.ruoyi.study.framework.common.core.ErrorCode;
 
+import static yeyue.ruoyi.study.framework.common.constants.CommonConstants.CODE_SUCCESS_STR;
+
 /**
  * 结果返回
  *
@@ -59,6 +61,13 @@ public class CommonResult<T> implements ErrorCode {
     public static <T> CommonResult<T> error(Integer code, String message) {
         ErrorCode.assertError(code);
         return error(String.valueOf(code), message);
+    }
+
+    /**
+     * 错误结果
+     */
+    public static <T> CommonResult<T> error(ErrorCode errorCode) {
+        return error(errorCode.getCode(), errorCode.getMsg());
     }
 
     /**

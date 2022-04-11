@@ -20,7 +20,7 @@
     <dependencies>
         <dependency>
             <groupId>yeyue.ruoyi.study.boot</groupId>
-            <artifactId>yeyue-ruoyi-validation</artifactId>
+            <artifactId>yeyue-ruoyi-common</artifactId>
         </dependency>
     </dependencies>
 </project>

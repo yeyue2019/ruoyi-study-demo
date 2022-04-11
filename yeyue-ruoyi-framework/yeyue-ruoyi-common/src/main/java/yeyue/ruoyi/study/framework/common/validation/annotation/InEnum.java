@@ -1,7 +1,7 @@
-package yeyue.ruoyi.study.framework.validation.annotation;
+package yeyue.ruoyi.study.framework.common.validation.annotation;
 
-import yeyue.ruoyi.study.framework.common.core.ValidEnum;
-import yeyue.ruoyi.study.framework.validation.validator.InEnumValidator;
+import yeyue.ruoyi.study.framework.common.validation.core.ValidEnum;
+import yeyue.ruoyi.study.framework.common.validation.validator.InEnumValidator;
 
 import javax.validation.*;
 import java.lang.annotation.*;

@@ -1,6 +1,7 @@
 package yeyue.ruoyi.study.framework.common.exception.common;
 
 import lombok.*;
+import yeyue.ruoyi.study.framework.common.constants.CommonConstants;
 import yeyue.ruoyi.study.framework.common.core.ErrorCode;
 
 /**
@@ -15,7 +16,7 @@ public enum GlobalErrorCode implements ErrorCode {
 
     // TODO: 2022/4/10 因为需要将错误码在Swagger输出，所以全局错误码统一进行规定，存在错误码子类时再额外考虑其处理场景
 
-    SUCCESS("0", "SUCCESS"),
+    SUCCESS(CommonConstants.CODE_SUCCESS_STR, "success"),
 
     BAD_REQUEST("400", "请求参数存在错误"),
     NOT_FOUND("404", "请求路径不存在"),

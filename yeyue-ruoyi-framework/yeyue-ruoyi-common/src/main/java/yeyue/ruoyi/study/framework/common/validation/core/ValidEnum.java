@@ -1,4 +1,4 @@
-package yeyue.ruoyi.study.framework.common.core;
+package yeyue.ruoyi.study.framework.common.validation.core;
 
 /**
  * 枚举校验实现类

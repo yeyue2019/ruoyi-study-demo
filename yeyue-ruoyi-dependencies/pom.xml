@@ -91,11 +91,6 @@
             </dependency>
             <dependency>
                 <groupId>yeyue.ruoyi.study.boot</groupId>
-                <artifactId>yeyue-ruoyi-validation</artifactId>
-                <version>${demo.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>yeyue.ruoyi.study.boot</groupId>
                 <artifactId>yeyue-ruoyi-redis-starter</artifactId>
                 <version>${demo.version}</version>
             </dependency>

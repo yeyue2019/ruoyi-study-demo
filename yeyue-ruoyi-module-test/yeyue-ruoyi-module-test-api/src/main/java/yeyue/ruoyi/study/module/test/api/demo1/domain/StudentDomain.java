@@ -2,7 +2,6 @@ package yeyue.ruoyi.study.module.test.api.demo1.domain;
 
 import io.swagger.annotations.*;
 import lombok.Data;
-import yeyue.ruoyi.study.framework.validation.annotation.InEnum;
 import yeyue.ruoyi.study.module.test.api.demo1.enums.GenderEnum;
 
 import javax.validation.constraints.*;
@@ -52,8 +51,9 @@ public class StudentDomain implements Serializable {
     private LocalDate birthday;
 
     @ApiModelProperty(value = "性别")
-    @InEnum(value = GenderEnum.class, message = "性别必须在%s中填写")
-    private String gender;
+    @NotNull(message = "性别不可为空")
+    // @InEnum(value = GenderEnum.class, message = "性别必须在%s中填写")
+    private GenderEnum gender;
 
     @ApiModelProperty(value = "是否完成学业")
     @NotNull(message = "学生学业完成情况不能为空")

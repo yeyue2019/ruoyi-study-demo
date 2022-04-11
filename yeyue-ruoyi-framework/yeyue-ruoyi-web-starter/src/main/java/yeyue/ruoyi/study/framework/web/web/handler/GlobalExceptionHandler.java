@@ -1,7 +1,9 @@
 package yeyue.ruoyi.study.framework.web.web.handler;
 
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.*;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.*;
@@ -43,6 +45,9 @@ public class GlobalExceptionHandler {
         if (ex instanceof MethodArgumentNotValidException) {
             return methodArgumentNotValidExceptionExceptionHandler((MethodArgumentNotValidException) ex);
         }
+        if (ex instanceof HttpMessageNotReadableException) {
+            return httpMessageNotReadableExceptionHandler((HttpMessageNotReadableException) ex);
+        }
         if (ex instanceof BindException) {
             return bindExceptionHandler((BindException) ex);
         }
@@ -73,6 +78,8 @@ public class GlobalExceptionHandler {
 
     // 全局使用GlobalErrorCode 便于Swagger管理
 
+    // TODO: 2022/4/11 后面考虑错误日志输出的去留
+
     /**
      * 处理 SpringMVC 请求参数缺失
      * <p>
@@ -93,6 +100,18 @@ public class GlobalExceptionHandler {
     public CommonResult<?> methodArgumentTypeMismatchExceptionHandler(MethodArgumentTypeMismatchException ex) {
         log.warn("[missingServletRequestParameterExceptionHandler]", ex);
         return CommonResult.error(GlobalErrorCode.BAD_REQUEST.getCode(), String.format("请求参数类型错误:%s不属于%s类型", ex.getValue(), ex.getRequiredType()));
+    }
+
+
+    @ExceptionHandler(value = HttpMessageNotReadableException.class)
+    public CommonResult<?> httpMessageNotReadableExceptionHandler(HttpMessageNotReadableException ex) {
+        log.warn("[httpMessageNotReadableExceptionHandler]", ex);
+        String msg = "请求参数数据内容错误";
+        if (ex.getCause() instanceof InvalidFormatException) {
+            InvalidFormatException invalidFormatException = (InvalidFormatException) ex.getCause();
+            msg = String.format("请求参数数据内容错误:%s不属于%s类型", invalidFormatException.getValue(), invalidFormatException.getTargetType());
+        }
+        return CommonResult.error(GlobalErrorCode.BAD_REQUEST.getCode(), msg);
     }
 
     /**
@@ -190,7 +209,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = ServiceException.class)
     public CommonResult<?> serviceExceptionHandler(ServiceException ex) {
         log.info("[serviceExceptionHandler]", ex);
-        return CommonResult.error(ex.getCode(), ex.getMessage());
+        return CommonResult.error(ex);
     }
 
     /**

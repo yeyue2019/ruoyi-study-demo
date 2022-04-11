@@ -1,17 +1,15 @@
-package yeyue.ruoyi.study.framework.validation.validator;
+package yeyue.ruoyi.study.framework.common.validation.validator;
 
-import yeyue.ruoyi.study.framework.common.core.ValidEnum;
-import yeyue.ruoyi.study.framework.validation.annotation.InEnum;
+import yeyue.ruoyi.study.framework.common.validation.annotation.InEnum;
+import yeyue.ruoyi.study.framework.common.validation.core.ValidEnum;
 
 import javax.validation.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * 枚举校验过滤器
- *
  * @author yeyue
- * @date 2022-04-09 13:48:34
+ * @date 2022-04-11 13:44:14
  */
 public class InEnumValidator implements ConstraintValidator<InEnum, String> {
 

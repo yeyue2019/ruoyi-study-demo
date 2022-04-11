@@ -3,9 +3,12 @@ package yeyue.ruoyi.study.framework.common.pojo;
 import io.swagger.annotations.*;
 import lombok.Data;
 
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.List;
+
+import static yeyue.ruoyi.study.framework.common.constants.CommonConstants.*;
 
 /**
  * 分页查询参数
@@ -16,9 +19,6 @@ import java.util.List;
 @Data
 @ApiModel
 public abstract class PageParam implements Serializable {
-
-    private static final Integer PAGE_NO = 1;
-    private static final Integer PAGE_SIZE = 10;
 
     // TODO: 2022/4/10 使用参数校验
 
@@ -34,5 +34,6 @@ public abstract class PageParam implements Serializable {
     protected Integer pageSize = PAGE_SIZE;
 
     @ApiModelProperty(value = "排序参数")
+    @Valid
     protected List<SortedParam> sorts;
 }

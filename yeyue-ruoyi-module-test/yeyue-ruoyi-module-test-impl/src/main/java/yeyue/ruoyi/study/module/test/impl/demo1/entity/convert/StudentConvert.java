@@ -1,7 +1,6 @@
 package yeyue.ruoyi.study.module.test.impl.demo1.entity.convert;
 
 import yeyue.ruoyi.study.module.test.api.demo1.domain.StudentDomain;
-import yeyue.ruoyi.study.module.test.api.demo1.enums.GenderEnum;
 import yeyue.ruoyi.study.module.test.impl.demo1.entity.StudentEntity;
 
 import java.util.*;
@@ -44,7 +43,7 @@ public class StudentConvert {
         studentDomain.setDescription(studentEntity.getDescription());
         studentDomain.setCreateTime(studentEntity.getCreateTime());
         studentDomain.setUpdateTime(studentEntity.getUpdateTime());
-        studentDomain.setGender(studentEntity.getGender().name());
+        studentDomain.setGender(studentEntity.getGender());
 // Not mapped TO fields:
 // Not mapped FROM fields:
 // creator
@@ -78,7 +77,7 @@ public class StudentConvert {
         studentEntity.setGrade(studentDomain.getGrade());
         studentEntity.setAwardNumber(studentDomain.getAwardNumber());
         studentEntity.setDescription(studentDomain.getDescription());
-        studentEntity.setGender(GenderEnum.valueOf(studentDomain.getGender()));
+        studentEntity.setGender(studentDomain.getGender());
 // Not mapped TO fields:
 // creator
 // updater

@@ -61,7 +61,7 @@ spring:
           db-type: mysql
           merge-sql: true
           log-slow-sql: true
-          slow-sql-log-level: info
+          slow-sql-log-level: WARN
           slow-sql-millis: 100
         wall:
           config:

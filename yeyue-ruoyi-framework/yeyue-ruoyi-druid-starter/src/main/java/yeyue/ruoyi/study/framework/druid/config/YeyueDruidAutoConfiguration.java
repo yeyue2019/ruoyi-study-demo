@@ -2,7 +2,6 @@ package yeyue.ruoyi.study.framework.druid.config;
 
 import com.alibaba.druid.spring.boot.autoconfigure.properties.DruidStatProperties;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.*;
 import yeyue.ruoyi.study.framework.druid.core.filter.DruidAdRemoveFilter;
@@ -14,14 +13,18 @@ import yeyue.ruoyi.study.framework.druid.core.filter.DruidAdRemoveFilter;
  * @date 2022-04-10 17:34:19
  */
 @Configuration
-@EnableConfigurationProperties(DruidStatProperties.class)
 public class YeyueDruidAutoConfiguration {
+
+    // 去掉连接超时后的warn警告
+    static {
+        System.setProperty("druid.mysql.usePingMethod","false");
+    }
 
     /**
      * 创建 DruidAdRemoveFilter 过滤器，过滤 common.js 的广告
      */
     @Bean
-    @ConditionalOnProperty(name = "spring.datasource.druid.web-stat-filter.enabled", havingValue = "true")
+    @ConditionalOnProperty(name = "spring.datasource.druid.stat-view-servlet.enabled", havingValue = "true")
     public FilterRegistrationBean<DruidAdRemoveFilter> druidAdRemoveFilterFilter(DruidStatProperties properties) {
         // 获取 druid web 监控页面的参数
         DruidStatProperties.StatViewServlet config = properties.getStatViewServlet();

@@ -53,6 +53,9 @@ public class StudentServiceImpl implements StudentService {
                 redisRepository.save("test", new RedisDomainDefine<>("user", domain, 1, TimeUnit.MINUTES));
             }
         }
+        new Thread(() -> {
+            log.info("我是一条其他线程的数据！！！");
+        }).start();
         return domain;
     }
 

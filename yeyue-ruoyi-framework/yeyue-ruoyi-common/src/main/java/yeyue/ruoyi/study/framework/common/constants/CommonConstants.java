@@ -35,4 +35,15 @@ public abstract class CommonConstants {
      * 顺序 - 降序
      */
     public static final String ORDER_DESC = "desc";
+
+    /**
+     * TraceId的使用名称
+     */
+    public static final String TRACE_ID_NAME = "r-trace";
+
+    // servlet拦截器执行顺序
+
+    public static final int CORS_FILTER_ORDER = Integer.MIN_VALUE;
+
+    public static final int TRACE_FILTER_ORDER = CORS_FILTER_ORDER + 1;
 }

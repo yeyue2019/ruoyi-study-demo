@@ -5,7 +5,7 @@
     <!--变量配置-->
     <Properties>
         <Property name="CONSOLE_PATTERN"
-                  value="%d{yyyy-MM-dd HH:mm:ss,SSS} %highlight{%-5p}{ERROR=Bright RED, WARN=Bright Yellow, INFO=Bright Green, DEBUG=Bright Cyan, TRACE=Bright White} %pid{-} --- [%32.32t] [%X{traceId}] %-40.40c{39} : %m%ex%n"/>
+                  value="%d{yyyy-MM-dd HH:mm:ss,SSS} %highlight{%-5p}{ERROR=Bright RED, WARN=Bright Yellow, INFO=Bright Green, DEBUG=Bright Cyan, TRACE=Bright White} %pid{-} --- [%32.32t] [%traceId] %-40.40c{39} : %m%ex%n"/>
     </Properties>
 
     <Appenders>

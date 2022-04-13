@@ -63,5 +63,10 @@
             <artifactId>spring-core</artifactId>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.skywalking</groupId>
+            <artifactId>apm-toolkit-trace</artifactId>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 </project>

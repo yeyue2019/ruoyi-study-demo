@@ -28,7 +28,7 @@
         <module>yeyue-ruoyi-redis-starter</module>
         <module>yeyue-ruoyi-mybatis-starter</module>
         <module>yeyue-ruoyi-druid-starter</module>
-        <module>yeyue-ruoyi-slf4j-starter</module>
+        <module>yeyue-ruoyi-monitor-starter</module>
     </modules>
 
 </project>

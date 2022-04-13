@@ -32,7 +32,7 @@
         </dependency>
         <dependency>
             <groupId>yeyue.ruoyi.study.boot</groupId>
-            <artifactId>yeyue-ruoyi-slf4j-starter</artifactId>
+            <artifactId>yeyue-ruoyi-monitor-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

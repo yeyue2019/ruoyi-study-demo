@@ -25,11 +25,11 @@
     </properties>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/com.lmax/disruptor -->
+        <!-- 监控相关 -->
         <dependency>
-            <groupId>com.lmax</groupId>
-            <artifactId>disruptor</artifactId>
-            <version>3.4.4</version>
+            <groupId>io.opentracing</groupId>
+            <artifactId>opentracing-util</artifactId>
+            <version>0.31.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.skywalking</groupId>
@@ -38,13 +38,23 @@
         </dependency>
         <dependency>
             <groupId>org.apache.skywalking</groupId>
-            <artifactId>apm-toolkit-opentracing</artifactId>
+            <artifactId>apm-toolkit-logback-1.x</artifactId>
             <version>8.7.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.skywalking</groupId>
-            <artifactId>apm-toolkit-log4j-2.x</artifactId>
+            <artifactId>apm-toolkit-opentracing</artifactId>
             <version>8.7.0</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>opentracing-api</artifactId>
+                    <groupId>io.opentracing</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>opentracing-noop</artifactId>
+                    <groupId>io.opentracing</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>yeyue.ruoyi.study.boot</groupId>

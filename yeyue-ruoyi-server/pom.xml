@@ -30,6 +30,15 @@
             <artifactId>yeyue-ruoyi-module-test-impl</artifactId>
             <version>${demo.version}</version>
         </dependency>
+        <dependency>
+            <groupId>yeyue.ruoyi.study.boot</groupId>
+            <artifactId>yeyue-ruoyi-slf4j-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
 
     <build>

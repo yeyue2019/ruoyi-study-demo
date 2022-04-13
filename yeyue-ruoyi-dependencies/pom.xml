@@ -21,6 +21,7 @@
         <redisson.version>3.16.6</redisson.version>
         <druid.version>1.2.8</druid.version>
         <mybatis-plus.version>3.4.3.4</mybatis-plus.version>
+        <skywalking.version>8.7.0</skywalking.version>
         <fastjson.version>1.2.79</fastjson.version>
         <guava.version>30.1.1-jre</guava.version>
         <knife4j.version>3.0.2</knife4j.version>
@@ -53,6 +54,26 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.skywalking</groupId>
+                <artifactId>apm-toolkit-trace</artifactId>
+                <version>${skywalking.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.skywalking</groupId>
+                <artifactId>apm-toolkit-logback-1.x</artifactId>
+                <version>${skywalking.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.skywalking</groupId>
+                <artifactId>apm-toolkit-log4j-2.x</artifactId>
+                <version>${skywalking.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.skywalking</groupId>
+                <artifactId>apm-toolkit-opentracing</artifactId>
+                <version>${skywalking.version}</version>
             </dependency>
             <!-- fastjson -->
             <dependency>
@@ -135,6 +156,11 @@
             <dependency>
                 <groupId>yeyue.ruoyi.study.boot</groupId>
                 <artifactId>yeyue-ruoyi-druid-starter</artifactId>
+                <version>${demo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>yeyue.ruoyi.study.boot</groupId>
+                <artifactId>yeyue-ruoyi-slf4j-starter</artifactId>
                 <version>${demo.version}</version>
             </dependency>
         </dependencies>

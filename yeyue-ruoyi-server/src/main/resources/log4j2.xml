@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 日志级别以及优先级排序: OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE > ALL -->
 <!-- monitorInterval: Log4j能够自动检测修改配置 文件和重新配置本身，设置间隔秒数|status: 这个用于设置log4j2自身内部的信息输出，可以不设置，当设置成trace时，你会看到log4j2内部各种详细输出-->
-<Configuration monitorInterval="60" status="WARN">
+<Configuration>
     <!--变量配置-->
     <Properties>
-        <!-- 格式化输出：%date表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度 %msg：日志消息，%n是换行符-->
-        <!-- %logger{36} 表示 Logger 名字最长36个字符 -->
-        <Property name="FILE_PATTERN"
-                  value="[%d{HH:mm:ss,SSS}][%highlight{%-5level}{ERROR=Bright RED, WARN=Bright Yellow, INFO=Bright Green, DEBUG=Bright Cyan, TRACE=Bright White}][%-5T][%t][%c]:%m%ex%n"/>
         <Property name="CONSOLE_PATTERN"
-                  value="[%d{HH:mm:ss,SSS}][%highlight{%-5level}{ERROR=Bright RED, WARN=Bright Yellow, INFO=Bright Green, DEBUG=Bright Cyan, TRACE=Bright White}][%-5T][%t][%c]:%m%ex%n"/>
-        <!--        &lt;!&ndash; 定义日志存储的路径 &ndash;&gt;-->
-        <!--        <Property name="FILE_PATH" value="logs"/>-->
-        <!--        &lt;!&ndash; TODO 项目启动时需要用参数指定 &ndash;&gt;-->
-        <!--        <Property name="FILE_NAME" value="yeyue-ruoyi-server"/>-->
+                  value="%d{yyyy-MM-dd HH:mm:ss,SSS} %highlight{%-5p}{ERROR=Bright RED, WARN=Bright Yellow, INFO=Bright Green, DEBUG=Bright Cyan, TRACE=Bright White} %pid{-} --- [%32.32t] [%X{traceId}] %-40.40c{39} : %m%ex%n"/>
     </Properties>
 
     <Appenders>
@@ -27,7 +19,11 @@
         <root level="INFO">
             <Appender-Ref ref="Console"/>
         </root>
+        <!-- 输出druid、redisson的操作日志 -->
         <logger name="druid.sql.Statement" level="DEBUG" additivity="false">
+            <Appender-Ref ref="Console"/>
+        </logger>
+        <logger name="org.redisson.command.RedisExecutor" level="DEBUG" additivity="false">
             <Appender-Ref ref="Console"/>
         </logger>
     </Loggers>

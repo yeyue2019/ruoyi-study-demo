@@ -3,22 +3,25 @@ package yeyue.ruoyi.study.framework.web.web.handler;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.util.Assert;
 import org.springframework.validation.*;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
+import yeyue.ruoyi.study.framework.common.core.ErrorCode;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.exception.common.GlobalErrorCode;
+import yeyue.ruoyi.study.framework.common.exception.util.ExceptionUtils;
 import yeyue.ruoyi.study.framework.common.pojo.CommonResult;
 import yeyue.ruoyi.study.framework.common.util.object.ObjectUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.*;
 import java.sql.SQLException;
+import java.util.Arrays;
 
 /**
  * 全局异常处理器
@@ -73,7 +76,7 @@ public class GlobalExceptionHandler {
         //     return accessDeniedExceptionHandler(request, (AccessDeniedException) ex);
         // }
         if (ex instanceof DataAccessException) {
-            return sqlExceptionHandler(request, (DataAccessException) ex);
+            return dataAccessExceptionHandler(request, (DataAccessException) ex);
         }
         // 最后采用通用枚举处理
         if (ex instanceof ServiceException) {
@@ -93,8 +96,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = MissingServletRequestParameterException.class)
     public CommonResult<?> missingServletRequestParameterExceptionHandler(MissingServletRequestParameterException ex) {
-        log.warn("[missingServletRequestParameterExceptionHandler]", ex);
-        return CommonResult.error(GlobalErrorCode.BAD_REQUEST.getCode(), String.format("请求参数缺失:%s", ex.getParameterName()));
+        return globalHandler(ex, GlobalErrorCode.BAD_REQUEST, String.format("请求参数缺失:%s", ex.getParameterName()), false);
     }
 
     /**
@@ -104,20 +106,18 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public CommonResult<?> methodArgumentTypeMismatchExceptionHandler(MethodArgumentTypeMismatchException ex) {
-        log.warn("[missingServletRequestParameterExceptionHandler]", ex);
-        return CommonResult.error(GlobalErrorCode.BAD_REQUEST.getCode(), String.format("请求参数类型错误:%s不属于%s类型", ex.getValue(), ex.getRequiredType()));
+        return globalHandler(ex, GlobalErrorCode.BAD_REQUEST, String.format("请求参数类型错误:%s不属于%s类型", ex.getValue(), ex.getRequiredType()), false);
     }
 
 
     @ExceptionHandler(value = HttpMessageNotReadableException.class)
     public CommonResult<?> httpMessageNotReadableExceptionHandler(HttpMessageNotReadableException ex) {
-        log.warn("[httpMessageNotReadableExceptionHandler]", ex);
         String msg = "请求参数数据内容错误";
         if (ex.getCause() instanceof InvalidFormatException) {
             InvalidFormatException invalidFormatException = (InvalidFormatException) ex.getCause();
             msg = String.format("请求参数数据内容错误:%s不属于%s类型", invalidFormatException.getValue(), invalidFormatException.getTargetType());
         }
-        return CommonResult.error(GlobalErrorCode.BAD_REQUEST.getCode(), msg);
+        return globalHandler(ex, GlobalErrorCode.BAD_REQUEST, msg, false);
     }
 
     /**
@@ -125,10 +125,9 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public CommonResult<?> methodArgumentNotValidExceptionExceptionHandler(MethodArgumentNotValidException ex) {
-        log.warn("[methodArgumentNotValidExceptionExceptionHandler]", ex);
         FieldError fieldError = ex.getBindingResult().getFieldError();
-        assert fieldError != null;
-        return CommonResult.error(GlobalErrorCode.BAD_REQUEST.getCode(), String.format("请求参数不正确:%s", fieldError.getDefaultMessage()));
+        Assert.notNull(fieldError, "fieldError不允许为空！！！");
+        return globalHandler(ex, GlobalErrorCode.BAD_REQUEST, String.format("请求参数不正确:%s", fieldError.getDefaultMessage()), false);
     }
 
     /**
@@ -136,10 +135,9 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(BindException.class)
     public CommonResult<?> bindExceptionHandler(BindException ex) {
-        log.warn("[handleBindException]", ex);
         FieldError fieldError = ex.getFieldError();
-        assert fieldError != null;
-        return CommonResult.error(GlobalErrorCode.BAD_REQUEST.getCode(), String.format("请求参数不正确:%s", fieldError.getDefaultMessage()));
+        Assert.notNull(fieldError, "fieldError不允许为空！！！");
+        return globalHandler(ex, GlobalErrorCode.BAD_REQUEST, String.format("请求参数不正确:%s", fieldError.getDefaultMessage()), false);
     }
 
     /**
@@ -147,9 +145,8 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = ConstraintViolationException.class)
     public CommonResult<?> constraintViolationExceptionHandler(ConstraintViolationException ex) {
-        log.warn("[constraintViolationExceptionHandler]", ex);
         ConstraintViolation<?> constraintViolation = ex.getConstraintViolations().iterator().next();
-        return CommonResult.error(GlobalErrorCode.BAD_REQUEST.getCode(), String.format("请求参数不正确:%s", constraintViolation.getMessage()));
+        return globalHandler(ex, GlobalErrorCode.BAD_REQUEST, String.format("请求参数不正确:%s", constraintViolation.getMessage()), false);
     }
 
     /**
@@ -157,9 +154,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = ValidationException.class)
     public CommonResult<?> validationException(ValidationException ex) {
-        log.warn("[constraintViolationExceptionHandler]", ex);
-        // 无法拼接明细的错误信息，因为 Dubbo Consumer 抛出 ValidationException 异常时，是直接的字符串信息，且人类不可读
-        return CommonResult.error(GlobalErrorCode.BAD_REQUEST.getCode(), HttpStatus.BAD_REQUEST.getReasonPhrase());
+        return globalHandler(ex, GlobalErrorCode.BAD_REQUEST, true);
     }
 
     /**
@@ -171,8 +166,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(NoHandlerFoundException.class)
     public CommonResult<?> noHandlerFoundExceptionHandler(NoHandlerFoundException ex) {
-        log.warn("[noHandlerFoundExceptionHandler]", ex);
-        return CommonResult.error(GlobalErrorCode.NOT_FOUND.getCode(), String.format("请求地址不存在:%s", ex.getRequestURL()));
+        return globalHandler(ex, GlobalErrorCode.NOT_FOUND, String.format("请求地址不存在:%s", ex.getRequestURL()), false);
     }
 
     /**
@@ -182,8 +176,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public CommonResult<?> httpRequestMethodNotSupportedExceptionHandler(HttpRequestMethodNotSupportedException ex) {
-        log.warn("[httpRequestMethodNotSupportedExceptionHandler]", ex);
-        return CommonResult.error(GlobalErrorCode.METHOD_NOT_ALLOWED.getCode(), String.format("请求方法不正确:%s", ex.getMessage()));
+        return globalHandler(ex, GlobalErrorCode.METHOD_NOT_ALLOWED, String.format("请求方法不正确:%s,支持的方法为:%s", ex.getMethod(), Arrays.toString(ex.getSupportedMethods())), false);
     }
 
     // /**
@@ -211,10 +204,10 @@ public class GlobalExceptionHandler {
      * 处理数据库操作异常 SQLException
      */
     @ExceptionHandler(value = DataAccessException.class)
-    public CommonResult<?> sqlExceptionHandler(HttpServletRequest req, DataAccessException ex) {
+    public CommonResult<?> dataAccessExceptionHandler(HttpServletRequest req, DataAccessException ex) {
         if (ex.getRootCause() instanceof SQLException) {
             SQLException sqlEx = (SQLException) ex.getRootCause();
-            log.warn("[sqlExceptionHandler]:SQL语句执行报错, pstmt:{}, reason:{}, exName:{}", sqlEx.getErrorCode(), sqlEx.getMessage(), ex.getClass().getSimpleName());
+            log.warn("[sqlHandler]:SQL语句执行报错, pstmt:{}, reason:{}, exName:{}", sqlEx.getErrorCode(), sqlEx.getMessage(), ex.getClass().getSimpleName());
             return CommonResult.error(GlobalErrorCode.SQL_EXECUTE_BAD.getCode(), ObjectUtils.indexJoin(sqlEx.getErrorCode(), sqlEx.getMessage()));
         }
         return defaultExceptionHandler(req, ex);
@@ -227,8 +220,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = ServiceException.class)
     public CommonResult<?> serviceExceptionHandler(ServiceException ex) {
-        log.info("[serviceExceptionHandler]", ex);
-        return CommonResult.error(ex);
+        return globalHandler(ex, ex, true);
     }
 
     /**
@@ -236,7 +228,32 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = Exception.class)
     public CommonResult<?> defaultExceptionHandler(HttpServletRequest req, Throwable ex) {
-        log.error("[defaultExceptionHandler]", ex);
-        return CommonResult.error(GlobalErrorCode.INTERNAL_SERVER_ERROR.getCode(), ex.getMessage());
+        return globalHandler(ex, GlobalErrorCode.INTERNAL_SERVER_ERROR, ExceptionUtils.getMessage(ex), true);
+    }
+
+    /**
+     * 日志输出控制器
+     *
+     * @param ex        异常内容
+     * @param errorCode 返回的统一错误码
+     * @param printMsg  返回的错误信息
+     * @param logged    是否输出日志
+     * @return 结果
+     */
+    private static CommonResult<?> globalHandler(Throwable ex, ErrorCode errorCode, String printMsg, boolean logged) {
+        if (logged) {
+            log.warn("[globalHandler]:{}", ExceptionUtils.getMessage(ex));
+        }
+        return CommonResult.error(errorCode.getCode(), printMsg);
+    }
+
+    /**
+     * 日志输出控制器
+     */
+    private static CommonResult<?> globalHandler(Throwable ex, ErrorCode errorCode, boolean logged) {
+        if (logged) {
+            log.warn("[globalHandler]:{}", ExceptionUtils.getMessage(ex));
+        }
+        return CommonResult.error(errorCode);
     }
 }

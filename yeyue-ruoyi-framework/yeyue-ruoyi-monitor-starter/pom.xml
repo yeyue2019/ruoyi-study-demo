@@ -31,10 +31,6 @@
             <groupId>org.apache.skywalking</groupId>
             <artifactId>apm-toolkit-log4j-2.x</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.apache.skywalking</groupId>
-            <artifactId>apm-toolkit-opentracing</artifactId>
-        </dependency>
         <!-- web -->
         <dependency>
             <groupId>yeyue.ruoyi.study.boot</groupId>

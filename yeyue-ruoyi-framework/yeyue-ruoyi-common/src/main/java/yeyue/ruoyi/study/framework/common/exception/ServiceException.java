@@ -2,7 +2,6 @@ package yeyue.ruoyi.study.framework.common.exception;
 
 import lombok.Data;
 import yeyue.ruoyi.study.framework.common.core.ErrorCode;
-import yeyue.ruoyi.study.framework.common.exception.util.ExceptionUtils;
 import yeyue.ruoyi.study.framework.common.util.object.ObjectUtils;
 
 /**
@@ -47,10 +46,5 @@ public class ServiceException extends RuntimeException implements ErrorCode {
         super(ObjectUtils.indexJoin(code, message));
         ErrorCode.assertError(code);
         this.code = code;
-    }
-
-    @Override
-    public String getMessage() {
-        return ExceptionUtils.getMessage(this);
     }
 }

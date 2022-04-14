@@ -1,6 +1,7 @@
 package yeyue.ruoyi.study.module.test.impl.demo1.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.skywalking.apm.toolkit.trace.RunnableWrapper;
 import org.springframework.stereotype.Component;
 import yeyue.ruoyi.study.framework.common.pojo.PageResult;
 import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
@@ -53,9 +54,9 @@ public class StudentServiceImpl implements StudentService {
                 redisRepository.save("test", new RedisDomainDefine<>("user", domain, 1, TimeUnit.MINUTES));
             }
         }
-        new Thread(() -> {
+        new Thread(RunnableWrapper.of( () -> {
             log.info("开启一个新线程");
-        }).start();
+        })).start();
         return domain;
     }
 

@@ -2,12 +2,11 @@ package yeyue.ruoyi.study.framework.monitor.trace.filter;
 
 import org.apache.skywalking.apm.toolkit.trace.TraceContext;
 import org.springframework.web.filter.OncePerRequestFilter;
+import yeyue.ruoyi.study.framework.common.constants.CommonConstants;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.IOException;
-
-import static yeyue.ruoyi.study.framework.common.constants.CommonConstants.TRACE_ID_NAME;
 
 /**
  * 日志输出过滤器
@@ -22,6 +21,7 @@ public class YeyueTraceFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        response.addHeader(CommonConstants.TRACE_ID_NAME, TraceContext.traceId());
         filterChain.doFilter(request, response);
     }
 }

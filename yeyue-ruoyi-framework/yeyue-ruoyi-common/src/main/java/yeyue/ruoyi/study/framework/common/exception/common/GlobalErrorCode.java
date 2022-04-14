@@ -24,6 +24,7 @@ public enum GlobalErrorCode implements ErrorCode {
 
     INTERNAL_SERVER_ERROR("500", "服务器异常"),
 
+    SQL_EXECUTE_BAD("599", "SQL执行错误"),
     IO_EXCEPTION("600", "IO操作异常"),
     ENUM_VALUE_CANNOT_DEFAULT("601", "条件不在枚举筛选范围内"),
     ENCODE_NOT_SUPPORTED("602", "系统不支持的编码格式"),

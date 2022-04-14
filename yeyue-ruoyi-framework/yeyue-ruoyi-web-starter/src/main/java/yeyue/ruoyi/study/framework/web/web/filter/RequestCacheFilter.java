@@ -2,6 +2,7 @@ package yeyue.ruoyi.study.framework.web.web.filter;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.skywalking.apm.toolkit.trace.ActiveSpan;
 import org.springframework.web.filter.OncePerRequestFilter;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.exception.common.GlobalErrorCode;
@@ -18,12 +19,17 @@ import java.nio.charset.Charset;
  * @author yeyue
  * @date 2022-04-14 10:23:09
  */
+@Slf4j
 public class RequestCacheFilter extends OncePerRequestFilter {
 
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        filterChain.doFilter(new CacheRequestBodyWrapper(request), response);
+        HttpServletRequest wrapper = new CacheRequestBodyWrapper(request);
+        String body = ServletUtils.getBodyString(wrapper);
+        ActiveSpan.tag("http.body", body);
+        log.info("打印一下body:{}", body);
+        filterChain.doFilter(wrapper, response);
     }
 
     /**

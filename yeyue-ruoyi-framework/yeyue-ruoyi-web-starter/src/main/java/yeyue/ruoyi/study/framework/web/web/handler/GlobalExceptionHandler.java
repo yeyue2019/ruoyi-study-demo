@@ -2,6 +2,7 @@ package yeyue.ruoyi.study.framework.web.web.handler;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.*;
@@ -13,9 +14,11 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.exception.common.GlobalErrorCode;
 import yeyue.ruoyi.study.framework.common.pojo.CommonResult;
+import yeyue.ruoyi.study.framework.common.util.object.ObjectUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.*;
+import java.sql.SQLException;
 
 /**
  * 全局异常处理器
@@ -69,6 +72,9 @@ public class GlobalExceptionHandler {
         // if (ex instanceof AccessDeniedException) {
         //     return accessDeniedExceptionHandler(request, (AccessDeniedException) ex);
         // }
+        if (ex instanceof DataAccessException) {
+            return sqlExceptionHandler(request, (DataAccessException) ex);
+        }
         // 最后采用通用枚举处理
         if (ex instanceof ServiceException) {
             return serviceExceptionHandler((ServiceException) ex);
@@ -200,6 +206,19 @@ public class GlobalExceptionHandler {
     //             req.getRequestURL(), ex);
     //     return CommonResult.error(FORBIDDEN);
     // }
+
+    /**
+     * 处理数据库操作异常 SQLException
+     */
+    @ExceptionHandler(value = DataAccessException.class)
+    public CommonResult<?> sqlExceptionHandler(HttpServletRequest req, DataAccessException ex) {
+        if (ex.getRootCause() instanceof SQLException) {
+            SQLException sqlEx = (SQLException) ex.getRootCause();
+            log.warn("[sqlExceptionHandler]:SQL语句执行报错, pstmt:{}, reason:{}, exName:{}", sqlEx.getErrorCode(), sqlEx.getMessage(), ex.getClass().getSimpleName());
+            return CommonResult.error(GlobalErrorCode.SQL_EXECUTE_BAD.getCode(), ObjectUtils.indexJoin(sqlEx.getErrorCode(), sqlEx.getMessage()));
+        }
+        return defaultExceptionHandler(req, ex);
+    }
 
     /**
      * 处理业务异常 ServiceException

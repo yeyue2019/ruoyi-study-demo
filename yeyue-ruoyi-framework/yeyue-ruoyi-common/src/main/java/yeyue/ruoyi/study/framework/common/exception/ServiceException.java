@@ -1,8 +1,9 @@
 package yeyue.ruoyi.study.framework.common.exception;
 
-import lombok.*;
-import org.apache.commons.lang3.StringUtils;
+import lombok.Data;
 import yeyue.ruoyi.study.framework.common.core.ErrorCode;
+import yeyue.ruoyi.study.framework.common.exception.util.ExceptionUtils;
+import yeyue.ruoyi.study.framework.common.util.object.ObjectUtils;
 
 /**
  * 业务异常
@@ -16,7 +17,8 @@ public class ServiceException extends RuntimeException implements ErrorCode {
     /**
      * 业务错误码
      */
-    private String code = StringUtils.EMPTY;
+    private String code;
+    private String msg;
 
     @Override
     public String getCode() {
@@ -35,15 +37,20 @@ public class ServiceException extends RuntimeException implements ErrorCode {
         this(errorCode.getCode(), errorCode.getMsg());
     }
 
-    public ServiceException(String code, String message) {
-        super(message);
+    public ServiceException(ErrorCode errorCode, Throwable throwable) {
+        super(ObjectUtils.indexJoin(errorCode.getCode(), throwable.getMessage()), throwable);
+        ErrorCode.assertError(code);
+        this.code = errorCode.getCode();
+    }
+
+    private ServiceException(String code, String message) {
+        super(ObjectUtils.indexJoin(code, message));
         ErrorCode.assertError(code);
         this.code = code;
     }
 
-    public ServiceException(Integer code, String message) {
-        super(message);
-        ErrorCode.assertError(code);
-        this.code = String.valueOf(code);
+    @Override
+    public String getMessage() {
+        return ExceptionUtils.getMessage(this);
     }
 }

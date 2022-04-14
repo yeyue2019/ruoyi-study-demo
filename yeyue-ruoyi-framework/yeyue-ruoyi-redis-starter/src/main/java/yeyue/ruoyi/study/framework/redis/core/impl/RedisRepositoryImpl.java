@@ -1,7 +1,6 @@
 package yeyue.ruoyi.study.framework.redis.core.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.*;
 import org.redisson.codec.JsonJacksonCodec;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +8,7 @@ import org.springframework.stereotype.Component;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.exception.common.GlobalErrorCode;
 import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
+import yeyue.ruoyi.study.framework.common.util.object.ObjectUtils;
 import yeyue.ruoyi.study.framework.redis.core.RedisRepository;
 import yeyue.ruoyi.study.framework.redis.domain.RedisDomainDefine;
 
@@ -21,7 +21,6 @@ import java.util.*;
 @Slf4j
 @Component
 public class RedisRepositoryImpl implements RedisRepository {
-    public static final String INDEX_JOIN = ":";
 
     RedissonClient redissonClient;
 
@@ -40,7 +39,7 @@ public class RedisRepositoryImpl implements RedisRepository {
     @Override
     public boolean delete(String name, Object id) {
         try {
-            return redissonClient.getBucket(joinIndex(name, id)).delete();
+            return redissonClient.getBucket(ObjectUtils.indexJoin(name, id)).delete();
         } catch (Throwable e) {
             log.error("[RedisRepository][delete]请求失败", e);
             return false;
@@ -50,7 +49,7 @@ public class RedisRepositoryImpl implements RedisRepository {
     @Override
     public <T> void save(String name, RedisDomainDefine<T> define) {
         try {
-            RBucket<T> bucket = redissonClient.getBucket(joinIndex(name, define.getId()), jacksonCodec);
+            RBucket<T> bucket = redissonClient.getBucket(ObjectUtils.indexJoin(name, define.getId()), jacksonCodec);
             if (define.getTimeout() >= 0) {
                 bucket.set(define.getValue(), define.getTimeout(), define.getTimeUnit());
             } else {
@@ -69,7 +68,7 @@ public class RedisRepositoryImpl implements RedisRepository {
         try {
             RBatch batch = redissonClient.createBatch();
             for (RedisDomainDefine<T> define : defines) {
-                RBucketAsync<T> bucket = batch.getBucket(joinIndex(name, define.getId()), jacksonCodec);
+                RBucketAsync<T> bucket = batch.getBucket(ObjectUtils.indexJoin(name, define.getId()), jacksonCodec);
                 if (define.getTimeout() >= 0) {
                     bucket.setAsync(define.getValue(), define.getTimeout(), define.getTimeUnit());
                 } else {
@@ -85,7 +84,7 @@ public class RedisRepositoryImpl implements RedisRepository {
     @Override
     public <T> T get(String name, Object id) {
         try {
-            RBucket<T> bucket = redissonClient.getBucket(joinIndex(name, id), jacksonCodec);
+            RBucket<T> bucket = redissonClient.getBucket(ObjectUtils.indexJoin(name, id), jacksonCodec);
             return bucket.get();
         } catch (Throwable e) {
             log.error("[RedisRepository][get][1]请求失败", e);
@@ -103,7 +102,7 @@ public class RedisRepositoryImpl implements RedisRepository {
             Map<Object, T> map = CollectionUtils.newHashMap(ids.size());
             Map<Object, RFuture<T>> futureMap = CollectionUtils.newHashMap(ids.size());
             for (Object id : ids) {
-                RBucketAsync<T> bucketAsync = batch.getBucket(joinIndex(name, id));
+                RBucketAsync<T> bucketAsync = batch.getBucket(ObjectUtils.indexJoin(name, id));
                 futureMap.put(id, bucketAsync.getAsync());
             }
             batch.execute();
@@ -118,9 +117,5 @@ public class RedisRepositoryImpl implements RedisRepository {
             log.error("[RedisRepository][get][2]请求失败", e);
             throw new ServiceException(GlobalErrorCode.REDIS_CLIENT_COMMAND_FAIL);
         }
-    }
-
-    public static String joinIndex(Object... args) {
-        return StringUtils.joinWith(INDEX_JOIN, args);
     }
 }

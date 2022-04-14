@@ -21,6 +21,8 @@ public abstract class CommonConstants {
     public static final String DATE_PATTERN = "yyyy-MM-dd";
     public static final String TIME_PATTERN = "HH:mm:ss";
 
+    public static final String INDEX_JOIN = ":";
+    public static final String SPILT_JOIN = ",";
     /**
      * 分页查询关键字
      */
@@ -46,4 +48,6 @@ public abstract class CommonConstants {
     public static final int CORS_FILTER_ORDER = Integer.MIN_VALUE;
 
     public static final int TRACE_FILTER_ORDER = CORS_FILTER_ORDER + 1;
+
+    public static final int REQUEST_CACHE_FILTER_ORDER = Integer.MIN_VALUE + 2;
 }

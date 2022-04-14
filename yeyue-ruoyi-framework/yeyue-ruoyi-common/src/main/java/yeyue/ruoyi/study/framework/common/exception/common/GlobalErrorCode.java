@@ -24,11 +24,11 @@ public enum GlobalErrorCode implements ErrorCode {
 
     INTERNAL_SERVER_ERROR("500", "服务器异常"),
 
-    REDIS_CLIENT_COMMAND_FAIL("601", "Redis操作行为异常"),
+    IO_EXCEPTION("600", "IO操作异常"),
+    ENUM_VALUE_CANNOT_DEFAULT("601", "条件不在枚举筛选范围内"),
+    ENCODE_NOT_SUPPORTED("602", "系统不支持的编码格式"),
 
-    ENUM_VALUE_CANNOT_DEFAULT("701", "条件不在枚举筛选范围内"),
-
-
+    REDIS_CLIENT_COMMAND_FAIL("701", "Redis操作行为异常"),
     ;
 
     private final String code;

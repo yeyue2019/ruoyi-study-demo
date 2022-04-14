@@ -28,6 +28,7 @@
         <swagger-annotations.version>1.5.22</swagger-annotations.version>
         <lombok.version>1.18.20</lombok.version>
         <mapstruct.version>1.4.1.Final</mapstruct.version>
+        <common-io.version>2.11.0</common-io.version>
     </properties>
 
     <dependencyManagement>
@@ -80,6 +81,11 @@
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${common-io.version}</version>
             </dependency>
             <!-- swagger相关 -->
             <dependency>

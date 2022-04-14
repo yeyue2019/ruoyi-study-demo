@@ -4,6 +4,7 @@ import org.springframework.util.Assert;
 import yeyue.ruoyi.study.framework.common.pojo.PageResult;
 import yeyue.ruoyi.study.framework.common.util.object.ObjectUtils;
 
+import javax.validation.constraints.NotNull;
 import java.util.*;
 import java.util.function.*;
 import java.util.stream.Collectors;
@@ -24,12 +25,45 @@ public abstract class CollectionUtils extends org.springframework.util.Collectio
         return !isEmpty(map);
     }
 
-    public static boolean isEmpty(Object... array) {
+    public static boolean ignoreIsEmpty(Object... array) {
         return array == null || array.length == 0;
     }
 
-    public static boolean isNotEmpty(Object... array) {
+    public static boolean ignoreIsNotEmpty(Object... array) {
+        return !ignoreIsEmpty(array);
+    }
+
+    @SafeVarargs
+    public static <T> boolean isEmpty(T... array) {
+        return array == null || array.length == 0;
+    }
+
+    @SafeVarargs
+    public static <T> boolean isNotEmpty(T... array) {
         return !isEmpty(array);
+    }
+
+    public static Object[] ignoreAddAll(@NotNull Object[] from, Object... to) {
+        if (ignoreIsEmpty(to)) {
+            return from;
+        }
+        int fromLength = from.length;
+        int toLength = to.length;
+        Object[] result = Arrays.copyOf(from, fromLength + toLength);
+        System.arraycopy(to, 0, result, fromLength, toLength);
+        return result;
+    }
+
+    @SafeVarargs
+    public static <T> T[] addAll(@NotNull T[] from, T... to) {
+        if (isEmpty(to)) {
+            return from;
+        }
+        int fromLength = from.length;
+        int toLength = to.length;
+        T[] result = Arrays.copyOf(from, fromLength + toLength);
+        System.arraycopy(to, 0, result, fromLength, toLength);
+        return result;
     }
 
     public static <T> Collection<T> singleton(T data) {

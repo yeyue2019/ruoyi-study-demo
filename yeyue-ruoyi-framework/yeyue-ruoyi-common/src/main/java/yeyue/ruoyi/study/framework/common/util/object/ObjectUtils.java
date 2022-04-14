@@ -1,5 +1,8 @@
 package yeyue.ruoyi.study.framework.common.util.object;
 
+import org.apache.commons.lang3.StringUtils;
+import yeyue.ruoyi.study.framework.common.constants.CommonConstants;
+
 import java.util.function.Function;
 
 /**
@@ -20,5 +23,15 @@ public abstract class ObjectUtils {
      */
     public static <T, R> R convert(T source, R defaultResult, Function<T, R> function) {
         return source == null ? defaultResult : function.apply(source);
+    }
+
+    /**
+     * 对象组合索引
+     *
+     * @param args 对象集合
+     * @return 索引
+     */
+    public static String indexJoin(Object... args) {
+        return StringUtils.joinWith(CommonConstants.INDEX_JOIN, args);
     }
 }

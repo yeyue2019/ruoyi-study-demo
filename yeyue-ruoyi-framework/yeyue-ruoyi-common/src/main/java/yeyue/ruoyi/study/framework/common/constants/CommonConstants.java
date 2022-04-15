@@ -41,11 +41,21 @@ public abstract class CommonConstants {
     /**
      * TraceId的使用名称
      */
-    public static final String TRACE_ID_NAME = "r-trace";
+    public static final String TRACE_ID_NAME = "trace-id";
 
+    /**
+     * http请求的追踪信息
+     */
 
-    public static final String TAG_TRACE_REQUEST = "trace-req";
-    public static final String TAG_TRACE_RESPONSE = "trace-res";
+    public static final String TRACE_REQ_URL = "req-url";
+    public static final String TRACE_REQ_METHOD = "req_method";
+    public static final String TRACE_REQ_PARAM = "req_param";
+    public static final String TRACE_REQ_HEADER = "req_header";
+    public static final String TRACE_REQ_BODY = "req_body";
+    public static final String TRACE_RES_CODE = "res_code";
+    public static final String TRACE_RES_BODY = "res_body";
+    public static final String TRACE_RES_MSG = "res_msg";
+    public static final String TRACE_RES_HEADER = "res-header";
 
     public static final String PATTERN_ALL = "/**";
 

@@ -1,6 +1,5 @@
 package yeyue.ruoyi.study.framework.common.monitor.trace.util;
 
-import org.springframework.util.Assert;
 import yeyue.ruoyi.study.framework.common.monitor.trace.context.YeyueTraceContext;
 import yeyue.ruoyi.study.framework.common.monitor.trace.context.skywalking.SkyWalkingTraceContext;
 
@@ -11,7 +10,7 @@ import yeyue.ruoyi.study.framework.common.monitor.trace.context.skywalking.SkyWa
  * @date 2022-04-15 12:00:31
  */
 public abstract class TracerUtils {
-    private static final YeyueTraceContext CONTEXT = new SkyWalkingTraceContext();
+    private static final YeyueTraceContext CONTEXT = SkyWalkingTraceContext.INSTANCE;
 
     /**
      * 封装traceId的获取方式
@@ -29,7 +28,6 @@ public abstract class TracerUtils {
      * @param value 值
      */
     public static <T> void put(String name, T value) {
-        Assert.notNull(value, "对象不可为空");
         CONTEXT.put(name, value);
     }
 

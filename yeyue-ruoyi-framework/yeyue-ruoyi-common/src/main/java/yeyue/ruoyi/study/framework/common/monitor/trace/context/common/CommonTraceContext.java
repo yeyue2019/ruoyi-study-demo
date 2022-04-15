@@ -1,6 +1,8 @@
-package yeyue.ruoyi.study.framework.common.monitor.trace.context.normal;
+package yeyue.ruoyi.study.framework.common.monitor.trace.context.common;
 
 import org.apache.commons.lang3.StringUtils;
+import yeyue.ruoyi.study.framework.common.exception.ServiceException;
+import yeyue.ruoyi.study.framework.common.exception.common.GlobalErrorCode;
 import yeyue.ruoyi.study.framework.common.monitor.trace.context.YeyueTraceContext;
 
 import java.util.UUID;
@@ -11,7 +13,7 @@ import java.util.UUID;
  * @author yeyue
  * @date 2022-04-15 12:06:50
  */
-public class NormalTraceContext implements YeyueTraceContext {
+public class CommonTraceContext implements YeyueTraceContext {
     @Override
     public String traceId() {
         return generate();
@@ -19,19 +21,22 @@ public class NormalTraceContext implements YeyueTraceContext {
 
     @Override
     public <T> void put(String name, T value) {
+        throw new ServiceException(GlobalErrorCode.UNSUPPORTED_METHOD_IMPLEMENT);
     }
 
     @Override
     public <T> T get(String name, Class<T> clazz) {
-        return null;
+        throw new ServiceException(GlobalErrorCode.UNSUPPORTED_METHOD_IMPLEMENT);
     }
 
     private static final String PROCESS_ID = UUID.randomUUID().toString().replaceAll("-", "");
     private static final ThreadLocal<IDContext> THREAD_ID_SEQUENCE = ThreadLocal.withInitial(
             () -> new IDContext(System.currentTimeMillis(), (short) 0));
 
-    private NormalTraceContext() {
+    private CommonTraceContext() {
     }
+
+    public static CommonTraceContext INSTANCE = new CommonTraceContext();
 
     /**
      * Generate a new id, combined by three parts.

@@ -6,8 +6,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.server.*;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
-import yeyue.ruoyi.study.framework.common.constants.CommonConstants;
-import yeyue.ruoyi.study.framework.common.monitor.trace.util.TracerUtils;
 import yeyue.ruoyi.study.framework.common.pojo.core.CommonResult;
 
 /**
@@ -29,10 +27,12 @@ public class GlobalResponseHandler implements ResponseBodyAdvice {
         return returnType.getMethod().getReturnType() == CommonResult.class;
     }
 
+    // 执行顺序  Filter -> Advice -> Interceptor
+
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
-        // TODO: 2022/4/15 对于正常的请求返回记录
-        TracerUtils.put(CommonConstants.TAG_TRACE_RESPONSE, body);
+        // TODO: 2022/4/15 仅能记录正常返回的对象结果,异常返回则会有SkyWalking直接发现
+        // TODO: 2022/4/15 可以直接拿对象结果处理
         return body;
     }
 }

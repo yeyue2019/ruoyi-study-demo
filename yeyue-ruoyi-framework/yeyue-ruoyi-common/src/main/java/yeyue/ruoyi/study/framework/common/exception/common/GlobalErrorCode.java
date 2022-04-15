@@ -28,6 +28,7 @@ public enum GlobalErrorCode implements ErrorCode {
     IO_EXCEPTION("600", "IO操作异常"),
     ENUM_VALUE_CANNOT_DEFAULT("601", "条件不在枚举筛选范围内"),
     ENCODE_NOT_SUPPORTED("602", "系统不支持的编码格式"),
+    UNSUPPORTED_METHOD_IMPLEMENT("603", "不支持的方法操作"),
 
     REDIS_CLIENT_COMMAND_FAIL("701", "Redis操作行为异常"),
     ;

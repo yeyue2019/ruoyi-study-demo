@@ -1,20 +1,26 @@
 package yeyue.ruoyi.study.framework.common.monitor.trace.context.skywalking;
 
-import com.alibaba.fastjson.*;
+import com.alibaba.fastjson.JSON;
 import io.opentracing.Tracer;
 import org.apache.skywalking.apm.toolkit.opentracing.SkywalkingTracer;
 import org.apache.skywalking.apm.toolkit.trace.TraceContext;
+import yeyue.ruoyi.study.framework.common.exception.ServiceException;
+import yeyue.ruoyi.study.framework.common.exception.common.GlobalErrorCode;
 import yeyue.ruoyi.study.framework.common.monitor.trace.context.YeyueTraceContext;
-
-import java.util.*;
 
 /**
  * @author yeyue
  * @date 2022-04-15 12:03:14
  */
 public class SkyWalkingTraceContext implements YeyueTraceContext {
+
     private static final Tracer TRACER = new SkywalkingTracer();
-    private static final Set<Class<?>> PRIMITIVE_TYPES = new HashSet<>(Arrays.asList(Boolean.class, Character.class, Number.class, String.class, Void.class));
+
+    private SkyWalkingTraceContext() {
+
+    }
+
+    public static SkyWalkingTraceContext INSTANCE = new SkyWalkingTraceContext();
 
     @Override
     public String traceId() {
@@ -23,28 +29,23 @@ public class SkyWalkingTraceContext implements YeyueTraceContext {
 
     @Override
     public <T> void put(String name, T value) {
-        String source;
-        if (PRIMITIVE_TYPES.contains(value.getClass().getSuperclass())) {
-            source = value.toString();
-            TraceContext.putCorrelation(name, value.toString());
-        } else {
-            source = JSON.toJSONString(value);
+        if (value == null) {
+            return;
         }
-        TraceContext.putCorrelation(name, source);
+        if (value.getClass() == Boolean.class) {
+            TRACER.activeSpan().setTag(name, (Boolean) value);
+        } else if (value.getClass().getSuperclass() == Number.class) {
+            TRACER.activeSpan().setTag(name, (Number) value);
+        } else if (value.getClass() == String.class) {
+            TRACER.activeSpan().setTag(name, (String) value);
+        } else {
+            TRACER.activeSpan().setTag(name, JSON.toJSONString(value));
+        }
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public <T> T get(String name, Class<T> clazz) {
-        String source = TraceContext.getCorrelation(name).orElse(null);
-        if (source == null) {
-            return null;
-        }
-        if (PRIMITIVE_TYPES.contains(clazz)) {
-            return (T) source;
-        } else {
-            return JSONObject.parseObject(name, clazz);
-        }
+        throw new ServiceException(GlobalErrorCode.UNSUPPORTED_METHOD_IMPLEMENT);
     }
 
 }

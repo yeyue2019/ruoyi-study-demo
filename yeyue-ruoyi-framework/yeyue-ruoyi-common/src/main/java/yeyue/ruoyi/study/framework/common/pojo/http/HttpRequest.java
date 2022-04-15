@@ -2,9 +2,7 @@ package yeyue.ruoyi.study.framework.common.pojo.http;
 
 import io.swagger.annotations.*;
 import lombok.*;
-import yeyue.ruoyi.study.framework.common.util.servlet.ServletUtils;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 import java.util.*;
 
@@ -33,14 +31,6 @@ public class HttpRequest implements Serializable {
 
     @ApiModelProperty(value = "请求体")
     private String body;
-
-    public HttpRequest(HttpServletRequest request) {
-        this.url = ServletUtils.getUrl(request);
-        this.method = ServletUtils.getMethod(request);
-        this.params = ServletUtils.getParams(request);
-        this.headers = ServletUtils.getHeaderMap(request);
-        this.body = ServletUtils.getBodyString(request);
-    }
 
     public HttpRequest(String url, String method, Map<String, String[]> params, Map<String, String> headers, String body) {
         this.url = url;

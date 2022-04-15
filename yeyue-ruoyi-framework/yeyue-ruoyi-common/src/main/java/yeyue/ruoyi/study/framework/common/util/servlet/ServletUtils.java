@@ -9,7 +9,7 @@ import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
 import yeyue.ruoyi.study.framework.common.util.network.NetworkUtils;
 
 import javax.servlet.*;
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.*;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.util.*;
@@ -92,6 +92,21 @@ public abstract class ServletUtils {
         while (names.hasMoreElements()) {
             name = names.nextElement();
             result.put(name, request.getHeader(name));
+        }
+        return result;
+    }
+
+    /**
+     * 获取响应的header
+     *
+     * @param response 请求
+     * @return 结果
+     */
+    public static Map<String, String> getHeaderMap(HttpServletResponse response) {
+        final Map<String, String> result = new HashMap<>(20);
+        final Collection<String> names = response.getHeaderNames();
+        for (String name : names) {
+            result.put(name, response.getHeader(name));
         }
         return result;
     }

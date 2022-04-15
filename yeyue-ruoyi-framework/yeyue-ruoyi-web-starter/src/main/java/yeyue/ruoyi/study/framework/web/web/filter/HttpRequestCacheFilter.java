@@ -1,9 +1,7 @@
 package yeyue.ruoyi.study.framework.web.web.filter;
 
-import io.opentracing.Tracer;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.skywalking.apm.toolkit.opentracing.SkywalkingTracer;
 import org.springframework.web.filter.OncePerRequestFilter;
 import yeyue.ruoyi.study.framework.web.web.wrapper.HttpRequestCopyWrapper;
 
@@ -20,8 +18,6 @@ import java.io.IOException;
 @Slf4j
 @AllArgsConstructor
 public class HttpRequestCacheFilter extends OncePerRequestFilter {
-
-    private final Tracer TRACER = new SkywalkingTracer();
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {

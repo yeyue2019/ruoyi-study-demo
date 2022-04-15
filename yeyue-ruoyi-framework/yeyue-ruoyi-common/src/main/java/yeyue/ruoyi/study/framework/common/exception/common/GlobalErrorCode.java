@@ -2,7 +2,7 @@ package yeyue.ruoyi.study.framework.common.exception.common;
 
 import lombok.*;
 import yeyue.ruoyi.study.framework.common.constants.CommonConstants;
-import yeyue.ruoyi.study.framework.common.core.ErrorCode;
+import yeyue.ruoyi.study.framework.common.pojo.core.ErrorCode;
 
 /**
  * 全局错误码枚举

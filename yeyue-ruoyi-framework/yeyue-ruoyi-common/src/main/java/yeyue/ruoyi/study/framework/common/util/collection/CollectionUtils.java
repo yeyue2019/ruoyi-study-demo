@@ -1,7 +1,7 @@
 package yeyue.ruoyi.study.framework.common.util.collection;
 
 import org.springframework.util.Assert;
-import yeyue.ruoyi.study.framework.common.pojo.PageResult;
+import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
 import yeyue.ruoyi.study.framework.common.util.object.ObjectUtils;
 
 import javax.validation.constraints.NotNull;

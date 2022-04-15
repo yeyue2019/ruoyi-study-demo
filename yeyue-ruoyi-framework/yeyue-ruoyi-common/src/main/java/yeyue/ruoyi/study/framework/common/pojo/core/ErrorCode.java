@@ -1,4 +1,4 @@
-package yeyue.ruoyi.study.framework.common.core;
+package yeyue.ruoyi.study.framework.common.pojo.core;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -38,15 +38,17 @@ public interface ErrorCode extends Serializable {
     /**
      * 确认错误场景的错误码
      */
-    static void assertError(String code) {
+    static String assertError(String code) {
         Assert.isTrue(!isSuccess(code), "code 必须是错误的！");
+        return code;
     }
 
     /**
      * 确认错误场景的错误码
      */
-    static void assertError(Integer code) {
+    static String assertError(Integer code) {
         Assert.notNull(code, "code 不能为空！");
+        return assertError(String.valueOf(code));
     }
 
     /**

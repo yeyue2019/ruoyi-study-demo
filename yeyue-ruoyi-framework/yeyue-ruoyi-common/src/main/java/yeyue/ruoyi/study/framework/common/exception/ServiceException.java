@@ -1,7 +1,7 @@
 package yeyue.ruoyi.study.framework.common.exception;
 
 import lombok.Data;
-import yeyue.ruoyi.study.framework.common.core.ErrorCode;
+import yeyue.ruoyi.study.framework.common.pojo.core.ErrorCode;
 import yeyue.ruoyi.study.framework.common.util.object.ObjectUtils;
 
 /**

@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import org.apache.ibatis.annotations.Param;
-import yeyue.ruoyi.study.framework.common.pojo.*;
+import yeyue.ruoyi.study.framework.common.pojo.pageable.*;
 import yeyue.ruoyi.study.framework.mybatis.core.util.MyBatisUtils;
 
 import java.util.*;

@@ -44,9 +44,12 @@ public abstract class CommonConstants {
     public static final String TRACE_ID_NAME = "r-trace";
 
 
-    public static final String TAG_PARAM = "http.params";
-    public static final String TAG_HEADER = "http.headers";
-    public static final String TAG_BODY = "http.body";
+    public static final String TAG_TRACE_REQUEST = "trace-req";
+    public static final String TAG_TRACE_RESPONSE = "trace-res";
+
+    public static final String PATTERN_ALL = "/**";
+
+    public static final String CORS_ALLOW = "*";
 
     // servlet拦截器执行顺序
 

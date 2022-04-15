@@ -1,8 +1,8 @@
 package yeyue.ruoyi.study.framework.monitor.trace.filter;
 
-import org.apache.skywalking.apm.toolkit.trace.TraceContext;
 import org.springframework.web.filter.OncePerRequestFilter;
 import yeyue.ruoyi.study.framework.common.constants.CommonConstants;
+import yeyue.ruoyi.study.framework.common.monitor.trace.util.TracerUtils;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -21,7 +21,7 @@ public class YeyueTraceFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        response.addHeader(CommonConstants.TRACE_ID_NAME, TraceContext.traceId());
+        response.addHeader(CommonConstants.TRACE_ID_NAME, TracerUtils.traceId());
         filterChain.doFilter(request, response);
     }
 }

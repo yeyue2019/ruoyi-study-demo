@@ -2,7 +2,7 @@ package yeyue.ruoyi.study.framework.mybatis.core.util;
 
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import yeyue.ruoyi.study.framework.common.pojo.PageParam;
+import yeyue.ruoyi.study.framework.common.pojo.pageable.PageParam;
 import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
 
 /**

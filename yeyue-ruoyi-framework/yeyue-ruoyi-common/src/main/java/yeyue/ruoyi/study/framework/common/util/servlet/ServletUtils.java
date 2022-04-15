@@ -1,7 +1,7 @@
 package yeyue.ruoyi.study.framework.common.util.servlet;
 
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.http.MediaType;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.exception.common.GlobalErrorCode;
@@ -30,8 +30,28 @@ public abstract class ServletUtils {
      * @param request 请求
      * @return 结果
      */
-    public static boolean isJsonRequest(ServletRequest request) {
+    public static boolean isJson(ServletRequest request) {
         return StringUtils.startsWithIgnoreCase(request.getContentType(), MediaType.APPLICATION_JSON_VALUE);
+    }
+
+    /**
+     * 获取请求URI
+     *
+     * @param request 请求
+     * @return 结果
+     */
+    public static String getUrl(HttpServletRequest request) {
+        return request.getRequestURL().toString();
+    }
+
+    /**
+     * 获取Http请求的方法
+     *
+     * @param request 请求
+     * @return 结果
+     */
+    public static String getMethod(HttpServletRequest request) {
+        return request.getMethod();
     }
 
     /**
@@ -147,5 +167,19 @@ public abstract class ServletUtils {
         }
         // 最后从Remote里查询
         return NetworkUtils.getMultistageReverseProxyIp(request.getRemoteAddr());
+    }
+
+    /**
+     * 创建Servlet Filter
+     *
+     * @param filter 过滤器
+     * @param order  指定过滤顺序
+     * @param <T>    类型
+     * @return 创建成功的bean
+     */
+    public static <T extends Filter> FilterRegistrationBean<T> createFilterBean(T filter, Integer order) {
+        FilterRegistrationBean<T> bean = new FilterRegistrationBean<>(filter);
+        bean.setOrder(order);
+        return bean;
     }
 }

@@ -6,10 +6,9 @@ import org.springframework.web.cors.*;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.*;
 import yeyue.ruoyi.study.framework.common.constants.CommonConstants;
+import yeyue.ruoyi.study.framework.common.util.servlet.ServletUtils;
 import yeyue.ruoyi.study.framework.web.web.filter.HttpRequestCacheFilter;
-import yeyue.ruoyi.study.framework.web.web.interceptor.HttpTraceInterceptor;
-
-import javax.servlet.Filter;
+import yeyue.ruoyi.study.framework.web.web.interceptor.HttpRequestHandlerInterceptor;
 
 /**
  * @author yeyue
@@ -27,43 +26,38 @@ public class YeyueAutoWebConfiguration implements WebMvcConfigurer {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
         // 设置访问源地址
-        config.addAllowedOriginPattern("*");
+        config.addAllowedOriginPattern(CommonConstants.CORS_ALLOW);
         // 设置访问源请求头
-        config.addAllowedHeader("*");
+        config.addAllowedHeader(CommonConstants.CORS_ALLOW);
         // 设置访问源请求方法
-        config.addAllowedMethod("*");
+        config.addAllowedMethod(CommonConstants.CORS_ALLOW);
         // 创建 UrlBasedCorsConfigurationSource 对象
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         // 对接口配置跨域设置
-        source.registerCorsConfiguration("/**", config);
-        return createFilterBean(new CorsFilter(source), CommonConstants.CORS_FILTER_ORDER);
+        source.registerCorsConfiguration(CommonConstants.PATTERN_ALL, config);
+        return ServletUtils.createFilterBean(new CorsFilter(source), CommonConstants.CORS_FILTER_ORDER);
     }
-
-    // private Tracer tracer = new SkywalkingTracer();
 
     /**
      * 缓存请求信息的Filter
      */
     @Bean
     public FilterRegistrationBean<HttpRequestCacheFilter> cacheFilterBean() {
-        return createFilterBean(new HttpRequestCacheFilter(), CommonConstants.REQUEST_CACHE_FILTER_ORDER);
+        return ServletUtils.createFilterBean(new HttpRequestCacheFilter(), CommonConstants.REQUEST_CACHE_FILTER_ORDER);
     }
 
+    /**
+     * 注册请求拦截器
+     */
     @Bean
-    public HttpTraceInterceptor httpInterceptor() {
-        return new HttpTraceInterceptor();
+    public HttpRequestHandlerInterceptor httpInterceptor() {
+        return new HttpRequestHandlerInterceptor();
     }
 
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         WebMvcConfigurer.super.addInterceptors(registry);
-        registry.addInterceptor(this.httpInterceptor()).addPathPatterns("/**");
-    }
-
-    private static <T extends Filter> FilterRegistrationBean<T> createFilterBean(T filter, Integer order) {
-        FilterRegistrationBean<T> bean = new FilterRegistrationBean<>(filter);
-        bean.setOrder(order);
-        return bean;
+        registry.addInterceptor(this.httpInterceptor()).addPathPatterns(CommonConstants.PATTERN_ALL);
     }
 }

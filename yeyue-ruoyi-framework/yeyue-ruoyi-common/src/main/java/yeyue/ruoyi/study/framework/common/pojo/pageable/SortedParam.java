@@ -1,4 +1,4 @@
-package yeyue.ruoyi.study.framework.common.pojo;
+package yeyue.ruoyi.study.framework.common.pojo.pageable;
 
 import io.swagger.annotations.*;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package yeyue.ruoyi.study.framework.common.pojo;
+package yeyue.ruoyi.study.framework.common.pojo.pageable;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonIgnore;

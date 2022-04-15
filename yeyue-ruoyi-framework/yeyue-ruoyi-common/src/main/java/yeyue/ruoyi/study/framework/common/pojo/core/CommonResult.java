@@ -1,8 +1,7 @@
-package yeyue.ruoyi.study.framework.common.pojo;
+package yeyue.ruoyi.study.framework.common.pojo.core;
 
 import io.swagger.annotations.*;
 import lombok.Data;
-import yeyue.ruoyi.study.framework.common.core.ErrorCode;
 
 import static yeyue.ruoyi.study.framework.common.constants.CommonConstants.CODE_SUCCESS_STR;
 
@@ -28,6 +27,15 @@ public class CommonResult<T> implements ErrorCode {
     /**
      * 成功结果
      */
+    public static <T> CommonResult<T> success() {
+        CommonResult<T> result = new CommonResult<>();
+        result.code = CODE_SUCCESS_STR;
+        return result;
+    }
+
+    /**
+     * 成功结果
+     */
     public static <T> CommonResult<T> success(T data) {
         CommonResult<T> result = new CommonResult<>();
         result.code = CODE_SUCCESS_STR;
@@ -36,21 +44,11 @@ public class CommonResult<T> implements ErrorCode {
     }
 
     /**
-     * 成功结果
-     */
-    public static <T> CommonResult<T> success() {
-        CommonResult<T> result = new CommonResult<>();
-        result.code = CODE_SUCCESS_STR;
-        return result;
-    }
-
-    /**
      * 错误结果
      */
     public static <T> CommonResult<T> error(String code, String message) {
-        ErrorCode.assertError(code);
         CommonResult<T> result = new CommonResult<>();
-        result.code = code;
+        result.code = ErrorCode.assertError(code);
         result.msg = message;
         return result;
     }
@@ -59,21 +57,13 @@ public class CommonResult<T> implements ErrorCode {
      * 错误结果
      */
     public static <T> CommonResult<T> error(Integer code, String message) {
-        ErrorCode.assertError(code);
-        return error(String.valueOf(code), message);
+        return error(ErrorCode.assertError(code), message);
     }
 
     /**
      * 错误结果
      */
     public static <T> CommonResult<T> error(ErrorCode errorCode) {
-        return error(errorCode.getCode(), errorCode.getMsg());
-    }
-
-    /**
-     * 错误结果
-     */
-    public static <T> CommonResult<T> error(CommonResult<?> result) {
-        return error(result.code, result.msg);
+        return error(ErrorCode.assertError(errorCode.getCode()), errorCode.getMsg());
     }
 }

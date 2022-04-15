@@ -1,6 +1,6 @@
 package yeyue.ruoyi.study.module.test.api.demo1.service;
 
-import yeyue.ruoyi.study.framework.common.pojo.PageResult;
+import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
 import yeyue.ruoyi.study.module.test.api.demo1.domain.StudentDomain;
 import yeyue.ruoyi.study.module.test.api.demo1.service.dto.StudentPage;
 

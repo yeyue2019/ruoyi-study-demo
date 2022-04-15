@@ -20,7 +20,7 @@ trace.ignore_path=${SW_AGENT_TRACE_IGNORE_PATH:/eureka/**}
 
 plugin.jdbc.trace_sql_parameters=${SW_JDBC_TRACE_SQL_PARAMETERS:true}
 
-3. 添加线程池追踪增强插件
+3. 线程池追踪增强插件
 
 ```shell
 cp bootstrap-plugins/apm-jdk-threading-plugin-8.7.0.jar plugins

@@ -23,6 +23,7 @@
         <mybatis-plus.version>3.4.3.4</mybatis-plus.version>
         <skywalking.version>8.7.0</skywalking.version>
         <opentracing.version>0.30.0</opentracing.version>
+        <spring-boot-admin.version>2.6.2</spring-boot-admin.version>
         <fastjson.version>1.2.79</fastjson.version>
         <guava.version>30.1.1-jre</guava.version>
         <knife4j.version>3.0.2</knife4j.version>
@@ -86,6 +87,16 @@
                 <groupId>io.opentracing</groupId>
                 <artifactId>opentracing-noop</artifactId>
                 <version>${opentracing.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-server</artifactId> <!-- 实现 Spring Boot Admin Server 服务端 -->
+                <version>${spring-boot-admin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-client</artifactId> <!-- 实现 Spring Boot Admin Server 服务端 -->
+                <version>${spring-boot-admin.version}</version>
             </dependency>
             <!-- fastjson -->
             <dependency>

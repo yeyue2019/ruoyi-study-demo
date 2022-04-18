@@ -19,12 +19,12 @@
         <root level="INFO">
             <Appender-Ref ref="Console"/>
         </root>
-        <!-- 输出druid、redisson的操作日志 -->
         <logger name="druid.sql.Statement" level="DEBUG" additivity="false">
             <Appender-Ref ref="Console"/>
         </logger>
-        <logger name="org.redisson.command.RedisExecutor" level="DEBUG" additivity="false">
-            <Appender-Ref ref="Console"/>
-        </logger>
+        <!-- Redisson日志取消输出 -->
+<!--        <logger name="org.redisson.command.RedisExecutor" level="DEBUG" additivity="false">-->
+<!--            <Appender-Ref ref="Console"/>-->
+<!--        </logger>-->
     </Loggers>
 </Configuration>

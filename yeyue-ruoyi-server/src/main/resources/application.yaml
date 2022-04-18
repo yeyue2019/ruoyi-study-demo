@@ -4,22 +4,19 @@ server:
 spring:
   application:
     name: yeyue-ruoyi-server
----
-spring:
-  jackson:
-    time-zone: GMT+8
-    date-format: yyyy-MM-dd HH:mm:ss
-    default-property-inclusion: non_null
-    serialization:
-      write-enums-using-to-string: true
-      fail-on-empty-beans: false
-    deserialization:
-      fail-on-unknown-properties: false
----
-spring:
-  redis:
-    password: 123456
-    database: 0
+  boot:
+    admin:
+      client:
+        url: http://127.0.0.1:${server.port}${spring.boot.admin.context-path}
+      context-path: /admin-actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
 ---
 knife4j:
   enable: true
@@ -87,6 +84,20 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
   global-config:
     banner: false
-
-
+---
+spring:
+  redis:
+    password: 123456
+    database: 0
+---
+spring:
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+    default-property-inclusion: non_null
+    serialization:
+      write-enums-using-to-string: true
+      fail-on-empty-beans: false
+    deserialization:
+      fail-on-unknown-properties: false
 

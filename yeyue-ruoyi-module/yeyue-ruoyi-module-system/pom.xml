@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>yeyue-ruoyi-module</artifactId>
+        <groupId>yeyue.ruoyi.study.boot</groupId>
+        <version>${demo.version}</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>yeyue-ruoyi-module-system</artifactId>
+    <packaging>pom</packaging>
+
+    <description>
+        系统通用业务集成业务包
+    </description>
+    <modules>
+        <module>yeyue-ruoyi-module-system-api</module>
+        <module>yeyue-ruoyi-module-system-impl</module>
+    </modules>
+</project>

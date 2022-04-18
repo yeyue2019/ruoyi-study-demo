@@ -33,8 +33,8 @@ public abstract class NetworkUtils {
      */
     public static String getMultistageReverseProxyIp(String ip) {
         // 多级反向代理检测
-        if (ip != null && ip.indexOf(CommonConstants.SPILT_JOIN) > 0) {
-            final String[] ips = ip.trim().split(CommonConstants.SPILT_JOIN);
+        if (ip != null && ip.indexOf(CommonConstants.SPLIT_JOIN) > 0) {
+            final String[] ips = ip.trim().split(CommonConstants.SPLIT_JOIN);
             for (String subIp : ips) {
                 if (!isUnknown(subIp)) {
                     ip = subIp;

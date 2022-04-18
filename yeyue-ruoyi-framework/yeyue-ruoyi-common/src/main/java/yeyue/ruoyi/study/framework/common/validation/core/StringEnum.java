@@ -6,7 +6,7 @@ package yeyue.ruoyi.study.framework.common.validation.core;
  * @author yeyue
  * @date 2022-04-09 13:43:25
  */
-public interface ValidEnum {
+public interface StringEnum {
 
     /**
      * 字符串数组

@@ -25,9 +25,14 @@
     </properties>
 
     <dependencies>
+        <!--        <dependency>-->
+        <!--            <groupId>yeyue.ruoyi.study.boot</groupId>-->
+        <!--            <artifactId>yeyue-ruoyi-module-test-impl</artifactId>-->
+        <!--            <version>${demo.version}</version>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>yeyue.ruoyi.study.boot</groupId>
-            <artifactId>yeyue-ruoyi-module-test-impl</artifactId>
+            <artifactId>yeyue-ruoyi-module-system-impl</artifactId>
             <version>${demo.version}</version>
         </dependency>
         <dependency>

@@ -15,6 +15,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import yeyue.ruoyi.study.framework.common.exception.common.GlobalErrorCode;
 import yeyue.ruoyi.study.framework.web.doc.swagger.properties.YeyueSwaggerProperties;
 
+import java.time.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -48,7 +49,9 @@ public class YeyueSwaggerAutoConfiguration {
                 .globalResponses(HttpMethod.POST, globalResponses())
                 .globalResponses(HttpMethod.DELETE, globalResponses())
                 .globalResponses(HttpMethod.PUT, globalResponses())
-                .useDefaultResponseMessages(false)
+                .directModelSubstitute(LocalDate.class, String.class)
+                .directModelSubstitute(LocalTime.class, String.class)
+                .directModelSubstitute(LocalDateTime.class, String.class)
                 // default配置默认读取所有接口
                 .select()
                 .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))

@@ -112,5 +112,11 @@
             <artifactId>apm-toolkit-opentracing</artifactId>
             <scope>provided</scope>
         </dependency>
+        <!-- mybatis-plus 扫描注解 -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-annotation</artifactId>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 </project>

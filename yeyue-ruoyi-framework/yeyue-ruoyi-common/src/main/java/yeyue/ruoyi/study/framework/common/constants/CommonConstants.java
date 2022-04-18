@@ -22,7 +22,7 @@ public abstract class CommonConstants {
     public static final String TIME_PATTERN = "HH:mm:ss";
 
     public static final String INDEX_JOIN = ":";
-    public static final String SPILT_JOIN = ",";
+    public static final String SPLIT_JOIN = ",";
     /**
      * 分页查询关键字
      */

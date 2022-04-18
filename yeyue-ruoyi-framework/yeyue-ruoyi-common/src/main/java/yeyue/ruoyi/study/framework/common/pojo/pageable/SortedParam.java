@@ -4,7 +4,7 @@ import io.swagger.annotations.*;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 import yeyue.ruoyi.study.framework.common.enums.QuerySortOrderEnum;
-import yeyue.ruoyi.study.framework.common.validation.annotation.InEnum;
+import yeyue.ruoyi.study.framework.common.validation.annotation.InStringEnum;
 
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
@@ -28,7 +28,7 @@ public class SortedParam implements Serializable {
 
     @ApiModelProperty(value = "顺序")
     @NotEmpty(message = "查询顺序不可为空")
-    @InEnum(value = QuerySortOrderEnum.class, message = "查询顺序可选值为%s")
+    @InStringEnum(value = QuerySortOrderEnum.class, message = "查询顺序可选值为%s")
     private String order;
 
     /**

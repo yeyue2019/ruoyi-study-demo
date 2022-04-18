@@ -14,7 +14,7 @@ import java.io.*;
 import java.nio.charset.Charset;
 import java.util.*;
 
-import static yeyue.ruoyi.study.framework.common.constants.CommonConstants.SPILT_JOIN;
+import static yeyue.ruoyi.study.framework.common.constants.CommonConstants.SPLIT_JOIN;
 
 /**
  * servlet工具类
@@ -74,7 +74,7 @@ public abstract class ServletUtils {
         Map<String, String[]> params = getParams(request);
         Map<String, String> result = CollectionUtils.newHashMap(params.size());
         for (Map.Entry<String, String[]> entry : params.entrySet()) {
-            result.put(entry.getKey(), StringUtils.join(entry.getValue(), SPILT_JOIN));
+            result.put(entry.getKey(), StringUtils.join(entry.getValue(), SPLIT_JOIN));
         }
         return result;
     }

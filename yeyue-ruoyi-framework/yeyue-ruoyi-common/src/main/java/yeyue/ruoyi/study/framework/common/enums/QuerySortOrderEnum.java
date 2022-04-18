@@ -2,7 +2,7 @@ package yeyue.ruoyi.study.framework.common.enums;
 
 import lombok.*;
 import yeyue.ruoyi.study.framework.common.constants.CommonConstants;
-import yeyue.ruoyi.study.framework.common.validation.core.ValidEnum;
+import yeyue.ruoyi.study.framework.common.validation.core.StringEnum;
 
 /**
  * 查询指定顺序
@@ -12,7 +12,7 @@ import yeyue.ruoyi.study.framework.common.validation.core.ValidEnum;
  */
 @Getter
 @AllArgsConstructor
-public enum QuerySortOrderEnum implements ValidEnum {
+public enum QuerySortOrderEnum implements StringEnum {
 
     asc(CommonConstants.ORDER_ASC, true),
     desc(CommonConstants.ORDER_DESC, false);

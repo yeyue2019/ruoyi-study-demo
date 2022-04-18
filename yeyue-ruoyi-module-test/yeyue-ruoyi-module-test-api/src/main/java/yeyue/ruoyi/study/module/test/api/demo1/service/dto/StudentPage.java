@@ -3,7 +3,7 @@ package yeyue.ruoyi.study.module.test.api.demo1.service.dto;
 import io.swagger.annotations.*;
 import lombok.Data;
 import yeyue.ruoyi.study.framework.common.pojo.pageable.PageParam;
-import yeyue.ruoyi.study.framework.common.validation.annotation.InEnum;
+import yeyue.ruoyi.study.framework.common.validation.annotation.InStringEnum;
 import yeyue.ruoyi.study.module.test.api.demo1.enums.GenderEnum;
 
 import java.time.LocalDateTime;
@@ -25,7 +25,7 @@ public class StudentPage extends PageParam {
     private String mobile;
 
     @ApiModelProperty(value = "性别筛选")
-    @InEnum(value = GenderEnum.class, message = "性别不在可选氛围内:%s")
+    @InStringEnum(value = GenderEnum.class, message = "性别不在可选氛围内:%s")
     private String gender;
 
     @ApiModelProperty(value = "添加开始时间")

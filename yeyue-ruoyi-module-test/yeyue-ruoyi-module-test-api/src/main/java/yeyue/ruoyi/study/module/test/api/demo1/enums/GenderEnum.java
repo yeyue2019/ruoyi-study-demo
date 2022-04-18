@@ -1,7 +1,7 @@
 package yeyue.ruoyi.study.module.test.api.demo1.enums;
 
 import lombok.*;
-import yeyue.ruoyi.study.framework.common.validation.core.ValidEnum;
+import yeyue.ruoyi.study.framework.common.validation.core.StringEnum;
 
 import java.util.Arrays;
 
@@ -13,7 +13,7 @@ import java.util.Arrays;
  */
 @Getter
 @AllArgsConstructor
-public enum GenderEnum implements ValidEnum {
+public enum GenderEnum implements StringEnum {
 
     男, 女, 未知;
 

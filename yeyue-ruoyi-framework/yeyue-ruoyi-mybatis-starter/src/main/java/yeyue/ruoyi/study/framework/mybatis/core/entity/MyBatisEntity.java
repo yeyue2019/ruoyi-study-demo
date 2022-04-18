@@ -1,7 +1,6 @@
 package yeyue.ruoyi.study.framework.mybatis.core.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
-import io.swagger.annotations.*;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -14,26 +13,35 @@ import java.time.LocalDateTime;
  * @date 2022-04-09 22:02:54
  */
 @Data
-@ApiModel
 public abstract class MyBatisEntity implements Serializable {
 
-    @TableField(fill = FieldFill.INSERT)
-    @ApiModelProperty(value = "创建时间")
+    /**
+     * 创建时间
+     */
+    @TableField(fill = FieldFill.INSERT, updateStrategy = FieldStrategy.NEVER)
     protected LocalDateTime createTime;
 
-    @TableField(fill = FieldFill.INSERT)
-    @ApiModelProperty(value = "创建者")
+    /**
+     * 创建者
+     */
+    @TableField(fill = FieldFill.INSERT, updateStrategy = FieldStrategy.NEVER)
     protected String creator;
 
+    /**
+     * 更新时间
+     */
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    @ApiModelProperty(value = "更新时间")
     protected LocalDateTime updateTime;
 
+    /**
+     * 更新者
+     */
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    @ApiModelProperty(value = "更新者")
     protected LocalDateTime updater;
 
+    /**
+     * 逻辑删除标识位
+     */
     @TableLogic(value = "false", delval = "true")
-    @ApiModelProperty(value = "逻辑删除标识位")
     protected Boolean deleted;
 }

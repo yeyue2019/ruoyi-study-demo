@@ -17,7 +17,7 @@ public class YeyueDruidAutoConfiguration {
 
     // 去掉连接超时后的warn警告
     static {
-        System.setProperty("druid.mysql.usePingMethod","false");
+        System.setProperty("druid.mysql.usePingMethod", "false");
     }
 
     /**

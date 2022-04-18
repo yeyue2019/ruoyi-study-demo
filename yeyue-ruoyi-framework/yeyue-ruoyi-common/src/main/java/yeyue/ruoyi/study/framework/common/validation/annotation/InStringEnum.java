@@ -1,7 +1,7 @@
 package yeyue.ruoyi.study.framework.common.validation.annotation;
 
-import yeyue.ruoyi.study.framework.common.validation.core.ValidEnum;
-import yeyue.ruoyi.study.framework.common.validation.validator.InEnumValidator;
+import yeyue.ruoyi.study.framework.common.validation.core.StringEnum;
+import yeyue.ruoyi.study.framework.common.validation.validator.InStringEnumValidator;
 
 import javax.validation.*;
 import java.lang.annotation.*;
@@ -9,7 +9,7 @@ import java.lang.annotation.*;
 import static java.lang.annotation.ElementType.*;
 
 /**
- * 校验枚举Name在枚举中
+ * 校验枚举
  *
  * @author yeyue
  * @date 2022-04-09 13:45:50
@@ -17,15 +17,12 @@ import static java.lang.annotation.ElementType.*;
 @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Constraint(validatedBy = InEnumValidator.class)
-public @interface InEnum {
+@Constraint(validatedBy = InStringEnumValidator.class)
+public @interface InStringEnum {
 
-    /**
-     * @return 实现 ValidEnum 接口的
-     */
-    Class<? extends ValidEnum> value();
+    Class<? extends StringEnum> value();
 
-    String message() default "必须在指定范围 %s";
+    String message() default "输入值不在可选范围内";
 
     Class<?>[] groups() default {};
 

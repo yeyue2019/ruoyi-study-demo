@@ -84,6 +84,7 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.nologging.NoLoggingImpl
   global-config:
     banner: false
+  type-enums-package: yeyue.ruoyi.study.framework.common.enums
 ---
 spring:
   redis:

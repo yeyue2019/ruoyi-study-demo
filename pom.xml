@@ -20,7 +20,8 @@
         <module>yeyue-ruoyi-dependencies</module>
         <module>yeyue-ruoyi-server</module>
         <module>yeyue-ruoyi-framework</module>
-        <module>yeyue-ruoyi-module-test</module>
+        <!--        <module>yeyue-ruoyi-module-test</module>-->
+        <module>yeyue-ruoyi-module</module>
     </modules>
 
     <properties>

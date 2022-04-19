@@ -20,7 +20,6 @@
         <module>yeyue-ruoyi-dependencies</module>
         <module>yeyue-ruoyi-server</module>
         <module>yeyue-ruoyi-framework</module>
-        <!--        <module>yeyue-ruoyi-module-test</module>-->
         <module>yeyue-ruoyi-module</module>
     </modules>
 
@@ -35,7 +34,6 @@
         <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
         <spring.boot.version>2.5.10</spring.boot.version>
         <lombok.version>1.18.20</lombok.version>
-
         <mapstruct.version>1.4.1.Final</mapstruct.version>
     </properties>
 
@@ -51,43 +49,6 @@
         </dependencies>
     </dependencyManagement>
 
-    <build>
-        <pluginManagement>
-            <plugins>
-                <!-- maven-surefire-plugin 插件，用于运行单元测试。 -->
-                <!-- 注意，需要使用 3.0.X+，因为要支持 Junit 5 版本 -->
-<!--                <plugin>-->
-<!--                    <groupId>org.apache.maven.plugins</groupId>-->
-<!--                    <artifactId>maven-antrun-plugin</artifactId>-->
-<!--                    <version>${maven-surefire-plugin.version}</version>-->
-<!--                    <configuration>-->
-<!--                        <skip>true</skip>-->
-<!--                    </configuration>-->
-<!--                </plugin>-->
-                <!-- maven-compiler-plugin 插件，解决 Lombok + MapStruct 组合 -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>${maven-compiler-plugin.version}</version>
-                    <configuration>
-                        <annotationProcessorPaths>
-                            <path>
-                                <groupId>org.projectlombok</groupId>
-                                <artifactId>lombok</artifactId>
-                                <version>${lombok.version}</version>
-                            </path>
-                            <path>
-                                <groupId>org.mapstruct</groupId>
-                                <artifactId>mapstruct-processor</artifactId>
-                                <version>${mapstruct.version}</version>
-                            </path>
-                        </annotationProcessorPaths>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-    </build>
-
     <!-- 使用 aliyun 的 Maven 源，提升下载速度 -->
     <repositories>
         <repository>
@@ -96,4 +57,32 @@
             <url>https://maven.aliyun.com/repository/public</url>
         </repository>
     </repositories>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler-plugin.version}</version>
+                    <configuration>
+                        <failOnError>true</failOnError>
+                        <verbose>true</verbose>
+                        <fork>true</fork>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                        <encoding>${project.build.sourceEncoding}</encoding>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven-surefire-plugin.version}</version>
+                    <configuration>
+                        <skip>true</skip>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 </project>

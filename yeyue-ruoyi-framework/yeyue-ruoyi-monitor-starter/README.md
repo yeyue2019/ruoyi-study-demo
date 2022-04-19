@@ -30,3 +30,9 @@ cp bootstrap-plugins/apm-jdk-threading-plugin-8.7.0.jar plugins
 # 线程类 (java.lang.Runnable和java.util.concurrent.Callable) 及其子类，包括名称与THREADING_CLASS_PREFIXES( 分割,) 中的任何一个匹配的匿名内部类，将被检测，确保只指定您期望检测的窄前缀， (java.并将javax.被忽略由于安全问题）
 plugin.jdkthreading.threading_class_prefixes=${THREADING_CLASS_PREFIXES:}
 ```
+
+4. agent启动vm参数：
+
+```shell
+-javaagent:/Users/yeyue/project/gitee/ruoyi-study-demo/plugin/skywalking/agent/skywalking-agent.jar
+```

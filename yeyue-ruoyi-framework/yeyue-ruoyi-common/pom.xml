@@ -101,6 +101,11 @@
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
         </dependency>
+        <!-- ThreadLocal 异步传递 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>transmittable-thread-local</artifactId>
+        </dependency>
         <!-- skywalking trace -->
         <dependency>
             <groupId>org.apache.skywalking</groupId>

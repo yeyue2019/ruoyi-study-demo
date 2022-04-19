@@ -1,8 +1,9 @@
 package yeyue.ruoyi.study.framework.common.util.servlet;
 
+import com.alibaba.fastjson.JSON;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.http.MediaType;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.exception.common.GlobalErrorCode;
 import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
@@ -14,6 +15,7 @@ import java.io.*;
 import java.nio.charset.Charset;
 import java.util.*;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static yeyue.ruoyi.study.framework.common.constants.CommonConstants.SPLIT_JOIN;
 
 /**
@@ -22,6 +24,7 @@ import static yeyue.ruoyi.study.framework.common.constants.CommonConstants.SPLIT
  * @author yeyue
  * @date 2022-04-14 10:24:45
  */
+@Slf4j
 public abstract class ServletUtils {
 
     /**
@@ -30,8 +33,20 @@ public abstract class ServletUtils {
      * @param request 请求
      * @return 结果
      */
-    public static boolean isJson(ServletRequest request) {
-        return StringUtils.startsWithIgnoreCase(request.getContentType(), MediaType.APPLICATION_JSON_VALUE);
+    public static boolean isJSON(ServletRequest request) {
+        return StringUtils.startsWithIgnoreCase(request.getContentType(), APPLICATION_JSON_VALUE);
+    }
+
+    /**
+     * 向Response输出JSON
+     *
+     * @param response 响应
+     * @param object   结果
+     * @throws IOException 异常
+     */
+    public static void writeJSON(HttpServletResponse response, Object object) throws IOException {
+        String content = JSON.toJSONString(object);
+        response.getOutputStream().write(content.getBytes());
     }
 
     /**

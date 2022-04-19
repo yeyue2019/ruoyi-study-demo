@@ -40,6 +40,10 @@
             <artifactId>yeyue-ruoyi-monitor-starter</artifactId>
         </dependency>
         <dependency>
+            <groupId>yeyue.ruoyi.study.boot</groupId>
+            <artifactId>yeyue-ruoyi-security-starter</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>

@@ -29,6 +29,7 @@
         <module>yeyue-ruoyi-mybatis-starter</module>
         <module>yeyue-ruoyi-druid-starter</module>
         <module>yeyue-ruoyi-monitor-starter</module>
+        <module>yeyue-ruoyi-security-starter</module>
     </modules>
 
 </project>

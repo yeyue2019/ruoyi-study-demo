@@ -4,6 +4,9 @@ import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.*;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.util.Assert;
 import org.springframework.validation.*;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -71,15 +74,24 @@ public class GlobalExceptionHandler {
         // if (ex instanceof RequestNotPermitted) {
         //     return requestNotPermittedExceptionHandler(request, (RequestNotPermitted) ex);
         // }
-        // if (ex instanceof AccessDeniedException) {
-        //     return accessDeniedExceptionHandler(request, (AccessDeniedException) ex);
-        // }
         if (ex instanceof DataAccessException) {
             return dataAccessExceptionHandler(request, (DataAccessException) ex);
         }
         // 最后采用通用枚举处理
         if (ex instanceof ServiceException) {
             return serviceExceptionHandler((ServiceException) ex);
+        }
+        if (ex instanceof BadCredentialsException) {
+            return badCredentialsExceptionHandler(request, (BadCredentialsException) ex);
+        }
+        if (ex instanceof DisabledException) {
+            return disabledExceptionHandler(request, (DisabledException) ex);
+        }
+        if (ex instanceof AccessDeniedException) {
+            return accessDeniedExceptionHandler(request, (AccessDeniedException) ex);
+        }
+        if (ex instanceof AuthenticationException) {
+            return authenticationExceptionHandler(request, (AuthenticationException) ex);
         }
         return defaultExceptionHandler(request, ex);
     }
@@ -187,18 +199,6 @@ public class GlobalExceptionHandler {
     //     return CommonResult.error(TOO_MANY_REQUESTS);
     // }
 
-    // /**
-    //  * 处理 Spring Security 权限不足的异常
-    //  * <p>
-    //  * 来源是，使用 @PreAuthorize 注解，AOP 进行权限拦截
-    //  */
-    // @ExceptionHandler(value = AccessDeniedException.class)
-    // public CommonResult<?> accessDeniedExceptionHandler(HttpServletRequest req, AccessDeniedException ex) {
-    //     log.warn("[accessDeniedExceptionHandler][userId({}) 无法访问 url({})]", WebFrameworkUtils.getLoginUserId(req),
-    //             req.getRequestURL(), ex);
-    //     return CommonResult.error(FORBIDDEN);
-    // }
-
     /**
      * 处理数据库操作异常 SQLException
      */
@@ -210,6 +210,31 @@ public class GlobalExceptionHandler {
             return ExceptionUtils.print(ex, GlobalErrorCode.SQL_EXECUTE_BAD, ObjectUtils.indexJoin(sqlEx.getErrorCode(), sqlEx.getMessage()), true, logMsg);
         }
         return defaultExceptionHandler(req, ex);
+    }
+
+    // Spring Security 异常拦截
+
+    @ExceptionHandler(value = BadCredentialsException.class)
+    public CommonResult<?> badCredentialsExceptionHandler(HttpServletRequest req, BadCredentialsException ex) {
+        return ExceptionUtils.print(ex, GlobalErrorCode.UNAUTHORIZED, "账号或密码错误", false, null);
+    }
+
+    @ExceptionHandler(value = DisabledException.class)
+    public CommonResult<?> disabledExceptionHandler(HttpServletRequest req, DisabledException ex) {
+        return ExceptionUtils.print(ex, GlobalErrorCode.UNAUTHORIZED, "登录失败，账号被禁用", false, null);
+    }
+
+    /**
+     * 处理 Spring Security 权限不足的异常
+     */
+    @ExceptionHandler(value = AccessDeniedException.class)
+    public CommonResult<?> accessDeniedExceptionHandler(HttpServletRequest req, AccessDeniedException ex) {
+        return ExceptionUtils.print(ex, GlobalErrorCode.FORBIDDEN, null, false, null);
+    }
+
+    @ExceptionHandler(value = AuthenticationException.class)
+    public CommonResult<?> authenticationExceptionHandler(HttpServletRequest req, AuthenticationException ex) {
+        return ExceptionUtils.print(ex, GlobalErrorCode.UNAUTHORIZED, "用户权限模块未检出错误", true, null);
     }
 
     /**

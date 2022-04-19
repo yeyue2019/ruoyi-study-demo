@@ -55,7 +55,10 @@ public abstract class CommonConstants {
     public static final String TRACE_RES_CODE = "res_code";
     public static final String TRACE_RES_BODY = "res_body";
     public static final String TRACE_RES_MSG = "res_msg";
+
     public static final String TRACE_RES_HEADER = "res-header";
+
+    public static final String AUTHORIZATION_HEADER = "Authorization";
 
     public static final String PATTERN_ALL = "/**";
 

@@ -31,6 +31,7 @@
         <lombok.version>1.18.20</lombok.version>
         <mapstruct.version>1.4.1.Final</mapstruct.version>
         <common-io.version>2.11.0</common-io.version>
+        <transmittable-thread-local.version>2.12.2</transmittable-thread-local.version>
     </properties>
 
     <dependencyManagement>
@@ -164,6 +165,11 @@
                 <artifactId>mapstruct-processor</artifactId>
                 <version>${mapstruct.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>transmittable-thread-local</artifactId> <!-- 解决 ThreadLocal 父子线程的传值问题 -->
+                <version>${transmittable-thread-local.version}</version>
+            </dependency>
 
             <!-- 系统内部依赖 -->
             <dependency>
@@ -194,6 +200,11 @@
             <dependency>
                 <groupId>yeyue.ruoyi.study.boot</groupId>
                 <artifactId>yeyue-ruoyi-monitor-starter</artifactId>
+                <version>${demo.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>yeyue.ruoyi.study.boot</groupId>
+                <artifactId>yeyue-ruoyi-security-starter</artifactId>
                 <version>${demo.version}</version>
             </dependency>
         </dependencies>

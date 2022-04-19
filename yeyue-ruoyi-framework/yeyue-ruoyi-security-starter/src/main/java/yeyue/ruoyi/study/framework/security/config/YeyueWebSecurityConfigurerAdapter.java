@@ -67,7 +67,9 @@ public class YeyueWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdap
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .headers().frameOptions().disable().and()
                 // 添加自定义的处理器
-                .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint).accessDeniedHandler(accessDeniedHandler).and()
+                .exceptionHandling()
+                .authenticationEntryPoint(authenticationEntryPoint)
+                .accessDeniedHandler(accessDeniedHandler).and()
                 .authorizeRequests()
                 // 静态资源放行
                 .antMatchers(HttpMethod.GET, "/*.html", "/**/*.html", "/**/*.css", "/**/*.js").permitAll()

@@ -1,4 +1,4 @@
-package yeyue.ruoyi.study.framework.web.web.wrapper;
+package yeyue.ruoyi.study.framework.common.servlet.wrapper;
 
 import javax.servlet.*;
 import javax.servlet.http.*;

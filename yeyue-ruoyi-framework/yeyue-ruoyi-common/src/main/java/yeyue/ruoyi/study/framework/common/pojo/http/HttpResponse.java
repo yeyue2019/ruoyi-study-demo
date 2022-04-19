@@ -20,7 +20,7 @@ import java.util.Map;
 public class HttpResponse implements Serializable {
 
     @ApiModelProperty(value = "http状态码")
-    private int code;
+    private int status;
 
     @ApiModelProperty(value = "错误提示信息")
     private String message;
@@ -31,22 +31,22 @@ public class HttpResponse implements Serializable {
     @ApiModelProperty(value = "响应头")
     private Map<String, String> headers;
 
-    public HttpResponse(int code, String message, String body, Map<String, String> headers) {
-        this.code = code;
+    public HttpResponse(int status, String message, String body, Map<String, String> headers) {
+        this.status = status;
         this.message = message;
         this.body = body;
         this.headers = headers;
     }
 
-    public HttpResponse(int code, String message, Map<String, String> headers) {
-        this(code, message, null, headers);
+    public HttpResponse(int status, String message, Map<String, String> headers) {
+        this(status, message, null, headers);
     }
 
     @JsonIgnore
     @JSONField(serialize = false, deserialize = false)
     @ApiModelProperty(hidden = true)
     public boolean isSuccess() {
-        return this.code >= 200 && this.code < 300;
+        return this.status >= 200 && this.status < 300;
     }
 
     @JsonIgnore

@@ -5,7 +5,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import yeyue.ruoyi.study.framework.common.exception.common.GlobalErrorCode;
 import yeyue.ruoyi.study.framework.common.pojo.core.CommonResult;
-import yeyue.ruoyi.study.framework.common.util.servlet.ServletUtils;
+import yeyue.ruoyi.study.framework.common.servlet.util.ServletUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.*;

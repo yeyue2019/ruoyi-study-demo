@@ -6,7 +6,7 @@ import org.springframework.web.cors.*;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.*;
 import yeyue.ruoyi.study.framework.common.constants.CommonConstants;
-import yeyue.ruoyi.study.framework.common.util.servlet.ServletUtils;
+import yeyue.ruoyi.study.framework.common.servlet.util.ServletUtils;
 import yeyue.ruoyi.study.framework.web.web.filter.HttpRequestCacheFilter;
 import yeyue.ruoyi.study.framework.web.web.interceptor.HttpRequestHandlerInterceptor;
 

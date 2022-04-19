@@ -7,6 +7,7 @@ spring:
   boot:
     admin:
       client:
+        enabled: false
         url: http://127.0.0.1:${server.port}${spring.boot.admin.context-path}
       context-path: /admin-actuator
 management:

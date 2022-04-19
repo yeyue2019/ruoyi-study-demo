@@ -3,7 +3,8 @@ package yeyue.ruoyi.study.framework.web.web.filter;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.filter.OncePerRequestFilter;
-import yeyue.ruoyi.study.framework.web.web.wrapper.*;
+import yeyue.ruoyi.study.framework.common.monitor.trace.util.TracerHttpUtils;
+import yeyue.ruoyi.study.framework.common.servlet.wrapper.*;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -21,8 +22,9 @@ public class HttpRequestCacheFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        filterChain.doFilter(new HttpRequestCopyWrapper(request), new HttpResponseCopyWrapper(response));
-        // TODO: 2022/4/15 不缺人执行后能够返回，所以在后面添加逻辑
+        HttpRequestCopyWrapper wrapper = new HttpRequestCopyWrapper(request);
+        TracerHttpUtils.before(wrapper);
+        filterChain.doFilter(wrapper, new HttpResponseCopyWrapper(response));
     }
 
 }

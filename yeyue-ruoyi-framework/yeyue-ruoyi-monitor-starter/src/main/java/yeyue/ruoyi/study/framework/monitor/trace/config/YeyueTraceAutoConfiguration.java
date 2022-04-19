@@ -3,7 +3,7 @@ package yeyue.ruoyi.study.framework.monitor.trace.config;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.*;
 import yeyue.ruoyi.study.framework.common.constants.CommonConstants;
-import yeyue.ruoyi.study.framework.common.util.servlet.ServletUtils;
+import yeyue.ruoyi.study.framework.common.servlet.util.ServletUtils;
 import yeyue.ruoyi.study.framework.monitor.trace.filter.YeyueTraceFilter;
 
 /**

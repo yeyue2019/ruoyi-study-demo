@@ -1,4 +1,4 @@
-package yeyue.ruoyi.study.framework.common.util.servlet;
+package yeyue.ruoyi.study.framework.common.servlet.util;
 
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;

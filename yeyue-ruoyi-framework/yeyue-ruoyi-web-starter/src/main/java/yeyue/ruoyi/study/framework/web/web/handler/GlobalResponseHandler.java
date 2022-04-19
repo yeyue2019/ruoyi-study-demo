@@ -1,5 +1,6 @@
 package yeyue.ruoyi.study.framework.web.web.handler;
 
+import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
@@ -33,6 +34,7 @@ public class GlobalResponseHandler implements ResponseBodyAdvice {
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
         // TODO: 2022/4/15 仅能记录正常返回的对象结果,异常返回则会有SkyWalking直接发现
         // TODO: 2022/4/15 可以直接拿对象结果处理
+        log.info("[beforeBodyWrite]打印Http请求执行结果:{}", JSON.toJSONString(body));
         return body;
     }
 }

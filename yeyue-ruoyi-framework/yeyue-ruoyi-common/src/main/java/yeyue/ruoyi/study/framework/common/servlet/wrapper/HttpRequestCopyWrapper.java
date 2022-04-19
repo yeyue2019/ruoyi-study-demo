@@ -1,10 +1,10 @@
-package yeyue.ruoyi.study.framework.web.web.wrapper;
+package yeyue.ruoyi.study.framework.common.servlet.wrapper;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.exception.common.GlobalErrorCode;
-import yeyue.ruoyi.study.framework.common.util.servlet.ServletUtils;
+import yeyue.ruoyi.study.framework.common.servlet.util.ServletUtils;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -12,7 +12,7 @@ import java.io.*;
 import java.nio.charset.Charset;
 
 /**
- * 请求拷贝
+ * 请求拷贝类
  *
  * @author yeyue
  * @date 2022-04-14 20:31:46

@@ -71,15 +71,8 @@ public class GlobalExceptionHandler {
         if (ex instanceof HttpRequestMethodNotSupportedException) {
             return httpRequestMethodNotSupportedExceptionHandler((HttpRequestMethodNotSupportedException) ex);
         }
-        // if (ex instanceof RequestNotPermitted) {
-        //     return requestNotPermittedExceptionHandler(request, (RequestNotPermitted) ex);
-        // }
         if (ex instanceof DataAccessException) {
             return dataAccessExceptionHandler(request, (DataAccessException) ex);
-        }
-        // 最后采用通用枚举处理
-        if (ex instanceof ServiceException) {
-            return serviceExceptionHandler((ServiceException) ex);
         }
         if (ex instanceof BadCredentialsException) {
             return badCredentialsExceptionHandler(request, (BadCredentialsException) ex);
@@ -92,6 +85,9 @@ public class GlobalExceptionHandler {
         }
         if (ex instanceof AuthenticationException) {
             return authenticationExceptionHandler(request, (AuthenticationException) ex);
+        }
+        if (ex instanceof ServiceException) {
+            return serviceExceptionHandler((ServiceException) ex);
         }
         return defaultExceptionHandler(request, ex);
     }

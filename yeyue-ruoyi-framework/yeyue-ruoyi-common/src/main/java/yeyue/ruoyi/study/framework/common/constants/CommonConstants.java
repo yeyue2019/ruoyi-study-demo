@@ -47,16 +47,17 @@ public abstract class CommonConstants {
      * http请求的追踪信息
      */
 
-    public static final String TRACE_REQ_URL = "req-url";
-    public static final String TRACE_REQ_METHOD = "req_method";
-    public static final String TRACE_REQ_PARAM = "req_param";
-    public static final String TRACE_REQ_HEADER = "req_header";
-    public static final String TRACE_REQ_BODY = "req_body";
-    public static final String TRACE_RES_CODE = "res_code";
-    public static final String TRACE_RES_BODY = "res_body";
-    public static final String TRACE_RES_MSG = "res_msg";
+    public static final String TRACE_REQ_URL = "request.url";
+    public static final String TRACE_REQ_METHOD = "request.method";
+    public static final String TRACE_REQ_PARAM = "request.param";
+    public static final String TRACE_REQ_HEADER = "request.header";
+    public static final String TRACE_REQ_BODY = "request.body";
 
-    public static final String TRACE_RES_HEADER = "res-header";
+    public static final String TRACE_RES_STATUS = "response.status";
+    public static final String TRACE_RES_BODY = "response.body";
+    public static final String TRACE_RES_HEADER = "response.header";
+
+    public static final String TRACE_HEADER = "TRACE-ID";
 
     public static final String AUTHORIZATION_HEADER = "Authorization";
 

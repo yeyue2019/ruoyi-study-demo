@@ -33,7 +33,7 @@ public class YeyueSecurityAutoConfiguration {
     }
 
     /**
-     * 认证失败处理类
+     * 认证失败的处理器
      */
     @Bean
     public AuthenticationEntryPoint authenticationEntryPoint() {
@@ -41,7 +41,7 @@ public class YeyueSecurityAutoConfiguration {
     }
 
     /**
-     * 权限不够处理器
+     * 权限不足的处理器
      */
     @Bean
     public AccessDeniedHandler accessDeniedHandler() {

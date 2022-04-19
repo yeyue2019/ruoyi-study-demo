@@ -1,7 +1,7 @@
 package yeyue.ruoyi.study.module.system.api.service.user;
 
 import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
-import yeyue.ruoyi.study.module.system.api.domain.user.AdminUserDomain;
+import yeyue.ruoyi.study.module.system.api.domain.user.SystemUserDomain;
 import yeyue.ruoyi.study.module.system.api.service.user.dto.*;
 
 /**
@@ -10,7 +10,7 @@ import yeyue.ruoyi.study.module.system.api.service.user.dto.*;
  * @author yeyue
  * @date 2022-04-18 16:02:20
  */
-public interface AdminUserService {
+public interface SystemUserService {
 
     /**
      * 创建用户
@@ -18,14 +18,14 @@ public interface AdminUserService {
      * @param create 用户信息
      * @return 用户Id
      */
-    Long create(AdminUserDomain create);
+    Long create(SystemUserDomain create);
 
     /**
      * 修改信息
      *
      * @param update 用户信息
      */
-    void update(AdminUserDomain update);
+    void update(SystemUserDomain update);
 
     /**
      * 修改用户密码
@@ -33,7 +33,7 @@ public interface AdminUserService {
      * @param id  用户id
      * @param req 密码信息
      */
-    void updatePasswd(Long id, AdminUserUpdatePasswdReqDTO req);
+    void updatePwd(Long id, SystemUserUpdatePwdReq req);
 
     /**
      * 修改用户状态
@@ -56,7 +56,7 @@ public interface AdminUserService {
      * @param id 用户Id
      * @return 结果
      */
-    AdminUserDomain getById(Long id);
+    SystemUserDomain getById(Long id);
 
     /**
      * 根据用户账号查询用户
@@ -64,7 +64,7 @@ public interface AdminUserService {
      * @param username 用户账号
      * @return 结果
      */
-    AdminUserDomain getByUsername(String username);
+    SystemUserDomain getByUsername(String username);
 
     /**
      * 用户列表查询
@@ -72,5 +72,5 @@ public interface AdminUserService {
      * @param req 请求
      * @return 结果
      */
-    PageResult<AdminUserDomain> list(AdminUserPageReqDTO req);
+    PageResult<SystemUserDomain> list(SystemUserPageReq req);
 }

@@ -19,7 +19,7 @@ import java.util.Set;
  */
 @Data
 @ApiModel(description = "系统用户")
-public class AdminUserDomain implements Serializable {
+public class SystemUserDomain implements Serializable {
 
     @ApiModelProperty(value = "Id")
     @Null(groups = ApiCommand.Create.class, message = "创建时不需要传入Id")

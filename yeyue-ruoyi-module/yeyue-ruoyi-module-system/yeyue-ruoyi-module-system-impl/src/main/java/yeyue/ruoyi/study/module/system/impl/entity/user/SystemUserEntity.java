@@ -2,14 +2,14 @@ package yeyue.ruoyi.study.module.system.impl.entity.user;
 
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
-import yeyue.ruoyi.study.framework.common.enums.*;
-import yeyue.ruoyi.study.framework.mybatis.core.entity.MyBatisEntity;
+import yeyue.ruoyi.study.framework.common.enums.GenderEnum;
 import yeyue.ruoyi.study.framework.mybatis.core.type.JsonLongSetTypeHandler;
+import yeyue.ruoyi.study.module.system.impl.entity.SystemEntity;
 
 import java.time.LocalDate;
 import java.util.Set;
 
-import static yeyue.ruoyi.study.module.system.impl.constants.SystemTableConstants.ADMIN_USER;
+import static yeyue.ruoyi.study.module.system.impl.constants.SystemTableConstants.SYSTEM_USER;
 
 /**
  * 系统用户实体
@@ -18,11 +18,8 @@ import static yeyue.ruoyi.study.module.system.impl.constants.SystemTableConstant
  * @date 2022-04-18 15:20:36
  */
 @Data
-@TableName(value = ADMIN_USER, autoResultMap = true)
-public class AdminUserEntity extends MyBatisEntity {
-
-    @TableId(type = IdType.ASSIGN_ID)
-    private Long id;
+@TableName(value = SYSTEM_USER, autoResultMap = true)
+public class SystemUserEntity extends SystemEntity {
 
     /**
      * 账号
@@ -74,12 +71,6 @@ public class AdminUserEntity extends MyBatisEntity {
      * 用户自述
      */
     private String description;
-
-    /**
-     * 用户状态
-     */
-    @TableField(updateStrategy = FieldStrategy.NEVER)
-    private CommonStatusEnum status;
 
     /**
      * 部门Id

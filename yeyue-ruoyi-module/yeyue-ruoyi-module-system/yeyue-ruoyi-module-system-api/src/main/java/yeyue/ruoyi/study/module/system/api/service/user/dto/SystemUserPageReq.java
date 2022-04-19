@@ -12,5 +12,5 @@ import yeyue.ruoyi.study.framework.common.pojo.pageable.PageParam;
  */
 @Data
 @ApiModel(description = "用户分页查询")
-public class AdminUserPageReqDTO extends PageParam {
+public class SystemUserPageReq extends PageParam {
 }

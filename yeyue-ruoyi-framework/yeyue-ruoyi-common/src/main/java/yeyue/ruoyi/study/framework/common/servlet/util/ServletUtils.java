@@ -4,8 +4,11 @@ import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.web.context.request.*;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.exception.common.GlobalErrorCode;
+import yeyue.ruoyi.study.framework.common.pojo.http.*;
+import yeyue.ruoyi.study.framework.common.servlet.wrapper.*;
 import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
 import yeyue.ruoyi.study.framework.common.util.network.NetworkUtils;
 
@@ -26,6 +29,21 @@ import static yeyue.ruoyi.study.framework.common.constants.CommonConstants.SPLIT
  */
 @Slf4j
 public abstract class ServletUtils {
+
+    /**
+     * 获取Http请求
+     *
+     * @return 结果
+     */
+    private static HttpServletRequest getRequest() {
+        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+        if (!(requestAttributes instanceof ServletRequestAttributes)) {
+            return null;
+        }
+        ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) requestAttributes;
+        return servletRequestAttributes.getRequest();
+    }
+
 
     /**
      * 判断是否属于JSON请求
@@ -154,6 +172,33 @@ public abstract class ServletUtils {
             throw new ServiceException(GlobalErrorCode.IO_EXCEPTION, e);
         }
         return sb.toString();
+    }
+
+    /**
+     * 转化Http请求对象
+     *
+     * @param request 请求
+     * @return 结果
+     */
+    public static HttpRequest getRequest(HttpServletRequest request) {
+        if (request instanceof HttpRequestCopyWrapper) {
+            return new HttpRequest(getUrl(request), getMethod(request), getParams(request), getHeaderMap(request), getBodyString(request));
+        }
+        return null;
+    }
+
+    /**
+     * 转化Http响应结果
+     *
+     * @param response 响应
+     * @return 结果
+     */
+    public static HttpResponse getResponse(HttpServletResponse response) {
+        if (response instanceof HttpResponseCopyWrapper) {
+            HttpResponseCopyWrapper wrapper = (HttpResponseCopyWrapper) response;
+            return new HttpResponse(wrapper.getStatus(), new String(wrapper.toByteArray()), getHeaderMap(response));
+        }
+        return null;
     }
 
     /**

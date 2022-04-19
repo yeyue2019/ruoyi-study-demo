@@ -5,12 +5,12 @@
     <!--变量配置-->
     <Properties>
         <Property name="CONSOLE_PATTERN"
-                  value="%d{yyyy-MM-dd HH:mm:ss,SSS} %highlight{%-5p}{ERROR=Bright RED, WARN=Bright Yellow, INFO=Bright Green, DEBUG=Bright Cyan, TRACE=Bright White} %pid{-} --- [%32.32t] [%traceId] %-40.40c{39} : %m%ex%n"/>
+                  value="%d{yyyy-MM-dd HH:mm:ss,SSS} %highlight{%-5p}{ERROR=Bright RED, WARN=Bright Yellow, INFO=Bright Green, DEBUG=Bright Cyan, TRACE=Bright White} %pid{-} --- [%32.32t] [%trace] %-40.40c{39} : %m%ex%n"/>
     </Properties>
 
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="${CONSOLE_PATTERN}"/>
+            <PatternLayout pattern="[%d{HH:mm:ss,SSS}][%trace][%-5p][%t][%c]:%m%n"/>
             <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
         </Console>
     </Appenders>

@@ -38,8 +38,8 @@ public class HttpResponse implements Serializable {
         this.headers = headers;
     }
 
-    public HttpResponse(int status, String message, Map<String, String> headers) {
-        this(status, message, null, headers);
+    public HttpResponse(int status, String body, Map<String, String> headers) {
+        this(status, null, body, headers);
     }
 
     @JsonIgnore

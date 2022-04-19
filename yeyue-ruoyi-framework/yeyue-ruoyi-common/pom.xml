@@ -18,12 +18,12 @@
     </description>
 
     <dependencies>
-        <!-- 参数校验 -->
+        <!-- validation -->
         <dependency>
             <groupId>jakarta.validation</groupId>
             <artifactId>jakarta.validation-api</artifactId>
         </dependency>
-        <!-- swagger注释 -->
+        <!-- swagger -->
         <dependency>
             <groupId>io.swagger</groupId>
             <artifactId>swagger-annotations</artifactId>
@@ -46,7 +46,7 @@
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct-processor</artifactId>
         </dependency>
-        <!-- json处理 -->
+        <!-- json -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
@@ -55,7 +55,7 @@
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
         </dependency>
-        <!-- 字符串工具类 -->
+        <!-- utils -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
@@ -65,7 +65,7 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
         </dependency>
-        <!-- 日志框架 -->
+        <!-- slf4j -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -90,12 +90,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- springboot自动关联配置 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
-        </dependency>
         <!-- tomcat servlet -->
         <dependency>
             <groupId>jakarta.servlet</groupId>
@@ -106,21 +100,16 @@
             <groupId>com.alibaba</groupId>
             <artifactId>transmittable-thread-local</artifactId>
         </dependency>
-        <!-- skywalking trace -->
-        <dependency>
-            <groupId>org.apache.skywalking</groupId>
-            <artifactId>apm-toolkit-trace</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.skywalking</groupId>
-            <artifactId>apm-toolkit-opentracing</artifactId>
-            <scope>provided</scope>
-        </dependency>
         <!-- mybatis-plus 扫描注解 -->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-annotation</artifactId>
+        </dependency>
+        <!-- springboot自动关联配置 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
         </dependency>
     </dependencies>
 </project>

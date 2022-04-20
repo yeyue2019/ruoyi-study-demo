@@ -103,7 +103,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = MissingServletRequestParameterException.class)
     public CommonResult<?> missingServletRequestParameterExceptionHandler(MissingServletRequestParameterException ex) {
-        return ExceptionUtils.print(ex, GlobalErrorCode.BAD_REQUEST, String.format("请求参数缺失:%s", ex.getParameterName()), true, null);
+        return ExceptionUtils.print(ex, GlobalErrorCode.BAD_REQUEST, String.format("请求参数缺失:%s", ex.getParameterName()), false, null);
     }
 
     /**
@@ -113,7 +113,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public CommonResult<?> methodArgumentTypeMismatchExceptionHandler(MethodArgumentTypeMismatchException ex) {
-        return ExceptionUtils.print(ex, GlobalErrorCode.BAD_REQUEST, String.format("请求参数类型错误:%s不属于%s类型", ex.getValue(), ex.getRequiredType()), true, null);
+        return ExceptionUtils.print(ex, GlobalErrorCode.BAD_REQUEST, String.format("请求参数类型错误:%s不属于%s类型", ex.getValue(), ex.getRequiredType()), false, null);
     }
 
 
@@ -124,7 +124,7 @@ public class GlobalExceptionHandler {
             InvalidFormatException invalidFormatException = (InvalidFormatException) ex.getCause();
             msg = String.format("请求参数数据内容错误:%s不属于%s类型", invalidFormatException.getValue(), invalidFormatException.getTargetType());
         }
-        return ExceptionUtils.print(ex, GlobalErrorCode.BAD_REQUEST, msg, true, null);
+        return ExceptionUtils.print(ex, GlobalErrorCode.BAD_REQUEST, msg, false, null);
     }
 
     /**
@@ -134,7 +134,7 @@ public class GlobalExceptionHandler {
     public CommonResult<?> methodArgumentNotValidExceptionExceptionHandler(MethodArgumentNotValidException ex) {
         FieldError fieldError = ex.getBindingResult().getFieldError();
         Assert.notNull(fieldError, "fieldError不允许为空！！！");
-        return ExceptionUtils.print(ex, GlobalErrorCode.BAD_REQUEST, String.format("请求参数不正确:%s", fieldError.getDefaultMessage()), true, null);
+        return ExceptionUtils.print(ex, GlobalErrorCode.BAD_REQUEST, String.format("请求参数不正确:%s", fieldError.getDefaultMessage()), false, null);
     }
 
     /**
@@ -144,7 +144,7 @@ public class GlobalExceptionHandler {
     public CommonResult<?> bindExceptionHandler(BindException ex) {
         FieldError fieldError = ex.getFieldError();
         Assert.notNull(fieldError, "fieldError不允许为空！！！");
-        return ExceptionUtils.print(ex, GlobalErrorCode.BAD_REQUEST, String.format("请求参数不正确:%s", fieldError.getDefaultMessage()), true, null);
+        return ExceptionUtils.print(ex, GlobalErrorCode.BAD_REQUEST, String.format("请求参数不正确:%s", fieldError.getDefaultMessage()), false, null);
     }
 
     /**
@@ -153,7 +153,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = ConstraintViolationException.class)
     public CommonResult<?> constraintViolationExceptionHandler(ConstraintViolationException ex) {
         ConstraintViolation<?> constraintViolation = ex.getConstraintViolations().iterator().next();
-        return ExceptionUtils.print(ex, GlobalErrorCode.BAD_REQUEST, String.format("请求参数不正确:%s", constraintViolation.getMessage()), true, null);
+        return ExceptionUtils.print(ex, GlobalErrorCode.BAD_REQUEST, String.format("请求参数不正确:%s", constraintViolation.getMessage()), false, null);
     }
 
     /**
@@ -173,7 +173,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(NoHandlerFoundException.class)
     public CommonResult<?> noHandlerFoundExceptionHandler(NoHandlerFoundException ex) {
-        return ExceptionUtils.print(ex, GlobalErrorCode.NOT_FOUND, String.format("请求地址不存在:%s", ex.getRequestURL()), true, null);
+        return ExceptionUtils.print(ex, GlobalErrorCode.NOT_FOUND, String.format("请求地址不存在:%s", ex.getRequestURL()), false, null);
     }
 
     /**
@@ -183,7 +183,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public CommonResult<?> httpRequestMethodNotSupportedExceptionHandler(HttpRequestMethodNotSupportedException ex) {
-        return ExceptionUtils.print(ex, GlobalErrorCode.METHOD_NOT_ALLOWED, String.format("请求方法不正确:%s,支持的方法为:%s", ex.getMethod(), Arrays.toString(ex.getSupportedMethods())), true, null);
+        return ExceptionUtils.print(ex, GlobalErrorCode.METHOD_NOT_ALLOWED, String.format("请求方法不正确:%s,支持的方法为:%s", ex.getMethod(), Arrays.toString(ex.getSupportedMethods())), false, null);
     }
 
     // /**
@@ -212,12 +212,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = BadCredentialsException.class)
     public CommonResult<?> badCredentialsExceptionHandler(HttpServletRequest req, BadCredentialsException ex) {
-        return ExceptionUtils.print(ex, GlobalErrorCode.UNAUTHORIZED, "账号或密码错误", true, null);
+        return ExceptionUtils.print(ex, GlobalErrorCode.UNAUTHORIZED, "账号或密码错误", false, null);
     }
 
     @ExceptionHandler(value = DisabledException.class)
     public CommonResult<?> disabledExceptionHandler(HttpServletRequest req, DisabledException ex) {
-        return ExceptionUtils.print(ex, GlobalErrorCode.UNAUTHORIZED, "登录失败，账号被禁用", true, null);
+        return ExceptionUtils.print(ex, GlobalErrorCode.UNAUTHORIZED, "登录失败，账号被禁用", false, null);
     }
 
     /**
@@ -230,7 +230,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = AuthenticationException.class)
     public CommonResult<?> authenticationExceptionHandler(HttpServletRequest req, AuthenticationException ex) {
-        return ExceptionUtils.print(ex, GlobalErrorCode.UNAUTHORIZED, "用户权限模块未检出错误", true, null);
+        return ExceptionUtils.print(ex, GlobalErrorCode.UNAUTHORIZED, "用户权限模块未检出错误", false, null);
     }
 
     /**
@@ -240,7 +240,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = ServiceException.class)
     public CommonResult<?> serviceExceptionHandler(ServiceException ex) {
-        return ExceptionUtils.print(ex, ex, null, true, null);
+        return ExceptionUtils.print(ex, ex, null, false, null);
     }
 
     /**

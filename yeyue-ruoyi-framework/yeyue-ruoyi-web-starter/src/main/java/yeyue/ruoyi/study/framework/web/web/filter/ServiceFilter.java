@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSON;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.filter.OncePerRequestFilter;
+import yeyue.ruoyi.study.framework.common.constants.CommonConstants;
+import yeyue.ruoyi.study.framework.common.monitor.trace.util.TracerUtils;
 import yeyue.ruoyi.study.framework.common.pojo.core.CommonResult;
 import yeyue.ruoyi.study.framework.common.pojo.http.*;
 import yeyue.ruoyi.study.framework.common.servlet.util.ServletUtils;
@@ -16,14 +18,14 @@ import javax.servlet.http.*;
 import java.io.IOException;
 
 /**
- * 拷贝HttpRequest的Body作为全局参数
+ * Http业务请求收集过滤器
  *
  * @author yeyue
  * @date 2022-04-14 10:23:09
  */
 @Slf4j
 @AllArgsConstructor
-public class HttpRequestCacheFilter extends OncePerRequestFilter {
+public class ServiceFilter extends OncePerRequestFilter {
 
     private final GlobalExceptionHandler handler;
 
@@ -48,12 +50,19 @@ public class HttpRequestCacheFilter extends OncePerRequestFilter {
             filterChain.doFilter(reqWrapper, resWrapper);
             logRes = ServletUtils.getResponse(resWrapper);
             log.info("打印正常执行完成的请求:请求内容:{},响应内容:{},执行毫秒数:{}", logReq, logRes, System.currentTimeMillis() - start);
+            traceTag(logReq, logRes);
         } catch (Throwable e) {
             CommonResult<?> errorCode = handler.filterExceptionHandler(reqWrapper, e);
             logRes = new HttpResponse(200, JSON.toJSONString(errorCode), ServletUtils.getHeaderMap(reqWrapper));
             log.warn("打印异常执行完成的请求:请求内容:{},响应内容:{},执行毫秒数:{}", logReq, logRes, System.currentTimeMillis() - start);
+            traceTag(logReq, logRes);
             ServletUtils.writeJSON(resWrapper, errorCode);
         }
+    }
+
+    public static void traceTag(HttpRequest request, HttpResponse response) {
+        TracerUtils.tag(CommonConstants.TRACE_REQ_ALL, request);
+        TracerUtils.tag(CommonConstants.TRACE_RES_ALL, response);
     }
 
 }

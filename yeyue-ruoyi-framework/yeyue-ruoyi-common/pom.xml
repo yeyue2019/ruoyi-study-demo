@@ -111,6 +111,11 @@
             <artifactId>apm-toolkit-trace</artifactId>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.skywalking</groupId>
+            <artifactId>apm-toolkit-opentracing</artifactId>
+            <scope>provided</scope>
+        </dependency>
         <!-- springboot自动关联配置 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -7,7 +7,7 @@ import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.*;
 import yeyue.ruoyi.study.framework.common.constants.CommonConstants;
 import yeyue.ruoyi.study.framework.common.servlet.util.ServletUtils;
-import yeyue.ruoyi.study.framework.web.web.filter.HttpRequestCacheFilter;
+import yeyue.ruoyi.study.framework.web.web.filter.ServiceFilter;
 import yeyue.ruoyi.study.framework.web.web.handler.GlobalExceptionHandler;
 import yeyue.ruoyi.study.framework.web.web.interceptor.HttpRequestHandlerInterceptor;
 
@@ -48,8 +48,8 @@ public class YeyueAutoWebConfiguration implements WebMvcConfigurer {
      * 缓存请求信息的Filter
      */
     @Bean
-    public FilterRegistrationBean<HttpRequestCacheFilter> cacheFilterBean() {
-        return ServletUtils.createFilterBean(new HttpRequestCacheFilter(exceptionHandler), CommonConstants.REQUEST_CACHE_FILTER_ORDER);
+    public FilterRegistrationBean<ServiceFilter> serviceFilterBean() {
+        return ServletUtils.createFilterBean(new ServiceFilter(exceptionHandler), CommonConstants.SERVICE_FILTER_ORDER);
     }
 
     /**

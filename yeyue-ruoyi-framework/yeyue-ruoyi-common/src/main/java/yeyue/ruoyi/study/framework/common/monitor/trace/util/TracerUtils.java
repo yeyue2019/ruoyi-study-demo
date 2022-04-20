@@ -1,5 +1,9 @@
 package yeyue.ruoyi.study.framework.common.monitor.trace.util;
 
+import com.alibaba.fastjson.JSON;
+import io.opentracing.Tracer;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.skywalking.apm.toolkit.opentracing.SkywalkingTracer;
 import org.apache.skywalking.apm.toolkit.trace.TraceContext;
 import yeyue.ruoyi.study.framework.common.monitor.trace.ids.GlobalIdGenerator;
 
@@ -9,8 +13,9 @@ import yeyue.ruoyi.study.framework.common.monitor.trace.ids.GlobalIdGenerator;
  * @author yeyue
  * @date 2022-04-20 14:40:22
  */
+@Slf4j
 public abstract class TracerUtils {
-    private static final String NONE = "TID : NA";
+    private static final Tracer TRACER = new SkywalkingTracer();
 
     /**
      * 获取Skywalking的traceId
@@ -28,5 +33,26 @@ public abstract class TracerUtils {
      */
     public static String newTraceId() {
         return GlobalIdGenerator.generate();
+    }
+
+    /**
+     * 将标签打入上下文
+     *
+     * @param name  标签名
+     * @param value 标签内容
+     */
+    public static void tag(String name, Object value) {
+        if (value == null) {
+            return;
+        }
+        if (value instanceof Boolean) {
+            TRACER.activeSpan().setTag(name, (Boolean) value);
+        } else if (value instanceof Number) {
+            TRACER.activeSpan().setTag(name, (Number) value);
+        } else if (value instanceof String) {
+            TRACER.activeSpan().setTag(name, (String) value);
+        } else {
+            TRACER.activeSpan().setTag(name, JSON.toJSONString(value));
+        }
     }
 }

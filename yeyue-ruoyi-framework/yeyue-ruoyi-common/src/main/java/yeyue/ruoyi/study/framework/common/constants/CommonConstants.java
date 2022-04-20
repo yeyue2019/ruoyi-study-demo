@@ -42,12 +42,14 @@ public abstract class CommonConstants {
      * http请求的追踪信息
      */
 
+    public static final String TRACE_REQ_ALL = "request.all";
     public static final String TRACE_REQ_URL = "request.url";
     public static final String TRACE_REQ_METHOD = "request.method";
     public static final String TRACE_REQ_PARAM = "request.param";
     public static final String TRACE_REQ_HEADER = "request.header";
     public static final String TRACE_REQ_BODY = "request.body";
 
+    public static final String TRACE_RES_ALL = "response.all";
     public static final String TRACE_RES_STATUS = "response.status";
     public static final String TRACE_RES_BODY = "response.body";
     public static final String TRACE_RES_HEADER = "response.header";
@@ -66,5 +68,5 @@ public abstract class CommonConstants {
 
     public static final int TRACE_FILTER_ORDER = CORS_FILTER_ORDER + 1;
 
-    public static final int REQUEST_CACHE_FILTER_ORDER = Integer.MIN_VALUE + 2;
+    public static final int SERVICE_FILTER_ORDER = Integer.MIN_VALUE + 2;
 }

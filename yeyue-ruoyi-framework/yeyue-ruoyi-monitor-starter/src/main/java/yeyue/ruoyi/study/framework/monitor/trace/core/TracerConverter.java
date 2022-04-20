@@ -4,7 +4,7 @@ package yeyue.ruoyi.study.framework.monitor.trace.core;
 import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.config.plugins.Plugin;
 import org.apache.logging.log4j.core.pattern.*;
-import yeyue.ruoyi.study.framework.common.monitor.trace.context.TracerContext;
+import yeyue.ruoyi.study.framework.common.monitor.trace.util.TracerUtils;
 
 /**
  * traceId追踪插件
@@ -13,7 +13,7 @@ import yeyue.ruoyi.study.framework.common.monitor.trace.context.TracerContext;
  * @date 2021-09-30 15:12
  */
 @Plugin(name = "TracerConverter", category = PatternConverter.CATEGORY)
-@ConverterKeys({"trace"})
+@ConverterKeys({"tr"})
 public class TracerConverter extends LogEventPatternConverter {
 
     /**
@@ -27,12 +27,12 @@ public class TracerConverter extends LogEventPatternConverter {
     }
 
     public static TracerConverter newInstance(String[] options) {
-        return new TracerConverter("trace", "trace");
+        return new TracerConverter("tr", "tr");
     }
 
     @Override
     public void format(LogEvent event, StringBuilder toAppendTo) {
-        toAppendTo.append(TracerContext.get());
+        toAppendTo.append(TracerUtils.getTraceId());
     }
 }
 

@@ -4,7 +4,7 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.*;
 import yeyue.ruoyi.study.framework.common.constants.CommonConstants;
 import yeyue.ruoyi.study.framework.common.servlet.util.ServletUtils;
-import yeyue.ruoyi.study.framework.monitor.trace.filter.YeyueTraceFilter;
+import yeyue.ruoyi.study.framework.monitor.trace.filter.TracerFilter;
 
 /**
  * 日志自动配置
@@ -16,7 +16,7 @@ import yeyue.ruoyi.study.framework.monitor.trace.filter.YeyueTraceFilter;
 public class YeyueTraceAutoConfiguration {
 
     @Bean
-    public FilterRegistrationBean<YeyueTraceFilter> traceFilter() {
-        return ServletUtils.createFilterBean(new YeyueTraceFilter(), CommonConstants.TRACE_FILTER_ORDER);
+    public FilterRegistrationBean<TracerFilter> traceFilter() {
+        return ServletUtils.createFilterBean(new TracerFilter(), CommonConstants.TRACE_FILTER_ORDER);
     }
 }

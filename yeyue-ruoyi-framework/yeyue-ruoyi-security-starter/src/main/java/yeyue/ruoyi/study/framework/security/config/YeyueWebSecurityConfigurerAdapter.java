@@ -74,7 +74,7 @@ public class YeyueWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdap
                 // 静态资源放行
                 .antMatchers(HttpMethod.GET, "/*.html", "/**/*.html", "/**/*.css", "/**/*.js").permitAll()
                 // 健康检查放行
-                .antMatchers("/actuator/**", "/admin-actuator/**", "/swagger-resources").permitAll()
+                .antMatchers("/actuator/**", "/admin-actuator/**").permitAll()
                 // Swagger放行
                 .antMatchers(HttpMethod.GET, "/v3/api-docs", "/swagger-resources").permitAll()
                 .antMatchers("/ruoyi/test/security/login").permitAll()

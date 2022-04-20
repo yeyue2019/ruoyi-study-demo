@@ -1,5 +1,6 @@
 package yeyue.ruoyi.study.framework.common.pojo.http;
 
+import com.alibaba.fastjson.*;
 import io.swagger.annotations.*;
 import lombok.*;
 
@@ -50,5 +51,16 @@ public class HttpRequest implements Serializable {
 
     public HttpRequest(String url, String method, Map<String, String> headers) {
         this(url, method, new HashMap<>(0), headers, null);
+    }
+
+    @Override
+    public String toString() {
+        JSONObject json = new JSONObject();
+        json.put("url", this.url);
+        json.put("method", this.method);
+        json.put("params", this.params);
+        json.put("headers", this.headers);
+        json.put("body", JSONValidator.from(this.body).validate() ? JSON.parse(this.body) : body);
+        return json.toJSONString();
     }
 }

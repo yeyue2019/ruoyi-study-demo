@@ -8,7 +8,10 @@ import org.springframework.web.servlet.config.annotation.*;
 import yeyue.ruoyi.study.framework.common.constants.CommonConstants;
 import yeyue.ruoyi.study.framework.common.servlet.util.ServletUtils;
 import yeyue.ruoyi.study.framework.web.web.filter.HttpRequestCacheFilter;
+import yeyue.ruoyi.study.framework.web.web.handler.GlobalExceptionHandler;
 import yeyue.ruoyi.study.framework.web.web.interceptor.HttpRequestHandlerInterceptor;
+
+import javax.annotation.Resource;
 
 /**
  * @author yeyue
@@ -16,6 +19,9 @@ import yeyue.ruoyi.study.framework.web.web.interceptor.HttpRequestHandlerInterce
  */
 @Configuration
 public class YeyueAutoWebConfiguration implements WebMvcConfigurer {
+
+    @Resource
+    GlobalExceptionHandler exceptionHandler;
 
     /**
      * 创建 CorsFilter Bean，解决跨域问题
@@ -43,7 +49,7 @@ public class YeyueAutoWebConfiguration implements WebMvcConfigurer {
      */
     @Bean
     public FilterRegistrationBean<HttpRequestCacheFilter> cacheFilterBean() {
-        return ServletUtils.createFilterBean(new HttpRequestCacheFilter(), CommonConstants.REQUEST_CACHE_FILTER_ORDER);
+        return ServletUtils.createFilterBean(new HttpRequestCacheFilter(exceptionHandler), CommonConstants.REQUEST_CACHE_FILTER_ORDER);
     }
 
     /**

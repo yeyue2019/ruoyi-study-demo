@@ -46,4 +46,4 @@ nbdist/
 ### JRebel ###
 rebel.xml
 
-plugin/
+yeyue-plugins-monitor/*

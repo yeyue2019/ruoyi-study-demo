@@ -1,5 +1,6 @@
 package yeyue.ruoyi.study.framework.common.pojo.http;
 
+import com.alibaba.fastjson.*;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.*;
@@ -56,4 +57,13 @@ public class HttpResponse implements Serializable {
         return !isSuccess();
     }
 
+    @Override
+    public String toString() {
+        JSONObject json = new JSONObject();
+        json.put("status", this.status);
+        json.put("message", this.message);
+        json.put("headers", this.headers);
+        json.put("body", JSONValidator.from(this.body).validate() ? JSON.parse(this.body) : body);
+        return json.toJSONString();
+    }
 }

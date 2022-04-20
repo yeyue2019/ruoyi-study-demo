@@ -66,8 +66,6 @@
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>${maven-compiler-plugin.version}</version>
                     <configuration>
-                        <failOnError>true</failOnError>
-                        <verbose>true</verbose>
                         <fork>true</fork>
                         <source>${java.version}</source>
                         <target>${java.version}</target>

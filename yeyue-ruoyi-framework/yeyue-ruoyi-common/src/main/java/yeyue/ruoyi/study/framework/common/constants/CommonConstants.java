@@ -39,11 +39,6 @@ public abstract class CommonConstants {
     public static final String ORDER_DESC = "desc";
 
     /**
-     * TraceId的使用名称
-     */
-    public static final String TRACE_ID_NAME = "trace-id";
-
-    /**
      * http请求的追踪信息
      */
 

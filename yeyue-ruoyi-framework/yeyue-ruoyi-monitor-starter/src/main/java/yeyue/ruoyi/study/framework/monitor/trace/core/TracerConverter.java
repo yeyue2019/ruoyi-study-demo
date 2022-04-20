@@ -4,6 +4,7 @@ package yeyue.ruoyi.study.framework.monitor.trace.core;
 import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.config.plugins.Plugin;
 import org.apache.logging.log4j.core.pattern.*;
+import yeyue.ruoyi.study.framework.common.monitor.trace.context.TracerContext;
 
 /**
  * traceId追踪插件
@@ -31,7 +32,7 @@ public class TracerConverter extends LogEventPatternConverter {
 
     @Override
     public void format(LogEvent event, StringBuilder toAppendTo) {
-        toAppendTo.append("AAA");
+        toAppendTo.append(TracerContext.get());
     }
 }
 

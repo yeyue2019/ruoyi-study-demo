@@ -5,8 +5,7 @@ import org.springframework.security.authentication.dao.AbstractUserDetailsAuthen
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import yeyue.ruoyi.study.framework.common.exception.ServiceException;
-import yeyue.ruoyi.study.framework.common.exception.common.GlobalErrorCode;
+import org.springframework.security.web.authentication.preauth.PreAuthenticatedCredentialsNotFoundException;
 import yeyue.ruoyi.study.framework.security.core.service.SecurityAuthService;
 
 /**
@@ -56,7 +55,7 @@ public class YeyueUserDetailsAuthenticationProvider extends AbstractUserDetailsA
     protected UserDetails retrieveUser(String username, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
         // 判断Token属于自定义的类型否则不予处理
         if (!(authentication instanceof YeyueUsernamePasswordAuthenticationToken)) {
-            throw new ServiceException(GlobalErrorCode.CLASS_TYPE_NOT_INSTANCEOF_THIS);
+            throw new PreAuthenticatedCredentialsNotFoundException(authentication.getClass().getSimpleName());
         }
         // 获取自定义的参数进行处理
         YeyueUsernamePasswordAuthenticationToken token = (YeyueUsernamePasswordAuthenticationToken) authentication;

@@ -35,7 +35,7 @@ public class HttpRequestCopyWrapper extends HttpServletRequestWrapper {
             this.body = ServletUtils.getBodyString(request, encode).getBytes(encode);
         } catch (UnsupportedEncodingException e) {
             log.warn("当前系统不支持该系统编码:{}", encode);
-            throw new ServiceException(GlobalErrorCode.ENCODE_NOT_SUPPORTED);
+            throw new ServiceException(GlobalErrorCode.SYSTEM_CODE_SUPPORT_ERROR);
         }
     }
 

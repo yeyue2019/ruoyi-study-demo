@@ -56,7 +56,10 @@ public abstract class CommonConstants {
 
     public static final String TRACE_HEADER = "TRACE-ID";
 
+    public static final String AUTHORIZATION_TOKEN_PREFIX = "Bearer ";
     public static final String AUTHORIZATION_HEADER = "Authorization";
+
+    public static final String TEST_TOKEN_NAME = "ruoyi-study-demo";
 
     public static final String PATTERN_ALL = "/**";
 

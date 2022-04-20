@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import yeyue.ruoyi.study.framework.common.constants.CommonConstants;
 import yeyue.ruoyi.study.framework.security.core.service.SecurityAuthService;
 import yeyue.ruoyi.study.framework.security.core.userdetails.WebLoginUser;
 
@@ -23,11 +24,11 @@ public class MockAuthServiceImpl implements SecurityAuthService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        if (!StringUtils.equals(username, "yeyue")) {
+        if (!StringUtils.equals(username, CommonConstants.TEST_TOKEN_NAME)) {
             throw new UsernameNotFoundException(username);
         }
         WebLoginUser user = new WebLoginUser();
-        user.setUsername("yeyue");
+        user.setUsername(username);
         user.setPassword(passwordEncoder.encode("123456"));
         user.setId(1L);
         user.setStatus(0);

@@ -74,11 +74,16 @@ public class SystemUserController {
     }
 
     @ApiOperation(value = "更改用户状态")
-    @PostMapping("/status/update/{id}/{status}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "用户Id", paramType = "query", dataType = "Long"),
+            @ApiImplicitParam(name = "status", value = "用户状态", paramType = "query", dataType = "Integer"),
+    })
+    @PostMapping("/status/update")
     public CommonResult<Void> update(
             @Positive(message = "用户Id格式错误")
-            @PathVariable Long id,
-            @InIntEnum(CommonStatusEnum.class) @PathVariable Integer status) {
+            @RequestParam Long id,
+            @InIntEnum(CommonStatusEnum.class)
+            @RequestParam Integer status) {
         service.updateStatus(id, status);
         return CommonResult.success();
     }

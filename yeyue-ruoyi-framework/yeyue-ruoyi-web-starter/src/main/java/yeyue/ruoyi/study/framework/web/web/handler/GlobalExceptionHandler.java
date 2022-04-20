@@ -7,6 +7,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.util.Assert;
 import org.springframework.validation.*;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -73,12 +74,6 @@ public class GlobalExceptionHandler {
         }
         if (ex instanceof DataAccessException) {
             return dataAccessExceptionHandler(request, (DataAccessException) ex);
-        }
-        if (ex instanceof BadCredentialsException) {
-            return badCredentialsExceptionHandler(request, (BadCredentialsException) ex);
-        }
-        if (ex instanceof DisabledException) {
-            return disabledExceptionHandler(request, (DisabledException) ex);
         }
         if (ex instanceof AccessDeniedException) {
             return accessDeniedExceptionHandler(request, (AccessDeniedException) ex);
@@ -208,29 +203,31 @@ public class GlobalExceptionHandler {
         return defaultExceptionHandler(req, ex);
     }
 
-    // Spring Security 异常拦截
-
-    @ExceptionHandler(value = BadCredentialsException.class)
-    public CommonResult<?> badCredentialsExceptionHandler(HttpServletRequest req, BadCredentialsException ex) {
-        return ExceptionUtils.print(ex, GlobalErrorCode.UNAUTHORIZED, "账号或密码错误", false, null);
-    }
-
-    @ExceptionHandler(value = DisabledException.class)
-    public CommonResult<?> disabledExceptionHandler(HttpServletRequest req, DisabledException ex) {
-        return ExceptionUtils.print(ex, GlobalErrorCode.UNAUTHORIZED, "登录失败，账号被禁用", false, null);
-    }
-
     /**
      * 处理 Spring Security 权限不足的异常
      */
     @ExceptionHandler(value = AccessDeniedException.class)
     public CommonResult<?> accessDeniedExceptionHandler(HttpServletRequest req, AccessDeniedException ex) {
-        return ExceptionUtils.print(ex, GlobalErrorCode.FORBIDDEN, null, true, null);
+        return ExceptionUtils.print(ex, GlobalErrorCode.FORBIDDEN, "没有操作权限", true, null);
     }
 
     @ExceptionHandler(value = AuthenticationException.class)
     public CommonResult<?> authenticationExceptionHandler(HttpServletRequest req, AuthenticationException ex) {
-        return ExceptionUtils.print(ex, GlobalErrorCode.UNAUTHORIZED, "用户权限模块未检出错误", false, null);
+        String message = "用户信息获取失败";
+        if (ex instanceof AccountStatusException) {
+            if (ex instanceof AccountExpiredException) {
+                message = "用户身份过期";
+            } else if (ex instanceof CredentialsExpiredException) {
+                message = "用户登录过期";
+            } else if (ex instanceof DisabledException) {
+                message = "用户状态禁用";
+            } else {
+                message = "用户已被锁定";
+            }
+        } else if (ex instanceof BadCredentialsException || ex instanceof UsernameNotFoundException) {
+            message = "账号或密码错误";
+        }
+        return ExceptionUtils.print(ex, GlobalErrorCode.UNAUTHORIZED, message, false, null);
     }
 
     /**

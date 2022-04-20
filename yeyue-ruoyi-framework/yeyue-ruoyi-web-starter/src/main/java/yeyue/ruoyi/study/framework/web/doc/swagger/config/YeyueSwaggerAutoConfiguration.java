@@ -12,6 +12,7 @@ import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import yeyue.ruoyi.study.framework.common.constants.CommonConstants;
 import yeyue.ruoyi.study.framework.common.exception.common.GlobalErrorCode;
 import yeyue.ruoyi.study.framework.web.doc.swagger.properties.YeyueSwaggerProperties;
 
@@ -52,16 +53,14 @@ public class YeyueSwaggerAutoConfiguration {
                 .directModelSubstitute(LocalDate.class, String.class)
                 .directModelSubstitute(LocalTime.class, String.class)
                 .directModelSubstitute(LocalDateTime.class, String.class)
+                .useDefaultResponseMessages(false)
                 // default配置默认读取所有接口
                 .select()
                 .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
                 .paths(PathSelectors.any())
                 .build()
-                .extensions(openApiExtensionResolver.buildSettingExtensions())
-                // .securitySchemes(securitySchemes())
-                // .globalRequestParameters(globalRequestParameters())
-                // .securityContexts(securityContexts())
-                ;
+                .globalRequestParameters(globalRequestParameters())
+                .extensions(openApiExtensionResolver.buildSettingExtensions());
     }
 
     /**
@@ -85,5 +84,11 @@ public class YeyueSwaggerAutoConfiguration {
                         .code(errorEnums.getCode())
                         .description(errorEnums.getMsg())
                         .build()).collect(Collectors.toList());
+    }
+
+    private static List<RequestParameter> globalRequestParameters() {
+        RequestParameterBuilder tenantParameter = new RequestParameterBuilder().name(CommonConstants.AUTHORIZATION_HEADER).description("鉴权信息").required(false)
+                .in(ParameterType.HEADER).example(new ExampleBuilder().value(CommonConstants.AUTHORIZATION_TOKEN_PREFIX + "test").build());
+        return Collections.singletonList(tenantParameter.build());
     }
 }

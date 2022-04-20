@@ -84,7 +84,7 @@ public abstract class DateUtils {
                     target = ts / 1000;
                     break;
                 default:
-                    throw new ServiceException(GlobalErrorCode.ENUM_VALUE_CANNOT_DEFAULT);
+                    throw new ServiceException(GlobalErrorCode.DATA_NOT_MATCH_ENUMS);
             }
             return new Date(target);
         });
@@ -101,7 +101,7 @@ public abstract class DateUtils {
                 case 16:
                     return target * 1000L;
                 default:
-                    throw new ServiceException(GlobalErrorCode.ENUM_VALUE_CANNOT_DEFAULT);
+                    throw new ServiceException(GlobalErrorCode.DATA_NOT_MATCH_ENUMS);
             }
         });
     }

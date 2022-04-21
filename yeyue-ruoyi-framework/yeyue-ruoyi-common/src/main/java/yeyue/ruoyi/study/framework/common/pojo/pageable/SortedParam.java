@@ -1,15 +1,15 @@
 package yeyue.ruoyi.study.framework.common.pojo.pageable;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.*;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
-import yeyue.ruoyi.study.framework.common.enums.QuerySortOrderEnum;
+import yeyue.ruoyi.study.framework.common.enums.SortOrderEnum;
 import yeyue.ruoyi.study.framework.common.validation.annotation.InStringEnum;
 
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
-
-import static yeyue.ruoyi.study.framework.common.constants.CommonConstants.*;
 
 /**
  * 分页排序参数
@@ -28,7 +28,7 @@ public class SortedParam implements Serializable {
 
     @ApiModelProperty(value = "顺序")
     @NotEmpty(message = "查询顺序不可为空")
-    @InStringEnum(value = QuerySortOrderEnum.class, message = "查询顺序可选值为%s")
+    @InStringEnum(value = SortOrderEnum.class, message = "查询顺序可选值为%s")
     private String order;
 
     /**
@@ -37,7 +37,7 @@ public class SortedParam implements Serializable {
     public static SortedParam asc(String field) {
         SortedParam s = new SortedParam();
         s.field = field;
-        s.order = ORDER_ASC;
+        s.order = SortOrderEnum.ASC.getOrder();
         return s;
     }
 
@@ -47,15 +47,19 @@ public class SortedParam implements Serializable {
     public static SortedParam desc(String field) {
         SortedParam s = new SortedParam();
         s.field = field;
-        s.order = ORDER_DESC;
+        s.order = SortOrderEnum.DESC.getOrder();
         return s;
     }
 
-    public boolean ifAsc() {
-        return StringUtils.equals(this.order, ORDER_ASC);
-    }
-
-    public boolean ifDesc() {
-        return StringUtils.equals(this.order, ORDER_DESC);
+    /**
+     * 是否倒序
+     *
+     * @return 结果
+     */
+    @JsonIgnore
+    @JSONField(serialize = false, deserialize = false)
+    @ApiModelProperty(hidden = true)
+    public boolean isDesc() {
+        return StringUtils.equals(this.order, SortOrderEnum.DESC.getOrder());
     }
 }

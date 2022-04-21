@@ -8,8 +8,6 @@ import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.List;
 
-import static yeyue.ruoyi.study.framework.common.constants.CommonConstants.*;
-
 /**
  * 分页查询参数
  *
@@ -19,6 +17,9 @@ import static yeyue.ruoyi.study.framework.common.constants.CommonConstants.*;
 @Data
 @ApiModel
 public abstract class PageParam implements Serializable {
+
+    public static final Integer PAGE_NO = 1;
+    public static final Integer PAGE_SIZE = 10;
 
     // TODO: 2022/4/10 使用参数校验
 

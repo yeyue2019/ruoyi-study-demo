@@ -9,67 +9,9 @@ package yeyue.ruoyi.study.framework.common.constants;
 public abstract class CommonConstants {
 
     /**
-     * 业务成功返回码
+     * 字符串连接分隔符
      */
-    public static final int CODE_SUCCESS_INT = 0;
-    public static final String CODE_SUCCESS_STR = String.valueOf(CODE_SUCCESS_INT);
-
-    /**
-     * 时间Pattern实例
-     */
-    public static final String DATETIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
-    public static final String DATE_PATTERN = "yyyy-MM-dd";
-    public static final String TIME_PATTERN = "HH:mm:ss";
-
     public static final String INDEX_JOIN = ":";
     public static final String SPLIT_JOIN = ",";
-    /**
-     * 分页查询关键字
-     */
-    public static final Integer PAGE_NO = 1;
-    public static final Integer PAGE_SIZE = 10;
-
-    /**
-     * 顺序 - 升序
-     */
-    public static final String ORDER_ASC = "asc";
-    /**
-     * 顺序 - 降序
-     */
-    public static final String ORDER_DESC = "desc";
-
-    /**
-     * http请求的追踪信息
-     */
-
-    public static final String TRACE_REQ_ALL = "request.all";
-    public static final String TRACE_REQ_URL = "request.url";
-    public static final String TRACE_REQ_METHOD = "request.method";
-    public static final String TRACE_REQ_PARAM = "request.param";
-    public static final String TRACE_REQ_HEADER = "request.header";
-    public static final String TRACE_REQ_BODY = "request.body";
-
-    public static final String TRACE_RES_ALL = "response.all";
-    public static final String TRACE_RES_STATUS = "response.status";
-    public static final String TRACE_RES_BODY = "response.body";
-    public static final String TRACE_RES_HEADER = "response.header";
-
-    public static final String TRACE_HEADER = "TRACE-ID";
-
-    public static final String AUTHORIZATION_TOKEN_PREFIX = "Bearer ";
-    public static final String AUTHORIZATION_HEADER = "Authorization";
-
-    public static final String TEST_TOKEN_NAME = "ruoyi-study-demo";
-
-    public static final String PATTERN_ALL = "/**";
-
-    public static final String CORS_ALLOW = "*";
-
-    // servlet拦截器执行顺序
-
-    public static final int CORS_FILTER_ORDER = Integer.MIN_VALUE;
-
-    public static final int TRACE_FILTER_ORDER = CORS_FILTER_ORDER + 1;
-
-    public static final int SERVICE_FILTER_ORDER = Integer.MIN_VALUE + 2;
+    public static final String REGEX_JOIN = "-";
 }

@@ -4,7 +4,7 @@ import io.swagger.annotations.*;
 import lombok.Data;
 import yeyue.ruoyi.study.framework.common.enums.GenderEnum;
 import yeyue.ruoyi.study.framework.common.validation.annotation.InStringEnum;
-import yeyue.ruoyi.study.framework.common.validation.core.ApiCommand;
+import yeyue.ruoyi.study.framework.common.validation.core.CommandGroup;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
@@ -22,8 +22,8 @@ import java.util.Set;
 public class SystemUserDomain implements Serializable {
 
     @ApiModelProperty(value = "Id")
-    @Null(groups = ApiCommand.Create.class, message = "创建时不需要传入Id")
-    @NotNull(groups = ApiCommand.Update.class, message = "用户Id不能为空")
+    @Null(groups = CommandGroup.Create.class, message = "创建时不需要传入Id")
+    @NotNull(groups = CommandGroup.Update.class, message = "用户Id不能为空")
     private Long id;
 
     @ApiModelProperty(value = "账号", required = true, example = "yeyue")
@@ -33,8 +33,8 @@ public class SystemUserDomain implements Serializable {
     private String username;
 
     @ApiModelProperty(value = "密码:只有创建时需要传入")
-    @NotEmpty(groups = ApiCommand.Create.class, message = "用户密码不能为空")
-    @Size(min = 6, max = 16, groups = ApiCommand.Create.class, message = "密码长度为6-16位")
+    @NotEmpty(groups = CommandGroup.Create.class, message = "用户密码不能为空")
+    @Size(min = 6, max = 16, groups = CommandGroup.Create.class, message = "密码长度为6-16位")
     private String password;
 
     @ApiModelProperty(value = "昵称")

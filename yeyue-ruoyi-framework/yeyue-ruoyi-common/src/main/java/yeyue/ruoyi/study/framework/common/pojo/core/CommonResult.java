@@ -3,8 +3,6 @@ package yeyue.ruoyi.study.framework.common.pojo.core;
 import io.swagger.annotations.*;
 import lombok.Data;
 
-import static yeyue.ruoyi.study.framework.common.constants.CommonConstants.CODE_SUCCESS_STR;
-
 /**
  * 结果返回
  *

@@ -98,7 +98,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = MissingServletRequestParameterException.class)
     public CommonResult<?> missingServletRequestParameterExceptionHandler(MissingServletRequestParameterException ex) {
-        return ExceptionUtils.print(ex, GlobalErrorCode.BAD_REQUEST, String.format("请求参数缺失:%s", ex.getParameterName()), false, null);
+        return ExceptionUtils.output(ex, GlobalErrorCode.BAD_REQUEST, String.format("请求参数缺失:%s", ex.getParameterName()), false, null);
     }
 
     /**
@@ -108,7 +108,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public CommonResult<?> methodArgumentTypeMismatchExceptionHandler(MethodArgumentTypeMismatchException ex) {
-        return ExceptionUtils.print(ex, GlobalErrorCode.BAD_REQUEST, String.format("请求参数类型错误:%s不属于%s类型", ex.getValue(), ex.getRequiredType()), false, null);
+        return ExceptionUtils.output(ex, GlobalErrorCode.BAD_REQUEST, String.format("请求参数类型错误:%s不属于%s类型", ex.getValue(), ex.getRequiredType()), false, null);
     }
 
 
@@ -119,7 +119,7 @@ public class GlobalExceptionHandler {
             InvalidFormatException invalidFormatException = (InvalidFormatException) ex.getCause();
             msg = String.format("请求参数数据内容错误:%s不属于%s类型", invalidFormatException.getValue(), invalidFormatException.getTargetType());
         }
-        return ExceptionUtils.print(ex, GlobalErrorCode.BAD_REQUEST, msg, false, null);
+        return ExceptionUtils.output(ex, GlobalErrorCode.BAD_REQUEST, msg, false, null);
     }
 
     /**
@@ -129,7 +129,7 @@ public class GlobalExceptionHandler {
     public CommonResult<?> methodArgumentNotValidExceptionExceptionHandler(MethodArgumentNotValidException ex) {
         FieldError fieldError = ex.getBindingResult().getFieldError();
         Assert.notNull(fieldError, "fieldError不允许为空！！！");
-        return ExceptionUtils.print(ex, GlobalErrorCode.BAD_REQUEST, String.format("请求参数不正确:%s", fieldError.getDefaultMessage()), false, null);
+        return ExceptionUtils.output(ex, GlobalErrorCode.BAD_REQUEST, String.format("请求参数不正确:%s", fieldError.getDefaultMessage()), false, null);
     }
 
     /**
@@ -139,7 +139,7 @@ public class GlobalExceptionHandler {
     public CommonResult<?> bindExceptionHandler(BindException ex) {
         FieldError fieldError = ex.getFieldError();
         Assert.notNull(fieldError, "fieldError不允许为空！！！");
-        return ExceptionUtils.print(ex, GlobalErrorCode.BAD_REQUEST, String.format("请求参数不正确:%s", fieldError.getDefaultMessage()), false, null);
+        return ExceptionUtils.output(ex, GlobalErrorCode.BAD_REQUEST, String.format("请求参数不正确:%s", fieldError.getDefaultMessage()), false, null);
     }
 
     /**
@@ -148,7 +148,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = ConstraintViolationException.class)
     public CommonResult<?> constraintViolationExceptionHandler(ConstraintViolationException ex) {
         ConstraintViolation<?> constraintViolation = ex.getConstraintViolations().iterator().next();
-        return ExceptionUtils.print(ex, GlobalErrorCode.BAD_REQUEST, String.format("请求参数不正确:%s", constraintViolation.getMessage()), false, null);
+        return ExceptionUtils.output(ex, GlobalErrorCode.BAD_REQUEST, String.format("请求参数不正确:%s", constraintViolation.getMessage()), false, null);
     }
 
     /**
@@ -156,7 +156,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = ValidationException.class)
     public CommonResult<?> validationException(ValidationException ex) {
-        return ExceptionUtils.print(ex, GlobalErrorCode.BAD_REQUEST, null, true, null);
+        return ExceptionUtils.output(ex, GlobalErrorCode.BAD_REQUEST, null, true, null);
     }
 
     /**
@@ -168,7 +168,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(NoHandlerFoundException.class)
     public CommonResult<?> noHandlerFoundExceptionHandler(NoHandlerFoundException ex) {
-        return ExceptionUtils.print(ex, GlobalErrorCode.NOT_FOUND, String.format("请求地址不存在:%s", ex.getRequestURL()), false, null);
+        return ExceptionUtils.output(ex, GlobalErrorCode.NOT_FOUND, String.format("请求地址不存在:%s", ex.getRequestURL()), false, null);
     }
 
     /**
@@ -178,7 +178,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public CommonResult<?> httpRequestMethodNotSupportedExceptionHandler(HttpRequestMethodNotSupportedException ex) {
-        return ExceptionUtils.print(ex, GlobalErrorCode.METHOD_NOT_ALLOWED, String.format("请求方法不正确:%s,支持的方法为:%s", ex.getMethod(), Arrays.toString(ex.getSupportedMethods())), false, null);
+        return ExceptionUtils.output(ex, GlobalErrorCode.METHOD_NOT_ALLOWED, String.format("请求方法不正确:%s,支持的方法为:%s", ex.getMethod(), Arrays.toString(ex.getSupportedMethods())), false, null);
     }
 
     // /**
@@ -198,7 +198,7 @@ public class GlobalExceptionHandler {
         if (ex.getRootCause() instanceof SQLException) {
             SQLException sqlEx = (SQLException) ex.getRootCause();
             String logMsg = String.format("SQL语句执行报错, pstmt:%s, reason:%s, ex:%s", sqlEx.getErrorCode(), sqlEx.getMessage(), sqlEx.getClass().getSimpleName());
-            return ExceptionUtils.print(ex, GlobalErrorCode.SQL_EXECUTE_BAD, ObjectUtils.indexJoin(sqlEx.getErrorCode(), sqlEx.getMessage()), true, logMsg);
+            return ExceptionUtils.output(ex, GlobalErrorCode.SQL_EXECUTE_BAD, ObjectUtils.indexJoin(sqlEx.getErrorCode(), sqlEx.getMessage()), true, logMsg);
         }
         return defaultExceptionHandler(req, ex);
     }
@@ -208,7 +208,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = AccessDeniedException.class)
     public CommonResult<?> accessDeniedExceptionHandler(HttpServletRequest req, AccessDeniedException ex) {
-        return ExceptionUtils.print(ex, GlobalErrorCode.FORBIDDEN, "没有操作权限", true, null);
+        return ExceptionUtils.output(ex, GlobalErrorCode.FORBIDDEN, "没有操作权限", true, null);
     }
 
     @ExceptionHandler(value = AuthenticationException.class)
@@ -227,7 +227,7 @@ public class GlobalExceptionHandler {
         } else if (ex instanceof BadCredentialsException || ex instanceof UsernameNotFoundException) {
             message = "账号或密码错误";
         }
-        return ExceptionUtils.print(ex, GlobalErrorCode.UNAUTHORIZED, message, false, null);
+        return ExceptionUtils.output(ex, GlobalErrorCode.UNAUTHORIZED, message, false, null);
     }
 
     /**
@@ -237,7 +237,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = ServiceException.class)
     public CommonResult<?> serviceExceptionHandler(ServiceException ex) {
-        return ExceptionUtils.print(ex, ex, null, false, null);
+        return ExceptionUtils.output(ex, ex, null, false, null);
     }
 
     /**
@@ -245,6 +245,6 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = Exception.class)
     public CommonResult<?> defaultExceptionHandler(HttpServletRequest req, Throwable ex) {
-        return ExceptionUtils.print(ex, GlobalErrorCode.INTERNAL_SERVER_ERROR, ExceptionUtils.getMessage(ex), true, null);
+        return ExceptionUtils.output(ex, GlobalErrorCode.INTERNAL_SERVER_ERROR, ExceptionUtils.getMessage(ex), true, null);
     }
 }

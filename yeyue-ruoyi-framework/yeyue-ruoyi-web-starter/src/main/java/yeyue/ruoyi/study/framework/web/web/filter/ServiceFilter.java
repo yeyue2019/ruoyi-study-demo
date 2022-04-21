@@ -4,10 +4,10 @@ import com.alibaba.fastjson.JSON;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.filter.OncePerRequestFilter;
-import yeyue.ruoyi.study.framework.common.constants.CommonConstants;
 import yeyue.ruoyi.study.framework.common.monitor.trace.util.TracerUtils;
 import yeyue.ruoyi.study.framework.common.pojo.core.CommonResult;
-import yeyue.ruoyi.study.framework.common.pojo.http.*;
+import yeyue.ruoyi.study.framework.common.servlet.constants.ServletConstants;
+import yeyue.ruoyi.study.framework.common.servlet.pojo.*;
 import yeyue.ruoyi.study.framework.common.servlet.util.ServletUtils;
 import yeyue.ruoyi.study.framework.common.servlet.wrapper.*;
 import yeyue.ruoyi.study.framework.common.util.match.AntPathMatchUtils;
@@ -28,6 +28,8 @@ import java.io.IOException;
 public class ServiceFilter extends OncePerRequestFilter {
 
     private final GlobalExceptionHandler handler;
+
+    // TODO: 2022/4/21 这里考虑使用配置文件实现
 
     private static final String[] CACHE_PATTERNS = new String[]{
             "/ruoyi/**",
@@ -53,7 +55,7 @@ public class ServiceFilter extends OncePerRequestFilter {
             traceTag(logReq, logRes);
         } catch (Throwable e) {
             CommonResult<?> errorCode = handler.filterExceptionHandler(reqWrapper, e);
-            logRes = new HttpResponse(200, JSON.toJSONString(errorCode), ServletUtils.getHeaderMap(reqWrapper));
+            logRes = new HttpResponse().setStatus(200).setBody(JSON.toJSONString(errorCode)).setHeaders(ServletUtils.getHeaderMap(reqWrapper));
             log.warn("打印异常执行完成的请求:请求内容:{},响应内容:{},执行毫秒数:{}", logReq, logRes, System.currentTimeMillis() - start);
             traceTag(logReq, logRes);
             ServletUtils.writeJSON(resWrapper, errorCode);
@@ -61,8 +63,8 @@ public class ServiceFilter extends OncePerRequestFilter {
     }
 
     public static void traceTag(HttpRequest request, HttpResponse response) {
-        TracerUtils.tag(CommonConstants.TRACE_REQ_ALL, request);
-        TracerUtils.tag(CommonConstants.TRACE_RES_ALL, response);
+        TracerUtils.tag(ServletConstants.TRACE_REQUEST, request);
+        TracerUtils.tag(ServletConstants.TRACE_RESPONSE, response);
     }
 
 }

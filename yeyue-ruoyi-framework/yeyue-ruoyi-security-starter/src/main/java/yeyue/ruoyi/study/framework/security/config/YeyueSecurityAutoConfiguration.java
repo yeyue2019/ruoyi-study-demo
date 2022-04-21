@@ -24,8 +24,6 @@ public class YeyueSecurityAutoConfiguration {
     /**
      * Spring Security 加密器
      * 考虑到安全性，这里采用 BCryptPasswordEncoder 加密器
-     *
-     * @see <a href="http://stackabuse.com/password-encoding-with-spring-security/">Password Encoding with Spring Security</a>
      */
     @Bean
     public PasswordEncoder passwordEncoder() {

@@ -1,11 +1,11 @@
-package yeyue.ruoyi.study.framework.common.pojo.http;
+package yeyue.ruoyi.study.framework.common.servlet.pojo;
 
 import com.alibaba.fastjson.*;
 import io.swagger.annotations.*;
 import lombok.*;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.Map;
 
 /**
  * Http请求[不包含文件上传]
@@ -33,25 +33,8 @@ public class HttpRequest implements Serializable {
     @ApiModelProperty(value = "请求体")
     private String body;
 
-    public HttpRequest(String url, String method, Map<String, String[]> params, Map<String, String> headers, String body) {
-        this.url = url;
-        this.method = method;
-        this.params = params;
-        this.headers = headers;
-        this.body = body;
-    }
-
-    public HttpRequest(String url, String method, Map<String, String[]> params, Map<String, String> headers) {
-        this(url, method, params, headers, null);
-    }
-
-    public HttpRequest(String url, String method, Map<String, String> headers, String body) {
-        this(url, method, new HashMap<>(0), headers, body);
-    }
-
-    public HttpRequest(String url, String method, Map<String, String> headers) {
-        this(url, method, new HashMap<>(0), headers, null);
-    }
+    @ApiModelProperty(value = "发起请求的IP")
+    private String ip;
 
     @Override
     public String toString() {
@@ -61,6 +44,7 @@ public class HttpRequest implements Serializable {
         json.put("params", this.params);
         json.put("headers", this.headers);
         json.put("body", JSONValidator.from(this.body).validate() ? JSON.parse(this.body) : body);
+        json.put("ip", this.ip);
         return json.toJSONString();
     }
 }

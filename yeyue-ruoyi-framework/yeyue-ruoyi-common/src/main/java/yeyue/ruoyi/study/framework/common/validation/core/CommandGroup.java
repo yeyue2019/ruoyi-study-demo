@@ -3,12 +3,12 @@ package yeyue.ruoyi.study.framework.common.validation.core;
 import javax.validation.groups.Default;
 
 /**
- * 通用Api操作
+ * 操作所属分组
  *
  * @author yeyue
  * @date 2022-04-18 14:18:37
  */
-public interface ApiCommand {
+public interface CommandGroup {
 
     interface Create extends Default {
     }

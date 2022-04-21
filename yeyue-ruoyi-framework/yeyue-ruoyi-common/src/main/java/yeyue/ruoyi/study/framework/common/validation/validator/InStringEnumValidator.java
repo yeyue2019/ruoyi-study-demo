@@ -33,9 +33,6 @@ public class InStringEnumValidator implements ConstraintValidator<InStringEnum, 
         if (value == null) {
             return true;
         }
-        if (this.values.contains(value)) {
-            return true;
-        }
-        return false;
+        return this.values.contains(value);
     }
 }

@@ -7,7 +7,7 @@ import yeyue.ruoyi.study.framework.common.enums.CommonStatusEnum;
 import yeyue.ruoyi.study.framework.common.pojo.core.CommonResult;
 import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
 import yeyue.ruoyi.study.framework.common.validation.annotation.InIntEnum;
-import yeyue.ruoyi.study.framework.common.validation.core.ApiCommand;
+import yeyue.ruoyi.study.framework.common.validation.core.CommandGroup;
 import yeyue.ruoyi.study.module.system.api.domain.user.SystemUserDomain;
 import yeyue.ruoyi.study.module.system.api.service.user.SystemUserService;
 import yeyue.ruoyi.study.module.system.api.service.user.dto.*;
@@ -31,13 +31,13 @@ public class SystemUserController {
 
     @ApiOperation(value = "新增系统用户")
     @PutMapping("/create")
-    public CommonResult<Long> create(@Validated({ApiCommand.Create.class}) @RequestBody SystemUserDomain create) {
+    public CommonResult<Long> create(@Validated({CommandGroup.Create.class}) @RequestBody SystemUserDomain create) {
         return CommonResult.success(service.create(create));
     }
 
     @ApiOperation(value = "修改用户信息")
     @PostMapping("/update")
-    public CommonResult<Void> update(@Validated({ApiCommand.Update.class}) @RequestBody SystemUserDomain update) {
+    public CommonResult<Void> update(@Validated({CommandGroup.Update.class}) @RequestBody SystemUserDomain update) {
         service.update(update);
         return CommonResult.success();
     }

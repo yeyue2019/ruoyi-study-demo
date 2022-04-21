@@ -1,7 +1,6 @@
 package yeyue.ruoyi.study.framework.common.enums;
 
 import lombok.*;
-import yeyue.ruoyi.study.framework.common.constants.CommonConstants;
 import yeyue.ruoyi.study.framework.common.validation.core.StringEnum;
 
 /**
@@ -12,16 +11,16 @@ import yeyue.ruoyi.study.framework.common.validation.core.StringEnum;
  */
 @Getter
 @AllArgsConstructor
-public enum QuerySortOrderEnum implements StringEnum {
+public enum SortOrderEnum implements StringEnum {
 
-    asc(CommonConstants.ORDER_ASC, true),
-    desc(CommonConstants.ORDER_DESC, false);
+    ASC("asc", true),
+    DESC("desc", false);
 
     private final String order;
     private final boolean sc;
 
     @Override
     public String[] array() {
-        return new String[]{asc.name(), desc.name()};
+        return new String[]{ASC.order, DESC.order};
     }
 }

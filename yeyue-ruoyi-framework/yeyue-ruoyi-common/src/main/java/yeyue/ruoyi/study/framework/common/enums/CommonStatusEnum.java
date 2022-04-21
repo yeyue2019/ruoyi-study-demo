@@ -38,6 +38,6 @@ public enum CommonStatusEnum implements IntEnum {
 
     @Override
     public int[] array() {
-        return new int[]{1, 2};
+        return new int[]{ENABLE.status, DISABLE.status};
     }
 }

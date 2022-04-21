@@ -32,7 +32,7 @@ public class MyBatisQueryWrapper<T> extends QueryWrapper<T> {
 
     @Override
     public MyBatisQueryWrapper<T> in(String column, Object... values) {
-        return (MyBatisQueryWrapper<T>) super.in(CollectionUtils.ignoreIsNotEmpty(values), column, values);
+        return (MyBatisQueryWrapper<T>) super.in(CollectionUtils.isNotEmpty(values), column, values);
     }
 
     @Override

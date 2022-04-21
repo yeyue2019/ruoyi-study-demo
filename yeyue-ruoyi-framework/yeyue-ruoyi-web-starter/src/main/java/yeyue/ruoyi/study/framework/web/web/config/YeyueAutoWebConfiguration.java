@@ -5,7 +5,7 @@ import org.springframework.context.annotation.*;
 import org.springframework.web.cors.*;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.*;
-import yeyue.ruoyi.study.framework.common.constants.CommonConstants;
+import yeyue.ruoyi.study.framework.common.servlet.constants.ServletConstants;
 import yeyue.ruoyi.study.framework.common.servlet.util.ServletUtils;
 import yeyue.ruoyi.study.framework.web.web.filter.ServiceFilter;
 import yeyue.ruoyi.study.framework.web.web.handler.GlobalExceptionHandler;
@@ -32,16 +32,16 @@ public class YeyueAutoWebConfiguration implements WebMvcConfigurer {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
         // 设置访问源地址
-        config.addAllowedOriginPattern(CommonConstants.CORS_ALLOW);
+        config.addAllowedOriginPattern(ServletConstants.CORS_ALLOW);
         // 设置访问源请求头
-        config.addAllowedHeader(CommonConstants.CORS_ALLOW);
+        config.addAllowedHeader(ServletConstants.CORS_ALLOW);
         // 设置访问源请求方法
-        config.addAllowedMethod(CommonConstants.CORS_ALLOW);
+        config.addAllowedMethod(ServletConstants.CORS_ALLOW);
         // 创建 UrlBasedCorsConfigurationSource 对象
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         // 对接口配置跨域设置
-        source.registerCorsConfiguration(CommonConstants.PATTERN_ALL, config);
-        return ServletUtils.createFilterBean(new CorsFilter(source), CommonConstants.CORS_FILTER_ORDER);
+        source.registerCorsConfiguration(ServletConstants.PATTERN_ALL, config);
+        return ServletUtils.createFilterBean(new CorsFilter(source), ServletConstants.CORS_FILTER_ORDER);
     }
 
     /**
@@ -49,7 +49,7 @@ public class YeyueAutoWebConfiguration implements WebMvcConfigurer {
      */
     @Bean
     public FilterRegistrationBean<ServiceFilter> serviceFilterBean() {
-        return ServletUtils.createFilterBean(new ServiceFilter(exceptionHandler), CommonConstants.SERVICE_FILTER_ORDER);
+        return ServletUtils.createFilterBean(new ServiceFilter(exceptionHandler), ServletConstants.SERVICE_FILTER_ORDER);
     }
 
     /**
@@ -64,6 +64,6 @@ public class YeyueAutoWebConfiguration implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         WebMvcConfigurer.super.addInterceptors(registry);
-        registry.addInterceptor(this.httpInterceptor()).addPathPatterns(CommonConstants.PATTERN_ALL);
+        registry.addInterceptor(this.httpInterceptor()).addPathPatterns(ServletConstants.PATTERN_ALL);
     }
 }

@@ -16,12 +16,6 @@ import yeyue.ruoyi.study.framework.common.monitor.trace.util.TracerUtils;
 @ConverterKeys({"tr"})
 public class TracerConverter extends LogEventPatternConverter {
 
-    /**
-     * Constructs an instance of LoggingEventPatternConverter.
-     *
-     * @param name  name of converter.
-     * @param style CSS style for output.
-     */
     protected TracerConverter(String name, String style) {
         super(name, style);
     }

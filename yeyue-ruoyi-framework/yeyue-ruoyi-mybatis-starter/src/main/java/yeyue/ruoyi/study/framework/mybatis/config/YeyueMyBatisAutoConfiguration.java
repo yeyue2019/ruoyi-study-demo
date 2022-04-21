@@ -17,6 +17,8 @@ import yeyue.ruoyi.study.framework.mybatis.core.injector.MyBatisSqlInjector;
 @MapperScan(basePackages = {"yeyue.ruoyi.study.**.mapper.**"})
 public class YeyueMyBatisAutoConfiguration {
 
+    // TODO: 2022/4/21 扫描的包使用配置文件指定
+
     /**
      * 使用分页插件
      */

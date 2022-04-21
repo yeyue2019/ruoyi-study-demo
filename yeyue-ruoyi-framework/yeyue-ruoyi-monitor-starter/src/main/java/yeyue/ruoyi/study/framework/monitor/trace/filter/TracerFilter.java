@@ -1,8 +1,8 @@
 package yeyue.ruoyi.study.framework.monitor.trace.filter;
 
 import org.springframework.web.filter.OncePerRequestFilter;
-import yeyue.ruoyi.study.framework.common.constants.CommonConstants;
 import yeyue.ruoyi.study.framework.common.monitor.trace.util.TracerUtils;
+import yeyue.ruoyi.study.framework.common.servlet.constants.ServletConstants;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -21,7 +21,7 @@ public class TracerFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        response.addHeader(CommonConstants.TRACE_HEADER, TracerUtils.getTraceId());
+        response.addHeader(ServletConstants.TRACE_HEADER, TracerUtils.getTraceId());
         filterChain.doFilter(request, response);
     }
 }

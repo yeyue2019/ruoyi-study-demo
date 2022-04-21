@@ -1,4 +1,4 @@
-package yeyue.ruoyi.study.framework.common.pojo.http;
+package yeyue.ruoyi.study.framework.common.servlet.pojo;
 
 import com.alibaba.fastjson.*;
 import com.alibaba.fastjson.annotation.JSONField;
@@ -31,17 +31,6 @@ public class HttpResponse implements Serializable {
 
     @ApiModelProperty(value = "响应头")
     private Map<String, String> headers;
-
-    public HttpResponse(int status, String message, String body, Map<String, String> headers) {
-        this.status = status;
-        this.message = message;
-        this.body = body;
-        this.headers = headers;
-    }
-
-    public HttpResponse(int status, String body, Map<String, String> headers) {
-        this(status, null, body, headers);
-    }
 
     @JsonIgnore
     @JSONField(serialize = false, deserialize = false)

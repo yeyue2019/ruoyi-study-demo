@@ -8,8 +8,6 @@ import org.springframework.util.Assert;
 
 import java.io.Serializable;
 
-import static yeyue.ruoyi.study.framework.common.constants.CommonConstants.CODE_SUCCESS_STR;
-
 /**
  * 错误码
  *
@@ -17,6 +15,12 @@ import static yeyue.ruoyi.study.framework.common.constants.CommonConstants.CODE_
  * @date 2022-04-08 20:06:28
  */
 public interface ErrorCode extends Serializable {
+
+    /**
+     * 业务成功返回码
+     */
+    int CODE_SUCCESS_INT = 0;
+    String CODE_SUCCESS_STR = String.valueOf(CODE_SUCCESS_INT);
 
     /**
      * 错误码

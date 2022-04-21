@@ -5,7 +5,7 @@ import io.opentracing.Tracer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.skywalking.apm.toolkit.opentracing.SkywalkingTracer;
 import org.apache.skywalking.apm.toolkit.trace.TraceContext;
-import yeyue.ruoyi.study.framework.common.monitor.trace.ids.GlobalIdGenerator;
+import yeyue.ruoyi.study.framework.common.util.ids.IdUtils;
 
 /**
  * TraceId 获取的工具类
@@ -32,7 +32,7 @@ public abstract class TracerUtils {
      * @return 结果
      */
     public static String newTraceId() {
-        return GlobalIdGenerator.generate();
+        return IdUtils.uuid(false);
     }
 
     /**

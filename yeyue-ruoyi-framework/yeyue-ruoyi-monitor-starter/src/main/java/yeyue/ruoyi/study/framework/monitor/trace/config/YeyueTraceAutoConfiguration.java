@@ -2,7 +2,7 @@ package yeyue.ruoyi.study.framework.monitor.trace.config;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.*;
-import yeyue.ruoyi.study.framework.common.constants.CommonConstants;
+import yeyue.ruoyi.study.framework.common.servlet.constants.ServletConstants;
 import yeyue.ruoyi.study.framework.common.servlet.util.ServletUtils;
 import yeyue.ruoyi.study.framework.monitor.trace.filter.TracerFilter;
 
@@ -17,6 +17,6 @@ public class YeyueTraceAutoConfiguration {
 
     @Bean
     public FilterRegistrationBean<TracerFilter> traceFilter() {
-        return ServletUtils.createFilterBean(new TracerFilter(), CommonConstants.TRACE_FILTER_ORDER);
+        return ServletUtils.createFilterBean(new TracerFilter(), ServletConstants.TRACE_FILTER_ORDER);
     }
 }

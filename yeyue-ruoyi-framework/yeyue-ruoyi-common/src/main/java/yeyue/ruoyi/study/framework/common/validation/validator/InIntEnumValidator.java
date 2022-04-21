@@ -33,9 +33,6 @@ public class InIntEnumValidator implements ConstraintValidator<InIntEnum, Intege
         if (value == null) {
             return true;
         }
-        if (this.values.contains(value)) {
-            return true;
-        }
-        return false;
+        return this.values.contains(value);
     }
 }

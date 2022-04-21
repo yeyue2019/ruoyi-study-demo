@@ -7,7 +7,7 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.web.context.request.*;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.exception.common.GlobalErrorCode;
-import yeyue.ruoyi.study.framework.common.pojo.http.*;
+import yeyue.ruoyi.study.framework.common.servlet.pojo.*;
 import yeyue.ruoyi.study.framework.common.servlet.wrapper.*;
 import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
 import yeyue.ruoyi.study.framework.common.util.network.NetworkUtils;
@@ -31,11 +31,11 @@ import static yeyue.ruoyi.study.framework.common.constants.CommonConstants.SPLIT
 public abstract class ServletUtils {
 
     /**
-     * 获取Http请求
+     * 获取当前Http请求
      *
      * @return 结果
      */
-    private static HttpServletRequest getRequest() {
+    private static HttpServletRequest withRequest() {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         if (!(requestAttributes instanceof ServletRequestAttributes)) {
             return null;
@@ -46,7 +46,7 @@ public abstract class ServletUtils {
 
 
     /**
-     * 判断是否属于JSON请求
+     * 判断Request属于JSON请求
      *
      * @param request 请求
      * @return 结果
@@ -132,7 +132,7 @@ public abstract class ServletUtils {
     /**
      * 获取响应的header
      *
-     * @param response 请求
+     * @param response 响应
      * @return 结果
      */
     public static Map<String, String> getHeaderMap(HttpServletResponse response) {
@@ -145,12 +145,22 @@ public abstract class ServletUtils {
     }
 
     /**
+     * 获取响应的状态码
+     *
+     * @param response 响应
+     * @return 结果
+     */
+    public static int getStatus(HttpServletResponse response) {
+        return response.getStatus();
+    }
+
+    /**
      * 获取Body请求体
      *
      * @param request 请求
      * @return 字符串结果
      */
-    public static String getBodyString(ServletRequest request) {
+    public static String getBodyString(HttpRequestCopyWrapper request) {
         return getBodyString(request, Charset.defaultCharset().name());
     }
 
@@ -175,6 +185,16 @@ public abstract class ServletUtils {
     }
 
     /**
+     * 获取Body响应结果
+     *
+     * @param response 响应
+     * @return 结果
+     */
+    public static String getBodyString(HttpResponseCopyWrapper response) {
+        return new String(response.toByteArray(), Charset.defaultCharset());
+    }
+
+    /**
      * 转化Http请求对象
      *
      * @param request 请求
@@ -182,7 +202,13 @@ public abstract class ServletUtils {
      */
     public static HttpRequest getRequest(HttpServletRequest request) {
         if (request instanceof HttpRequestCopyWrapper) {
-            return new HttpRequest(getUrl(request), getMethod(request), getParams(request), getHeaderMap(request), getBodyString(request));
+            return new HttpRequest()
+                    .setUrl(getUrl(request))
+                    .setMethod(getMethod(request))
+                    .setHeaders(getHeaderMap(request))
+                    .setParams(getParams(request))
+                    .setBody(getBodyString((HttpRequestCopyWrapper) request))
+                    .setIp(getClientIp(request));
         }
         return null;
     }
@@ -195,8 +221,10 @@ public abstract class ServletUtils {
      */
     public static HttpResponse getResponse(HttpServletResponse response) {
         if (response instanceof HttpResponseCopyWrapper) {
-            HttpResponseCopyWrapper wrapper = (HttpResponseCopyWrapper) response;
-            return new HttpResponse(wrapper.getStatus(), new String(wrapper.toByteArray()), getHeaderMap(response));
+            return new HttpResponse()
+                    .setStatus(getStatus(response))
+                    .setHeaders(getHeaderMap(response))
+                    .setBody(getBodyString((HttpResponseCopyWrapper) response));
         }
         return null;
     }
@@ -233,7 +261,7 @@ public abstract class ServletUtils {
             }
         }
         // 再从自定义header里查询
-        if (CollectionUtils.isNotEmpty(headerNames)) {
+        if (CollectionUtils.isNotEmpty((Object[]) headerNames)) {
             for (String header : headerNames) {
                 if (!NetworkUtils.isUnknown(ip = request.getHeader(header))) {
                     return NetworkUtils.getMultistageReverseProxyIp(ip);

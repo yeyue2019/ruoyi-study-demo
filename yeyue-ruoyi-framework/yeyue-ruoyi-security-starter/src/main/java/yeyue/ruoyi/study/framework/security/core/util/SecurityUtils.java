@@ -5,13 +5,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.*;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.util.StringUtils;
-import yeyue.ruoyi.study.framework.common.constants.CommonConstants;
+import yeyue.ruoyi.study.framework.common.servlet.constants.ServletConstants;
 import yeyue.ruoyi.study.framework.security.core.authentication.YeyueUsernamePasswordAuthenticationToken;
 import yeyue.ruoyi.study.framework.security.core.userdetails.WebLoginUser;
 
 import javax.servlet.http.HttpServletRequest;
-
-import static yeyue.ruoyi.study.framework.common.constants.CommonConstants.AUTHORIZATION_TOKEN_PREFIX;
 
 /**
  * @author yeyue
@@ -26,15 +24,15 @@ public abstract class SecurityUtils {
      * @return 认证 Token
      */
     public static String obtainAuthorization(HttpServletRequest request) {
-        String authorization = request.getHeader(CommonConstants.AUTHORIZATION_HEADER);
+        String authorization = request.getHeader(ServletConstants.AUTHORIZATION_HEADER);
         if (!StringUtils.hasText(authorization)) {
             return null;
         }
-        int index = authorization.indexOf(AUTHORIZATION_TOKEN_PREFIX);
+        int index = authorization.indexOf(ServletConstants.AUTHORIZATION_TOKEN_PREFIX);
         if (index == -1) {
             return null;
         }
-        return authorization.substring(index + AUTHORIZATION_TOKEN_PREFIX.length()).trim();
+        return authorization.substring(index + ServletConstants.AUTHORIZATION_TOKEN_PREFIX.length()).trim();
     }
 
     /**

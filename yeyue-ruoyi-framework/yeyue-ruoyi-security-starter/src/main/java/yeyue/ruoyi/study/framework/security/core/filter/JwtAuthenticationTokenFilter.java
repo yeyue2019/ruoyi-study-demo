@@ -4,7 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import yeyue.ruoyi.study.framework.common.constants.CommonConstants;
+import yeyue.ruoyi.study.framework.common.servlet.constants.ServletConstants;
 import yeyue.ruoyi.study.framework.security.core.userdetails.WebLoginUser;
 import yeyue.ruoyi.study.framework.security.core.util.SecurityUtils;
 
@@ -32,7 +32,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         if (StringUtils.isNotEmpty(token)) {
             // 根据Token读取用户
             WebLoginUser loginUser = new WebLoginUser().setId(0L).setUsername(token);
-            if (StringUtils.equals(loginUser.getUsername(), CommonConstants.TEST_TOKEN_NAME)) {
+            if (StringUtils.equals(loginUser.getUsername(), ServletConstants.TEST_TOKEN_NAME)) {
                 // 将用户放入权限拦截之前
                 SecurityUtils.buildAuthentication(loginUser, request);
             }

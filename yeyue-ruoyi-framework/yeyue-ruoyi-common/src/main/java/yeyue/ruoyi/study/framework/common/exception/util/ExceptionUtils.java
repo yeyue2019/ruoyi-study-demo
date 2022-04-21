@@ -36,13 +36,9 @@ public abstract class ExceptionUtils {
      * @param logMsg    输出的日志内容
      * @return 结果
      */
-    public static CommonResult<?> print(Throwable ex, ErrorCode errorCode, String errMsg, boolean logged, String logMsg) {
+    public static CommonResult<?> output(Throwable ex, ErrorCode errorCode, String errMsg, boolean logged, String logMsg) {
         if (logged) {
-            if (logMsg == null) {
-                log.warn("[defaultErrorPrint] : {}", getMessage(ex));
-            } else {
-                log.warn("[specialErrorPrint] : {}", logMsg);
-            }
+            log.warn("[Exception.output]:{}", logMsg == null ? getMessage(ex) : logMsg);
         }
         if (errMsg == null) {
             return CommonResult.error(errorCode);

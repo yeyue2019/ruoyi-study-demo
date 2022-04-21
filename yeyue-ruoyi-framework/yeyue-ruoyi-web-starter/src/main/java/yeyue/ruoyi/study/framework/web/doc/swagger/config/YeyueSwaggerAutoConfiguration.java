@@ -12,8 +12,8 @@ import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
-import yeyue.ruoyi.study.framework.common.constants.CommonConstants;
 import yeyue.ruoyi.study.framework.common.exception.common.GlobalErrorCode;
+import yeyue.ruoyi.study.framework.common.servlet.constants.ServletConstants;
 import yeyue.ruoyi.study.framework.web.doc.swagger.properties.YeyueSwaggerProperties;
 
 import java.time.*;
@@ -87,8 +87,8 @@ public class YeyueSwaggerAutoConfiguration {
     }
 
     private static List<RequestParameter> globalRequestParameters() {
-        RequestParameterBuilder tenantParameter = new RequestParameterBuilder().name(CommonConstants.AUTHORIZATION_HEADER).description("鉴权信息").required(false)
-                .in(ParameterType.HEADER).example(new ExampleBuilder().value(CommonConstants.AUTHORIZATION_TOKEN_PREFIX + "test").build());
+        RequestParameterBuilder tenantParameter = new RequestParameterBuilder().name(ServletConstants.AUTHORIZATION_HEADER).description("鉴权信息").required(false)
+                .in(ParameterType.HEADER);
         return Collections.singletonList(tenantParameter.build());
     }
 }

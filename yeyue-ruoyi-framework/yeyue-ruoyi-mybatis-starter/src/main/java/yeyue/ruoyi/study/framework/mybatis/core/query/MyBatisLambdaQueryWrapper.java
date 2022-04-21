@@ -33,7 +33,7 @@ public class MyBatisLambdaQueryWrapper<T> extends LambdaQueryWrapper<T> {
 
     @Override
     public MyBatisLambdaQueryWrapper<T> in(SFunction<T, ?> column, Object... values) {
-        return (MyBatisLambdaQueryWrapper<T>) super.in(CollectionUtils.ignoreIsNotEmpty(values), column, values);
+        return (MyBatisLambdaQueryWrapper<T>) super.in(CollectionUtils.isNotEmpty(values), column, values);
     }
 
     @Override

@@ -2,12 +2,16 @@ package yeyue.ruoyi.study.framework.security.config;
 
 import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
 import org.springframework.context.annotation.*;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import yeyue.ruoyi.study.framework.security.core.authentication.YeyueUserDetailsAuthenticationProvider;
+import yeyue.ruoyi.study.framework.security.core.authorize.AuthorizeRequestsCustomizer;
 import yeyue.ruoyi.study.framework.security.core.context.TransmittableThreadLocalSecurityContextHolderStrategy;
 import yeyue.ruoyi.study.framework.security.core.handler.*;
 import yeyue.ruoyi.study.framework.security.core.service.SecurityAuthService;
@@ -65,5 +69,25 @@ public class YeyueSecurityAutoConfiguration {
         methodInvokingFactoryBean.setTargetMethod("setStrategyName");
         methodInvokingFactoryBean.setArguments(TransmittableThreadLocalSecurityContextHolderStrategy.class.getName());
         return methodInvokingFactoryBean;
+    }
+
+    @Bean("frameworkAuthorizeRequestsCustomizer")
+    public AuthorizeRequestsCustomizer frameworkAuthorizeRequestsCustomizer() {
+        return new AuthorizeRequestsCustomizer() {
+            @Override
+            public void customize(ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry) {
+                registry
+                        // 静态资源，可匿名访问
+                        .antMatchers(HttpMethod.GET, "/*.html", "/**/*.html", "/**/*.css", "/**/*.js").permitAll()
+                        // 健康检查放行
+                        .antMatchers("/actuator/**", "/admin-actuator/**").permitAll()
+                        // Swagger放行
+                        .antMatchers(HttpMethod.GET, "/v3/api-docs", "/swagger-resources").permitAll()
+                        // druid放行
+                        .antMatchers("/druid/**").permitAll()
+                        // 系统测试
+                        .antMatchers("/ruoyi/test/security/login").permitAll();
+            }
+        };
     }
 }

@@ -1,4 +1,4 @@
-package yeyue.ruoyi.study.module.system.impl.entity.department;
+package yeyue.ruoyi.study.module.system.impl.entity.dept;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;

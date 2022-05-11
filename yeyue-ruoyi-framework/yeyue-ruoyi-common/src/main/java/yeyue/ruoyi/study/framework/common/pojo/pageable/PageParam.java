@@ -2,11 +2,12 @@ package yeyue.ruoyi.study.framework.common.pojo.pageable;
 
 import io.swagger.annotations.*;
 import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.io.Serializable;
-import java.util.List;
+import java.util.*;
 
 /**
  * 分页查询参数
@@ -37,4 +38,19 @@ public abstract class PageParam implements Serializable {
     @ApiModelProperty(value = "排序参数")
     @Valid
     protected List<SortedParam> sorts;
+
+    /**
+     * 添加参与排序的字段
+     */
+    public void addSortParam(SortedParam addParam) {
+        if (this.sorts == null) {
+            this.sorts = new ArrayList<>();
+        }
+        for (SortedParam sortedParam : sorts) {
+            if (StringUtils.equals(sortedParam.getField(), addParam.getField())) {
+                return;
+            }
+        }
+        sorts.add(addParam);
+    }
 }

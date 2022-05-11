@@ -1,13 +1,14 @@
-package yeyue.ruoyi.study.module.system.impl.entity.department;
+package yeyue.ruoyi.study.module.system.impl.entity.dept;
 
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
+import yeyue.ruoyi.study.framework.common.enums.CommonStatusEnum;
 import yeyue.ruoyi.study.framework.mybatis.core.entity.MyBatisEntity;
 
 import static yeyue.ruoyi.study.module.system.impl.constants.SystemTableConstants.SYSTEM_POST;
 
 /**
- * 岗位
+ * 岗位表 ： 目前仅用作用户身份的一个标识
  *
  * @author yeyue
  * @date 2022-04-18 23:16:39
@@ -15,6 +16,12 @@ import static yeyue.ruoyi.study.module.system.impl.constants.SystemTableConstant
 @Data
 @TableName(value = SYSTEM_POST, autoResultMap = true)
 public class SystemPostEntity extends MyBatisEntity {
+
+    /**
+     * 岗位序号
+     */
+    @TableId
+    private Long id;
 
     /**
      * 岗位名称
@@ -35,4 +42,10 @@ public class SystemPostEntity extends MyBatisEntity {
      * 备注
      */
     private String remark;
+
+    /**
+     * 状态
+     */
+    @TableField(updateStrategy = FieldStrategy.NEVER)
+    private CommonStatusEnum status;
 }

@@ -23,7 +23,7 @@ import javax.validation.constraints.*;
 @Api(tags = "系统用户管理")
 @Validated
 @RestController
-@RequestMapping("/ruoyi/web/sys/user/")
+@RequestMapping("/web/sys/user/")
 public class SystemUserController {
 
     @Resource

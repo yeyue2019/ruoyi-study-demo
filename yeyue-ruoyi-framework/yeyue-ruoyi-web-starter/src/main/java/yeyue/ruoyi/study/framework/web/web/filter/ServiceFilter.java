@@ -32,7 +32,7 @@ public class ServiceFilter extends OncePerRequestFilter {
     // TODO: 2022/4/21 这里考虑使用配置文件实现
 
     private static final String[] CACHE_PATTERNS = new String[]{
-            "/ruoyi/**",
+            "/web/**",
     };
 
 

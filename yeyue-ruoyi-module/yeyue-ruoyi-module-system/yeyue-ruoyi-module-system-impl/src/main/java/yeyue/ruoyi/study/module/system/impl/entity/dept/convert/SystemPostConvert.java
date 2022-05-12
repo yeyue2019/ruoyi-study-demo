@@ -22,4 +22,6 @@ public interface SystemPostConvert extends BaseEnumConvert {
     SystemPostEntity dtoToEntity(SystemPostCreateReqDTO reqDTO);
 
     SystemPostEntity dtoToEntity(SystemPostUpdateReqDTO reqDTO);
+
+    SystemPostEntity dtoToEntity(SystemPostStatusUpdateReqDTO reqDTO);
 }

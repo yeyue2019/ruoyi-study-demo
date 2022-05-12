@@ -2,6 +2,7 @@ package yeyue.ruoyi.study.module.system.impl.service.dept;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import yeyue.ruoyi.study.framework.common.enums.CommonStatusEnum;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.pojo.pageable.*;
@@ -62,6 +63,12 @@ public class SystemPostServiceImpl implements SystemPostService {
         }
         SystemPostEntity entity = SystemPostConvert.INSTANCE.dtoToEntity(reqDTO);
         postMapper.updateById(entity);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int updateStatus(SystemPostStatusUpdateReqDTO reqDTO) {
+        return postMapper.updateBatchColumnByIds(SystemPostConvert.INSTANCE.dtoToEntity(reqDTO), reqDTO.getIds());
     }
 
     @Override

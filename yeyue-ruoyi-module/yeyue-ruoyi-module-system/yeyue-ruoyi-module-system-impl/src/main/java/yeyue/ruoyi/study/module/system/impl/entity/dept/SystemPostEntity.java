@@ -20,7 +20,7 @@ public class SystemPostEntity extends MyBatisEntity {
     /**
      * 岗位序号
      */
-    @TableId
+    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**
@@ -46,6 +46,5 @@ public class SystemPostEntity extends MyBatisEntity {
     /**
      * 状态
      */
-    @TableField(updateStrategy = FieldStrategy.NEVER)
     private CommonStatusEnum status;
 }

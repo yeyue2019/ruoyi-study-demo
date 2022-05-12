@@ -3,6 +3,7 @@ package yeyue.ruoyi.study.framework.mybatis.core.injector;
 import com.baomidou.mybatisplus.core.injector.*;
 import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import com.baomidou.mybatisplus.extension.injector.methods.InsertBatchSomeColumn;
+import yeyue.ruoyi.study.framework.mybatis.core.injector.method.UpdateBatchColumnByIds;
 
 import java.util.List;
 
@@ -18,6 +19,7 @@ public class MyBatisSqlInjector extends DefaultSqlInjector {
     public List<AbstractMethod> getMethodList(Class<?> mapperClass, TableInfo tableInfo) {
         List<AbstractMethod> methods = super.getMethodList(mapperClass, tableInfo);
         methods.add(new InsertBatchSomeColumn());
+        methods.add(new UpdateBatchColumnByIds());
         return methods;
     }
 }

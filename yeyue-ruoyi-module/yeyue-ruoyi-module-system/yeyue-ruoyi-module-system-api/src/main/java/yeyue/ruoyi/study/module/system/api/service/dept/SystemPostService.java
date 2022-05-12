@@ -26,6 +26,14 @@ public interface SystemPostService {
     void update(SystemPostUpdateReqDTO reqDTO);
 
     /**
+     * 修改岗位状态
+     *
+     * @param reqDTO 修改详情
+     * @return 修改成功的数量
+     */
+    int updateStatus(SystemPostStatusUpdateReqDTO reqDTO);
+
+    /**
      * 删除岗位
      *
      * @param id 岗位编号

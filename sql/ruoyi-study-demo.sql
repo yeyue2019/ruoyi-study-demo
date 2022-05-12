@@ -1,4 +1,27 @@
 -- ----------------------------
+-- Table structure for ruoyi_system_post
+-- ----------------------------
+DROP TABLE IF EXISTS `ruoyi_system_post`;
+CREATE TABLE `ruoyi_system_post`
+(
+    `id`         bigint                                                       NOT NULL AUTO_INCREMENT COMMENT '岗位ID',
+    `code`       varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '岗位编码',
+    `name`       varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '岗位名称',
+    `sort`       int                                                          NOT NULL COMMENT '显示顺序',
+    `status`     tinyint                                                      NOT NULL COMMENT '状态（0正常 1停用）',
+    `remark`     varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci         DEFAULT NULL COMMENT '备注',
+    `creator`    varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci          DEFAULT '' COMMENT '创建者',
+    `createTime` datetime                                                     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `updater`    varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci          DEFAULT '' COMMENT '更新者',
+    `updateTime` datetime                                                     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    `deleted`    bit(1)                                                       NOT NULL DEFAULT b'0' COMMENT '是否删除',
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB
+    AUTO_INCREMENT=100
+    DEFAULT CHARSET=utf8mb4
+    COLLATE=utf8mb4_unicode_ci
+    COMMENT='系统岗位表';
+-- ----------------------------
 -- Table structure for ruoyi_system_user
 -- ----------------------------
 DROP TABLE IF EXISTS `ruoyi_system_user`;
@@ -55,28 +78,6 @@ CREATE TABLE `ruoyi_system_dept`
     DEFAULT CHARSET=utf8mb4
     COLLATE=utf8mb4_unicode_ci
     COMMENT='系统部门表';
--- ----------------------------
--- Table structure for ruoyi_system_post
--- ----------------------------
-DROP TABLE IF EXISTS `ruoyi_system_post`;
-CREATE TABLE `ruoyi_system_post`
-(
-    `id`         bigint                                                       NOT NULL AUTO_INCREMENT COMMENT '岗位ID',
-    `code`       varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '岗位编码',
-    `name`       varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '岗位名称',
-    `sort`       int                                                          NOT NULL COMMENT '显示顺序',
-    `status`     tinyint                                                      NOT NULL COMMENT '状态（0正常 1停用）',
-    `remark`     varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci         DEFAULT NULL COMMENT '备注',
-    `creator`    varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci          DEFAULT '' COMMENT '创建者',
-    `createTime` datetime                                                     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `updater`    varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci          DEFAULT '' COMMENT '更新者',
-    `updateTime` datetime                                                     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-    `deleted`    bit(1)                                                       NOT NULL DEFAULT b'0' COMMENT '是否删除',
-    PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB
-    DEFAULT CHARSET=utf8mb4
-    COLLATE=utf8mb4_unicode_ci
-    COMMENT='系统岗位表';
 -- ----------------------------
 -- Table structure for ruoyi_system_menu
 -- ----------------------------

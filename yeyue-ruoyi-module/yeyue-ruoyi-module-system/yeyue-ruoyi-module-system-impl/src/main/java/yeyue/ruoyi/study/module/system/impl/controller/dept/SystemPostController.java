@@ -39,6 +39,12 @@ public class SystemPostController {
         return CommonResult.success();
     }
 
+    @ApiOperation(value = "修改系统岗位状态")
+    @PostMapping("/update/status")
+    public CommonResult<Integer> update(@Validated({CommandGroup.Update.class}) @RequestBody SystemPostStatusUpdateReqDTO dto) {
+        return CommonResult.success(service.updateStatus(dto));
+    }
+
     @ApiOperation(value = "删除系统岗位")
     @DeleteMapping("/delete")
     public CommonResult<Void> delete(@NotNull(message = "岗位编号不能为空") @RequestParam Long id) {

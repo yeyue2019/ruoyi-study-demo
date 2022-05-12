@@ -4,11 +4,13 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.*;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import org.apache.ibatis.annotations.Param;
 import yeyue.ruoyi.study.framework.common.pojo.pageable.*;
 import yeyue.ruoyi.study.framework.mybatis.core.util.MyBatisUtils;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -24,7 +26,7 @@ public interface MyBatisMapper<T> extends BaseMapper<T> {
      * @param queryWrapper 查询条件
      * @return 结果
      */
-    default PageResult<T> selectPage(PageParam queryParam, @Param("ew") Wrapper<T> queryWrapper) {
+    default PageResult<T> selectPage(PageParam queryParam, @Param(Constants.WRAPPER) Wrapper<T> queryWrapper) {
         IPage<T> mpPage = MyBatisUtils.buildPage(queryParam);
         selectPage(mpPage, queryWrapper);
         return new PageResult<>(mpPage.getRecords(), mpPage.getTotal());
@@ -120,5 +122,14 @@ public interface MyBatisMapper<T> extends BaseMapper<T> {
      * @param entities 保存的对象集合
      * @return 保存成功的数量
      */
-    int insertBatchSomeColumn(Collection<T> entities);
+    int insertBatchSomeColumn(@Param("list") Collection<T> entities);
+
+    /**
+     * 根据id批量保存
+     *
+     * @param entity 保存的实体数量
+     * @param idList id集合
+     * @return 保存成功的数量
+     */
+    int updateBatchColumnByIds(@Param(Constants.ENTITY) T entity, @Param(Constants.COLLECTION) Collection<? extends Serializable> idList);
 }

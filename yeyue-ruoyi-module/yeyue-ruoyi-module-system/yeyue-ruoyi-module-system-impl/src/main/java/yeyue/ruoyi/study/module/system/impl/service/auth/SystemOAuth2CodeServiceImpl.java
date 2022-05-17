@@ -69,7 +69,7 @@ public class SystemOAuth2CodeServiceImpl implements SystemOAuth2CodeService {
         if (entity.getExpiresTime() != null && entity.getExpiresTime().isBefore(now)) {
             throw new ServiceException(SystemErrorCode.OAUTH2_CODE_EXPIRES);
         }
-        SystemOAuth2AccessTokenDomain accessToken = tokenService.createAccessToken(new SystemOAuth2AccessTokenCreateReqDTO().setClientId(entity.getClientId()).setUserId(entity.getUserId()));
+        SystemOAuth2AccessTokenDomain accessToken = tokenService.create(new SystemOAuth2AccessTokenCreateReqDTO().setClientId(entity.getClientId()).setUserId(entity.getUserId()));
         entity.setAccessToken(accessToken.getAccessToken());
         entity.setRefreshToken(accessToken.getRefreshToken());
         entity.setStatus(CommonStatusEnum.DISABLE);

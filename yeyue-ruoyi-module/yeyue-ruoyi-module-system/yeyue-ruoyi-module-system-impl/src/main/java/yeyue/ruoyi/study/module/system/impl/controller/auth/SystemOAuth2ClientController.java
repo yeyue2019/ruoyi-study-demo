@@ -17,7 +17,7 @@ import javax.validation.constraints.NotNull;
  * @author yeyue
  * @date 2022-05-17 10:58:40
  */
-@Api(tags = "OAuth2协议")
+@Api(tags = "OAuth2协议管理")
 @Validated
 @RestController
 @RequestMapping("/web/sys/oauth2/client")

@@ -64,6 +64,10 @@ public class SystemOAuth2ClientServiceImpl implements SystemOAuth2ClientService 
 
     @Override
     public void delete(Long id) {
+        SystemOAuth2ClientEntity entity = clientMapper.selectById(id);
+        if (entity == null) {
+            throw new ServiceException(SystemErrorCode.OAUTH2_CLIENT_NOT_EXISTS);
+        }
         clientMapper.deleteById(id);
     }
 
@@ -79,5 +83,17 @@ public class SystemOAuth2ClientServiceImpl implements SystemOAuth2ClientService 
                 .like(SystemOAuth2ClientEntity::getName, reqDTO.getName())
                 .eq(SystemOAuth2ClientEntity::getStatus, reqDTO.getStatus()));
         return CollectionUtils.convertPage(pageResult, SystemOAuth2ClientConvert.INSTANCE::toDomain);
+    }
+
+    @Override
+    public SystemOAuth2ClientDomain getByClientId(String clientId) {
+        SystemOAuth2ClientEntity entity = clientMapper.selectOne(SystemOAuth2ClientEntity::getClientId, clientId);
+        if (entity == null) {
+            throw new ServiceException(SystemErrorCode.OAUTH2_CLIENT_NOT_EXISTS);
+        }
+        if (entity.getStatus() == CommonStatusEnum.DISABLE) {
+            throw new ServiceException(SystemErrorCode.OAUTH2_CLIENT_STATUS_DISABLE);
+        }
+        return SystemOAuth2ClientConvert.INSTANCE.toDomain(entity);
     }
 }

@@ -1,13 +1,9 @@
 package yeyue.ruoyi.study.module.system.impl.entity.auth;
 
 import com.baomidou.mybatisplus.annotation.*;
-import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import lombok.Data;
 import yeyue.ruoyi.study.framework.common.enums.CommonStatusEnum;
 import yeyue.ruoyi.study.framework.mybatis.core.entity.MyBatisEntity;
-import yeyue.ruoyi.study.module.system.api.enums.OAuth2GrantTypeEnum;
-
-import java.util.List;
 
 import static yeyue.ruoyi.study.module.system.impl.constants.SystemTableConstants.SYSTEM_AUTH_CLIENT;
 
@@ -28,7 +24,7 @@ public class SystemOAuth2ClientEntity extends MyBatisEntity {
     private Long id;
 
     /**
-     * 客户端编号
+     * 客户端Id
      */
     private String clientId;
 
@@ -43,19 +39,17 @@ public class SystemOAuth2ClientEntity extends MyBatisEntity {
     private String name;
 
     /**
-     * logo
-     */
-    private String logo;
-
-    /**
      * 描述
      */
     private String description;
 
+
+    // 客户端配置
+
     /**
-     * 状态
+     * 授权码有效期
      */
-    private CommonStatusEnum status;
+    private Integer codeValiditySeconds;
 
     /**
      * 访问令牌有效期
@@ -67,46 +61,10 @@ public class SystemOAuth2ClientEntity extends MyBatisEntity {
      */
     private Integer refreshTokenValiditySeconds;
 
-    /**
-     * 可重定向的 URI 地址
-     */
-    @TableField(typeHandler = JacksonTypeHandler.class)
-    private List<String> redirectUris;
+    // TODO: 2022/5/17 授权的一些配置 暂时注释掉了
 
     /**
-     * 是否自动授权
+     * 状态
      */
-    private Boolean autoApprove;
-
-
-    /**
-     * 授权类型（模式）
-     * <p>
-     * 枚举 {@link OAuth2GrantTypeEnum}
-     */
-    @TableField(typeHandler = JacksonTypeHandler.class)
-    private List<String> authorizedGrantTypes;
-
-    /**
-     * 授权范围
-     */
-    @TableField(typeHandler = JacksonTypeHandler.class)
-    private List<String> scopes;
-
-    /**
-     * 权限
-     */
-    @TableField(typeHandler = JacksonTypeHandler.class)
-    private List<String> authorities;
-
-    /**
-     * 资源
-     */
-    @TableField(typeHandler = JacksonTypeHandler.class)
-    private List<String> resourceIds;
-
-    /**
-     * 附加信息，JSON 格式
-     */
-    private String additionalInformation;
+    private CommonStatusEnum status;
 }

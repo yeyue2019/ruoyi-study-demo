@@ -21,6 +21,14 @@ public interface RedisRepository {
     boolean delete(String name, Object id);
 
     /**
+     * 删除缓存
+     *
+     * @param name 缓存声明名称
+     * @param ids  缓存Id集合
+     */
+    void delete(String name, Collection<Object> ids);
+
+    /**
      * 设置缓存
      *
      * @param name   键名称

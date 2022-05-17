@@ -41,8 +41,24 @@ public class RedisRepositoryImpl implements RedisRepository {
         try {
             return redissonClient.getBucket(ObjectUtils.indexJoin(name, id)).delete();
         } catch (Throwable e) {
-            log.error("[RedisRepository][delete]请求失败", e);
+            log.error("[RedisRepository][delete][1]请求失败", e);
             return false;
+        }
+    }
+
+    @Override
+    public void delete(String name, Collection<Object> ids) {
+        if (CollectionUtils.isEmpty(ids)) {
+            return;
+        }
+        try {
+            RBatch batch = redissonClient.createBatch();
+            ids.forEach(id -> {
+                batch.getBucket(ObjectUtils.indexJoin(name, id)).deleteAsync();
+            });
+            batch.execute();
+        } catch (Throwable e) {
+            log.error("[RedisRepository][delete][2]请求失败", e);
         }
     }
 

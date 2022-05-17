@@ -2,6 +2,7 @@ package yeyue.ruoyi.study.module.system.impl.entity.auth;
 
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
+import yeyue.ruoyi.study.framework.common.enums.CommonStatusEnum;
 import yeyue.ruoyi.study.framework.mybatis.core.entity.MyBatisEntity;
 
 import java.time.LocalDateTime;
@@ -30,6 +31,21 @@ public class SystemOAuth2CodeEntity extends MyBatisEntity {
     private String code;
 
     /**
+     * 客户端编号
+     */
+    private String clientId;
+
+    /**
+     * 用户编号
+     */
+    private String userId;
+
+    /**
+     * 过期时间
+     */
+    private LocalDateTime expiresTime;
+
+    /**
      * 访问令牌
      */
     private String accessToken;
@@ -40,18 +56,7 @@ public class SystemOAuth2CodeEntity extends MyBatisEntity {
     private String refreshToken;
 
     /**
-     * 过期时间
+     * 状态
      */
-    private LocalDateTime expiresTime;
-
-    /**
-     * 客户端编号
-     */
-    private String clientId;
-
-    /**
-     * 用户编号
-     */
-    private Long userId;
-
+    private CommonStatusEnum status;
 }

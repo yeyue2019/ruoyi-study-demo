@@ -31,7 +31,7 @@ public class SystemOAuth2RefreshTokenEntity extends MyBatisEntity {
     /**
      * 用户id
      */
-    private Long userId;
+    private String userId;
 
     /**
      * 客户端id

@@ -55,4 +55,12 @@ public interface SystemOAuth2ClientService {
      * @return 结果
      */
     PageResult<SystemOAuth2ClientDomain> list(SystemOAuth2ClientPageReqDTO reqDTO);
+
+    /**
+     * 根据缓存获取客户端
+     *
+     * @param clientId 客户端Id
+     * @return 结果
+     */
+    SystemOAuth2ClientDomain getByClientId(String clientId);
 }

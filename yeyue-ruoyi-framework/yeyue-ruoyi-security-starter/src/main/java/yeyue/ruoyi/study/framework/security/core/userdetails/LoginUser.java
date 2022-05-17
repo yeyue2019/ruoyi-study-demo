@@ -16,7 +16,7 @@ import java.util.*;
  * @date 2022-04-19 13:37:09
  */
 @Data
-public class WebLoginUser implements UserDetails {
+public class LoginUser implements UserDetails {
 
     private Long id;
 

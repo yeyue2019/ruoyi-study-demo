@@ -6,8 +6,9 @@ import org.springframework.security.core.context.*;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.util.StringUtils;
 import yeyue.ruoyi.study.framework.common.servlet.constants.ServletConstants;
+import yeyue.ruoyi.study.framework.common.servlet.security.WebSecurityUtils;
 import yeyue.ruoyi.study.framework.security.core.authentication.YeyueUsernamePasswordAuthenticationToken;
-import yeyue.ruoyi.study.framework.security.core.userdetails.WebLoginUser;
+import yeyue.ruoyi.study.framework.security.core.userdetails.LoginUser;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -48,15 +49,42 @@ public abstract class SecurityUtils {
         return context.getAuthentication();
     }
 
+    /**
+     * 获取当前用户
+     *
+     * @return 当前用户
+     */
+    public static LoginUser getLoginUser() {
+        Authentication authentication = getAuthentication();
+        if (authentication == null) {
+            return null;
+        }
+        return authentication.getPrincipal() instanceof LoginUser ? (LoginUser) authentication.getPrincipal() : null;
+    }
+
+    /**
+     * 设置当前用户
+     *
+     * @param loginUser 当前用户
+     * @param request   请求
+     */
+    public static void setLoginUser(LoginUser loginUser, HttpServletRequest request) {
+        // 创建 Authentication，并设置到上下文
+        Authentication authentication = buildAuthentication(loginUser, request);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        // 放到common需要的上下文中
+        WebSecurityUtils.setLoginUserId(request, String.valueOf(loginUser.getId()));
+    }
+
 
     /**
      * 构建用户登录身份
      */
-    public static void buildAuthentication(WebLoginUser loginUser, HttpServletRequest request) {
+    private static Authentication buildAuthentication(LoginUser loginUser, HttpServletRequest request) {
         // 创建 UsernamePasswordAuthenticationToken 对象
         UsernamePasswordAuthenticationToken authenticationToken = new YeyueUsernamePasswordAuthenticationToken(
                 loginUser, null, loginUser.getAuthorities());
         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+        return authenticationToken;
     }
 }

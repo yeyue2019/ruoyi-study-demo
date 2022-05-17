@@ -89,8 +89,6 @@ public class GlobalExceptionHandler {
 
     // 全局使用GlobalErrorCode 便于Swagger管理
 
-    // TODO: 2022/4/11 后面考虑错误日志输出的去留
-
     /**
      * 处理 SpringMVC 请求参数缺失
      * <p>

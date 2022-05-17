@@ -17,7 +17,8 @@ public enum SystemErrorCode implements ErrorCode {
     POST_CODE_DUPLICATE("10002", "岗位编码已存在"),
     POST_NOT_FOUND("10003", "当前岗位不存在"),
 
-
+    OAUTH2_CLIENT_EXIST("10101", "OAuth2 客户端编号已存在"),
+    OAUTH2_CLIENT_NOT_EXISTS("10102", "OAuth2 客户端不存在"),
     ;
 
     private final String code;

@@ -13,8 +13,6 @@ import org.springframework.context.annotation.*;
 @Configuration
 public class YeyueRedisAutoConfiguration {
 
-    // TODO: 2022/4/9 因为封装实现的原因 不使用redisTemplate作为redis操作工具 使用Redisson的RedissonClient
-
     /**
      * 使用系统中存在的ObjectMapper作为JsonJacksonCodec的序列化工具
      */

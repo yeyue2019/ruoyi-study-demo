@@ -22,8 +22,6 @@ public abstract class PageParam implements Serializable {
     public static final Integer PAGE_NO = 1;
     public static final Integer PAGE_SIZE = 10;
 
-    // TODO: 2022/4/10 使用参数校验
-
     @ApiModelProperty(value = "页码，从 1 开始", required = true, example = "1")
     @NotNull(message = "页码不能为空")
     @Min(value = 1, message = "页码最小值为 1")

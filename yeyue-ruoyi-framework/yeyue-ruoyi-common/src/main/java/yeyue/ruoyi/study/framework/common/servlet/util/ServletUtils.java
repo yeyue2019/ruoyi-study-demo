@@ -35,7 +35,7 @@ public abstract class ServletUtils {
      *
      * @return 结果
      */
-    private static HttpServletRequest withRequest() {
+    public static HttpServletRequest withRequest() {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         if (!(requestAttributes instanceof ServletRequestAttributes)) {
             return null;

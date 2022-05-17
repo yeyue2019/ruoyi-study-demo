@@ -31,4 +31,9 @@ public abstract class ServletConstants {
     public static final int TRACE_FILTER_ORDER = CORS_FILTER_ORDER + 1;
 
     public static final int SERVICE_FILTER_ORDER = Integer.MIN_VALUE + 2;
+
+    // 自定义参数
+
+    public static final String REQUEST_ATTRIBUTE_SECURITY_USER_ID = "security.userId";
+
 }

@@ -13,8 +13,6 @@ import yeyue.ruoyi.study.framework.common.pojo.core.ErrorCode;
 @AllArgsConstructor
 public enum GlobalErrorCode implements ErrorCode {
 
-    // TODO: 2022/4/10 因为需要将错误码在Swagger输出，所以全局错误码统一进行规定，存在错误码子类时再额外考虑其处理场景
-
     SUCCESS(CODE_SUCCESS_STR, "success"),
 
     BAD_REQUEST("400", "请求参数存在错误"),

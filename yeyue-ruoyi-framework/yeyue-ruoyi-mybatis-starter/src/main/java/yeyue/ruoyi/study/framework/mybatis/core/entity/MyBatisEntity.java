@@ -37,7 +37,7 @@ public abstract class MyBatisEntity implements Serializable {
      * 更新者
      */
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    protected LocalDateTime updater;
+    protected String updater;
 
     /**
      * 逻辑删除标识位

@@ -7,7 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import yeyue.ruoyi.study.framework.common.servlet.constants.ServletConstants;
 import yeyue.ruoyi.study.framework.security.core.service.SecurityAuthService;
-import yeyue.ruoyi.study.framework.security.core.userdetails.WebLoginUser;
+import yeyue.ruoyi.study.framework.security.core.userdetails.LoginUser;
 
 import javax.annotation.Resource;
 
@@ -27,7 +27,7 @@ public class MockAuthServiceImpl implements SecurityAuthService {
         if (!StringUtils.equals(username, ServletConstants.TEST_TOKEN_NAME)) {
             throw new UsernameNotFoundException(username);
         }
-        WebLoginUser user = new WebLoginUser();
+        LoginUser user = new LoginUser();
         user.setUsername(username);
         user.setPassword(passwordEncoder.encode("123456"));
         user.setId(1L);

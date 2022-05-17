@@ -22,6 +22,105 @@ CREATE TABLE `ruoyi_system_post`
     COLLATE=utf8mb4_unicode_ci
     COMMENT='系统岗位表';
 -- ----------------------------
+-- Table structure for ruoyi_system_oauth2_client
+-- ----------------------------
+DROP TABLE IF EXISTS `ruoyi_system_oauth2_client`;
+CREATE TABLE `ruoyi_system_oauth2_client`
+(
+    `id`                          bigint                                                        NOT NULL AUTO_INCREMENT COMMENT '编号',
+    `clientId`                    varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '客户端编号',
+    `secret`                      varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '客户端密钥',
+    `name`                        varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '应用名',
+    `logo`                        varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '应用图标',
+    `description`                 varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '应用描述',
+    `status`                      tinyint                                                       NOT NULL COMMENT '状态',
+    `accessTokenValiditySeconds`  int                                                           NOT NULL COMMENT '访问令牌的有效期',
+    `refreshTokenValiditySeconds` int                                                           NOT NULL COMMENT '刷新令牌的有效期',
+    `redirectUris`                varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '可重定向的 URI 地址',
+    `autoApprove`                 bit(1)                                                        NOT NULL COMMENT '是否自动授权',
+    `authorizedGrantTypes`        varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '授权类型',
+    `scopes`                      varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '授权范围',
+    `authorities`                 varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '权限',
+    `resourceIds`                 varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '资源',
+    `additionalInformation`       varchar(4096) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '附加信息',
+    `creator`                     varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '' COMMENT '创建者',
+    `createTime`                  datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `updater`                     varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '' COMMENT '更新者',
+    `updateTime`                  datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    `deleted`                     bit(1)                                                        NOT NULL DEFAULT b'0' COMMENT '是否删除',
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB
+    AUTO_INCREMENT = 100
+    CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_unicode_ci
+    COMMENT = 'OAuth2 客户端表';
+-- ----------------------------
+-- Table structure for ruoyi_system_oauth2_code
+-- ----------------------------
+DROP TABLE IF EXISTS `ruoyi_system_oauth2_code`;
+CREATE TABLE `ruoyi_system_oauth2_code`
+(
+    `id`           bigint                                                        NOT NULL COMMENT '编号',
+    `code`         varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '授权码',
+    `accessToken`  varchar(72) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '访问令牌',
+    `refreshToken` varchar(72) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '刷新令牌',
+    `userId`       bigint                                                        NOT NULL COMMENT '用户编号',
+    `clientId`     varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '客户端编号',
+    `expiresTime`  datetime                                                      NOT NULL COMMENT '过期时间',
+    `creator`      varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '' COMMENT '创建者',
+    `createTime`   datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `updater`      varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '' COMMENT '更新者',
+    `updateTime`   datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    `deleted`      bit(1)                                                        NOT NULL DEFAULT b'0' COMMENT '是否删除',
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB
+    CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_unicode_ci
+    COMMENT = 'OAuth2 授权码表';
+-- ----------------------------
+-- Table structure for ruoyi_system_oauth2_access_token
+-- ----------------------------
+DROP TABLE IF EXISTS `ruoyi_system_oauth2_access_token`;
+CREATE TABLE `ruoyi_system_oauth2_access_token`
+(
+    `id`           bigint                                                       NOT NULL COMMENT '编号',
+    `userId`       bigint                                                       NOT NULL COMMENT '用户编号',
+    `accessToken`  varchar(72) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '访问令牌',
+    `refreshToken` varchar(72) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '刷新令牌',
+    `clientId`     varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '客户端编号',
+    `expiresTime`  datetime                                                     NOT NULL COMMENT '过期时间',
+    `creator`      varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '' COMMENT '创建者',
+    `createTime`   datetime                                                     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `updater`      varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '' COMMENT '更新者',
+    `updateTime`   datetime                                                     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    `deleted`      bit(1)                                                       NOT NULL DEFAULT b'0' COMMENT '是否删除',
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB
+    CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_unicode_ci
+    COMMENT = 'OAuth2 访问令牌表';
+-- ----------------------------
+-- Table structure for ruoyi_system_oauth2_refresh_token
+-- ----------------------------
+DROP TABLE IF EXISTS `ruoyi_system_oauth2_refresh_token`;
+CREATE TABLE `ruoyi_system_oauth2_refresh_token`
+(
+    `id`           bigint                                                       NOT NULL COMMENT '编号',
+    `userId`       bigint                                                       NOT NULL COMMENT '用户编号',
+    `refreshToken` varchar(72) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '刷新令牌',
+    `clientId`     varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '客户端编号',
+    `expiresTime`  datetime                                                     NOT NULL COMMENT '过期时间',
+    `creator`      varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '' COMMENT '创建者',
+    `createTime`   datetime                                                     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `updater`      varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '' COMMENT '更新者',
+    `updateTime`   datetime                                                     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    `deleted`      bit(1)                                                       NOT NULL DEFAULT b'0' COMMENT '是否删除',
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB
+    CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_unicode_ci
+    COMMENT = 'OAuth2 刷新令牌表';
+-- ----------------------------
 -- Table structure for ruoyi_system_user
 -- ----------------------------
 DROP TABLE IF EXISTS `ruoyi_system_user`;

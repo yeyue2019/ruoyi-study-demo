@@ -16,9 +16,6 @@ import java.io.IOException;
  */
 public class TracerFilter extends OncePerRequestFilter {
 
-    // TODO: 2022/4/13 确认是第一个执行的过滤器
-
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         response.addHeader(ServletConstants.TRACE_HEADER, TracerUtils.getTraceId());

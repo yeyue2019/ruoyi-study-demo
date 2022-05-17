@@ -15,8 +15,6 @@ import java.util.Collection;
  */
 public class MyBatisLambdaQueryWrapper<T> extends LambdaQueryWrapper<T> {
 
-    // TODO: 2022/4/10 根据使用情况随时补充
-
     @Override
     public MyBatisLambdaQueryWrapper<T> eq(SFunction<T, ?> column, Object val) {
         return (MyBatisLambdaQueryWrapper<T>) super.eq(val != null, column, val);

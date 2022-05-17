@@ -12,8 +12,6 @@ import java.util.*;
  */
 public interface RedisRepository {
 
-    // TODO: 2022/4/9 统一所有的缓存管理，后续根据使用需求补充
-
     /**
      * 删除缓存
      *

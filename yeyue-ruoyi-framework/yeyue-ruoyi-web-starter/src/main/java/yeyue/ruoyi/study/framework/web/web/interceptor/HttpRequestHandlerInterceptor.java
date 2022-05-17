@@ -17,6 +17,5 @@ public class HttpRequestHandlerInterceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
         HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
-        // TODO: 2022/4/20 正常退出的请求执行线程缓存清除动作
     }
 }

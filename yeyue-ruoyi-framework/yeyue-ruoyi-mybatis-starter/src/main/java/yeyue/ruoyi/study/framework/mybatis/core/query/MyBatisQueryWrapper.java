@@ -14,8 +14,6 @@ import java.util.Collection;
  */
 public class MyBatisQueryWrapper<T> extends QueryWrapper<T> {
 
-    // TODO: 2022/4/10 根据使用情况随时补充
-
     @Override
     public MyBatisQueryWrapper<T> eq(String column, Object val) {
         return (MyBatisQueryWrapper<T>) super.eq(val != null, column, val);

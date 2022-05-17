@@ -2,6 +2,7 @@ package yeyue.ruoyi.study.framework.mybatis.core.handler;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import org.apache.ibatis.reflection.MetaObject;
+import yeyue.ruoyi.study.framework.common.servlet.security.WebSecurityUtils;
 import yeyue.ruoyi.study.framework.mybatis.core.entity.MyBatisEntity;
 
 import java.time.LocalDateTime;
@@ -20,15 +21,18 @@ public class MyBatisFieldAutoFillHandler implements MetaObjectHandler {
         if (Objects.nonNull(metaObject) && metaObject.getOriginalObject() instanceof MyBatisEntity) {
             MyBatisEntity entity = (MyBatisEntity) metaObject.getOriginalObject();
             LocalDateTime current = LocalDateTime.now();
-            // 创建时间为空，则以当前时间为插入时间
             if (Objects.isNull(entity.getCreateTime())) {
                 entity.setCreateTime(current);
             }
-            // 更新时间为空，则以当前时间为更新时间
             if (Objects.isNull(entity.getUpdateTime())) {
                 entity.setUpdateTime(current);
             }
-            // TODO: 2022/4/9 操作者字段后续补充
+            if (Objects.isNull(entity.getCreator())) {
+                entity.setCreator(WebSecurityUtils.getLoginUserId());
+            }
+            if (Objects.isNull(entity.getUpdater())) {
+                entity.setUpdater(WebSecurityUtils.getLoginUserId());
+            }
         }
     }
 
@@ -38,7 +42,7 @@ public class MyBatisFieldAutoFillHandler implements MetaObjectHandler {
             MyBatisEntity entity = (MyBatisEntity) metaObject.getOriginalObject();
             LocalDateTime current = LocalDateTime.now();
             entity.setUpdateTime(current);
-            // TODO: 2022/4/9 操作者字段后续补充
+            entity.setUpdater(WebSecurityUtils.getLoginUserId());
         }
     }
 }

@@ -2,7 +2,7 @@ package yeyue.ruoyi.study.framework.mybatis.core.type;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.type.*;
-import yeyue.ruoyi.study.framework.common.constants.CommonConstants;
+import yeyue.ruoyi.study.framework.common.constants.StringConstants;
 
 import java.sql.*;
 import java.util.*;
@@ -19,7 +19,7 @@ public class StringListTypeHandler implements TypeHandler<List<String>> {
 
     @Override
     public void setParameter(PreparedStatement preparedStatement, int i, List<String> strings, JdbcType jdbcType) throws SQLException {
-        preparedStatement.setString(i, strings == null ? null : StringUtils.joinWith(CommonConstants.SPLIT_JOIN, strings.toArray(new Object[0])));
+        preparedStatement.setString(i, strings == null ? null : StringUtils.joinWith(StringConstants.SPLIT_JOIN, strings.toArray(new Object[0])));
     }
 
     @Override
@@ -44,6 +44,6 @@ public class StringListTypeHandler implements TypeHandler<List<String>> {
         if (value == null) {
             return null;
         }
-        return Arrays.asList(StringUtils.split(value, CommonConstants.SPLIT_JOIN));
+        return Arrays.asList(StringUtils.split(value, StringConstants.SPLIT_JOIN));
     }
 }

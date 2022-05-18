@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.*;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
-import yeyue.ruoyi.study.framework.common.enums.SortOrderEnum;
-import yeyue.ruoyi.study.framework.common.validation.annotation.InStringEnum;
+import yeyue.ruoyi.study.framework.common.enums.FieldSortedEnum;
+import yeyue.ruoyi.study.framework.common.validation.annotation.InEnum;
 
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
@@ -28,7 +28,7 @@ public class SortedParam implements Serializable {
 
     @ApiModelProperty(value = "顺序")
     @NotEmpty(message = "查询顺序不可为空")
-    @InStringEnum(value = SortOrderEnum.class, message = "查询顺序可选值为%s")
+    @InEnum(value = FieldSortedEnum.class, message = "查询顺序错误")
     private String order;
 
     /**
@@ -37,7 +37,7 @@ public class SortedParam implements Serializable {
     public static SortedParam asc(String field) {
         SortedParam s = new SortedParam();
         s.field = field;
-        s.order = SortOrderEnum.ASC.getOrder();
+        s.order = FieldSortedEnum.ASC.getOrder();
         return s;
     }
 
@@ -47,7 +47,7 @@ public class SortedParam implements Serializable {
     public static SortedParam desc(String field) {
         SortedParam s = new SortedParam();
         s.field = field;
-        s.order = SortOrderEnum.DESC.getOrder();
+        s.order = FieldSortedEnum.DESC.getOrder();
         return s;
     }
 
@@ -60,6 +60,6 @@ public class SortedParam implements Serializable {
     @JSONField(serialize = false, deserialize = false)
     @ApiModelProperty(hidden = true)
     public boolean isDesc() {
-        return StringUtils.equals(this.order, SortOrderEnum.DESC.getOrder());
+        return StringUtils.equals(this.order, FieldSortedEnum.DESC.getOrder());
     }
 }

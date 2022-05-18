@@ -2,7 +2,7 @@ package yeyue.ruoyi.study.module.system.api.enums;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
 import lombok.*;
-import yeyue.ruoyi.study.framework.common.validation.core.IntEnum;
+import yeyue.ruoyi.study.framework.common.validation.core.EnumValuable;
 
 /**
  * 菜单类型枚举
@@ -12,7 +12,7 @@ import yeyue.ruoyi.study.framework.common.validation.core.IntEnum;
  */
 @Getter
 @AllArgsConstructor
-public enum MenuTypeEnum implements IntEnum {
+public enum MenuTypeEnum implements EnumValuable {
 
     /**
      * 目录
@@ -25,8 +25,7 @@ public enum MenuTypeEnum implements IntEnum {
     /**
      * 按钮
      */
-    BUTTON(3)
-    ;
+    BUTTON(3);
 
     /**
      * 类型
@@ -36,6 +35,6 @@ public enum MenuTypeEnum implements IntEnum {
 
     @Override
     public int[] array() {
-        return new int[]{1,2,3};
+        return new int[]{1, 2, 3};
     }
 }

@@ -2,10 +2,10 @@ package yeyue.ruoyi.study.framework.common.util.collection;
 
 import org.springframework.util.Assert;
 import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
-import yeyue.ruoyi.study.framework.common.util.object.ObjectUtils;
 
+import java.lang.reflect.*;
 import java.util.*;
-import java.util.function.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -16,6 +16,8 @@ import java.util.stream.Collectors;
  */
 public abstract class CollectionUtils extends org.springframework.util.CollectionUtils {
 
+    private static final Object[] EMPTY_ARRAY = new Object[0];
+
     public static boolean isNotEmpty(Collection<?> collection) {
         return !isEmpty(collection);
     }
@@ -24,27 +26,46 @@ public abstract class CollectionUtils extends org.springframework.util.Collectio
         return !isEmpty(map);
     }
 
-    public static boolean isIsEmpty(Object... array) {
+    public static boolean isNull(Object... array) {
         return array == null || array.length == 0;
     }
 
-    public static boolean isNotEmpty(Object... array) {
-        return !isIsEmpty(array);
+    public static boolean isNotNull(Object... array) {
+        return !isNull(array);
     }
 
-    public static <T> Collection<T> singleton(T data) {
-        return ObjectUtils.convert(data, Collections.emptyList(), Collections::singletonList);
+    public static <T> boolean isEmpty(T[] array) {
+        return array == null || array.length == 0;
     }
 
-    public static boolean contain(Object source, Object... targets) {
-        return Arrays.asList(targets).contains(source);
+    public static <T> boolean isNotEmpty(T[] array) {
+        return !isEmpty(array);
     }
 
-    public static <T> List<T> filterList(Collection<T> from, Predicate<T> predicate) {
-        if (isEmpty(from)) {
-            return new ArrayList<>();
+    @SuppressWarnings("unchecked")
+    public static <T> T[] empty() {
+        return (T[]) EMPTY_ARRAY;
+    }
+
+    public static <T> List<T> arrayToList(T[] array) {
+        if (isEmpty(array)) {
+            return Collections.emptyList();
         }
-        return from.stream().filter(predicate).collect(Collectors.toList());
+        return Arrays.stream(array).collect(Collectors.toList());
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> Class<T> getListClazz(List<T> list) {
+        ParameterizedType parameterizedType = (ParameterizedType) list.getClass().getGenericSuperclass();//获取当前new对象的泛型的父类类型
+        return (Class<T>) parameterizedType.getActualTypeArguments()[0];
+    }
+
+    @SuppressWarnings({"unchecked", "rawstype"})
+    public static <T> T[] listToArray(List<T> list) {
+        if (isEmpty(list)) {
+            return empty();
+        }
+        return (T[]) Array.newInstance(getListClazz(list), list.size());
     }
 
     public static <T, R> List<R> convertList(Collection<T> from, Function<T, R> function) {
@@ -54,9 +75,22 @@ public abstract class CollectionUtils extends org.springframework.util.Collectio
         return from.stream().map(function).filter(Objects::nonNull).collect(Collectors.toList());
     }
 
+
+    public static <T, R> R[] convertArray(T[] from, Function<T, R> function) {
+        if (isEmpty((Object[]) from)) {
+            return empty();
+        }
+        return listToArray(Arrays.stream(from).map(function).filter(Objects::nonNull).collect(Collectors.toList()));
+    }
+
     public static <T, R> PageResult<R> convertPage(PageResult<T> from, Function<T, R> function) {
         return new PageResult<>(convertList(from.getList(), function), from.getTotal());
     }
+
+    public static <T> Set<T> arrayToSet(T[] array) {
+        return new HashSet<>(arrayToList(array));
+    }
+
 
     /**
      * 集合分割处理

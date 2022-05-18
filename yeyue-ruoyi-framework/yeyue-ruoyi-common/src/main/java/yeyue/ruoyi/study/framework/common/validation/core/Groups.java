@@ -8,7 +8,7 @@ import javax.validation.groups.Default;
  * @author yeyue
  * @date 2022-04-18 14:18:37
  */
-public interface CommandGroup {
+public interface Groups {
 
     interface Create extends Default {
     }

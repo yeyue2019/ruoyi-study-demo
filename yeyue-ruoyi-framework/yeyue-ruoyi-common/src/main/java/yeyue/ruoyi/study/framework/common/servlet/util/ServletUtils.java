@@ -2,7 +2,6 @@ package yeyue.ruoyi.study.framework.common.servlet.util;
 
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.web.context.request.*;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
@@ -18,9 +17,6 @@ import java.io.*;
 import java.nio.charset.Charset;
 import java.util.*;
 
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-import static yeyue.ruoyi.study.framework.common.constants.CommonConstants.SPLIT_JOIN;
-
 /**
  * servlet工具类
  *
@@ -29,6 +25,7 @@ import static yeyue.ruoyi.study.framework.common.constants.CommonConstants.SPLIT
  */
 @Slf4j
 public abstract class ServletUtils {
+    public static final String[] HEADERS = new String[]{"X-Forwarded-For", "X-Real-IP", "Proxy-Client-IP", "WL-Proxy-Client-IP", "HTTP_CLIENT_IP", "HTTP_X_FORWARDED_FOR"};
 
     /**
      * 获取当前Http请求
@@ -44,17 +41,6 @@ public abstract class ServletUtils {
         return servletRequestAttributes.getRequest();
     }
 
-
-    /**
-     * 判断Request属于JSON请求
-     *
-     * @param request 请求
-     * @return 结果
-     */
-    public static boolean isJSON(ServletRequest request) {
-        return StringUtils.startsWithIgnoreCase(request.getContentType(), APPLICATION_JSON_VALUE);
-    }
-
     /**
      * 向Response输出JSON
      *
@@ -62,6 +48,7 @@ public abstract class ServletUtils {
      * @param object   结果
      * @throws IOException 异常
      */
+    @SuppressWarnings("spellCheckingInspection")
     public static void writeJSON(HttpServletResponse response, Object object) throws IOException {
         String content = JSON.toJSONString(object);
         response.getOutputStream().write(content.getBytes());
@@ -95,21 +82,6 @@ public abstract class ServletUtils {
      */
     public static Map<String, String[]> getParams(ServletRequest request) {
         return Collections.unmodifiableMap(request.getParameterMap());
-    }
-
-    /**
-     * 获取请求的param
-     *
-     * @param request 请求
-     * @return 结果
-     */
-    public static Map<String, String> getParamMap(ServletRequest request) {
-        Map<String, String[]> params = getParams(request);
-        Map<String, String> result = CollectionUtils.newHashMap(params.size());
-        for (Map.Entry<String, String[]> entry : params.entrySet()) {
-            result.put(entry.getKey(), StringUtils.join(entry.getValue(), SPLIT_JOIN));
-        }
-        return result;
     }
 
     /**
@@ -252,16 +224,16 @@ public abstract class ServletUtils {
      * @return IP地址
      */
     public static String getClientIp(HttpServletRequest request, String... headerNames) {
-        String[] headers = new String[]{"X-Forwarded-For", "X-Real-IP", "Proxy-Client-IP", "WL-Proxy-Client-IP", "HTTP_CLIENT_IP", "HTTP_X_FORWARDED_FOR"};
+
         String ip;
         // 先从默认header里查询
-        for (String header : headers) {
+        for (String header : HEADERS) {
             if (!NetworkUtils.isUnknown(ip = request.getHeader(header))) {
                 return NetworkUtils.getMultistageReverseProxyIp(ip);
             }
         }
         // 再从自定义header里查询
-        if (CollectionUtils.isNotEmpty((Object[]) headerNames)) {
+        if (CollectionUtils.isNotNull((Object[]) headerNames)) {
             for (String header : headerNames) {
                 if (!NetworkUtils.isUnknown(ip = request.getHeader(header))) {
                     return NetworkUtils.getMultistageReverseProxyIp(ip);
@@ -270,6 +242,10 @@ public abstract class ServletUtils {
         }
         // 最后从Remote里查询
         return NetworkUtils.getMultistageReverseProxyIp(request.getRemoteAddr());
+    }
+
+    public static String getClientIp(String... headerNames) {
+        return getClientIp(withRequest(), headerNames);
     }
 
     /**

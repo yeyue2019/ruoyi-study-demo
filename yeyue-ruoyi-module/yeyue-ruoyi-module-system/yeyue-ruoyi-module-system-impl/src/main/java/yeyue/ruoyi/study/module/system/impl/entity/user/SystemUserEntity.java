@@ -2,8 +2,8 @@ package yeyue.ruoyi.study.module.system.impl.entity.user;
 
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
-import yeyue.ruoyi.study.framework.common.enums.GenderEnum;
 import yeyue.ruoyi.study.framework.mybatis.core.type.JsonLongSetTypeHandler;
+import yeyue.ruoyi.study.module.system.api.enums.user.GenderEnum;
 import yeyue.ruoyi.study.module.system.impl.entity.SystemEntity;
 
 import java.time.LocalDate;

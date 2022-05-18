@@ -2,7 +2,6 @@ package yeyue.ruoyi.study.module.system.api.enums;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
 import lombok.*;
-import yeyue.ruoyi.study.framework.common.validation.core.StringEnum;
 
 /**
  * OAuth2 授权类型（模式）的枚举

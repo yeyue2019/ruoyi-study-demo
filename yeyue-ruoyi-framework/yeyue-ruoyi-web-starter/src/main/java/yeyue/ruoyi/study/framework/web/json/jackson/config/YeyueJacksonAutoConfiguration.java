@@ -11,7 +11,6 @@ import java.time.format.DateTimeFormatter;
 
 /**
  * jackson序列化配置
- * TODO 目前使用的包目录暂时不需要使用Springboot自动配置注入
  *
  * @author yeyue
  * @date 2022-04-09 17:30:42

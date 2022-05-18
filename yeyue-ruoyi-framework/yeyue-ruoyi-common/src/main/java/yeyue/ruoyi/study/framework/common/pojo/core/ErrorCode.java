@@ -71,7 +71,7 @@ public interface ErrorCode extends Serializable {
     @JsonIgnore
     @JSONField(serialize = false, deserialize = false)
     @ApiModelProperty(hidden = true)
-    default boolean isError() {
+    default boolean isNotSuccess() {
         return !isSuccess();
     }
 }

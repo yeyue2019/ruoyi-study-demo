@@ -1,17 +1,17 @@
 package yeyue.ruoyi.study.framework.common.validation.core;
 
 /**
- * 枚举校验实现类
+ * 可以实例为枚举的接口
  *
  * @author yeyue
- * @date 2022-04-09 13:43:25
+ * @date 2022-04-18 21:14:45
  */
-public interface StringEnum {
+public interface EnumValuable<T> {
 
     /**
-     * 字符串数组
+     * 数组
      *
      * @return 数组
      */
-    String[] array();
+    T[] enums();
 }

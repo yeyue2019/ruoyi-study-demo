@@ -1,12 +1,12 @@
 package yeyue.ruoyi.study.framework.common.constants;
 
 /**
- * 全局通用变量声明
+ * 字符串常量
  *
  * @author yeyue
  * @date 2022-04-09 17:42:29
  */
-public abstract class CommonConstants {
+public abstract class StringConstants {
 
     /**
      * 字符串连接分隔符

@@ -19,16 +19,6 @@ public class ServiceException extends RuntimeException implements ErrorCode {
     private String code;
     private String msg;
 
-    @Override
-    public String getCode() {
-        return this.code;
-    }
-
-    @Override
-    public String getMsg() {
-        return getMessage();
-    }
-
     public ServiceException() {
     }
 
@@ -37,14 +27,16 @@ public class ServiceException extends RuntimeException implements ErrorCode {
     }
 
     public ServiceException(ErrorCode errorCode, Throwable throwable) {
-        super(ObjectUtils.indexJoin(errorCode.getCode(), throwable.getMessage()), throwable);
+        super(throwable);
         ErrorCode.assertError(code);
         this.code = errorCode.getCode();
+        this.msg = throwable.getMessage();
     }
 
-    private ServiceException(String code, String message) {
+    public ServiceException(String code, String message) {
         super(ObjectUtils.indexJoin(code, message));
         ErrorCode.assertError(code);
         this.code = code;
+        this.msg = message;
     }
 }

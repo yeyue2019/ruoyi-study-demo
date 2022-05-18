@@ -1,8 +1,10 @@
 package yeyue.ruoyi.study.framework.common.exception.util;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.pojo.core.*;
-import yeyue.ruoyi.study.framework.common.util.object.ObjectUtils;
+import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
 
 /**
  * 获取异常信息的工具类
@@ -12,37 +14,63 @@ import yeyue.ruoyi.study.framework.common.util.object.ObjectUtils;
  */
 @Slf4j
 public abstract class ExceptionUtils {
+    public static final String OUT_PLACE_HOLDER = "{}";
 
-    /**
-     * 获取错误具体信息
-     *
-     * @param e 异常
-     * @return 错误提示
-     */
-    public static String getMessage(Throwable e) {
-        if (e == null) {
-            return null;
+    public static ServiceException exception(ErrorCode errorCode, Object... params) {
+        String message = format(errorCode.getCode(), errorCode.getMsg(), params);
+        return new ServiceException(errorCode.getCode(), message);
+    }
+
+    public static ServiceException exception(String code, String messagePattern, Object... params) {
+        String message = format(code, messagePattern, params);
+        return new ServiceException(code, message);
+    }
+
+    public static <T> CommonResult<T> handle(ErrorCode code, String messagePattern, Object... params) {
+        if (StringUtils.isEmpty(messagePattern)) {
+            return CommonResult.error(code);
         }
-        return ObjectUtils.indexJoin(e.getClass().getSimpleName(), e.getMessage());
+        return CommonResult.error(code.getCode(), format(code.getCode(), messagePattern, params));
     }
 
     /**
-     * 日志输出控制器
+     * 将错误编号对应的消息使用 params 进行格式化。
      *
-     * @param ex        错误实例
-     * @param errorCode 转化生成的错误码
-     * @param errMsg    转化生成的错误提示
-     * @param logged    是否输出到日志
-     * @param logMsg    输出的日志内容
-     * @return 结果
+     * @param code           错误编号
+     * @param messagePattern 消息模版
+     * @param params         参数
+     * @return 格式化后的提示
      */
-    public static CommonResult<?> output(Throwable ex, ErrorCode errorCode, String errMsg, boolean logged, String logMsg) {
-        if (logged) {
-            log.warn("[Exception.output]:{}", logMsg == null ? getMessage(ex) : logMsg);
+    public static String format(String code, String messagePattern, Object... params) {
+        if (CollectionUtils.isNull(params)) {
+            return messagePattern;
         }
-        if (errMsg == null) {
-            return CommonResult.error(errorCode);
+        StringBuilder sb = new StringBuilder(messagePattern.length() + 100);
+        int i = 0;
+        int j;
+        int l;
+        for (l = 0; l < params.length; l++) {
+            j = messagePattern.indexOf(OUT_PLACE_HOLDER, i);
+            if (j == -1) {
+                log.error("[format][参数过多：错误码({})|错误内容({})|参数({})", code, messagePattern, params);
+                if (i == 0) {
+                    return messagePattern;
+                } else {
+                    sb.append(messagePattern.substring(i));
+                    return sb.toString();
+                }
+            } else {
+                sb.append(messagePattern, i, j);
+                sb.append(params[l]);
+                i = j + 2;
+            }
         }
-        return CommonResult.error(errorCode.getCode(), errMsg);
+        if (messagePattern.indexOf(OUT_PLACE_HOLDER, i) != -1) {
+            log.error("[format][参数过少：错误码({})|错误内容({})|参数({})", code, messagePattern, params);
+        }
+        sb.append(messagePattern.substring(i));
+        return sb.toString();
     }
+
+
 }

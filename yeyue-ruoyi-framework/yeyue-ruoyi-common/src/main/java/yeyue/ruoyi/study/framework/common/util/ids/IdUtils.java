@@ -5,7 +5,7 @@ import org.apache.commons.lang3.*;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static yeyue.ruoyi.study.framework.common.constants.CommonConstants.REGEX_JOIN;
+import static yeyue.ruoyi.study.framework.common.constants.StringConstants.REGEX_JOIN;
 
 /**
  * Id生成工具类
@@ -14,7 +14,6 @@ import static yeyue.ruoyi.study.framework.common.constants.CommonConstants.REGEX
  * @date 2022-04-21 14:39:10
  */
 public abstract class IdUtils {
-
 
     /**
      * 获取UUID

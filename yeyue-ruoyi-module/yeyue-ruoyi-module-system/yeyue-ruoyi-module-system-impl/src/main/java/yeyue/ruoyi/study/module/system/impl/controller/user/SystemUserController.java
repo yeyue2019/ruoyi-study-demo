@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import yeyue.ruoyi.study.framework.common.enums.CommonStatusEnum;
 import yeyue.ruoyi.study.framework.common.pojo.core.CommonResult;
 import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
-import yeyue.ruoyi.study.framework.common.validation.annotation.InIntEnum;
-import yeyue.ruoyi.study.framework.common.validation.core.CommandGroup;
+import yeyue.ruoyi.study.framework.common.validation.annotation.InEnum;
+import yeyue.ruoyi.study.framework.common.validation.core.Groups;
 import yeyue.ruoyi.study.module.system.api.domain.user.SystemUserDomain;
 import yeyue.ruoyi.study.module.system.api.service.user.SystemUserService;
 import yeyue.ruoyi.study.module.system.api.service.user.dto.*;
@@ -31,13 +31,13 @@ public class SystemUserController {
 
     @ApiOperation(value = "新增系统用户")
     @PutMapping("/create")
-    public CommonResult<Long> create(@Validated({CommandGroup.Create.class}) @RequestBody SystemUserDomain create) {
+    public CommonResult<Long> create(@Validated({Groups.Create.class}) @RequestBody SystemUserDomain create) {
         return CommonResult.success(service.create(create));
     }
 
     @ApiOperation(value = "修改用户信息")
     @PostMapping("/update")
-    public CommonResult<Void> update(@Validated({CommandGroup.Update.class}) @RequestBody SystemUserDomain update) {
+    public CommonResult<Void> update(@Validated({Groups.Update.class}) @RequestBody SystemUserDomain update) {
         service.update(update);
         return CommonResult.success();
     }
@@ -82,7 +82,7 @@ public class SystemUserController {
     public CommonResult<Void> update(
             @Positive(message = "用户Id格式错误")
             @RequestParam Long id,
-            @InIntEnum(CommonStatusEnum.class)
+            @InEnum(CommonStatusEnum.class)
             @RequestParam Integer status) {
         service.updateStatus(id, status);
         return CommonResult.success();

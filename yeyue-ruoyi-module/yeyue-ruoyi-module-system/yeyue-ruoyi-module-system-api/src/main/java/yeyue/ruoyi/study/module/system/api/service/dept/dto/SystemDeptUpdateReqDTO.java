@@ -3,7 +3,7 @@ package yeyue.ruoyi.study.module.system.api.service.dept.dto;
 import io.swagger.annotations.*;
 import lombok.Data;
 import yeyue.ruoyi.study.framework.common.enums.CommonStatusEnum;
-import yeyue.ruoyi.study.framework.common.validation.annotation.InIntEnum;
+import yeyue.ruoyi.study.framework.common.validation.annotation.InEnum;
 
 import javax.validation.constraints.NotNull;
 
@@ -20,6 +20,6 @@ public class SystemDeptUpdateReqDTO extends SystemDeptCreateReqDTO {
     private Long id;
 
     @ApiModelProperty(value = "状态")
-    @InIntEnum(value = CommonStatusEnum.class, message = "状态枚举错误")
+    @InEnum(value = CommonStatusEnum.class, message = "状态枚举错误")
     private Integer status;
 }

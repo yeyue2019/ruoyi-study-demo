@@ -1,8 +1,8 @@
 package yeyue.ruoyi.study.framework.common.enums;
 
-import com.baomidou.mybatisplus.annotation.EnumValue;
 import lombok.*;
-import yeyue.ruoyi.study.framework.common.validation.core.IntEnum;
+import yeyue.ruoyi.study.framework.common.util.object.ObjectUtils;
+import yeyue.ruoyi.study.framework.common.validation.core.EnumValuable;
 
 /**
  * 通用状态枚举
@@ -12,7 +12,7 @@ import yeyue.ruoyi.study.framework.common.validation.core.IntEnum;
  */
 @Getter
 @AllArgsConstructor
-public enum CommonStatusEnum implements IntEnum {
+public enum CommonStatusEnum implements EnumValuable<Integer> {
 
     ENABLE(0, "开启"),
     DISABLE(1, "关闭");
@@ -20,24 +20,14 @@ public enum CommonStatusEnum implements IntEnum {
     /**
      * 状态值
      */
-    @EnumValue
     private final Integer status;
     /**
      * 状态名
      */
     private final String name;
 
-    public static CommonStatusEnum toEnum(Integer status) {
-        for (CommonStatusEnum value : CommonStatusEnum.values()) {
-            if (value.getStatus().equals(status)) {
-                return value;
-            }
-        }
-        return null;
-    }
-
     @Override
-    public int[] array() {
-        return new int[]{ENABLE.status, DISABLE.status};
+    public Integer[] enums() {
+        return ObjectUtils.getArray(CommonStatusEnum.class, CommonStatusEnum::getStatus);
     }
 }

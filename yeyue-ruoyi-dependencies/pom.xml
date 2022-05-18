@@ -11,11 +11,10 @@
 
     <name>${project.artifactId}</name>
     <description>
-        项目基础pom文件，学习若依项目结果，使用单独的pom管理所有的依赖以及依赖的版本（dependencyManagement）
+        项目基础pom文件，管理全部项目依赖
     </description>
 
     <properties>
-        <!-- 配置和项目pom需要保持一致 -->
         <demo.version>1.0.0</demo.version>
         <spring.boot.version>2.5.10</spring.boot.version>
         <redisson.version>3.16.6</redisson.version>
@@ -36,7 +35,6 @@
 
     <dependencyManagement>
         <dependencies>
-            <!-- Springboot 依赖管理 -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
@@ -96,15 +94,14 @@
             </dependency>
             <dependency>
                 <groupId>de.codecentric</groupId>
-                <artifactId>spring-boot-admin-starter-server</artifactId> <!-- 实现 Spring Boot Admin Server 服务端 -->
+                <artifactId>spring-boot-admin-starter-server</artifactId>
                 <version>${spring-boot-admin.version}</version>
             </dependency>
             <dependency>
                 <groupId>de.codecentric</groupId>
-                <artifactId>spring-boot-admin-starter-client</artifactId> <!-- 实现 Spring Boot Admin Server 服务端 -->
+                <artifactId>spring-boot-admin-starter-client</artifactId>
                 <version>${spring-boot-admin.version}</version>
             </dependency>
-            <!-- fastjson -->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
@@ -120,7 +117,6 @@
                 <artifactId>commons-io</artifactId>
                 <version>${common-io.version}</version>
             </dependency>
-            <!-- swagger相关 -->
             <dependency>
                 <groupId>com.github.xiaoymin</groupId>
                 <artifactId>knife4j-spring-boot-starter</artifactId>
@@ -138,7 +134,7 @@
             </dependency>
             <dependency>
                 <groupId>org.mapstruct</groupId>
-                <artifactId>mapstruct</artifactId> <!-- use mapstruct-jdk8 for Java 8 or higher -->
+                <artifactId>mapstruct</artifactId>
                 <version>${mapstruct.version}</version>
             </dependency>
             <dependency>
@@ -153,7 +149,7 @@
             </dependency>
             <dependency>
                 <groupId>com.alibaba</groupId>
-                <artifactId>transmittable-thread-local</artifactId> <!-- 解决 ThreadLocal 父子线程的传值问题 -->
+                <artifactId>transmittable-thread-local</artifactId>
                 <version>${transmittable-thread-local.version}</version>
             </dependency>
 

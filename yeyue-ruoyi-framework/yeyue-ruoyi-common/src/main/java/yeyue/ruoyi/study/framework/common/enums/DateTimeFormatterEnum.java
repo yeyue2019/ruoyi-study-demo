@@ -17,7 +17,7 @@ public enum DateTimeFormatterEnum {
     LOCAL_DATE_DEFAULT("yyyy-MM-dd HH:mm:ss"),
     LOCAL_TIME_DEFAULT("HH:mm:ss"),
     LOCAL_DATE_TIME_DEFAULT("yyyy-MM-dd HH:mm:ss"),
-    
+
     ;
     private final String pattern;
 

@@ -34,6 +34,6 @@ public abstract class ServletConstants {
 
     // 自定义参数
 
-    public static final String REQUEST_ATTRIBUTE_SECURITY_USER_ID = "security.userId";
+    public static final String REQUEST_ATTRIBUTE_SECURITY_USER_ID = "security-userId";
 
 }

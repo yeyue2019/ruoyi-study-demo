@@ -1,6 +1,5 @@
 package yeyue.ruoyi.study.module.system.api.enums;
 
-import com.baomidou.mybatisplus.annotation.EnumValue;
 import lombok.*;
 
 /**
@@ -22,6 +21,5 @@ public enum RoleTypeEnum {
      */
     CUSTOM(2);
 
-    @EnumValue
     private final Integer type;
 }

@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
 import yeyue.ruoyi.study.module.system.api.domain.dept.SystemDeptDomain;
-import yeyue.ruoyi.study.module.system.api.enums.DeptIdEnum;
+import yeyue.ruoyi.study.module.system.api.enums.dept.DeptIdEnum;
 import yeyue.ruoyi.study.module.system.api.service.dept.SystemDeptService;
 import yeyue.ruoyi.study.module.system.api.service.dept.dto.*;
 import yeyue.ruoyi.study.module.system.impl.mapper.dept.SystemDeptMapper;

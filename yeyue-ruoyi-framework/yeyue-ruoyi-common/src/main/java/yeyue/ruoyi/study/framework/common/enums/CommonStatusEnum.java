@@ -1,7 +1,7 @@
 package yeyue.ruoyi.study.framework.common.enums;
 
 import lombok.*;
-import yeyue.ruoyi.study.framework.common.util.object.ObjectUtils;
+import yeyue.ruoyi.study.framework.common.util.enums.EnumUtils;
 import yeyue.ruoyi.study.framework.common.validation.core.EnumValuable;
 
 /**
@@ -28,6 +28,6 @@ public enum CommonStatusEnum implements EnumValuable<Integer> {
 
     @Override
     public Integer[] enums() {
-        return ObjectUtils.getArray(CommonStatusEnum.class, CommonStatusEnum::getStatus);
+        return EnumUtils.getArray(CommonStatusEnum.class, CommonStatusEnum::getStatus);
     }
 }

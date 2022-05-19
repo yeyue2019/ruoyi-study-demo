@@ -26,14 +26,6 @@ public interface SystemOAuth2ClientService {
     void update(SystemOAuth2ClientUpdateReqDTO reqDTO);
 
     /**
-     * 更新客户端状态
-     *
-     * @param reqDTO 请求对象
-     * @return 修改数量
-     */
-    int updateStatus(SystemOAuth2ClientStatusUpdateReqDTO reqDTO);
-
-    /**
      * 删除客户端
      *
      * @param id 客户端id

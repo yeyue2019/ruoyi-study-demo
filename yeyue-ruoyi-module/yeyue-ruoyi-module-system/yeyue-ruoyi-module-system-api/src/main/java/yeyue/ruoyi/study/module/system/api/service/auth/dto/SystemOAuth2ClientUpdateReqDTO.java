@@ -2,6 +2,8 @@ package yeyue.ruoyi.study.module.system.api.service.auth.dto;
 
 import io.swagger.annotations.*;
 import lombok.Data;
+import yeyue.ruoyi.study.framework.common.enums.CommonStatusEnum;
+import yeyue.ruoyi.study.framework.common.validation.annotation.InEnum;
 
 import javax.validation.constraints.NotNull;
 
@@ -18,4 +20,9 @@ public class SystemOAuth2ClientUpdateReqDTO extends SystemOAuth2ClientCreateReqD
     @ApiModelProperty(value = "编号", required = true)
     @NotNull(message = "编号不能为空")
     private Long id;
+
+    @ApiModelProperty(value = "状态")
+    @NotNull(message = "状态不能为空")
+    @InEnum(value = CommonStatusEnum.class, message = "状态枚举错误")
+    private Integer status;
 }

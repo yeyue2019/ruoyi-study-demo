@@ -2,7 +2,6 @@ package yeyue.ruoyi.study.module.system.impl.entity.auth;
 
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
-import yeyue.ruoyi.study.framework.common.enums.CommonStatusEnum;
 import yeyue.ruoyi.study.framework.mybatis.core.entity.MyBatisEntity;
 
 import static yeyue.ruoyi.study.module.system.impl.constants.SystemTableConstants.SYSTEM_AUTH_CLIENT;
@@ -43,7 +42,6 @@ public class SystemOAuth2ClientEntity extends MyBatisEntity {
      */
     private String description;
 
-
     // 客户端配置
 
     /**
@@ -61,10 +59,10 @@ public class SystemOAuth2ClientEntity extends MyBatisEntity {
      */
     private Integer refreshTokenValiditySeconds;
 
-    // TODO: 2022/5/17 授权的一些配置 暂时注释掉了
-
     /**
      * 状态
      */
-    private CommonStatusEnum status;
+    private Integer status;
+
+    // TODO: 2022/5/17 授权的一些配置 暂时注释掉了
 }

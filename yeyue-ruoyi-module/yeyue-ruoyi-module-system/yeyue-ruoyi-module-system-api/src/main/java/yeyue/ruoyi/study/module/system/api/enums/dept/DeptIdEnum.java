@@ -1,4 +1,4 @@
-package yeyue.ruoyi.study.module.system.api.enums;
+package yeyue.ruoyi.study.module.system.api.enums.dept;
 
 import lombok.*;
 

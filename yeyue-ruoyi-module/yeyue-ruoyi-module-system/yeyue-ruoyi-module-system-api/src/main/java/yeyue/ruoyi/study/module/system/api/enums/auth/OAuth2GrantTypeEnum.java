@@ -1,7 +1,8 @@
-package yeyue.ruoyi.study.module.system.api.enums;
+package yeyue.ruoyi.study.module.system.api.enums.auth;
 
-import com.baomidou.mybatisplus.annotation.EnumValue;
 import lombok.*;
+import yeyue.ruoyi.study.framework.common.util.enums.EnumUtils;
+import yeyue.ruoyi.study.framework.common.validation.core.EnumValuable;
 
 /**
  * OAuth2 授权类型（模式）的枚举
@@ -11,7 +12,7 @@ import lombok.*;
  */
 @AllArgsConstructor
 @Getter
-public enum OAuth2GrantTypeEnum implements StringEnum {
+public enum OAuth2GrantTypeEnum implements EnumValuable<String> {
 
     /**
      * 密码模式
@@ -34,12 +35,10 @@ public enum OAuth2GrantTypeEnum implements StringEnum {
      */
     REFRESH_TOKEN("refresh_token");
 
-    @EnumValue
     private final String grantType;
 
-
     @Override
-    public String[] array() {
-        return new String[]{PASSWORD.grantType, AUTHORIZATION_CODE.grantType, IMPLICIT.grantType, CLIENT_CREDENTIALS.grantType, REFRESH_TOKEN.grantType};
+    public String[] enums() {
+        return EnumUtils.getArray(OAuth2GrantTypeEnum.class, OAuth2GrantTypeEnum::getGrantType);
     }
 }

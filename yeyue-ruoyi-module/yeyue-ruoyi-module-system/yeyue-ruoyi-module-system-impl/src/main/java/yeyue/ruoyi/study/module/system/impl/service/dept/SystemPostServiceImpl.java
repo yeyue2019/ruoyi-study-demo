@@ -3,7 +3,6 @@ package yeyue.ruoyi.study.module.system.impl.service.dept;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import yeyue.ruoyi.study.framework.common.enums.CommonStatusEnum;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.pojo.pageable.*;
 import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
@@ -39,8 +38,7 @@ public class SystemPostServiceImpl implements SystemPostService {
         if (postMapper.selectOne(SystemPostEntity::getCode, reqDTO.getCode()) != null) {
             throw new ServiceException(SystemErrorCode.POST_CODE_DUPLICATE);
         }
-        SystemPostEntity entity = SystemPostConvert.INSTANCE.dtoToEntity(reqDTO);
-        entity.setStatus(CommonStatusEnum.ENABLE);
+        SystemPostEntity entity = SystemPostConvert.INSTANCE.toEntity(reqDTO);
         postMapper.insert(entity);
         return entity.getId();
     }
@@ -61,14 +59,14 @@ public class SystemPostServiceImpl implements SystemPostService {
         if (codeCompare != null && codeCompare.getId().compareTo(reqDTO.getId()) != 0) {
             throw new ServiceException(SystemErrorCode.POST_CODE_DUPLICATE);
         }
-        SystemPostEntity entity = SystemPostConvert.INSTANCE.dtoToEntity(reqDTO);
+        SystemPostEntity entity = SystemPostConvert.INSTANCE.toEntity(reqDTO);
         postMapper.updateById(entity);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int updateStatus(SystemPostStatusUpdateReqDTO reqDTO) {
-        return postMapper.updateBatchColumnByIds(SystemPostConvert.INSTANCE.dtoToEntity(reqDTO), reqDTO.getIds());
+        return postMapper.updateBatchColumnByIds(SystemPostConvert.INSTANCE.toEntity(reqDTO), reqDTO.getIds());
     }
 
     @Override

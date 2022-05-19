@@ -2,7 +2,6 @@ package yeyue.ruoyi.study.module.system.impl.entity.auth;
 
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
-import yeyue.ruoyi.study.framework.common.enums.CommonStatusEnum;
 import yeyue.ruoyi.study.framework.mybatis.core.entity.MyBatisEntity;
 
 import java.time.LocalDateTime;
@@ -58,5 +57,5 @@ public class SystemOAuth2CodeEntity extends MyBatisEntity {
     /**
      * 状态
      */
-    private CommonStatusEnum status;
+    private Integer status;
 }

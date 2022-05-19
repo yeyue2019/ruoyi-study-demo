@@ -2,7 +2,6 @@ package yeyue.ruoyi.study.module.system.impl.entity.dept;
 
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
-import yeyue.ruoyi.study.framework.common.enums.CommonStatusEnum;
 import yeyue.ruoyi.study.framework.mybatis.core.entity.MyBatisEntity;
 
 import static yeyue.ruoyi.study.module.system.impl.constants.SystemTableConstants.SYSTEM_DEPT;
@@ -61,5 +60,5 @@ public class SystemDeptEntity extends MyBatisEntity {
     /**
      * 状态
      */
-    private CommonStatusEnum status;
+    private Integer status;
 }

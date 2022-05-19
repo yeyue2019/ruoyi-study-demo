@@ -1,6 +1,5 @@
 package yeyue.ruoyi.study.module.system.api.enums;
 
-import com.baomidou.mybatisplus.annotation.EnumValue;
 import lombok.*;
 
 /**
@@ -33,6 +32,5 @@ public enum DataScopeEnum {
      */
     SELF(5);
 
-    @EnumValue
     private final Integer scope;
 }

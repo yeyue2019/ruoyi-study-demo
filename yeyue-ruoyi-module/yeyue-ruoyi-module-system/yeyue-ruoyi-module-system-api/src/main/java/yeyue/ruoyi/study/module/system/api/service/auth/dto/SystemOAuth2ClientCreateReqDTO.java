@@ -41,25 +41,4 @@ public class SystemOAuth2ClientCreateReqDTO implements Serializable {
     @ApiModelProperty(value = "刷新令牌的有效期", required = true)
     @NotNull(message = "刷新令牌的有效期不能为空")
     private Integer refreshTokenValiditySeconds;
-
-    // @ApiModelProperty(value = "是否自动授权", required = true, example = "true")
-    // @NotNull(message = "是否自动授权不能为空")
-    // private Boolean autoApprove;
-    //
-    // @ApiModelProperty(value = "授权类型", required = true, example = "password", notes = "参见 OAuth2GrantTypeEnum 枚举")
-    // @NotNull(message = "授权类型不能为空")
-    // private List<@NotEmpty(message = "授权类型不能为空")
-    // @InStringEnum(value = OAuth2GrantTypeEnum.class, message = "授权类型不在可选范围内") String> authorizedGrantTypes;
-    //
-    // @ApiModelProperty(value = "授权范围", example = "user_info")
-    // private List<String> scopes;
-    //
-    // @ApiModelProperty(value = "权限", example = "system:user:query")
-    // private List<String> authorities;
-    //
-    // @ApiModelProperty(value = "资源", example = "1024")
-    // private List<String> resourceIds;
-    //
-    // @ApiModelProperty(value = "附加信息", example = "{yunai: true}")
-    // private String additionalInformation;
 }

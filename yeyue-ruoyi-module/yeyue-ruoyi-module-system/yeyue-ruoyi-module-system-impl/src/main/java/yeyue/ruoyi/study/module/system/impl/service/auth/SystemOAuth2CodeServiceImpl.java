@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import yeyue.ruoyi.study.framework.common.enums.CommonStatusEnum;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
+import yeyue.ruoyi.study.framework.common.util.enums.EnumUtils;
 import yeyue.ruoyi.study.framework.common.util.ids.IdUtils;
 import yeyue.ruoyi.study.module.system.api.domain.auth.*;
 import yeyue.ruoyi.study.module.system.api.service.auth.*;
@@ -47,7 +48,6 @@ public class SystemOAuth2CodeServiceImpl implements SystemOAuth2CodeService {
         if (client.getCodeValiditySeconds() != null && client.getCodeValiditySeconds() > 0) {
             entity.setExpiresTime(LocalDateTime.now().plusSeconds(client.getCodeValiditySeconds()));
         }
-        entity.setStatus(CommonStatusEnum.ENABLE);
         codeMapper.insert(entity);
         return code;
     }
@@ -61,7 +61,7 @@ public class SystemOAuth2CodeServiceImpl implements SystemOAuth2CodeService {
             throw new ServiceException(SystemErrorCode.OAUTH2_CODE_NOT_EXISTS);
         }
         // 校验code是否被使用过
-        if (entity.getStatus() == CommonStatusEnum.DISABLE) {
+        if (EnumUtils.equals(CommonStatusEnum.DISABLE, CommonStatusEnum::getStatus, entity.getStatus())) {
             throw new ServiceException(SystemErrorCode.OAUTH2_CODE_DISABLE);
         }
         // 校验code是否处于有效期
@@ -72,7 +72,7 @@ public class SystemOAuth2CodeServiceImpl implements SystemOAuth2CodeService {
         SystemOAuth2AccessTokenDomain accessToken = tokenService.create(new SystemOAuth2AccessTokenCreateReqDTO().setClientId(entity.getClientId()).setUserId(entity.getUserId()));
         entity.setAccessToken(accessToken.getAccessToken());
         entity.setRefreshToken(accessToken.getRefreshToken());
-        entity.setStatus(CommonStatusEnum.DISABLE);
+        entity.setStatus(CommonStatusEnum.DISABLE.getStatus());
         codeMapper.updateById(entity);
         return accessToken;
     }

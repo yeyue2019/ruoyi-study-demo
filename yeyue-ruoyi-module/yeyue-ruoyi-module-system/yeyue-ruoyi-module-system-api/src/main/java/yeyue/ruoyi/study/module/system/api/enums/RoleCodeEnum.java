@@ -1,6 +1,5 @@
 package yeyue.ruoyi.study.module.system.api.enums;
 
-import com.baomidou.mybatisplus.annotation.EnumValue;
 import lombok.*;
 
 /**
@@ -19,7 +18,6 @@ public enum RoleCodeEnum {
     /**
      * 超级管理员
      */
-    @EnumValue
     private final String code;
 
     /**

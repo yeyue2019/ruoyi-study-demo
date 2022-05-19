@@ -1,7 +1,7 @@
 package yeyue.ruoyi.study.module.system.api.enums;
 
-import com.baomidou.mybatisplus.annotation.EnumValue;
 import lombok.*;
+import yeyue.ruoyi.study.framework.common.util.enums.EnumUtils;
 import yeyue.ruoyi.study.framework.common.validation.core.EnumValuable;
 
 /**
@@ -12,7 +12,7 @@ import yeyue.ruoyi.study.framework.common.validation.core.EnumValuable;
  */
 @Getter
 @AllArgsConstructor
-public enum MenuTypeEnum implements EnumValuable {
+public enum MenuTypeEnum implements EnumValuable<Integer> {
 
     /**
      * 目录
@@ -30,11 +30,10 @@ public enum MenuTypeEnum implements EnumValuable {
     /**
      * 类型
      */
-    @EnumValue
     private final Integer type;
 
     @Override
-    public int[] array() {
-        return new int[]{1, 2, 3};
+    public Integer[] enums() {
+        return EnumUtils.getArray(MenuTypeEnum.class, MenuTypeEnum::getType);
     }
 }

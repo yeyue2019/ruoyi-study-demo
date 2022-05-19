@@ -39,12 +39,6 @@ public class SystemOAuth2ClientController {
         return CommonResult.success();
     }
 
-    @ApiOperation(value = "修改客户端状态")
-    @PostMapping("/update/status")
-    public CommonResult<Integer> update(@Validated({Groups.Update.class}) @RequestBody SystemOAuth2ClientStatusUpdateReqDTO dto) {
-        return CommonResult.success(service.updateStatus(dto));
-    }
-
     @ApiOperation(value = "删除客户端")
     @DeleteMapping("/delete")
     public CommonResult<Void> delete(@NotNull(message = "客户端编号不能为空") @RequestParam Long id) {

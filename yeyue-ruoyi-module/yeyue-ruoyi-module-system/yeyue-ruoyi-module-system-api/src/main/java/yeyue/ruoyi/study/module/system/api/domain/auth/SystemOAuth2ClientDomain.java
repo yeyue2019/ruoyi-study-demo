@@ -5,7 +5,6 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * @author yeyue
@@ -35,24 +34,6 @@ public class SystemOAuth2ClientDomain implements Serializable {
 
     @ApiModelProperty(value = "刷新令牌的有效期", required = true)
     private Integer refreshTokenValiditySeconds;
-
-    @ApiModelProperty(value = "是否自动授权", required = true, example = "true")
-    private Boolean autoApprove;
-
-    @ApiModelProperty(value = "授权类型", required = true, example = "password", notes = "参见 OAuth2GrantTypeEnum 枚举")
-    private List<String> authorizedGrantTypes;
-
-    @ApiModelProperty(value = "授权范围", example = "user_info")
-    private List<String> scopes;
-
-    @ApiModelProperty(value = "权限", example = "system:user:query")
-    private List<String> authorities;
-
-    @ApiModelProperty(value = "资源", example = "1024")
-    private List<String> resourceIds;
-
-    @ApiModelProperty(value = "附加信息", example = "{yunai: true}")
-    private String additionalInformation;
 
     @ApiModelProperty(value = "状态")
     private Integer status;

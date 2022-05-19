@@ -2,12 +2,12 @@ package yeyue.ruoyi.study.module.system.impl.service.auth;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-import yeyue.ruoyi.study.framework.common.enums.CommonStatusEnum;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
 import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
 import yeyue.ruoyi.study.framework.mybatis.core.query.MyBatisLambdaQueryWrapper;
+import yeyue.ruoyi.study.framework.redis.core.RedisRepository;
+import yeyue.ruoyi.study.framework.redis.domain.RedisDomainDefine;
 import yeyue.ruoyi.study.module.system.api.domain.auth.SystemOAuth2ClientDomain;
 import yeyue.ruoyi.study.module.system.api.service.auth.SystemOAuth2ClientService;
 import yeyue.ruoyi.study.module.system.api.service.auth.dto.*;
@@ -17,6 +17,7 @@ import yeyue.ruoyi.study.module.system.impl.framework.exception.SystemErrorCode;
 import yeyue.ruoyi.study.module.system.impl.mapper.auth.SystemOAuth2ClientMapper;
 
 import javax.annotation.Resource;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author yeyue
@@ -25,9 +26,12 @@ import javax.annotation.Resource;
 @Slf4j
 @Component
 public class SystemOAuth2ClientServiceImpl implements SystemOAuth2ClientService {
+    public static final String REDIS_SYSTEM_OAUTH2_CLIENT = "system:oauth2:client";
 
     @Resource
     SystemOAuth2ClientMapper clientMapper;
+    @Resource
+    RedisRepository redisRepository;
 
     @Override
     public Long create(SystemOAuth2ClientCreateReqDTO reqDTO) {
@@ -36,8 +40,8 @@ public class SystemOAuth2ClientServiceImpl implements SystemOAuth2ClientService 
             throw new ServiceException(SystemErrorCode.OAUTH2_CLIENT_EXIST);
         }
         SystemOAuth2ClientEntity entity = SystemOAuth2ClientConvert.INSTANCE.toEntity(reqDTO);
-        entity.setStatus(CommonStatusEnum.ENABLE);
         clientMapper.insert(entity);
+        clearByClientId(entity.getClientId());
         return entity.getId();
     }
 
@@ -54,12 +58,7 @@ public class SystemOAuth2ClientServiceImpl implements SystemOAuth2ClientService 
         }
         SystemOAuth2ClientEntity entity = SystemOAuth2ClientConvert.INSTANCE.toEntity(reqDTO);
         clientMapper.updateById(entity);
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public int updateStatus(SystemOAuth2ClientStatusUpdateReqDTO reqDTO) {
-        return clientMapper.updateBatchColumnByIds(SystemOAuth2ClientConvert.INSTANCE.toEntity(reqDTO), reqDTO.getIds());
+        clearByClientId(entity.getClientId());
     }
 
     @Override
@@ -69,6 +68,7 @@ public class SystemOAuth2ClientServiceImpl implements SystemOAuth2ClientService 
             throw new ServiceException(SystemErrorCode.OAUTH2_CLIENT_NOT_EXISTS);
         }
         clientMapper.deleteById(id);
+        clearByClientId(entity.getClientId());
     }
 
     @Override
@@ -87,13 +87,19 @@ public class SystemOAuth2ClientServiceImpl implements SystemOAuth2ClientService 
 
     @Override
     public SystemOAuth2ClientDomain getByClientId(String clientId) {
-        SystemOAuth2ClientEntity entity = clientMapper.selectOne(SystemOAuth2ClientEntity::getClientId, clientId);
-        if (entity == null) {
-            throw new ServiceException(SystemErrorCode.OAUTH2_CLIENT_NOT_EXISTS);
+        SystemOAuth2ClientDomain domain = redisRepository.get(REDIS_SYSTEM_OAUTH2_CLIENT, clientId);
+        if (domain == null) {
+            SystemOAuth2ClientEntity entity = clientMapper.selectOne(SystemOAuth2ClientEntity::getClientId, clientId);
+            if (entity == null) {
+                throw new ServiceException(SystemErrorCode.OAUTH2_CLIENT_NOT_EXISTS);
+            }
+            domain = SystemOAuth2ClientConvert.INSTANCE.toDomain(entity);
+            redisRepository.save(REDIS_SYSTEM_OAUTH2_CLIENT, new RedisDomainDefine<>(clientId, domain, 1, TimeUnit.DAYS));
         }
-        if (entity.getStatus() == CommonStatusEnum.DISABLE) {
-            throw new ServiceException(SystemErrorCode.OAUTH2_CLIENT_STATUS_DISABLE);
-        }
-        return SystemOAuth2ClientConvert.INSTANCE.toDomain(entity);
+        return domain;
+    }
+
+    public void clearByClientId(String clientId) {
+        redisRepository.delete(REDIS_SYSTEM_OAUTH2_CLIENT, clientId);
     }
 }

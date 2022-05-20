@@ -17,6 +17,12 @@ public enum SystemErrorCode implements ErrorCode {
     POST_CODE_DUPLICATE("10002", "岗位编码已存在"),
     POST_NOT_FOUND("10003", "当前岗位不存在"),
     DEPT_NOT_FOUND("10004", "当前部门不存在"),
+    DEPT_PARENT_ERROR("10005", "不能设置自己为父部门"),
+    DEPT_PARENT_NOT_EXITS("10006", "父级部门不存在"),
+    DEPT_NOT_ENABLE("10007", "部门不处于开启状态，不允许选择"),
+    DEPT_PARENT_IS_CHILD("10008", "不能设置自己的下级部门为父部门"),
+    DEPT_NAME_DUPLICATE("10009","已经存在该名字的部门"),
+    DEPT_EXITS_CHILDREN("10010", "存在子部门，无法删除"),
 
     OAUTH2_CLIENT_EXIST("10101", "客户端编号已存在"),
     OAUTH2_CLIENT_NOT_EXISTS("10102", "客户端不存在"),

@@ -1,5 +1,6 @@
 package yeyue.ruoyi.study.module.system.impl.service.auth;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
@@ -26,7 +27,9 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 @Component
 public class SystemOAuth2ClientServiceImpl implements SystemOAuth2ClientService {
-    public static final String REDIS_SYSTEM_OAUTH2_CLIENT = "system:oauth2:client";
+    public static final String REDIS_SYSTEM_OAUTH2_CLIENT_KEY = "system:oauth2:client";
+    public static final TypeReference<SystemOAuth2ClientDomain> REDIS_SYSTEM_OAUTH2_CLIENT_TYPE = new TypeReference<SystemOAuth2ClientDomain>() {
+    };
 
     @Resource
     SystemOAuth2ClientMapper clientMapper;
@@ -85,21 +88,22 @@ public class SystemOAuth2ClientServiceImpl implements SystemOAuth2ClientService 
         return CollectionUtils.convertPage(pageResult, SystemOAuth2ClientConvert.INSTANCE::toDomain);
     }
 
+
     @Override
     public SystemOAuth2ClientDomain getByClientId(String clientId) {
-        SystemOAuth2ClientDomain domain = redisRepository.get(REDIS_SYSTEM_OAUTH2_CLIENT, clientId);
+        SystemOAuth2ClientDomain domain = redisRepository.get(REDIS_SYSTEM_OAUTH2_CLIENT_KEY, clientId, REDIS_SYSTEM_OAUTH2_CLIENT_TYPE);
         if (domain == null) {
             SystemOAuth2ClientEntity entity = clientMapper.selectOne(SystemOAuth2ClientEntity::getClientId, clientId);
             if (entity == null) {
                 throw new ServiceException(SystemErrorCode.OAUTH2_CLIENT_NOT_EXISTS);
             }
             domain = SystemOAuth2ClientConvert.INSTANCE.toDomain(entity);
-            redisRepository.save(REDIS_SYSTEM_OAUTH2_CLIENT, new RedisDomainDefine<>(clientId, domain, 1, TimeUnit.DAYS));
+            redisRepository.save(REDIS_SYSTEM_OAUTH2_CLIENT_KEY, new RedisDomainDefine<>(clientId, domain, 1, TimeUnit.DAYS));
         }
         return domain;
     }
 
     public void clearByClientId(String clientId) {
-        redisRepository.delete(REDIS_SYSTEM_OAUTH2_CLIENT, clientId);
+        redisRepository.delete(REDIS_SYSTEM_OAUTH2_CLIENT_KEY, clientId);
     }
 }

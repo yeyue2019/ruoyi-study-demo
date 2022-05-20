@@ -54,7 +54,7 @@ public class SystemOAuth2ClientController {
 
     @ApiOperation(value = "查看客户端")
     @PostMapping("/list")
-    public CommonResult<PageResult<SystemOAuth2ClientDomain>> get(@Validated({Groups.List.class}) @RequestBody SystemOAuth2ClientPageReqDTO dto) {
+    public CommonResult<PageResult<SystemOAuth2ClientDomain>> list(@Validated({Groups.List.class}) @RequestBody SystemOAuth2ClientPageReqDTO dto) {
         return CommonResult.success(service.list(dto));
     }
 }

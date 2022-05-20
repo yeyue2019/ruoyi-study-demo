@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author yeyue
@@ -46,4 +47,8 @@ public class SystemDeptDomain implements Serializable {
 
     @ApiModelProperty(value = "更改时间")
     private LocalDateTime updateTime;
+
+    @ApiModelProperty(value = "子部门")
+    private List<SystemDeptDomain> children;
+
 }

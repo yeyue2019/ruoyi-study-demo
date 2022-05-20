@@ -1,6 +1,6 @@
 package yeyue.ruoyi.study.module.system.api.service.dept.dto;
 
-import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.*;
 import lombok.Data;
 import yeyue.ruoyi.study.framework.common.pojo.pageable.PageParam;
 
@@ -11,4 +11,7 @@ import yeyue.ruoyi.study.framework.common.pojo.pageable.PageParam;
 @Data
 @ApiModel(description = "部门信息查询")
 public class SystemDeptPageReqDTO extends PageParam {
+
+    @ApiModelProperty(value = "是否返回下级部门")
+    private Boolean children;
 }

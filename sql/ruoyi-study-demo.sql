@@ -8,7 +8,7 @@ CREATE TABLE `ruoyi_system_post`
     `code`       varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '岗位编码',
     `name`       varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '岗位名称',
     `sort`       int                                                          NOT NULL COMMENT '显示顺序',
-    `status`     tinyint                                                      NOT NULL COMMENT '状态（0正常 1停用）',
+    `status`     tinyint                                                      NOT NULL DEFAULT 0 COMMENT '状态（0正常 1停用）',
     `remark`     varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci         DEFAULT NULL COMMENT '备注',
     `creator`    varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci          DEFAULT '' COMMENT '创建者',
     `createTime` datetime                                                     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -35,7 +35,7 @@ CREATE TABLE `ruoyi_system_dept`
     `areaCode`     varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci          DEFAULT '86' COMMENT '手机区号',
     `mobile`       varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci          DEFAULT '' COMMENT '手机号码',
     `email`        varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci          DEFAULT NULL COMMENT '邮箱',
-    `status`       tinyint                                                      NOT NULL COMMENT '部门状态（0正常 1停用）',
+    `status`       tinyint                                                      NOT NULL DEFAULT 0 COMMENT '部门状态（0正常 1停用）',
     `creator`      varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci          DEFAULT '' COMMENT '创建者',
     `createTime`   datetime                                                     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `updater`      varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci          DEFAULT '' COMMENT '更新者',
@@ -43,6 +43,7 @@ CREATE TABLE `ruoyi_system_dept`
     `deleted`      bit(1)                                                       NOT NULL DEFAULT b'0' COMMENT '是否删除',
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB
+    AUTO_INCREMENT = 100
     DEFAULT CHARSET=utf8mb4
     COLLATE=utf8mb4_unicode_ci
     COMMENT='系统部门表';

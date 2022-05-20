@@ -1,8 +1,6 @@
 package yeyue.ruoyi.study.framework.redis.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.redisson.codec.JsonJacksonCodec;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * redis自动配置
@@ -13,11 +11,5 @@ import org.springframework.context.annotation.*;
 @Configuration
 public class YeyueRedisAutoConfiguration {
 
-    /**
-     * 使用系统中存在的ObjectMapper作为JsonJacksonCodec的序列化工具
-     */
-    @Bean
-    public JsonJacksonCodec jsonJacksonCodec(ObjectMapper objectMapper) {
-        return new JsonJacksonCodec(objectMapper);
-    }
+    // TODO: 2022/5/20 暂时没有需要配置的内容
 }

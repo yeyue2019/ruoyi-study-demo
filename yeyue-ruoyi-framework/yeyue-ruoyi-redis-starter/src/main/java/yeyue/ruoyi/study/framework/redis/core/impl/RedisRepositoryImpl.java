@@ -1,9 +1,12 @@
 package yeyue.ruoyi.study.framework.redis.core.impl;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.*;
-import org.redisson.codec.JsonJacksonCodec;
+import org.redisson.client.codec.StringCodec;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.exception.common.GlobalErrorCode;
@@ -24,22 +27,24 @@ public class RedisRepositoryImpl implements RedisRepository {
 
     RedissonClient redissonClient;
 
-    JsonJacksonCodec jacksonCodec;
+    ObjectMapper objectMapper;
+
+    StringRedisTemplate redisTemplate;
+
+    private static final StringCodec STRING_CODEC = new StringCodec();
 
     @Autowired
-    public void setRedissonClient(RedissonClient redissonClient) {
+    public RedisRepositoryImpl(RedissonClient redissonClient, ObjectMapper objectMapper, StringRedisTemplate redisTemplate) {
         this.redissonClient = redissonClient;
-    }
-
-    @Autowired
-    public void setJacksonCodec(JsonJacksonCodec jacksonCodec) {
-        this.jacksonCodec = jacksonCodec;
+        this.objectMapper = objectMapper;
+        this.redisTemplate = redisTemplate;
     }
 
     @Override
     public boolean delete(String name, Object id) {
         try {
-            return redissonClient.getBucket(ObjectUtils.indexJoin(name, id)).delete();
+            Boolean result = redisTemplate.delete(ObjectUtils.indexJoin(name, id));
+            return Objects.equals(Boolean.TRUE, result);
         } catch (Throwable e) {
             log.error("[RedisRepository][delete][1]请求失败", e);
             return false;
@@ -52,11 +57,8 @@ public class RedisRepositoryImpl implements RedisRepository {
             return;
         }
         try {
-            RBatch batch = redissonClient.createBatch();
-            ids.forEach(id -> {
-                batch.getBucket(ObjectUtils.indexJoin(name, id)).deleteAsync();
-            });
-            batch.execute();
+            List<String> keys = CollectionUtils.convertList(ids, id -> ObjectUtils.indexJoin(name, id));
+            redisTemplate.delete(keys);
         } catch (Throwable e) {
             log.error("[RedisRepository][delete][2]请求失败", e);
         }
@@ -65,11 +67,12 @@ public class RedisRepositoryImpl implements RedisRepository {
     @Override
     public <T> void save(String name, RedisDomainDefine<T> define) {
         try {
-            RBucket<T> bucket = redissonClient.getBucket(ObjectUtils.indexJoin(name, define.getId()), jacksonCodec);
-            if (define.getTimeout() >= 0) {
-                bucket.set(define.getValue(), define.getTimeout(), define.getTimeUnit());
+            String key = ObjectUtils.indexJoin(name, define.getId());
+            String value = objectMapper.writeValueAsString(define.getValue());
+            if (define.getTimeout() > 0) {
+                redisTemplate.opsForValue().set(key, value, define.getTimeout(), define.getTimeUnit());
             } else {
-                bucket.set(define.getValue());
+                redisTemplate.opsForValue().set(key, value);
             }
         } catch (Throwable e) {
             log.error("[RedisRepository][save][1]请求失败", e);
@@ -84,11 +87,13 @@ public class RedisRepositoryImpl implements RedisRepository {
         try {
             RBatch batch = redissonClient.createBatch();
             for (RedisDomainDefine<T> define : defines) {
-                RBucketAsync<T> bucket = batch.getBucket(ObjectUtils.indexJoin(name, define.getId()), jacksonCodec);
-                if (define.getTimeout() >= 0) {
-                    bucket.setAsync(define.getValue(), define.getTimeout(), define.getTimeUnit());
+                String key = ObjectUtils.indexJoin(name, define.getId());
+                String value = objectMapper.writeValueAsString(define.getValue());
+                RBucketAsync<String> bucket = batch.getBucket(key, STRING_CODEC);
+                if (define.getTimeout() > 0) {
+                    bucket.setAsync(value, define.getTimeout(), define.getTimeUnit());
                 } else {
-                    bucket.setAsync(define.getValue());
+                    bucket.setAsync(value);
                 }
             }
             batch.execute();
@@ -98,10 +103,14 @@ public class RedisRepositoryImpl implements RedisRepository {
     }
 
     @Override
-    public <T> T get(String name, Object id) {
+    public <T> T get(String name, Object id, TypeReference<T> type) {
         try {
-            RBucket<T> bucket = redissonClient.getBucket(ObjectUtils.indexJoin(name, id), jacksonCodec);
-            return bucket.get();
+            String key = ObjectUtils.indexJoin(name, id);
+            String value = redisTemplate.opsForValue().get(key);
+            if (value == null) {
+                return null;
+            }
+            return objectMapper.readValue(value, type);
         } catch (Throwable e) {
             log.error("[RedisRepository][get][1]请求失败", e);
             throw new ServiceException(GlobalErrorCode.REDIS_CLIENT_COMMAND_FAIL);
@@ -109,23 +118,23 @@ public class RedisRepositoryImpl implements RedisRepository {
     }
 
     @Override
-    public <T> Map<Object, T> get(String name, List<Object> ids) {
+    public <T> Map<Object, T> get(String name, List<Object> ids, TypeReference<T> type) {
         if (CollectionUtils.isEmpty(ids)) {
             return Collections.emptyMap();
         }
         try {
             RBatch batch = redissonClient.createBatch();
             Map<Object, T> map = CollectionUtils.newHashMap(ids.size());
-            Map<Object, RFuture<T>> futureMap = CollectionUtils.newHashMap(ids.size());
+            Map<Object, RFuture<String>> futureMap = CollectionUtils.newHashMap(ids.size());
             for (Object id : ids) {
-                RBucketAsync<T> bucketAsync = batch.getBucket(ObjectUtils.indexJoin(name, id));
+                RBucketAsync<String> bucketAsync = batch.getBucket(ObjectUtils.indexJoin(name, id));
                 futureMap.put(id, bucketAsync.getAsync());
             }
             batch.execute();
-            for (Map.Entry<Object, RFuture<T>> entry : futureMap.entrySet()) {
-                T valueNow = entry.getValue().getNow();
-                if (valueNow != null) {
-                    map.put(entry.getKey(), valueNow);
+            for (Map.Entry<Object, RFuture<String>> entry : futureMap.entrySet()) {
+                String value = entry.getValue().getNow();
+                if (value != null) {
+                    map.put(entry.getKey(), objectMapper.readValue(value, type));
                 }
             }
             return map;

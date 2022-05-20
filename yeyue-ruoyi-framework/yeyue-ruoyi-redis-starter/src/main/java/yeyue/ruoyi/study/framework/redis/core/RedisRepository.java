@@ -1,5 +1,6 @@
 package yeyue.ruoyi.study.framework.redis.core;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import yeyue.ruoyi.study.framework.redis.domain.RedisDomainDefine;
 
 import java.util.*;
@@ -49,18 +50,20 @@ public interface RedisRepository {
      *
      * @param name 键名称
      * @param id   缓存Id
+     * @param type 类型
      * @param <T>  获取的缓存类型
      * @return 缓存
      */
-    <T> T get(String name, Object id);
+    <T> T get(String name, Object id, TypeReference<T> type);
 
     /**
      * 获取缓存
      *
      * @param name 键名称
      * @param ids  缓存Id
+     * @param type 类型
      * @param <T>  获取的缓存类型
      * @return 缓存
      */
-    <T> Map<Object, T> get(String name, List<Object> ids);
+    <T> Map<Object, T> get(String name, List<Object> ids, TypeReference<T> type);
 }

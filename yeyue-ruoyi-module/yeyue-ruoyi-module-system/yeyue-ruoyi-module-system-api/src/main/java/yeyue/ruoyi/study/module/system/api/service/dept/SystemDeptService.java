@@ -1,8 +1,9 @@
 package yeyue.ruoyi.study.module.system.api.service.dept;
 
-import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
 import yeyue.ruoyi.study.module.system.api.domain.dept.SystemDeptDomain;
 import yeyue.ruoyi.study.module.system.api.service.dept.dto.*;
+
+import java.util.List;
 
 /**
  * @author yeyue
@@ -41,10 +42,11 @@ public interface SystemDeptService {
     void delete(Long id);
 
     /**
-     * 部门列表
+     * 部门集合
      *
-     * @param reqDTO 查询内容
+     * @param parentId  父部门id
+     * @param recursive 是否递归
      * @return 结果
      */
-    PageResult<SystemDeptPageReqDTO> list(SystemDeptPageReqDTO reqDTO);
+    List<SystemDeptDomain> list(Long parentId, Boolean recursive);
 }

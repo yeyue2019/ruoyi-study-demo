@@ -60,7 +60,7 @@ public class SystemPostController {
 
     @ApiOperation(value = "查看系统岗位")
     @PostMapping("/list")
-    public CommonResult<PageResult<SystemPostDomain>> get(@Validated({Groups.List.class}) @RequestBody SystemPostPageReqDTO dto) {
+    public CommonResult<PageResult<SystemPostDomain>> list(@Validated({Groups.List.class}) @RequestBody SystemPostPageReqDTO dto) {
         return CommonResult.success(service.list(dto));
     }
 }

@@ -61,7 +61,7 @@ public class SystemOAuth2CodeServiceImpl implements SystemOAuth2CodeService {
             throw new ServiceException(SystemErrorCode.OAUTH2_CODE_NOT_EXISTS);
         }
         // 校验code是否被使用过
-        if (EnumUtils.equals(CommonStatusEnum.DISABLE, CommonStatusEnum::getStatus, entity.getStatus())) {
+        if (EnumUtils.notEquals(CommonStatusEnum.ENABLE, CommonStatusEnum::getStatus, entity.getStatus())) {
             throw new ServiceException(SystemErrorCode.OAUTH2_CODE_DISABLE);
         }
         // 校验code是否处于有效期

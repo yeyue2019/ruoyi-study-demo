@@ -65,4 +65,8 @@ public abstract class EnumUtils {
         C target = func.apply(source);
         return Objects.equals(compare, target);
     }
+
+    public static <E extends Enum<E>, C> boolean notEquals(E source, Function<E, C> func, C compare) {
+        return !equals(source, func, compare);
+    }
 }

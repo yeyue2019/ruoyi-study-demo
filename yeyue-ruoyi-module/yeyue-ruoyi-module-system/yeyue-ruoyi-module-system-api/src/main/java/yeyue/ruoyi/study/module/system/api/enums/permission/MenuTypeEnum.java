@@ -1,4 +1,4 @@
-package yeyue.ruoyi.study.module.system.api.enums;
+package yeyue.ruoyi.study.module.system.api.enums.permission;
 
 import lombok.*;
 import yeyue.ruoyi.study.framework.common.util.enums.EnumUtils;

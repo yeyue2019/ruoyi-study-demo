@@ -21,8 +21,11 @@ public enum SystemErrorCode implements ErrorCode {
     DEPT_PARENT_NOT_EXITS("10006", "父级部门不存在"),
     DEPT_NOT_ENABLE("10007", "部门不处于开启状态，不允许选择"),
     DEPT_PARENT_IS_CHILD("10008", "不能设置自己的下级部门为父部门"),
-    DEPT_NAME_DUPLICATE("10009","已经存在该名字的部门"),
+    DEPT_NAME_DUPLICATE("10009", "已经存在该名字的部门"),
     DEPT_EXITS_CHILDREN("10010", "存在子部门，无法删除"),
+    MENU_PARENT_ERROR("10011", "不能设置自己为父菜单"),
+    MENU_PARENT_NOT_EXISTS("10012", "父菜单不存在"),
+    MENU_NOT_EXISTS("10013", "菜单不存在"),
 
     OAUTH2_CLIENT_EXIST("10101", "客户端编号已存在"),
     OAUTH2_CLIENT_NOT_EXISTS("10102", "客户端不存在"),

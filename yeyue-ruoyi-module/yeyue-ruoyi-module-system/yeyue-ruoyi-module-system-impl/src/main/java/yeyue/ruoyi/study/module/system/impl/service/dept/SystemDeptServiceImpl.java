@@ -121,7 +121,7 @@ public class SystemDeptServiceImpl implements SystemDeptService {
     private void checkParentDeptEnable(Long id, Long parentId) {
         // 不能设置自己为父部门
         if (Objects.equals(id, parentId)) {
-            throw new ServiceException(SystemErrorCode.DEPT_PARENT_ERROR);
+            throw new ServiceException(SystemErrorCode.D_PARENT_ERROR);
         }
         if (DeptIdEnum.ROOT.getId().compareTo(parentId) != 0) {
             // 父岗位不存在

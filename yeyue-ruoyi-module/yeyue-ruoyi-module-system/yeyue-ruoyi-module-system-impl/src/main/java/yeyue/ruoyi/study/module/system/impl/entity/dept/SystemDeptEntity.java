@@ -28,8 +28,9 @@ public class SystemDeptEntity extends MyBatisEntity {
     private String name;
 
     /**
-     * 父部门ID
+     * 父部门ID fix 创建后不可以修改父部门
      */
+    @TableField(updateStrategy = FieldStrategy.NEVER)
     private Long parentId;
 
     /**

@@ -51,8 +51,9 @@ public class SystemMenuEntity extends MyBatisEntity {
     private Integer sort;
 
     /**
-     * 父菜单ID
+     * 父菜单ID fix 创建后不可修改
      */
+    @TableField(updateStrategy = FieldStrategy.NEVER)
     private Long parentId;
 
     /**

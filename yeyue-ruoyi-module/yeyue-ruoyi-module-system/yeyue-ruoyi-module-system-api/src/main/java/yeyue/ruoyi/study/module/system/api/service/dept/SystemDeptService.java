@@ -44,9 +44,8 @@ public interface SystemDeptService {
     /**
      * 部门集合
      *
-     * @param parentId  父部门id
-     * @param recursive 是否递归
+     * @param reqDTO 查询条件
      * @return 结果
      */
-    List<SystemDeptDomain> list(Long parentId, Boolean recursive);
+    List<SystemDeptDomain> list(SystemDeptListReqDTO reqDTO);
 }

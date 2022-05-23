@@ -69,4 +69,31 @@ public abstract class EnumUtils {
     public static <E extends Enum<E>, C> boolean notEquals(E source, Function<E, C> func, C compare) {
         return !equals(source, func, compare);
     }
+
+    /**
+     * 列举的值是否属于枚举的任一内容
+     *
+     * @param value  列举的值
+     * @param func   枚举转换函数
+     * @param source 枚举集合
+     * @param <E>    枚举类型
+     * @param <C>    列举类型
+     * @return 结果
+     */
+    @SafeVarargs
+    public static <E extends Enum<E>, C> boolean containsAny(C value, Function<E, C> func, E... source) {
+        if (value == null || source == null) {
+            return false;
+        }
+        return Arrays.stream(source).map(func).anyMatch(c -> Objects.equals(value, c));
+    }
+
+    @SafeVarargs
+    public static <E extends Enum<E>, C> boolean containsNone(C value, Function<E, C> func, E... source) {
+        if (value == null || source == null) {
+            return false;
+        }
+        return Arrays.stream(source).map(func).anyMatch(c -> Objects.equals(value, c));
+    }
+
 }

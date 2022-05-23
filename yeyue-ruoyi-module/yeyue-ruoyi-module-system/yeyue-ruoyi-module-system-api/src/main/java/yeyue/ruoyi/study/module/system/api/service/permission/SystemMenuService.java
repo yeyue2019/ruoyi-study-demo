@@ -3,6 +3,8 @@ package yeyue.ruoyi.study.module.system.api.service.permission;
 import yeyue.ruoyi.study.module.system.api.domain.permission.SystemMenuDomain;
 import yeyue.ruoyi.study.module.system.api.service.permission.dto.*;
 
+import java.util.List;
+
 /**
  * @author yeyue
  * @date 2022-05-23 15:20:16
@@ -38,4 +40,12 @@ public interface SystemMenuService {
      * @param id 菜单id
      */
     void delete(Long id);
+
+    /**
+     * 菜单列表
+     *
+     * @param reqDTO 查询条件
+     * @return 菜单集合
+     */
+    List<SystemMenuDomain> list(SystemMenuListReqDTO reqDTO);
 }

@@ -5,8 +5,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import yeyue.ruoyi.study.framework.common.pojo.core.CommonResult;
 import yeyue.ruoyi.study.framework.common.validation.core.Groups;
-import yeyue.ruoyi.study.module.system.api.domain.dept.*;
-import yeyue.ruoyi.study.module.system.api.enums.dept.DeptIdEnum;
+import yeyue.ruoyi.study.module.system.api.domain.dept.SystemDeptDomain;
 import yeyue.ruoyi.study.module.system.api.service.dept.SystemDeptService;
 import yeyue.ruoyi.study.module.system.api.service.dept.dto.*;
 
@@ -55,7 +54,7 @@ public class SystemDeptController {
 
     @ApiOperation(value = "查看全部部门")
     @GetMapping("/list")
-    public CommonResult<List<SystemDeptDomain>> list() {
-        return CommonResult.success(service.list(DeptIdEnum.ROOT.getId(), true));
+    public CommonResult<List<SystemDeptDomain>> list(@RequestBody SystemDeptListReqDTO dto) {
+        return CommonResult.success(service.list(dto));
     }
 }

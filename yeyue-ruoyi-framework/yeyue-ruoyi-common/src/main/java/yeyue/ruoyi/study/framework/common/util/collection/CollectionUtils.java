@@ -68,29 +68,47 @@ public abstract class CollectionUtils extends org.springframework.util.Collectio
         return (T[]) Array.newInstance(getListClazz(list), list.size());
     }
 
-    public static <T, R> List<R> convertList(Collection<T> from, Function<T, R> function) {
+    public static <T, R> List<R> convertList(Collection<T> from, Function<T, R> func) {
         if (isEmpty(from)) {
             return new ArrayList<>();
         }
-        return from.stream().map(function).filter(Objects::nonNull).collect(Collectors.toList());
+        return from.stream().map(func).filter(Objects::nonNull).collect(Collectors.toList());
     }
 
 
-    public static <T, R> R[] convertArray(T[] from, Function<T, R> function) {
+    public static <T, R> R[] convertArray(T[] from, Function<T, R> func) {
         if (isEmpty((Object[]) from)) {
             return empty();
         }
-        return listToArray(Arrays.stream(from).map(function).filter(Objects::nonNull).collect(Collectors.toList()));
+        return listToArray(Arrays.stream(from).map(func).filter(Objects::nonNull).collect(Collectors.toList()));
     }
 
-    public static <T, R> PageResult<R> convertPage(PageResult<T> from, Function<T, R> function) {
-        return new PageResult<>(convertList(from.getList(), function), from.getTotal());
+    public static <T, R> PageResult<R> convertPage(PageResult<T> from, Function<T, R> func) {
+        return new PageResult<>(convertList(from.getList(), func), from.getTotal());
     }
 
     public static <T> Set<T> arrayToSet(T[] array) {
         return new HashSet<>(arrayToList(array));
     }
 
+    /**
+     * 判断是否是子节点
+     *
+     * @param tree   树
+     * @param func   树转换函数
+     * @param parent 父节点
+     * @param child  子节点
+     * @param <K>    节点值
+     * @param <V>    存放节点的对象
+     * @return 结果
+     */
+    public static <K, V> boolean ifChild(final Map<K, List<V>> tree, Function<V, K> func, K parent, K child) {
+        List<V> children = tree.get(parent);
+        if (isEmpty(children)) {
+            return false;
+        }
+        return children.stream().map(func).anyMatch(c -> Objects.equals(c, child));
+    }
 
     /**
      * 集合分割处理

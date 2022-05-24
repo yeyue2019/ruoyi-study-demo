@@ -18,7 +18,7 @@ import java.util.List;
  */
 @Api(tags = "部门管理")
 @RestController
-@RequestMapping("/web/sys/dept/")
+@RequestMapping("/web/sys/dept")
 public class SystemDeptController {
 
     @Resource

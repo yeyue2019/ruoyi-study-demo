@@ -18,7 +18,7 @@ import javax.validation.Valid;
  */
 @Api(tags = "角色管理")
 @RestController
-@RequestMapping("/web/sys/role/")
+@RequestMapping("/web/sys/role")
 public class SystemRoleController {
 
     @Resource

@@ -22,7 +22,7 @@ import javax.validation.constraints.Positive;
  * @author yeyue
  * @date 2022-04-18 17:01:43
  */
-@Api(tags = "系统用户管理")
+@Api(tags = "用户管理")
 @Validated
 @RestController
 @RequestMapping("/web/sys/user/")
@@ -76,16 +76,9 @@ public class SystemUserController {
     }
 
     @ApiOperation(value = "更改用户状态")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "id", value = "用户Id", paramType = "query", dataType = "Long"),
-            @ApiImplicitParam(name = "status", value = "用户状态", paramType = "query", dataType = "Integer"),
-    })
+    @ApiImplicitParams({@ApiImplicitParam(name = "id", value = "用户Id", paramType = "query", dataType = "Long"), @ApiImplicitParam(name = "status", value = "用户状态", paramType = "query", dataType = "Integer"),})
     @PostMapping("/status/update")
-    public CommonResult<Void> update(
-            @Positive(message = "用户Id格式错误")
-            @RequestParam Long id,
-            @InEnum(CommonStatusEnum.class)
-            @RequestParam Integer status) {
+    public CommonResult<Void> update(@Positive(message = "用户Id格式错误") @RequestParam Long id, @InEnum(CommonStatusEnum.class) @RequestParam Integer status) {
         service.updateStatus(id, status);
         return CommonResult.success();
     }

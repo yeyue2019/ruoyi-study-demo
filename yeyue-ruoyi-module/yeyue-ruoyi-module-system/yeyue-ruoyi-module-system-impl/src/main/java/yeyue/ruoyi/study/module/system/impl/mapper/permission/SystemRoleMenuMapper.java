@@ -1,7 +1,6 @@
 package yeyue.ruoyi.study.module.system.impl.mapper.permission;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
 import yeyue.ruoyi.study.framework.mybatis.core.mapper.MyBatisMapper;
 import yeyue.ruoyi.study.framework.mybatis.core.query.MyBatisLambdaQueryWrapper;
 import yeyue.ruoyi.study.module.system.impl.entity.permission.SystemRoleMenuEntity;
@@ -20,9 +19,6 @@ public interface SystemRoleMenuMapper extends MyBatisMapper<SystemRoleMenuEntity
     }
 
     default void deleteListByRoleIdAndMenuIds(Long roleId, Collection<Long> menuIds) {
-        if (roleId == null || CollectionUtils.isEmpty(menuIds)) {
-            return;
-        }
         delete(new MyBatisLambdaQueryWrapper<SystemRoleMenuEntity>()
                 .eq(SystemRoleMenuEntity::getRoleId, roleId)
                 .in(SystemRoleMenuEntity::getMenuId, menuIds));

@@ -16,7 +16,7 @@ import javax.validation.Valid;
  * @author yeyue
  * @date 2022-05-17 10:58:40
  */
-@Api(tags = "OAuth2协议管理")
+@Api(tags = "OAuth2协议")
 @RestController
 @RequestMapping("/web/sys/oauth2/client")
 public class SystemOAuth2ClientController {

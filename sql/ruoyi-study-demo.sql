@@ -92,6 +92,18 @@ CREATE TABLE `ruoyi_system_user_role`
     COLLATE=utf8mb4_unicode_ci
     COMMENT='用户和角色关联表';
 -- ----------------------------
+-- Records of ruoyi_system_role
+-- ----------------------------
+BEGIN;
+INSERT INTO `ruoyi_system_role` (`id`, `name`, `code`, `sort`, `dataScope`, `dataScopeDeptIds`, `status`, `type`,
+                                 `remark`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
+VALUES (1, '超级管理员', 'super_admin', 1, 1, '', 0, 1, '超级管理员', '1', '2021-01-05 17:03:48', '1', '2022-02-22 05:08:21',
+        b'0');
+INSERT INTO `ruoyi_system_role` (`id`, `name`, `code`, `sort`, `dataScope`, `dataScopeDeptIds`, `status`, `type`,
+                                 `remark`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
+VALUES (2, '普通角色', 'common', 2, 2, '', 0, 1, '普通角色', '1', '2021-01-05 17:03:48', '1', '2022-02-22 05:08:20', b'0');
+COMMIT;
+-- ----------------------------
 -- Table structure for ruoyi_system_post
 -- ----------------------------
 DROP TABLE IF EXISTS `ruoyi_system_post`;

@@ -31,18 +31,18 @@ import java.util.Objects;
 @Component
 public class SystemMenuServiceImpl implements SystemMenuService {
     @Resource
-    SystemMenuMapper menuMapper;
+    SystemMenuMapper mapper;
 
     @Override
     public Long create(SystemMenuCreateReqDTO reqDTO) {
         // 名称校验
-        if (menuMapper.selectByParentIdAndName(reqDTO.getParentId(), reqDTO.getName()) != null) {
+        if (mapper.selectByParentIdAndName(reqDTO.getParentId(), reqDTO.getName()) != null) {
             throw new ServiceException(SystemErrorCode.MENU_NAME_DUPLICATE);
         }
         // 父菜单校验
         if (EnumUtils.notEquals(MenuIdEnum.ROOT, MenuIdEnum::getId, reqDTO.getParentId())) {
             // 父菜单不存在
-            SystemMenuEntity menu = menuMapper.selectById(reqDTO.getParentId());
+            SystemMenuEntity menu = mapper.selectById(reqDTO.getParentId());
             if (menu == null) {
                 throw new ServiceException(SystemErrorCode.MENU_PARENT_NOT_EXISTS);
             }
@@ -57,46 +57,46 @@ public class SystemMenuServiceImpl implements SystemMenuService {
         }
         SystemMenuEntity entity = SystemMenuConvert.INSTANCE.toEntity(reqDTO);
         initMenuProperty(entity);
-        menuMapper.insert(entity);
+        mapper.insert(entity);
         return entity.getId();
     }
 
     @Override
     public void update(SystemMenuUpdateReqDTO reqDTO) {
-        if (menuMapper.selectById(reqDTO.getId()) == null) {
+        if (mapper.selectById(reqDTO.getId()) == null) {
             throw new ServiceException(SystemErrorCode.MENU_NOT_EXISTS);
         }
-        SystemMenuEntity nameCompare = menuMapper.selectByParentIdAndName(reqDTO.getParentId(), reqDTO.getName());
+        SystemMenuEntity nameCompare = mapper.selectByParentIdAndName(reqDTO.getParentId(), reqDTO.getName());
         if (nameCompare != null && !Objects.equals(nameCompare.getId(), reqDTO.getId())) {
             throw new ServiceException(SystemErrorCode.MENU_NAME_DUPLICATE);
         }
         SystemMenuEntity entity = SystemMenuConvert.INSTANCE.toEntity(reqDTO);
         initMenuProperty(entity);
-        menuMapper.updateById(entity);
+        mapper.updateById(entity);
     }
 
     @Override
     public SystemMenuDomain get(Long id) {
-        SystemMenuEntity entity = menuMapper.selectById(id);
+        SystemMenuEntity entity = mapper.selectById(id);
         return SystemMenuConvert.INSTANCE.toDomain(entity);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void delete(Long id) {
-        if (menuMapper.selectById(id) == null) {
+        if (mapper.selectById(id) == null) {
             throw new ServiceException(SystemErrorCode.MENU_NOT_EXISTS);
         }
-        if (menuMapper.selectCount(SystemMenuEntity::getParentId, id) > 0) {
+        if (mapper.selectCount(SystemMenuEntity::getParentId, id) > 0) {
             throw new ServiceException(SystemErrorCode.MENU_EXISTS_CHILDREN);
         }
-        menuMapper.deleteById(id);
+        mapper.deleteById(id);
         // TODO: 2022/5/23 角色权限关联表删除
     }
 
     @Override
     public List<SystemMenuDomain> list(SystemMenuListReqDTO reqDTO) {
-        List<SystemMenuEntity> list = menuMapper.selectList(new MyBatisLambdaQueryWrapper<SystemMenuEntity>().eq(SystemMenuEntity::getStatus, reqDTO.getStatus()));
+        List<SystemMenuEntity> list = mapper.selectList(new MyBatisLambdaQueryWrapper<SystemMenuEntity>().eq(SystemMenuEntity::getStatus, reqDTO.getStatus()));
         return CollectionUtils.funcList(list, SystemMenuConvert.INSTANCE::toDomain);
     }
 

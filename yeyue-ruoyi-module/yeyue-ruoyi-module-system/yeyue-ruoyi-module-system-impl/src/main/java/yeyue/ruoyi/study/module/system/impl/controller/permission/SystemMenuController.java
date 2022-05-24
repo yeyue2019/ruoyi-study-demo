@@ -18,7 +18,7 @@ import java.util.List;
  */
 @Api(tags = "菜单管理")
 @RestController
-@RequestMapping("/web/sys/menu/")
+@RequestMapping("/web/sys/menu")
 public class SystemMenuController {
 
     @Resource

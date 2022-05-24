@@ -59,9 +59,17 @@ public class SystemPermissionServiceImpl implements SystemPermissionService {
                 .filter(r -> !ruleIds.contains(r))
                 .collect(Collectors.toSet());
         // 执行删除和新增的操作
-        roleMenuMapper.deleteListByRoleIdAndMenuIds(reqDTO.getRoleId(), deleteIds);
-        roleMenuMapper.insertBatchSomeColumn(CollectionUtils.funcList(createIds, id -> new SystemRoleMenuEntity()
-                .setMenuId(id)
-                .setRoleId(reqDTO.getRoleId())));
+        if (CollectionUtils.isNotEmpty(deleteIds)) {
+            roleMenuMapper.deleteListByRoleIdAndMenuIds(reqDTO.getRoleId(), deleteIds);
+        }
+        if (CollectionUtils.isNotEmpty(createIds)) {
+            roleMenuMapper.insertBatchSomeColumn(CollectionUtils.funcList(createIds, id -> {
+                SystemRoleMenuEntity entity = new SystemRoleMenuEntity()
+                        .setMenuId(id)
+                        .setRoleId(reqDTO.getRoleId());
+                entity.setDeleted(false); // insertBatchSomeColumn方法有问题
+                return entity;
+            }));
+        }
     }
 }

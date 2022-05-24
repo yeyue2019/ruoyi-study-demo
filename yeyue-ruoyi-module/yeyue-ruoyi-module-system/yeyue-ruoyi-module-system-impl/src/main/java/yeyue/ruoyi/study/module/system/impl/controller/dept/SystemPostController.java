@@ -19,7 +19,7 @@ import javax.validation.Valid;
  */
 @Api(tags = "岗位管理")
 @RestController
-@RequestMapping("/web/sys/post/")
+@RequestMapping("/web/sys/post")
 public class SystemPostController {
 
     @Resource

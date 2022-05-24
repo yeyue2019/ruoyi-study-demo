@@ -3,7 +3,6 @@ package yeyue.ruoyi.study.module.system.api.domain.permission;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import yeyue.ruoyi.study.module.system.api.enums.permission.DataScopeEnum;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -39,7 +38,7 @@ public class SystemRoleDomain implements Serializable {
     private String remark;
 
     @ApiModelProperty(value = "数据范围")
-    private DataScopeEnum dataScope;
+    private Integer dataScope;
 
     @ApiModelProperty(value = "数据范围(指定部门数组)")
     private Set<Long> dataScopeDeptIds;

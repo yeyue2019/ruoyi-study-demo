@@ -30,18 +30,31 @@ public enum SystemErrorCode implements ErrorCode {
     ROLE_CODE_DUPLICATE("010106", "角色编码已存在"),
     ROLE_NAME_DUPLICATE("010107", "角色名称已存在"),
     ROLE_NOT_EXISTS("010108", "角色不存在"),
+    ROLE_CAN_NOT_UPDATE_CODE_VALUE_SUPER_ADMIN("010109", "不能删除超级管理员角色"),
+    ROLE_CAN_NOT_UPDATE_SYSTEM_TYPE_ROLE("010110", "不能删除类型为系统内置的角色"),
 
     OAUTH2_CLIENT_EXIST("10901", "客户端编号已存在"),
+
     OAUTH2_CLIENT_NOT_EXISTS("10902", "客户端不存在"),
+
     OAUTH2_CLIENT_STATUS_DISABLE("10903", "客户端被禁用"),
+
     OAUTH2_CODE_EXIST("10904", "授权码已存在"),
+
     OAUTH2_CODE_NOT_EXISTS("10905", "授权码不存在"),
+
     OAUTH2_CODE_EXPIRES("10906", "授权码已过期"),
+
     OAUTH2_CODE_DISABLE("10907", "授权码已不是最新"),
+
     OAUTH2_REFRESH_TOKEN_NOT_EXISTS("10908", "无效的刷新令牌"),
+
     OAUTH2_REFRESH_TOKEN_UNSUPPORTED_CLIENT("10909", "客户端与令牌不匹配"),
+
     OAUTH2_REFRESH_TOKEN_EXPIRES("10910", "刷新令牌已过期"),
+
     OAUTH2_ACCESS_TOKEN_NOT_EXISTS("10911", "无效的访问令牌"),
+
     OAUTH2_ACCESS_TOKEN_EXPIRES("10912", "访问令牌已过期"),
     ;
 

@@ -6,8 +6,11 @@ import org.springframework.transaction.annotation.Transactional;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
 import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
+import yeyue.ruoyi.study.framework.common.util.enums.EnumUtils;
 import yeyue.ruoyi.study.framework.mybatis.core.query.MyBatisLambdaQueryWrapper;
 import yeyue.ruoyi.study.module.system.api.domain.permission.SystemRoleDomain;
+import yeyue.ruoyi.study.module.system.api.enums.permission.RoleCodeEnum;
+import yeyue.ruoyi.study.module.system.api.enums.permission.RoleTypeEnum;
 import yeyue.ruoyi.study.module.system.api.service.permission.SystemRoleService;
 import yeyue.ruoyi.study.module.system.api.service.permission.dto.*;
 import yeyue.ruoyi.study.module.system.impl.entity.permission.SystemRoleEntity;
@@ -61,8 +64,15 @@ public class SystemRoleServiceImpl implements SystemRoleService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void delete(Long id) {
-        if (roleMapper.selectById(id) == null) {
+        SystemRoleEntity entity = roleMapper.selectById(id);
+        if (entity == null) {
             throw new ServiceException(SystemErrorCode.ROLE_NOT_EXISTS);
+        }
+        if (RoleCodeEnum.isSuperAdmin(entity.getCode())) {
+            throw new ServiceException(SystemErrorCode.ROLE_CAN_NOT_UPDATE_CODE_VALUE_SUPER_ADMIN);
+        }
+        if (EnumUtils.equals(RoleTypeEnum.SYSTEM, RoleTypeEnum::getType, entity.getType())) {
+            throw new ServiceException(SystemErrorCode.ROLE_CAN_NOT_UPDATE_SYSTEM_TYPE_ROLE);
         }
         roleMapper.deleteById(id);
         // TODO: 2022/5/24 删除相关数据

@@ -87,6 +87,6 @@ public class SystemPostServiceImpl implements SystemPostService {
                 .like(SystemPostEntity::getCode, reqDTO.getCode())
                 .like(SystemPostEntity::getName, reqDTO.getName())
                 .eq(SystemPostEntity::getStatus, reqDTO.getStatus()));
-        return CollectionUtils.convertPage(pageResult, SystemPostConvert.INSTANCE::toDomain);
+        return CollectionUtils.funcPage(pageResult, SystemPostConvert.INSTANCE::toDomain);
     }
 }

@@ -53,7 +53,7 @@ public class SystemMenuController {
     }
 
     @ApiOperation(value = "查看全部菜单")
-    @GetMapping("/list")
+    @PostMapping("/list")
     public CommonResult<List<SystemMenuDomain>> list(@RequestBody SystemMenuListReqDTO dto) {
         return CommonResult.success(service.list(dto));
     }

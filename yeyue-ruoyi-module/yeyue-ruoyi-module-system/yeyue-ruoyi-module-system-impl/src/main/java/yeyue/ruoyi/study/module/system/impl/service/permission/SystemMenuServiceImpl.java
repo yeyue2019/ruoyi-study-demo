@@ -11,7 +11,6 @@ import yeyue.ruoyi.study.framework.common.util.enums.EnumUtils;
 import yeyue.ruoyi.study.framework.mybatis.core.query.MyBatisLambdaQueryWrapper;
 import yeyue.ruoyi.study.module.system.api.domain.permission.SystemMenuDomain;
 import yeyue.ruoyi.study.module.system.api.enums.permission.*;
-import yeyue.ruoyi.study.module.system.api.service.dept.dto.SystemDeptListReqDTO;
 import yeyue.ruoyi.study.module.system.api.service.permission.SystemMenuService;
 import yeyue.ruoyi.study.module.system.api.service.permission.dto.*;
 import yeyue.ruoyi.study.module.system.impl.entity.permission.SystemMenuEntity;
@@ -99,7 +98,7 @@ public class SystemMenuServiceImpl implements SystemMenuService {
     @Override
     public List<SystemMenuDomain> list(SystemMenuListReqDTO reqDTO) {
         List<SystemMenuEntity> list = menuMapper.selectList(new MyBatisLambdaQueryWrapper<SystemMenuEntity>().eq(SystemMenuEntity::getStatus, reqDTO.getStatus()));
-        return CollectionUtils.convertList(list, SystemMenuConvert.INSTANCE::toDomain);
+        return CollectionUtils.funcList(list, SystemMenuConvert.INSTANCE::toDomain);
     }
 
     /**

@@ -66,6 +66,6 @@ public class SystemUserServiceImpl implements SystemUserService {
     @Override
     public PageResult<SystemUserDomain> list(SystemUserPageReq req) {
         PageResult<SystemUserEntity> source = userMapper.selectPage(req);
-        return CollectionUtils.convertPage(source, SystemUserConvert.INSTANCE::convert);
+        return CollectionUtils.funcPage(source, SystemUserConvert.INSTANCE::convert);
     }
 }

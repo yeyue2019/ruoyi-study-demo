@@ -85,7 +85,7 @@ public class SystemOAuth2ClientServiceImpl implements SystemOAuth2ClientService 
         PageResult<SystemOAuth2ClientEntity> pageResult = clientMapper.selectPage(reqDTO, new MyBatisLambdaQueryWrapper<SystemOAuth2ClientEntity>()
                 .like(SystemOAuth2ClientEntity::getName, reqDTO.getName())
                 .eq(SystemOAuth2ClientEntity::getStatus, reqDTO.getStatus()));
-        return CollectionUtils.convertPage(pageResult, SystemOAuth2ClientConvert.INSTANCE::toDomain);
+        return CollectionUtils.funcPage(pageResult, SystemOAuth2ClientConvert.INSTANCE::toDomain);
     }
 
 

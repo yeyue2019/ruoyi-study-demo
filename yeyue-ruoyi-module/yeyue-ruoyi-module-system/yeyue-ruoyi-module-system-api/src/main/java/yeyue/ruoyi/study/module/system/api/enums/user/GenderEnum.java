@@ -1,7 +1,6 @@
 package yeyue.ruoyi.study.module.system.api.enums.user;
 
 import lombok.*;
-import yeyue.ruoyi.study.framework.common.util.enums.EnumUtils;
 import yeyue.ruoyi.study.framework.common.validation.core.EnumValuable;
 
 /**
@@ -23,7 +22,7 @@ public enum GenderEnum implements EnumValuable<String> {
     private final String name;
 
     @Override
-    public String[] enums() {
-        return EnumUtils.getArray(GenderEnum.class, GenderEnum::getGender);
+    public String get() {
+        return this.gender;
     }
 }

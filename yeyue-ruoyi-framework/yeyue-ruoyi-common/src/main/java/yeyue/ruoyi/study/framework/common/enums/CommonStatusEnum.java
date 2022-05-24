@@ -1,7 +1,6 @@
 package yeyue.ruoyi.study.framework.common.enums;
 
 import lombok.*;
-import yeyue.ruoyi.study.framework.common.util.enums.EnumUtils;
 import yeyue.ruoyi.study.framework.common.validation.core.EnumValuable;
 
 /**
@@ -26,8 +25,9 @@ public enum CommonStatusEnum implements EnumValuable<Integer> {
      */
     private final String name;
 
+
     @Override
-    public Integer[] enums() {
-        return EnumUtils.getArray(CommonStatusEnum.class, CommonStatusEnum::getStatus);
+    public Integer get() {
+        return this.status;
     }
 }

@@ -53,7 +53,7 @@ public class SystemDeptController {
     }
 
     @ApiOperation(value = "查看全部部门")
-    @GetMapping("/list")
+    @PostMapping("/list")
     public CommonResult<List<SystemDeptDomain>> list(@RequestBody SystemDeptListReqDTO dto) {
         return CommonResult.success(service.list(dto));
     }

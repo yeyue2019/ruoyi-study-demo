@@ -57,7 +57,7 @@ public class RedisRepositoryImpl implements RedisRepository {
             return;
         }
         try {
-            List<String> keys = CollectionUtils.convertList(ids, id -> ObjectUtils.indexJoin(name, id));
+            List<String> keys = CollectionUtils.funcList(ids, id -> ObjectUtils.indexJoin(name, id));
             redisTemplate.delete(keys);
         } catch (Throwable e) {
             log.error("[RedisRepository][delete][2]请求失败", e);

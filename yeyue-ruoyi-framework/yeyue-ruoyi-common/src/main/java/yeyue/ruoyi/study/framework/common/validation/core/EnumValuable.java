@@ -6,12 +6,13 @@ package yeyue.ruoyi.study.framework.common.validation.core;
  * @author yeyue
  * @date 2022-04-18 21:14:45
  */
+@FunctionalInterface
 public interface EnumValuable<T> {
 
     /**
-     * 数组
+     * 转换为比较的参数
      *
-     * @return 数组
+     * @return 比较的参数
      */
-    T[] enums();
+    T get();
 }

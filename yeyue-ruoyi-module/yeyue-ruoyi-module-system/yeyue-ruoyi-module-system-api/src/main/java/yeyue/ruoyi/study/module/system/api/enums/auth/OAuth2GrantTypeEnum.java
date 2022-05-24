@@ -1,7 +1,6 @@
 package yeyue.ruoyi.study.module.system.api.enums.auth;
 
 import lombok.*;
-import yeyue.ruoyi.study.framework.common.util.enums.EnumUtils;
 import yeyue.ruoyi.study.framework.common.validation.core.EnumValuable;
 
 /**
@@ -38,7 +37,7 @@ public enum OAuth2GrantTypeEnum implements EnumValuable<String> {
     private final String grantType;
 
     @Override
-    public String[] enums() {
-        return EnumUtils.getArray(OAuth2GrantTypeEnum.class, OAuth2GrantTypeEnum::getGrantType);
+    public String get() {
+        return this.grantType;
     }
 }

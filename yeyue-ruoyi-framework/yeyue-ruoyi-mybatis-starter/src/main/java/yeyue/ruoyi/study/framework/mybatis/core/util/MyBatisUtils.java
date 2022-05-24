@@ -21,7 +21,7 @@ public abstract class MyBatisUtils {
         Page<T> page = new Page<>(queryParam.getPageNo(), queryParam.getPageSize());
         // 排序字段
         if (CollectionUtils.isNotEmpty(queryParam.getSorts())) {
-            page.addOrder(CollectionUtils.convertList(queryParam.getSorts(), param -> param.isDesc() ? OrderItem.desc(param.getField()) : OrderItem.asc(param.getField())));
+            page.addOrder(CollectionUtils.funcList(queryParam.getSorts(), param -> param.isDesc() ? OrderItem.desc(param.getField()) : OrderItem.asc(param.getField())));
         }
         return page;
     }

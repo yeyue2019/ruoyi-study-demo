@@ -1,7 +1,6 @@
 package yeyue.ruoyi.study.framework.common.enums;
 
 import lombok.*;
-import yeyue.ruoyi.study.framework.common.util.enums.EnumUtils;
 import yeyue.ruoyi.study.framework.common.validation.core.EnumValuable;
 
 /**
@@ -24,7 +23,7 @@ public enum FieldSortedEnum implements EnumValuable<String> {
     }
 
     @Override
-    public String[] enums() {
-        return EnumUtils.getArray(FieldSortedEnum.class, FieldSortedEnum::getOrder);
+    public String get() {
+        return this.order;
     }
 }

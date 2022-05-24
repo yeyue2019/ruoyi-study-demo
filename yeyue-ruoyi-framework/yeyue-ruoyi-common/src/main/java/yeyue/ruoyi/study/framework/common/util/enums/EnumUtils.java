@@ -45,7 +45,7 @@ public abstract class EnumUtils {
         if (null == enums) {
             return CollectionUtils.empty();
         }
-        return CollectionUtils.convertArray(enums, func);
+        return CollectionUtils.funcArray(enums, func);
     }
 
     /**

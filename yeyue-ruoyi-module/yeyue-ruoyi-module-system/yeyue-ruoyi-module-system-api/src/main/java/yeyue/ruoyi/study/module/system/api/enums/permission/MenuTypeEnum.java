@@ -1,7 +1,6 @@
 package yeyue.ruoyi.study.module.system.api.enums.permission;
 
 import lombok.*;
-import yeyue.ruoyi.study.framework.common.util.enums.EnumUtils;
 import yeyue.ruoyi.study.framework.common.validation.core.EnumValuable;
 
 /**
@@ -33,7 +32,7 @@ public enum MenuTypeEnum implements EnumValuable<Integer> {
     private final Integer type;
 
     @Override
-    public Integer[] enums() {
-        return EnumUtils.getArray(MenuTypeEnum.class, MenuTypeEnum::getType);
+    public Integer get() {
+        return this.type;
     }
 }

@@ -4,8 +4,10 @@ import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
 import yeyue.ruoyi.study.framework.common.validation.annotation.InEnum;
 import yeyue.ruoyi.study.framework.common.validation.core.EnumValuable;
 
-import javax.validation.*;
-import java.util.*;
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
+import java.util.Collections;
+import java.util.Set;
 
 /**
  * @author yeyue
@@ -20,7 +22,9 @@ public class InEnumValidator implements ConstraintValidator<InEnum, Object> {
 
     @Override
     public void initialize(InEnum constraintAnnotation) {
-        EnumValuable<?>[] values = constraintAnnotation.value().getEnumConstants();
+        EnumValuable<?>[] values = constraintAnnotation
+                .value()
+                .getEnumConstants();
         if (values == null) {
             this.values = Collections.emptySet();
         } else {

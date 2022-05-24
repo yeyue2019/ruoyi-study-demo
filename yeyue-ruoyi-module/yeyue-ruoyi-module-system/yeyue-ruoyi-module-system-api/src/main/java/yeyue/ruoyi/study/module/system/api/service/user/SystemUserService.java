@@ -2,7 +2,8 @@ package yeyue.ruoyi.study.module.system.api.service.user;
 
 import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
 import yeyue.ruoyi.study.module.system.api.domain.user.SystemUserDomain;
-import yeyue.ruoyi.study.module.system.api.service.user.dto.*;
+import yeyue.ruoyi.study.module.system.api.service.user.dto.SystemUserPageReq;
+import yeyue.ruoyi.study.module.system.api.service.user.dto.SystemUserUpdatePwdReq;
 
 /**
  * 用户管理

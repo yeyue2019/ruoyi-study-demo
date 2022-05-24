@@ -3,7 +3,8 @@ package yeyue.ruoyi.study.framework.common.exception.util;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
-import yeyue.ruoyi.study.framework.common.pojo.core.*;
+import yeyue.ruoyi.study.framework.common.pojo.core.CommonResult;
+import yeyue.ruoyi.study.framework.common.pojo.core.ErrorCode;
 import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
 
 /**

@@ -4,7 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
-import yeyue.ruoyi.study.framework.common.pojo.pageable.*;
+import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
+import yeyue.ruoyi.study.framework.common.pojo.pageable.SortedParam;
 import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
 import yeyue.ruoyi.study.framework.mybatis.core.query.MyBatisLambdaQueryWrapper;
 import yeyue.ruoyi.study.module.system.api.domain.dept.SystemPostDomain;
@@ -51,12 +52,16 @@ public class SystemPostServiceImpl implements SystemPostService {
         }
         // 岗位名称不能重复
         SystemPostEntity nameCompare = postMapper.selectOne(SystemPostEntity::getName, reqDTO.getName());
-        if (nameCompare != null && nameCompare.getId().compareTo(reqDTO.getId()) != 0) {
+        if (nameCompare != null && nameCompare
+                .getId()
+                .compareTo(reqDTO.getId()) != 0) {
             throw new ServiceException(SystemErrorCode.POST_NAME_DUPLICATE);
         }
         // 岗位编码不能重复
         SystemPostEntity codeCompare = postMapper.selectOne(SystemPostEntity::getCode, reqDTO.getCode());
-        if (codeCompare != null && codeCompare.getId().compareTo(reqDTO.getId()) != 0) {
+        if (codeCompare != null && codeCompare
+                .getId()
+                .compareTo(reqDTO.getId()) != 0) {
             throw new ServiceException(SystemErrorCode.POST_CODE_DUPLICATE);
         }
         SystemPostEntity entity = SystemPostConvert.INSTANCE.toEntity(reqDTO);

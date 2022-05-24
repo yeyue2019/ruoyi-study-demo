@@ -35,7 +35,9 @@ public abstract class AntPathMatchUtils {
         if (patterns == null) {
             return false;
         }
-        return Arrays.stream(patterns).anyMatch(pattern -> match(path, pattern));
+        return Arrays
+                .stream(patterns)
+                .anyMatch(pattern -> match(path, pattern));
     }
 
     /**
@@ -49,6 +51,8 @@ public abstract class AntPathMatchUtils {
         if (patterns == null) {
             return true;
         }
-        return Arrays.stream(patterns).noneMatch(pattern -> match(path, pattern));
+        return Arrays
+                .stream(patterns)
+                .noneMatch(pattern -> match(path, pattern));
     }
 }

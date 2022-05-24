@@ -1,6 +1,7 @@
 package yeyue.ruoyi.study.module.system.api.enums.auth;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import yeyue.ruoyi.study.framework.common.validation.core.EnumValuable;
 
 /**

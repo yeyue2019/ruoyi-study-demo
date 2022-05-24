@@ -8,10 +8,12 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.validation.*;
+import org.springframework.validation.BindException;
+import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
@@ -22,7 +24,8 @@ import yeyue.ruoyi.study.framework.common.pojo.core.CommonResult;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.*;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * 全局异常处理器
@@ -120,8 +123,12 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(BindException.class)
     public CommonResult<?> bindExceptionHandler(BindException ex) {
-        FieldError fieldError = ex.getBindingResult().getFieldError();
-        return ExceptionUtils.handle(GlobalErrorCode.BAD_REQUEST, "请求参数不正确:{}", Objects.requireNonNull(fieldError).getDefaultMessage());
+        FieldError fieldError = ex
+                .getBindingResult()
+                .getFieldError();
+        return ExceptionUtils.handle(GlobalErrorCode.BAD_REQUEST, "请求参数不正确:{}", Objects
+                .requireNonNull(fieldError)
+                .getDefaultMessage());
     }
 
     /**
@@ -129,7 +136,10 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = ConstraintViolationException.class)
     public CommonResult<?> constraintViolationExceptionHandler(ConstraintViolationException ex) {
-        ConstraintViolation<?> constraintViolation = ex.getConstraintViolations().iterator().next();
+        ConstraintViolation<?> constraintViolation = ex
+                .getConstraintViolations()
+                .iterator()
+                .next();
         return ExceptionUtils.handle(GlobalErrorCode.BAD_REQUEST, "请求参数不正确:{}", constraintViolation.getMessage());
     }
 
@@ -179,7 +189,9 @@ public class GlobalExceptionHandler {
     public CommonResult<?> dataAccessExceptionHandler(DataAccessException ex) {
         if (ex.getRootCause() instanceof SQLException) {
             SQLException sqlEx = (SQLException) ex.getRootCause();
-            return ExceptionUtils.handle(GlobalErrorCode.SQL_EXECUTE_BAD, "pstmt:{}, reason:{}, ex:{}", sqlEx.getErrorCode(), sqlEx.getMessage(), sqlEx.getClass().getName());
+            return ExceptionUtils.handle(GlobalErrorCode.SQL_EXECUTE_BAD, "pstmt:{}, reason:{}, ex:{}", sqlEx.getErrorCode(), sqlEx.getMessage(), sqlEx
+                    .getClass()
+                    .getName());
         }
         return defaultExceptionHandler(ex);
     }

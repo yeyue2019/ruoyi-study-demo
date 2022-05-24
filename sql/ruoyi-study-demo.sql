@@ -26,6 +26,32 @@ CREATE TABLE `ruoyi_system_menu`
     COLLATE=utf8mb4_unicode_ci
     COMMENT='系统菜单权限表';
 -- ----------------------------
+-- Table structure for ruoyi_system_role
+-- ----------------------------
+DROP TABLE IF EXISTS `ruoyi_system_role`;
+CREATE TABLE `ruoyi_system_role`
+(
+    `id`               bigint                                                        NOT NULL AUTO_INCREMENT COMMENT '角色ID',
+    `name`             varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '角色名称',
+    `code`             varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '角色权限字符串',
+    `sort`             int                                                           NOT NULL COMMENT '显示顺序',
+    `dataScope`        tinyint                                                       NOT NULL DEFAULT '1' COMMENT '数据范围（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限）',
+    `dataScopeDeptIds` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '数据范围(指定部门数组)',
+    `status`           tinyint                                                       NOT NULL DEFAULT '0' COMMENT '角色状态（0正常 1停用）',
+    `type`             tinyint                                                       NOT NULL COMMENT '角色类型',
+    `remark`           varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci          DEFAULT NULL COMMENT '备注',
+    `creator`          varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci           DEFAULT '' COMMENT '创建者',
+    `createTime`       datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `updater`          varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci           DEFAULT '' COMMENT '更新者',
+    `updateTime`       datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    `deleted`          bit(1)                                                        NOT NULL DEFAULT b'0' COMMENT '是否删除',
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB
+     AUTO_INCREMENT=100
+    DEFAULT CHARSET=utf8mb4
+    COLLATE=utf8mb4_unicode_ci
+    COMMENT='系统角色信息表';
+-- ----------------------------
 -- Table structure for ruoyi_system_post
 -- ----------------------------
 DROP TABLE IF EXISTS `ruoyi_system_post`;
@@ -35,7 +61,7 @@ CREATE TABLE `ruoyi_system_post`
     `code`       varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '岗位编码',
     `name`       varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '岗位名称',
     `sort`       int                                                          NOT NULL COMMENT '显示顺序',
-    `status`     tinyint                                                      NOT NULL DEFAULT 0 COMMENT '状态（0正常 1停用）',
+    `status`     tinyint                                                      NOT NULL DEFAULT '0' COMMENT '状态（0正常 1停用）',
     `remark`     varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci         DEFAULT NULL COMMENT '备注',
     `creator`    varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci          DEFAULT '' COMMENT '创建者',
     `createTime` datetime                                                     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -62,7 +88,7 @@ CREATE TABLE `ruoyi_system_dept`
     `areaCode`     varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci          DEFAULT '86' COMMENT '手机区号',
     `mobile`       varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci          DEFAULT '' COMMENT '手机号码',
     `email`        varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci          DEFAULT NULL COMMENT '邮箱',
-    `status`       tinyint                                                      NOT NULL DEFAULT 0 COMMENT '部门状态（0正常 1停用）',
+    `status`       tinyint                                                      NOT NULL DEFAULT '0' COMMENT '部门状态（0正常 1停用）',
     `creator`      varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci          DEFAULT '' COMMENT '创建者',
     `createTime`   datetime                                                     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `updater`      varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci          DEFAULT '' COMMENT '更新者',
@@ -86,7 +112,7 @@ CREATE TABLE `ruoyi_system_oauth2_client`
     `name`                        varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '应用名',
 --     `logo`                        varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '应用图标',
     `description`                 varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '应用描述',
-    `status`                      tinyint                                                       NOT NULL DEFAULT 0 COMMENT '状态',
+    `status`                      tinyint                                                       NOT NULL DEFAULT '0' COMMENT '状态',
     `codeValiditySeconds`         int                                                           NOT NULL COMMENT '授权码的有效期',
     `accessTokenValiditySeconds`  int                                                           NOT NULL COMMENT '访问令牌的有效期',
     `refreshTokenValiditySeconds` int                                                           NOT NULL COMMENT '刷新令牌的有效期',
@@ -122,7 +148,7 @@ CREATE TABLE `ruoyi_system_oauth2_code`
     `userId`       varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '用户编号',
     `clientId`     varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '客户端编号',
     `expiresTime`  datetime NULL COMMENT '过期时间',
-    `status`       tinyint                                                       NOT NULL DEFAULT 0 COMMENT '状态',
+    `status`       tinyint                                                       NOT NULL DEFAULT '0' COMMENT '状态',
     `creator`      varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '' COMMENT '创建者',
     `createTime`   datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `updater`      varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '' COMMENT '更新者',
@@ -213,31 +239,6 @@ CREATE TABLE `ruoyi_system_user`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci
     COMMENT ='系统用户表';
--- ----------------------------
--- Table structure for ruoyi_system_role
--- ----------------------------
-DROP TABLE IF EXISTS `ruoyi_system_role`;
-CREATE TABLE `ruoyi_system_role`
-(
-    `id`               bigint                                                        NOT NULL AUTO_INCREMENT COMMENT '角色ID',
-    `name`             varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '角色名称',
-    `code`             varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '角色权限字符串',
-    `sort`             int                                                           NOT NULL COMMENT '显示顺序',
-    `dataScope`        tinyint                                                       NOT NULL DEFAULT '1' COMMENT '数据范围（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限）',
-    `dataScopeDeptIds` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '数据范围(指定部门数组)',
-    `status`           tinyint                                                       NOT NULL COMMENT '角色状态（0正常 1停用）',
-    `type`             tinyint                                                       NOT NULL COMMENT '角色类型',
-    `remark`           varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci          DEFAULT NULL COMMENT '备注',
-    `creator`          varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci           DEFAULT '' COMMENT '创建者',
-    `createTime`       datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `updater`          varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci           DEFAULT '' COMMENT '更新者',
-    `updateTime`       datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-    `deleted`          bit(1)                                                        NOT NULL DEFAULT b'0' COMMENT '是否删除',
-    PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB
-    DEFAULT CHARSET=utf8mb4
-    COLLATE=utf8mb4_unicode_ci
-    COMMENT='系统角色信息表';
 -- ----------------------------
 -- Table structure for ruoyi_system_role_menu
 -- ----------------------------

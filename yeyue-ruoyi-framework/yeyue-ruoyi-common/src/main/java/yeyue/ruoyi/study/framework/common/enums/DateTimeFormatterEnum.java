@@ -1,6 +1,7 @@
 package yeyue.ruoyi.study.framework.common.enums;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.time.format.DateTimeFormatter;
 

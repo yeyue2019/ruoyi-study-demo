@@ -6,13 +6,17 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.web.context.request.*;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.exception.common.GlobalErrorCode;
-import yeyue.ruoyi.study.framework.common.servlet.pojo.*;
-import yeyue.ruoyi.study.framework.common.servlet.wrapper.*;
+import yeyue.ruoyi.study.framework.common.servlet.pojo.HttpRequest;
+import yeyue.ruoyi.study.framework.common.servlet.pojo.HttpResponse;
+import yeyue.ruoyi.study.framework.common.servlet.wrapper.HttpRequestCopyWrapper;
+import yeyue.ruoyi.study.framework.common.servlet.wrapper.HttpResponseCopyWrapper;
 import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
 import yeyue.ruoyi.study.framework.common.util.network.NetworkUtils;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
+import javax.servlet.Filter;
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.util.*;
@@ -51,7 +55,9 @@ public abstract class ServletUtils {
     @SuppressWarnings("spellCheckingInspection")
     public static void writeJSON(HttpServletResponse response, Object object) throws IOException {
         String content = JSON.toJSONString(object);
-        response.getOutputStream().write(content.getBytes());
+        response
+                .getOutputStream()
+                .write(content.getBytes());
     }
 
     /**
@@ -61,7 +67,9 @@ public abstract class ServletUtils {
      * @return 结果
      */
     public static String getUrl(HttpServletRequest request) {
-        return request.getRequestURL().toString();
+        return request
+                .getRequestURL()
+                .toString();
     }
 
     /**
@@ -133,7 +141,9 @@ public abstract class ServletUtils {
      * @return 字符串结果
      */
     public static String getBodyString(HttpRequestCopyWrapper request) {
-        return getBodyString(request, Charset.defaultCharset().name());
+        return getBodyString(request, Charset
+                .defaultCharset()
+                .name());
     }
 
     /**

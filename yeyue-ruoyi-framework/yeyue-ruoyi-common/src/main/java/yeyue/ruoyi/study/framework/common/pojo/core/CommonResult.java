@@ -1,6 +1,7 @@
 package yeyue.ruoyi.study.framework.common.pojo.core;
 
-import io.swagger.annotations.*;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**

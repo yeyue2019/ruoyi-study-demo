@@ -1,6 +1,7 @@
 package yeyue.ruoyi.study.module.system.api.enums.permission;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
  * @author yeyue

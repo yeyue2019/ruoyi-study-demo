@@ -3,8 +3,10 @@ package yeyue.ruoyi.study.framework.druid.core.filter;
 import com.alibaba.druid.util.Utils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
@@ -30,6 +32,8 @@ public class DruidAdRemoveFilter extends OncePerRequestFilter {
         // 正则替换 banner, 除去底部的广告信息
         text = text.replaceAll("<a.*?banner\"></a><br/>", "");
         text = text.replaceAll("powered.*?shrek.wang</a>", "");
-        response.getWriter().write(text);
+        response
+                .getWriter()
+                .write(text);
     }
 }

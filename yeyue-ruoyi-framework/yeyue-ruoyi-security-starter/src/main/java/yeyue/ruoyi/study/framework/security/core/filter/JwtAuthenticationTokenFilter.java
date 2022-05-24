@@ -7,8 +7,10 @@ import yeyue.ruoyi.study.framework.common.servlet.constants.ServletConstants;
 import yeyue.ruoyi.study.framework.security.core.userdetails.LoginUser;
 import yeyue.ruoyi.study.framework.security.core.util.SecurityUtils;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
@@ -40,6 +42,8 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         if (!StringUtils.equals(token, ServletConstants.TEST_TOKEN_NAME)) {
             return null;
         }
-        return new LoginUser().setId(0L).setUsername(token);
+        return new LoginUser()
+                .setId(0L)
+                .setUsername(token);
     }
 }

@@ -5,7 +5,8 @@ import org.apache.ibatis.type.*;
 import yeyue.ruoyi.study.framework.common.constants.StringConstants;
 
 import java.sql.*;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 自定义类型转换器 List<String>  <-> String

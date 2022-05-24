@@ -1,6 +1,7 @@
 package yeyue.ruoyi.study.module.system.api.service.dept.dto;
 
-import io.swagger.annotations.*;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.*;

@@ -1,7 +1,8 @@
 package yeyue.ruoyi.study.framework.security.config;
 
 import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
@@ -13,7 +14,8 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import yeyue.ruoyi.study.framework.security.core.authentication.YeyueUserDetailsAuthenticationProvider;
 import yeyue.ruoyi.study.framework.security.core.authorize.AuthorizeRequestsCustomizer;
 import yeyue.ruoyi.study.framework.security.core.context.TransmittableThreadLocalSecurityContextHolderStrategy;
-import yeyue.ruoyi.study.framework.security.core.handler.*;
+import yeyue.ruoyi.study.framework.security.core.handler.AccessDeniedHandlerImpl;
+import yeyue.ruoyi.study.framework.security.core.handler.AuthenticationEntryPointImpl;
 import yeyue.ruoyi.study.framework.security.core.service.SecurityAuthService;
 
 /**
@@ -78,15 +80,20 @@ public class YeyueSecurityAutoConfiguration {
             public void customize(ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry) {
                 registry
                         // 静态资源，可匿名访问
-                        .antMatchers(HttpMethod.GET, "/*.html", "/**/*.html", "/**/*.css", "/**/*.js").permitAll()
+                        .antMatchers(HttpMethod.GET, "/*.html", "/**/*.html", "/**/*.css", "/**/*.js")
+                        .permitAll()
                         // 健康检查放行
-                        .antMatchers("/actuator/**", "/admin-actuator/**").permitAll()
+                        .antMatchers("/actuator/**", "/admin-actuator/**")
+                        .permitAll()
                         // Swagger放行
-                        .antMatchers(HttpMethod.GET, "/v3/api-docs", "/swagger-resources").permitAll()
+                        .antMatchers(HttpMethod.GET, "/v3/api-docs", "/swagger-resources")
+                        .permitAll()
                         // druid放行
-                        .antMatchers("/druid/**").permitAll()
+                        .antMatchers("/druid/**")
+                        .permitAll()
                         // 系统测试
-                        .antMatchers("/ruoyi/test/security/login").permitAll();
+                        .antMatchers("/ruoyi/test/security/login")
+                        .permitAll();
             }
         };
     }

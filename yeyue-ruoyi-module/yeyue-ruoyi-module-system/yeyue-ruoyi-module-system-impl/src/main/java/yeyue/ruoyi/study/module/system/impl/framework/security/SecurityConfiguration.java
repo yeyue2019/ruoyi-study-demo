@@ -1,6 +1,7 @@
 package yeyue.ruoyi.study.module.system.impl.framework.security;
 
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import yeyue.ruoyi.study.framework.security.core.authorize.AuthorizeRequestsCustomizer;

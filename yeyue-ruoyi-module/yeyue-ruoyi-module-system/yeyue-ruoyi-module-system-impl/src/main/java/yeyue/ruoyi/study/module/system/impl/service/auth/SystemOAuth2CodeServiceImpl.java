@@ -7,9 +7,11 @@ import yeyue.ruoyi.study.framework.common.enums.CommonStatusEnum;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.util.enums.EnumUtils;
 import yeyue.ruoyi.study.framework.common.util.ids.IdUtils;
-import yeyue.ruoyi.study.module.system.api.domain.auth.*;
+import yeyue.ruoyi.study.module.system.api.domain.auth.SystemOAuth2AccessTokenDomain;
+import yeyue.ruoyi.study.module.system.api.domain.auth.SystemOAuth2ClientDomain;
 import yeyue.ruoyi.study.module.system.api.service.auth.*;
-import yeyue.ruoyi.study.module.system.api.service.auth.dto.*;
+import yeyue.ruoyi.study.module.system.api.service.auth.dto.SystemOAuth2AccessTokenCreateReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.auth.dto.SystemOAuth2CodeCreateReqDTO;
 import yeyue.ruoyi.study.module.system.impl.entity.auth.SystemOAuth2CodeEntity;
 import yeyue.ruoyi.study.module.system.impl.framework.exception.SystemErrorCode;
 import yeyue.ruoyi.study.module.system.impl.mapper.auth.SystemOAuth2CodeMapper;
@@ -46,7 +48,9 @@ public class SystemOAuth2CodeServiceImpl implements SystemOAuth2CodeService {
         entity.setUserId(reqDTO.getUserId());
         entity.setCode(code);
         if (client.getCodeValiditySeconds() != null && client.getCodeValiditySeconds() > 0) {
-            entity.setExpiresTime(LocalDateTime.now().plusSeconds(client.getCodeValiditySeconds()));
+            entity.setExpiresTime(LocalDateTime
+                    .now()
+                    .plusSeconds(client.getCodeValiditySeconds()));
         }
         codeMapper.insert(entity);
         return code;
@@ -66,10 +70,14 @@ public class SystemOAuth2CodeServiceImpl implements SystemOAuth2CodeService {
         }
         // 校验code是否处于有效期
         LocalDateTime now = LocalDateTime.now();
-        if (entity.getExpiresTime() != null && entity.getExpiresTime().isBefore(now)) {
+        if (entity.getExpiresTime() != null && entity
+                .getExpiresTime()
+                .isBefore(now)) {
             throw new ServiceException(SystemErrorCode.OAUTH2_CODE_EXPIRES);
         }
-        SystemOAuth2AccessTokenDomain accessToken = tokenService.create(new SystemOAuth2AccessTokenCreateReqDTO().setClientId(entity.getClientId()).setUserId(entity.getUserId()));
+        SystemOAuth2AccessTokenDomain accessToken = tokenService.create(new SystemOAuth2AccessTokenCreateReqDTO()
+                .setClientId(entity.getClientId())
+                .setUserId(entity.getUserId()));
         entity.setAccessToken(accessToken.getAccessToken());
         entity.setRefreshToken(accessToken.getRefreshToken());
         entity.setStatus(CommonStatusEnum.DISABLE.getStatus());

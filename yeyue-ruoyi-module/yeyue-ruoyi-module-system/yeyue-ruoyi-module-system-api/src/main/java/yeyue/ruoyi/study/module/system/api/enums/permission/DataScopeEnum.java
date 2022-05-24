@@ -1,6 +1,8 @@
-package yeyue.ruoyi.study.module.system.api.enums;
+package yeyue.ruoyi.study.module.system.api.enums.permission;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import yeyue.ruoyi.study.framework.common.validation.core.EnumValuable;
 
 /**
  * 权限范围
@@ -10,7 +12,7 @@ import lombok.*;
  */
 @Getter
 @AllArgsConstructor
-public enum DataScopeEnum {
+public enum DataScopeEnum implements EnumValuable<Integer> {
     /**
      * 全部数据权限
      */
@@ -33,4 +35,10 @@ public enum DataScopeEnum {
     SELF(5);
 
     private final Integer scope;
+
+
+    @Override
+    public Integer get() {
+        return this.scope;
+    }
 }

@@ -3,7 +3,8 @@ package yeyue.ruoyi.study.module.system.impl.entity.auth.convert;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 import yeyue.ruoyi.study.module.system.api.domain.auth.SystemOAuth2ClientDomain;
-import yeyue.ruoyi.study.module.system.api.service.auth.dto.*;
+import yeyue.ruoyi.study.module.system.api.service.auth.dto.SystemOAuth2ClientCreateReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.auth.dto.SystemOAuth2ClientUpdateReqDTO;
 import yeyue.ruoyi.study.module.system.impl.entity.auth.SystemOAuth2ClientEntity;
 
 /**

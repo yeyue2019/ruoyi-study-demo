@@ -1,6 +1,7 @@
 package yeyue.ruoyi.study.framework.security.core.authentication;
 
-import org.springframework.security.authentication.*;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -40,7 +41,9 @@ public class YeyueUserDetailsAuthenticationProvider extends AbstractUserDetailsA
                     "AbstractUserDetailsAuthenticationProvider.badCredentials", "Bad credentials"));
         }
         // 校验 password
-        String presentedPassword = authentication.getCredentials().toString();
+        String presentedPassword = authentication
+                .getCredentials()
+                .toString();
         if (!this.passwordEncoder.matches(presentedPassword, userDetails.getPassword())) {
             this.logger.debug("Failed to authenticate since password does not match stored value");
             throw new BadCredentialsException(this.messages.getMessage(
@@ -55,7 +58,9 @@ public class YeyueUserDetailsAuthenticationProvider extends AbstractUserDetailsA
     protected UserDetails retrieveUser(String username, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
         // 判断Token属于自定义的类型否则不予处理
         if (!(authentication instanceof YeyueUsernamePasswordAuthenticationToken)) {
-            throw new PreAuthenticatedCredentialsNotFoundException(authentication.getClass().getSimpleName());
+            throw new PreAuthenticatedCredentialsNotFoundException(authentication
+                    .getClass()
+                    .getSimpleName());
         }
         // 获取自定义的参数进行处理
         YeyueUsernamePasswordAuthenticationToken token = (YeyueUsernamePasswordAuthenticationToken) authentication;

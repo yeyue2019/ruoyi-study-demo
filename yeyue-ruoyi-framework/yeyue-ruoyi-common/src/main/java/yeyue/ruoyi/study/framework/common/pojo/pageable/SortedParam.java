@@ -2,7 +2,8 @@ package yeyue.ruoyi.study.framework.common.pojo.pageable;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.swagger.annotations.*;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 import yeyue.ruoyi.study.framework.common.enums.FieldSortedEnum;

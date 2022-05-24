@@ -1,7 +1,8 @@
 package yeyue.ruoyi.study.module.system.api.service.auth;
 
 import yeyue.ruoyi.study.module.system.api.domain.auth.SystemOAuth2AccessTokenDomain;
-import yeyue.ruoyi.study.module.system.api.service.auth.dto.*;
+import yeyue.ruoyi.study.module.system.api.service.auth.dto.SystemOAuth2AccessTokenCreateReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.auth.dto.SystemOAuth2AccessTokenRefreshReqDTO;
 
 /**
  * @author yeyue

@@ -70,9 +70,13 @@ public class RedisRepositoryImpl implements RedisRepository {
             String key = ObjectUtils.indexJoin(name, define.getId());
             String value = objectMapper.writeValueAsString(define.getValue());
             if (define.getTimeout() > 0) {
-                redisTemplate.opsForValue().set(key, value, define.getTimeout(), define.getTimeUnit());
+                redisTemplate
+                        .opsForValue()
+                        .set(key, value, define.getTimeout(), define.getTimeUnit());
             } else {
-                redisTemplate.opsForValue().set(key, value);
+                redisTemplate
+                        .opsForValue()
+                        .set(key, value);
             }
         } catch (Throwable e) {
             log.error("[RedisRepository][save][1]请求失败", e);
@@ -106,7 +110,9 @@ public class RedisRepositoryImpl implements RedisRepository {
     public <T> T get(String name, Object id, TypeReference<T> type) {
         try {
             String key = ObjectUtils.indexJoin(name, id);
-            String value = redisTemplate.opsForValue().get(key);
+            String value = redisTemplate
+                    .opsForValue()
+                    .get(key);
             if (value == null) {
                 return null;
             }
@@ -132,7 +138,9 @@ public class RedisRepositoryImpl implements RedisRepository {
             }
             batch.execute();
             for (Map.Entry<Object, RFuture<String>> entry : futureMap.entrySet()) {
-                String value = entry.getValue().getNow();
+                String value = entry
+                        .getValue()
+                        .getNow();
                 if (value != null) {
                     map.put(entry.getKey(), objectMapper.readValue(value, type));
                 }

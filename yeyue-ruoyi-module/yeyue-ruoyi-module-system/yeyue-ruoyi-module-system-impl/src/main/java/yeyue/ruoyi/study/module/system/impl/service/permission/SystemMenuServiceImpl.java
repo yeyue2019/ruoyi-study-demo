@@ -10,7 +10,8 @@ import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
 import yeyue.ruoyi.study.framework.common.util.enums.EnumUtils;
 import yeyue.ruoyi.study.framework.mybatis.core.query.MyBatisLambdaQueryWrapper;
 import yeyue.ruoyi.study.module.system.api.domain.permission.SystemMenuDomain;
-import yeyue.ruoyi.study.module.system.api.enums.permission.*;
+import yeyue.ruoyi.study.module.system.api.enums.permission.MenuIdEnum;
+import yeyue.ruoyi.study.module.system.api.enums.permission.MenuTypeEnum;
 import yeyue.ruoyi.study.module.system.api.service.permission.SystemMenuService;
 import yeyue.ruoyi.study.module.system.api.service.permission.dto.*;
 import yeyue.ruoyi.study.module.system.impl.entity.permission.SystemMenuEntity;
@@ -19,7 +20,8 @@ import yeyue.ruoyi.study.module.system.impl.framework.exception.SystemErrorCode;
 import yeyue.ruoyi.study.module.system.impl.mapper.permission.SystemMenuMapper;
 
 import javax.annotation.Resource;
-import java.util.*;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * @author yeyue
@@ -41,7 +43,9 @@ public class SystemMenuServiceImpl implements SystemMenuService {
             throw new ServiceException(SystemErrorCode.MENU_NAME_DUPLICATE);
         }
         // 父菜单校验
-        if (MenuIdEnum.ROOT.getId().compareTo(reqDTO.getParentId()) != 0) {
+        if (MenuIdEnum.ROOT
+                .getId()
+                .compareTo(reqDTO.getParentId()) != 0) {
             // 父菜单不存在
             SystemMenuEntity menu = menuMapper.selectById(reqDTO.getParentId());
             if (menu == null) {

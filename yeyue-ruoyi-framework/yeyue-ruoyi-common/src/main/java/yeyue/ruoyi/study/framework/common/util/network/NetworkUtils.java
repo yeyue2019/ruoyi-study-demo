@@ -34,7 +34,9 @@ public abstract class NetworkUtils {
     public static String getMultistageReverseProxyIp(String ip) {
         // 多级反向代理检测
         if (ip != null && ip.indexOf(StringConstants.SPLIT_JOIN) > 0) {
-            final String[] ips = ip.trim().split(StringConstants.SPLIT_JOIN);
+            final String[] ips = ip
+                    .trim()
+                    .split(StringConstants.SPLIT_JOIN);
             for (String subIp : ips) {
                 if (!isUnknown(subIp)) {
                     ip = subIp;

@@ -2,7 +2,8 @@ package yeyue.ruoyi.study.framework.common.util.enums;
 
 import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.function.Function;
 
 /**
@@ -28,7 +29,9 @@ public abstract class EnumUtils {
         if (null == enums) {
             return false;
         }
-        return Arrays.stream(enums).anyMatch(e -> Objects.equals(func.apply(e), compare));
+        return Arrays
+                .stream(enums)
+                .anyMatch(e -> Objects.equals(func.apply(e), compare));
     }
 
     /**
@@ -85,7 +88,10 @@ public abstract class EnumUtils {
         if (value == null || source == null) {
             return false;
         }
-        return Arrays.stream(source).map(func).anyMatch(c -> Objects.equals(value, c));
+        return Arrays
+                .stream(source)
+                .map(func)
+                .anyMatch(c -> Objects.equals(value, c));
     }
 
     @SafeVarargs

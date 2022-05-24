@@ -1,7 +1,8 @@
 package yeyue.ruoyi.study.framework.security.config;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -81,20 +82,31 @@ public class YeyueWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdap
     protected void configure(HttpSecurity http) throws Exception {
         http
                 // 跨域 开启
-                .cors().and()
+                .cors()
+                .and()
                 // 跨站请求伪造 关闭
-                .csrf().disable()
+                .csrf()
+                .disable()
                 // Session 关闭
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .headers().frameOptions().disable().and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .headers()
+                .frameOptions()
+                .disable()
+                .and()
                 // 添加自定义的处理器
                 .exceptionHandling()
                 .authenticationEntryPoint(authenticationEntryPoint)
-                .accessDeniedHandler(accessDeniedHandler).and()
+                .accessDeniedHandler(accessDeniedHandler)
+                .and()
                 // 添加自定义过滤规则
                 .authorizeRequests(registry -> authorizeRequestsCustomizers.forEach(customizer -> customizer.customize(registry)))
                 // 兜底保证
-                .authorizeRequests().anyRequest().authenticated().and()
+                .authorizeRequests()
+                .anyRequest()
+                .authenticated()
+                .and()
                 .addFilterBefore(authenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
 

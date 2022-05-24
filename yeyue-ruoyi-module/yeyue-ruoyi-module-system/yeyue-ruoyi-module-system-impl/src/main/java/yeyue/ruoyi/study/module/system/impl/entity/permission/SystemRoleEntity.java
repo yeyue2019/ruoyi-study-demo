@@ -2,9 +2,10 @@ package yeyue.ruoyi.study.module.system.impl.entity.permission;
 
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
+import yeyue.ruoyi.study.framework.mybatis.core.entity.MyBatisEntity;
 import yeyue.ruoyi.study.framework.mybatis.core.type.JsonLongSetTypeHandler;
-import yeyue.ruoyi.study.module.system.api.enums.*;
-import yeyue.ruoyi.study.module.system.impl.entity.SystemEntity;
+import yeyue.ruoyi.study.module.system.api.enums.permission.DataScopeEnum;
+import yeyue.ruoyi.study.module.system.api.enums.permission.RoleTypeEnum;
 
 import java.util.Set;
 
@@ -18,7 +19,13 @@ import static yeyue.ruoyi.study.module.system.impl.constants.SystemTableConstant
  */
 @Data
 @TableName(value = SYSTEM_ROLE, autoResultMap = true)
-public class SystemRoleEntity extends SystemEntity {
+public class SystemRoleEntity extends MyBatisEntity {
+
+    /**
+     * 角色Id
+     */
+    @TableId(type = IdType.AUTO)
+    private Long id;
 
     /**
      * 角色名称
@@ -28,7 +35,8 @@ public class SystemRoleEntity extends SystemEntity {
     /**
      * 角色标识
      */
-    private RoleCodeEnum code;
+    @TableField(updateStrategy = FieldStrategy.NEVER)
+    private String code;
 
     /**
      * 角色排序
@@ -36,9 +44,15 @@ public class SystemRoleEntity extends SystemEntity {
     private Integer sort;
 
     /**
-     * 角色类型
+     * 状态
      */
-    private RoleTypeEnum type;
+    private Integer status;
+
+    /**
+     * 角色类型 {@link RoleTypeEnum}
+     */
+    @TableField(updateStrategy = FieldStrategy.NEVER)
+    private Integer type;
 
     /**
      * 备注
@@ -46,12 +60,13 @@ public class SystemRoleEntity extends SystemEntity {
     private String remark;
 
     /**
-     * 数据范围
+     * 数据范围 {@link DataScopeEnum}
      */
-    private DataScopeEnum dataScope;
+    private Integer dataScope;
 
     /**
      * 数据范围(指定部门数组)
+     * 适用于 {@link #dataScope} 的值为 {@link DataScopeEnum#DEPT_CUSTOM} 时
      */
     @TableField(typeHandler = JsonLongSetTypeHandler.class)
     private Set<Long> dataScopeDeptIds;

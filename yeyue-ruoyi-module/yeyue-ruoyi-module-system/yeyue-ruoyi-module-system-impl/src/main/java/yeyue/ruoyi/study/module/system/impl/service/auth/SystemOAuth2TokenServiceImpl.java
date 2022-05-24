@@ -6,13 +6,18 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.util.ids.IdUtils;
-import yeyue.ruoyi.study.module.system.api.domain.auth.*;
-import yeyue.ruoyi.study.module.system.api.service.auth.*;
-import yeyue.ruoyi.study.module.system.api.service.auth.dto.*;
-import yeyue.ruoyi.study.module.system.impl.entity.auth.*;
+import yeyue.ruoyi.study.module.system.api.domain.auth.SystemOAuth2AccessTokenDomain;
+import yeyue.ruoyi.study.module.system.api.domain.auth.SystemOAuth2ClientDomain;
+import yeyue.ruoyi.study.module.system.api.service.auth.SystemOAuth2ClientService;
+import yeyue.ruoyi.study.module.system.api.service.auth.SystemOAuth2TokenService;
+import yeyue.ruoyi.study.module.system.api.service.auth.dto.SystemOAuth2AccessTokenCreateReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.auth.dto.SystemOAuth2AccessTokenRefreshReqDTO;
+import yeyue.ruoyi.study.module.system.impl.entity.auth.SystemOAuth2AccessTokenEntity;
+import yeyue.ruoyi.study.module.system.impl.entity.auth.SystemOAuth2RefreshTokenEntity;
 import yeyue.ruoyi.study.module.system.impl.entity.auth.convert.SystemOAuth2AccessTokenConvert;
 import yeyue.ruoyi.study.module.system.impl.framework.exception.SystemErrorCode;
-import yeyue.ruoyi.study.module.system.impl.mapper.auth.*;
+import yeyue.ruoyi.study.module.system.impl.mapper.auth.SystemOAuth2AccessTokenMapper;
+import yeyue.ruoyi.study.module.system.impl.mapper.auth.SystemOAuth2RefreshTokenMapper;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
@@ -56,7 +61,9 @@ public class SystemOAuth2TokenServiceImpl implements SystemOAuth2TokenService {
         if (!StringUtils.equals(refreshToken.getClientId(), reqDTO.getClientId())) {
             throw new ServiceException(SystemErrorCode.OAUTH2_REFRESH_TOKEN_UNSUPPORTED_CLIENT);
         }
-        if (refreshToken.getExpiresTime() != null && refreshToken.getExpiresTime().isBefore(LocalDateTime.now())) {
+        if (refreshToken.getExpiresTime() != null && refreshToken
+                .getExpiresTime()
+                .isBefore(LocalDateTime.now())) {
             throw new ServiceException(SystemErrorCode.OAUTH2_REFRESH_TOKEN_EXPIRES);
         }
         // 3. 创建访问令牌
@@ -71,7 +78,9 @@ public class SystemOAuth2TokenServiceImpl implements SystemOAuth2TokenService {
         if (entity == null) {
             throw new ServiceException(SystemErrorCode.OAUTH2_ACCESS_TOKEN_NOT_EXISTS);
         }
-        if (entity.getExpiresTime() != null && entity.getExpiresTime().isBefore(LocalDateTime.now())) {
+        if (entity.getExpiresTime() != null && entity
+                .getExpiresTime()
+                .isBefore(LocalDateTime.now())) {
             throw new ServiceException(SystemErrorCode.OAUTH2_ACCESS_TOKEN_EXPIRES);
         }
         return SystemOAuth2AccessTokenConvert.INSTANCE.toDomain(entity);
@@ -101,7 +110,9 @@ public class SystemOAuth2TokenServiceImpl implements SystemOAuth2TokenService {
         entity.setUserId(userId);
         entity.setRefreshToken(IdUtils.uuid(true));
         if (client.getRefreshTokenValiditySeconds() != null && client.getRefreshTokenValiditySeconds() > 0) {
-            entity.setExpiresTime(LocalDateTime.now().plusSeconds(client.getRefreshTokenValiditySeconds()));
+            entity.setExpiresTime(LocalDateTime
+                    .now()
+                    .plusSeconds(client.getRefreshTokenValiditySeconds()));
         }
         refreshTokenMapper.insert(entity);
         return entity;
@@ -114,7 +125,9 @@ public class SystemOAuth2TokenServiceImpl implements SystemOAuth2TokenService {
         entity.setRefreshToken(refreshToken.getRefreshToken());
         entity.setAccessToken(IdUtils.uuid(true));
         if (client.getAccessTokenValiditySeconds() != null && client.getAccessTokenValiditySeconds() > 0) {
-            entity.setExpiresTime(LocalDateTime.now().plusSeconds(client.getAccessTokenValiditySeconds()));
+            entity.setExpiresTime(LocalDateTime
+                    .now()
+                    .plusSeconds(client.getAccessTokenValiditySeconds()));
         }
         accessTokenMapper.insert(entity);
         return entity;

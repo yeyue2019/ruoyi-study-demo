@@ -46,13 +46,21 @@ public abstract class TracerUtils {
             return;
         }
         if (value instanceof Boolean) {
-            TRACER.activeSpan().setTag(name, (Boolean) value);
+            TRACER
+                    .activeSpan()
+                    .setTag(name, (Boolean) value);
         } else if (value instanceof Number) {
-            TRACER.activeSpan().setTag(name, (Number) value);
+            TRACER
+                    .activeSpan()
+                    .setTag(name, (Number) value);
         } else if (value instanceof String) {
-            TRACER.activeSpan().setTag(name, (String) value);
+            TRACER
+                    .activeSpan()
+                    .setTag(name, (String) value);
         } else {
-            TRACER.activeSpan().setTag(name, JSON.toJSONString(value));
+            TRACER
+                    .activeSpan()
+                    .setTag(name, JSON.toJSONString(value));
         }
     }
 }

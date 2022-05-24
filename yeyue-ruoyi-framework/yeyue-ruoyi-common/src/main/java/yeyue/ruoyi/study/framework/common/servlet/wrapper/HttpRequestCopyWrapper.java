@@ -6,8 +6,10 @@ import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.exception.common.GlobalErrorCode;
 import yeyue.ruoyi.study.framework.common.servlet.util.ServletUtils;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
+import javax.servlet.ReadListener;
+import javax.servlet.ServletInputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import java.io.*;
 import java.nio.charset.Charset;
 
@@ -30,9 +32,13 @@ public class HttpRequestCopyWrapper extends HttpServletRequestWrapper {
         String encode = null;
         try {
             if (StringUtils.isEmpty((encode = request.getCharacterEncoding()))) {
-                request.setCharacterEncoding((encode = Charset.defaultCharset().displayName()));
+                request.setCharacterEncoding((encode = Charset
+                        .defaultCharset()
+                        .displayName()));
             }
-            this.body = ServletUtils.getBodyString(request, encode).getBytes(encode);
+            this.body = ServletUtils
+                    .getBodyString(request, encode)
+                    .getBytes(encode);
         } catch (UnsupportedEncodingException e) {
             log.warn("当前系统不支持该系统编码:{}", encode);
             throw new ServiceException(GlobalErrorCode.SYSTEM_CODE_SUPPORT_ERROR);

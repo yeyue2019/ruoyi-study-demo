@@ -1,6 +1,7 @@
 package yeyue.ruoyi.study.module.system.api.service.permission.dto;
 
-import io.swagger.annotations.*;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import yeyue.ruoyi.study.framework.common.validation.annotation.InEnum;
 import yeyue.ruoyi.study.module.system.api.enums.permission.MenuTypeEnum;

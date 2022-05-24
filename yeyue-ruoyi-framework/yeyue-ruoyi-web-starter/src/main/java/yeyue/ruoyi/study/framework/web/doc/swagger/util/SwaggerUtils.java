@@ -63,18 +63,24 @@ public abstract class SwaggerUtils {
      * 获取全局响应状态码
      */
     private static List<Response> globalResponses(ErrorCode[] codes) {
-        return Arrays.stream(codes).map(
-                errorEnums -> new ResponseBuilder()
-                        .code(errorEnums.getCode())
-                        .description(errorEnums.getMsg())
-                        .build()).collect(Collectors.toList());
+        return Arrays
+                .stream(codes)
+                .map(
+                        errorEnums -> new ResponseBuilder()
+                                .code(errorEnums.getCode())
+                                .description(errorEnums.getMsg())
+                                .build())
+                .collect(Collectors.toList());
     }
 
     /**
      * 全局通用请求参数
      */
     private static List<RequestParameter> globalRequestParameters() {
-        RequestParameterBuilder tenantParameter = new RequestParameterBuilder().name(ServletConstants.AUTHORIZATION_HEADER).description("鉴权信息").required(false)
+        RequestParameterBuilder tenantParameter = new RequestParameterBuilder()
+                .name(ServletConstants.AUTHORIZATION_HEADER)
+                .description("鉴权信息")
+                .required(false)
                 .in(ParameterType.HEADER);
         return Collections.singletonList(tenantParameter.build());
     }

@@ -10,11 +10,13 @@ import yeyue.ruoyi.study.framework.common.validation.annotation.InEnum;
 import yeyue.ruoyi.study.framework.common.validation.core.Groups;
 import yeyue.ruoyi.study.module.system.api.domain.user.SystemUserDomain;
 import yeyue.ruoyi.study.module.system.api.service.user.SystemUserService;
-import yeyue.ruoyi.study.module.system.api.service.user.dto.*;
+import yeyue.ruoyi.study.module.system.api.service.user.dto.SystemUserPageReq;
+import yeyue.ruoyi.study.module.system.api.service.user.dto.SystemUserUpdatePwdReq;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Positive;
 
 /**
  * @author yeyue

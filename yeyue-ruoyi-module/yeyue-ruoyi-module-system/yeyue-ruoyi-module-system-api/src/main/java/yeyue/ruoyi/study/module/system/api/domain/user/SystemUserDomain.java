@@ -1,12 +1,14 @@
 package yeyue.ruoyi.study.module.system.api.domain.user;
 
-import io.swagger.annotations.*;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import yeyue.ruoyi.study.framework.common.validation.core.Groups;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
-import java.time.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 /**

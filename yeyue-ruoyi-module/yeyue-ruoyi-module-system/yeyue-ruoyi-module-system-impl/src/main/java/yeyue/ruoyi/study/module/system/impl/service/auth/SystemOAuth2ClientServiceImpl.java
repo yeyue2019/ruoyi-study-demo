@@ -56,7 +56,9 @@ public class SystemOAuth2ClientServiceImpl implements SystemOAuth2ClientService 
         }
         // clientId 不能重复
         SystemOAuth2ClientEntity clientIdCompare = clientMapper.selectOne(SystemOAuth2ClientEntity::getClientId, reqDTO.getClientId());
-        if (clientIdCompare != null && clientIdCompare.getId().compareTo(reqDTO.getId()) != 0) {
+        if (clientIdCompare != null && clientIdCompare
+                .getId()
+                .compareTo(reqDTO.getId()) != 0) {
             throw new ServiceException(SystemErrorCode.OAUTH2_CLIENT_EXIST);
         }
         SystemOAuth2ClientEntity entity = SystemOAuth2ClientConvert.INSTANCE.toEntity(reqDTO);

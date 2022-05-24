@@ -1,6 +1,7 @@
 package yeyue.ruoyi.study.module.system.api.enums.dept;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
  * 部门编号枚举

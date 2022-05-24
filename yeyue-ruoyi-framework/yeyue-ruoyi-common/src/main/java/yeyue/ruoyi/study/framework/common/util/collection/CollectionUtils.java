@@ -3,7 +3,8 @@ package yeyue.ruoyi.study.framework.common.util.collection;
 import org.springframework.util.Assert;
 import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
 
-import java.lang.reflect.*;
+import java.lang.reflect.Array;
+import java.lang.reflect.ParameterizedType;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -53,7 +54,9 @@ public abstract class CollectionUtils extends org.springframework.util.Collectio
         if (isEmpty(array)) {
             return Collections.emptyList();
         }
-        return Arrays.stream(array).collect(Collectors.toList());
+        return Arrays
+                .stream(array)
+                .collect(Collectors.toList());
     }
 
     @SuppressWarnings({"unchecked", "rawstype"})
@@ -80,7 +83,11 @@ public abstract class CollectionUtils extends org.springframework.util.Collectio
         if (isEmpty(from)) {
             return new ArrayList<>();
         }
-        return from.stream().map(func).filter(Objects::nonNull).collect(Collectors.toList());
+        return from
+                .stream()
+                .map(func)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
     }
 
 
@@ -88,7 +95,11 @@ public abstract class CollectionUtils extends org.springframework.util.Collectio
         if (isEmpty(from)) {
             return empty();
         }
-        return listToArray(Arrays.stream(from).map(func).filter(Objects::nonNull).collect(Collectors.toList()));
+        return listToArray(Arrays
+                .stream(from)
+                .map(func)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList()));
     }
 
     public static <T, R> PageResult<R> funcPage(PageResult<T> from, Function<T, R> func) {
@@ -115,7 +126,10 @@ public abstract class CollectionUtils extends org.springframework.util.Collectio
         if (isEmpty(children)) {
             return false;
         }
-        return children.stream().map(func).anyMatch(c -> Objects.equals(c, child));
+        return children
+                .stream()
+                .map(func)
+                .anyMatch(c -> Objects.equals(c, child));
     }
 
     /**
@@ -158,7 +172,9 @@ public abstract class CollectionUtils extends org.springframework.util.Collectio
      */
     @SuppressWarnings("unchecked")
     public static <T> Class<T> getListClazz(List<T> list) {
-        ParameterizedType parameterizedType = (ParameterizedType) list.getClass().getGenericSuperclass();//获取当前new对象的泛型的父类类型
+        ParameterizedType parameterizedType = (ParameterizedType) list
+                .getClass()
+                .getGenericSuperclass();//获取当前new对象的泛型的父类类型
         return (Class<T>) parameterizedType.getActualTypeArguments()[0];
     }
 }

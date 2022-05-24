@@ -7,7 +7,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import yeyue.ruoyi.study.framework.common.enums.CommonStatusEnum;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
 
 /**
  * web登录用户
@@ -72,6 +73,8 @@ public class LoginUser implements UserDetails {
     @JSONField(serialize = false, deserialize = false)
     @Override
     public boolean isEnabled() {
-        return CommonStatusEnum.ENABLE.getStatus().equals(this.status);
+        return CommonStatusEnum.ENABLE
+                .getStatus()
+                .equals(this.status);
     }
 }

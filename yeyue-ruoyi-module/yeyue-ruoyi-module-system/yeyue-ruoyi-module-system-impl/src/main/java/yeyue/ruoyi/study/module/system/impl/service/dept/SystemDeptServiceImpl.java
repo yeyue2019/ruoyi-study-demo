@@ -41,7 +41,9 @@ public class SystemDeptServiceImpl implements SystemDeptService {
             throw new ServiceException(SystemErrorCode.DEPT_NAME_DUPLICATE);
         }
         // 上级岗位校验
-        if (DeptIdEnum.ROOT.getId().compareTo(reqDTO.getParentId()) != 0) {
+        if (DeptIdEnum.ROOT
+                .getId()
+                .compareTo(reqDTO.getParentId()) != 0) {
             // 父岗位不存在
             SystemDeptEntity dept = deptMapper.selectById(reqDTO.getParentId());
             if (dept == null) {
@@ -96,7 +98,10 @@ public class SystemDeptServiceImpl implements SystemDeptService {
         if (CollectionUtils.isEmpty(entities)) {
             return Collections.emptyList();
         }
-        Map<Long, List<SystemDeptDomain>> tree = entities.stream().map(SystemDeptConvert.INSTANCE::toDomain).collect(Collectors.groupingBy(SystemDeptDomain::getParentId));
+        Map<Long, List<SystemDeptDomain>> tree = entities
+                .stream()
+                .map(SystemDeptConvert.INSTANCE::toDomain)
+                .collect(Collectors.groupingBy(SystemDeptDomain::getParentId));
         List<SystemDeptDomain> result = new ArrayList<>();
         getDeptByParentId(result, reqDTO.getParentId(), reqDTO.getRecursive() ? Integer.MAX_VALUE : 1, tree);
         return result;

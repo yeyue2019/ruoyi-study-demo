@@ -2,7 +2,8 @@ package yeyue.ruoyi.study.framework.security.core.util;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.*;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.util.StringUtils;
 import yeyue.ruoyi.study.framework.common.servlet.constants.ServletConstants;
@@ -33,7 +34,9 @@ public abstract class SecurityUtils {
         if (index == -1) {
             return null;
         }
-        return authorization.substring(index + ServletConstants.AUTHORIZATION_TOKEN_PREFIX.length()).trim();
+        return authorization
+                .substring(index + ServletConstants.AUTHORIZATION_TOKEN_PREFIX.length())
+                .trim();
     }
 
     /**
@@ -71,7 +74,9 @@ public abstract class SecurityUtils {
     public static void setLoginUser(LoginUser loginUser, HttpServletRequest request) {
         // 创建 Authentication，并设置到上下文
         Authentication authentication = buildAuthentication(loginUser, request);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        SecurityContextHolder
+                .getContext()
+                .setAuthentication(authentication);
         // 放到common需要的上下文中
         WebSecurityUtils.setLoginUserId(request, String.valueOf(loginUser.getId()));
     }

@@ -2,7 +2,8 @@ package yeyue.ruoyi.study.framework.mybatis.core.query;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
-import org.apache.commons.lang3.*;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
 
 import java.util.Collection;

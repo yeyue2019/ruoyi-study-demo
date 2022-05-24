@@ -28,7 +28,7 @@ import java.time.LocalDateTime;
 public class SystemOAuth2CodeServiceImpl implements SystemOAuth2CodeService {
 
     @Resource
-    SystemOAuth2CodeMapper codeMapper;
+    SystemOAuth2CodeMapper mapper;
     @Resource
     SystemOAuth2ClientService clientService;
     @Resource
@@ -39,7 +39,7 @@ public class SystemOAuth2CodeServiceImpl implements SystemOAuth2CodeService {
         // 校验客户端是否存在
         SystemOAuth2ClientDomain client = clientService.getByClientId(reqDTO.getClientId());
         String code = IdUtils.random(16, true);
-        SystemOAuth2CodeEntity codeCompare = codeMapper.selectOne(SystemOAuth2CodeEntity::getCode, code);
+        SystemOAuth2CodeEntity codeCompare = mapper.selectByCode(code);
         if (codeCompare != null) {
             throw new ServiceException(SystemErrorCode.OAUTH2_CODE_EXIST);
         }
@@ -52,7 +52,7 @@ public class SystemOAuth2CodeServiceImpl implements SystemOAuth2CodeService {
                     .now()
                     .plusSeconds(client.getCodeValiditySeconds()));
         }
-        codeMapper.insert(entity);
+        mapper.insert(entity);
         return code;
     }
 
@@ -60,7 +60,7 @@ public class SystemOAuth2CodeServiceImpl implements SystemOAuth2CodeService {
     @Transactional(rollbackFor = Exception.class)
     public SystemOAuth2AccessTokenDomain authorize(String code) {
         // 校验code是否存在或是否使用
-        SystemOAuth2CodeEntity entity = codeMapper.selectOne(SystemOAuth2CodeEntity::getCode, code);
+        SystemOAuth2CodeEntity entity = mapper.selectByCode(code);
         if (entity == null) {
             throw new ServiceException(SystemErrorCode.OAUTH2_CODE_NOT_EXISTS);
         }
@@ -81,7 +81,7 @@ public class SystemOAuth2CodeServiceImpl implements SystemOAuth2CodeService {
         entity.setAccessToken(accessToken.getAccessToken());
         entity.setRefreshToken(accessToken.getRefreshToken());
         entity.setStatus(CommonStatusEnum.DISABLE.getStatus());
-        codeMapper.updateById(entity);
+        mapper.updateById(entity);
         return accessToken;
     }
 }

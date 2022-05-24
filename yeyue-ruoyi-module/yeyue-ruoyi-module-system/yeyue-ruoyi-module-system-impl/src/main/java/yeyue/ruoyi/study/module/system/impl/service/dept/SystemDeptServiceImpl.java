@@ -33,17 +33,12 @@ public class SystemDeptServiceImpl implements SystemDeptService {
 
     @Override
     public Long create(SystemDeptCreateReqDTO reqDTO) {
-        if (reqDTO.getParentId() == null) {
-            reqDTO.setParentId(DeptIdEnum.ROOT.getId());
-        }
         // 名称校验
         if (deptMapper.selectByParentIdAndName(reqDTO.getParentId(), reqDTO.getName()) != null) {
             throw new ServiceException(SystemErrorCode.DEPT_NAME_DUPLICATE);
         }
         // 上级岗位校验
-        if (DeptIdEnum.ROOT
-                .getId()
-                .compareTo(reqDTO.getParentId()) != 0) {
+        if (EnumUtils.notEquals(DeptIdEnum.ROOT, DeptIdEnum::getId, reqDTO.getParentId())) {
             // 父岗位不存在
             SystemDeptEntity dept = deptMapper.selectById(reqDTO.getParentId());
             if (dept == null) {
@@ -64,6 +59,7 @@ public class SystemDeptServiceImpl implements SystemDeptService {
         if (deptMapper.selectById(reqDTO.getId()) == null) {
             throw new ServiceException(SystemErrorCode.DEPT_NOT_FOUND);
         }
+        // TODO: 2022/5/24 这里最好用数据库查询出来的parentId
         SystemDeptEntity nameCompare = deptMapper.selectByParentIdAndName(reqDTO.getParentId(), reqDTO.getName());
         if (nameCompare != null && !Objects.equals(nameCompare.getId(), reqDTO.getId())) {
             throw new ServiceException(SystemErrorCode.DEPT_NAME_DUPLICATE);
@@ -91,9 +87,6 @@ public class SystemDeptServiceImpl implements SystemDeptService {
 
     @Override
     public List<SystemDeptDomain> list(SystemDeptListReqDTO reqDTO) {
-        if (reqDTO.getParentId() == null) {
-            reqDTO.setParentId(DeptIdEnum.ROOT.getId());
-        }
         List<SystemDeptEntity> entities = deptMapper.selectList(new MyBatisLambdaQueryWrapper<SystemDeptEntity>().eq(SystemDeptEntity::getStatus, reqDTO.getStatus()));
         if (CollectionUtils.isEmpty(entities)) {
             return Collections.emptyList();

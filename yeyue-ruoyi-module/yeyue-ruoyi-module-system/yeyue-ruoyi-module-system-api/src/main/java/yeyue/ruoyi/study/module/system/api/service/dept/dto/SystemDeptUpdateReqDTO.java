@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
  * @date 2022-05-17 21:30:47
  */
 @Data
-@ApiModel(description = "部门信息更新")
+@ApiModel(description = "部门更新")
 public class SystemDeptUpdateReqDTO extends SystemDeptCreateReqDTO {
 
     @ApiModelProperty(value = "部门编号", required = true, example = "1024")

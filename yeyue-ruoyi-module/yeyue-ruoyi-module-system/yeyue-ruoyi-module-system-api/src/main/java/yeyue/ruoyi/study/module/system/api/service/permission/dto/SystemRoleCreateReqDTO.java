@@ -24,10 +24,10 @@ public class SystemRoleCreateReqDTO implements Serializable {
 
     @NotBlank(message = "角色标志不能为空")
     @Size(max = 100, message = "角色标志长度不能超过100个字符")
-    @ApiModelProperty(value = "角色编码", required = true, example = "ADMIN")
+    @ApiModelProperty(value = "角色编码", required = true, example = "admin")
     private String code;
 
-    @ApiModelProperty(value = "显示顺序不能为空", required = true, example = "1024")
+    @ApiModelProperty(value = "显示顺序不能为空", required = true, example = "1")
     @NotNull(message = "显示顺序不能为空")
     private Integer sort;
 

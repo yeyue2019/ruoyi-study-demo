@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 @ApiModel(description = "岗位修改")
 public class SystemPostUpdateReqDTO extends SystemPostCreateReqDTO {
 
-    @ApiModelProperty(value = "岗位编号", required = true, example = "1024")
+    @ApiModelProperty(value = "岗位编号", required = true, example = "100")
     @NotNull(message = "岗位编号不能为空")
     private Long id;
 }

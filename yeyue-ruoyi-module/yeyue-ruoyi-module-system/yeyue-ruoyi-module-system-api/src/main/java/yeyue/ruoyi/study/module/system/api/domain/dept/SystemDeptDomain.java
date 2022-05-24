@@ -31,14 +31,8 @@ public class SystemDeptDomain implements Serializable {
     @ApiModelProperty(value = "负责人")
     private Long leaderUserId;
 
-    @ApiModelProperty(value = "电话区号")
-    private String areaCode;
-
-    @ApiModelProperty(value = "联系电话")
-    private String mobile;
-
-    @ApiModelProperty(value = "邮箱")
-    private String email;
+    @ApiModelProperty(value = "备注")
+    private String remark;
 
     @ApiModelProperty(value = "状态")
     private Integer status;

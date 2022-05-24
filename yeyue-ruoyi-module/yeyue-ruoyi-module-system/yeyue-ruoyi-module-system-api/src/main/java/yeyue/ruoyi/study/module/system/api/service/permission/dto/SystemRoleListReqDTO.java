@@ -7,7 +7,7 @@ import yeyue.ruoyi.study.framework.common.enums.CommonStatusEnum;
 import yeyue.ruoyi.study.framework.common.validation.annotation.InEnum;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.Set;
 
 /**
  * @author yeyue
@@ -22,5 +22,5 @@ public class SystemRoleListReqDTO implements Serializable {
     private Integer status;
 
     @ApiModelProperty(value = "特定的角色id")
-    private Collection<Long> ids;
+    private Set<Long> ids;
 }

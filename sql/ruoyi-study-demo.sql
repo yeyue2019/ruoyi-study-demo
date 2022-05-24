@@ -125,9 +125,7 @@ CREATE TABLE `ruoyi_system_dept`
     `parentId`     bigint                                                       NOT NULL DEFAULT '0' COMMENT '父部门id',
     `sort`         int                                                          NOT NULL DEFAULT '0' COMMENT '显示顺序',
     `leaderUserId` bigint                                                                DEFAULT NULL COMMENT '负责人',
-    `areaCode`     varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci          DEFAULT '86' COMMENT '手机区号',
-    `mobile`       varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci          DEFAULT '' COMMENT '手机号码',
-    `email`        varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci          DEFAULT NULL COMMENT '邮箱',
+    `remark`       varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci         DEFAULT NULL COMMENT '备注',
     `status`       tinyint                                                      NOT NULL DEFAULT '0' COMMENT '部门状态（0正常 1停用）',
     `creator`      varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci          DEFAULT '' COMMENT '创建者',
     `createTime`   datetime                                                     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -144,29 +142,29 @@ CREATE TABLE `ruoyi_system_dept`
 -- Records of ruoyi_system_dept
 -- ----------------------------
 BEGIN;
-INSERT INTO `ruoyi_system_dept` (`id`, `name`, `parentId`, `sort`, `leaderUserId`, `areaCode`, `mobile`, `email`,
+INSERT INTO `ruoyi_system_dept` (`id`, `name`, `parentId`, `sort`, `leaderUserId`, `remark`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (1, '总部', 0, 0, 1, '86', '15888888888', 'ry@qq.com', 0, '1', '2021-01-05 17:03:47', '1',
+VALUES (1, '总部', 0, 0, 1, '', 0, '1', '2021-01-05 17:03:47', '1',
         '2022-01-14 01:04:05', b'0');
-INSERT INTO `ruoyi_system_dept` (`id`, `name`, `parentId`, `sort`, `leaderUserId`, `areaCode`, `mobile`, `email`,
+INSERT INTO `ruoyi_system_dept` (`id`, `name`, `parentId`, `sort`, `leaderUserId`, `remark`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (2, '研发部门', 1, 2, 1, '86', '15888888888', 'ry@qq.com', 0, '1', '2021-01-05 17:03:47', '1',
+VALUES (2, '研发部门', 1, 2, 1, '', 0, '1', '2021-01-05 17:03:47', '1',
         '2022-01-14 01:04:14', b'0');
-INSERT INTO `ruoyi_system_dept` (`id`, `name`, `parentId`, `sort`, `leaderUserId`, `areaCode`, `mobile`, `email`,
+INSERT INTO `ruoyi_system_dept` (`id`, `name`, `parentId`, `sort`, `leaderUserId`, `remark`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (3, '市场部门', 1, 3, 1, '86', '15888888888', 'ry@qq.com', 0, '1', '2021-01-05 17:03:47', '1',
+VALUES (3, '市场部门', 1, 3, 1, '', 0, '1', '2021-01-05 17:03:47', '1',
         '2021-12-15 05:01:38', b'0');
-INSERT INTO `ruoyi_system_dept` (`id`, `name`, `parentId`, `sort`, `leaderUserId`, `areaCode`, `mobile`, `email`,
+INSERT INTO `ruoyi_system_dept` (`id`, `name`, `parentId`, `sort`, `leaderUserId`, `remark`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (4, '测试部门', 1, 4, 1, '86', '15888888888', 'ry@qq.com', 0, '1', '2021-01-05 17:03:47', '1',
+VALUES (4, '测试部门', 1, 4, 1, '', 0, '1', '2021-01-05 17:03:47', '1',
         '2021-12-15 05:01:37', b'0');
-INSERT INTO `ruoyi_system_dept` (`id`, `name`, `parentId`, `sort`, `leaderUserId`, `areaCode`, `mobile`, `email`,
+INSERT INTO `ruoyi_system_dept` (`id`, `name`, `parentId`, `sort`, `leaderUserId`, `remark`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (5, '财务部门', 1, 5, 1, '86', '15888888888', 'ry@qq.com', 0, '1', '2021-01-05 17:03:47', '1',
+VALUES (5, '财务部门', 1, 5, 1, '', 0, '1', '2021-01-05 17:03:47', '1',
         '2022-01-15 21:32:22', b'0');
-INSERT INTO `ruoyi_system_dept` (`id`, `name`, `parentId`, `sort`, `leaderUserId`, `areaCode`, `mobile`, `email`,
+INSERT INTO `ruoyi_system_dept` (`id`, `name`, `parentId`, `sort`, `leaderUserId`, `remark`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (6, '运维部门', 1, 6, 1, '86', '15888888888', 'ry@qq.com', 0, '1', '2021-01-05 17:03:47', '1',
+VALUES (6, '运维部门', 1, 6, 1, '', 0, '1', '2021-01-05 17:03:47', '1',
         '2021-12-15 05:01:33', b'0');
 COMMIT;
 -- ----------------------------
@@ -179,19 +177,11 @@ CREATE TABLE `ruoyi_system_oauth2_client`
     `clientId`                    varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '客户端编号',
     `secret`                      varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '客户端密钥',
     `name`                        varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '应用名',
---     `logo`                        varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '应用图标',
     `description`                 varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '应用描述',
     `status`                      tinyint                                                       NOT NULL DEFAULT '0' COMMENT '状态',
     `codeValiditySeconds`         int                                                           NOT NULL COMMENT '授权码的有效期',
     `accessTokenValiditySeconds`  int                                                           NOT NULL COMMENT '访问令牌的有效期',
     `refreshTokenValiditySeconds` int                                                           NOT NULL COMMENT '刷新令牌的有效期',
---     `redirectUris`                varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '可重定向的 URI 地址',
---     `autoApprove`                 bit(1)                                                        NOT NULL COMMENT '是否自动授权',
---     `authorizedGrantTypes`        varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '授权类型',
---     `scopes`                      varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '授权范围',
---     `authorities`                 varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '权限',
---     `resourceIds`                 varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '资源',
---     `additionalInformation`       varchar(4096) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '附加信息',
     `creator`                     varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '' COMMENT '创建者',
     `createTime`                  datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `updater`                     varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '' COMMENT '更新者',

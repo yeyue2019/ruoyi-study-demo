@@ -35,17 +35,12 @@ public class SystemMenuServiceImpl implements SystemMenuService {
 
     @Override
     public Long create(SystemMenuCreateReqDTO reqDTO) {
-        if (reqDTO.getParentId() == null) {
-            reqDTO.setParentId(MenuIdEnum.ROOT.getId());
-        }
         // 名称校验
         if (menuMapper.selectByParentIdAndName(reqDTO.getParentId(), reqDTO.getName()) != null) {
             throw new ServiceException(SystemErrorCode.MENU_NAME_DUPLICATE);
         }
         // 父菜单校验
-        if (MenuIdEnum.ROOT
-                .getId()
-                .compareTo(reqDTO.getParentId()) != 0) {
+        if (EnumUtils.notEquals(MenuIdEnum.ROOT, MenuIdEnum::getId, reqDTO.getParentId())) {
             // 父菜单不存在
             SystemMenuEntity menu = menuMapper.selectById(reqDTO.getParentId());
             if (menu == null) {

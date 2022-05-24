@@ -32,18 +32,18 @@ public class SystemOAuth2ClientServiceImpl implements SystemOAuth2ClientService 
     };
 
     @Resource
-    SystemOAuth2ClientMapper clientMapper;
+    SystemOAuth2ClientMapper mapper;
     @Resource
-    RedisRepository redisRepository;
+    RedisRepository repository;
 
     @Override
     public Long create(SystemOAuth2ClientCreateReqDTO reqDTO) {
         // 客户端id不能重复
-        if (clientMapper.selectOne(SystemOAuth2ClientEntity::getClientId, reqDTO.getClientId()) != null) {
+        if (mapper.selectByClientId(reqDTO.getClientId()) != null) {
             throw new ServiceException(SystemErrorCode.OAUTH2_CLIENT_EXIST);
         }
         SystemOAuth2ClientEntity entity = SystemOAuth2ClientConvert.INSTANCE.toEntity(reqDTO);
-        clientMapper.insert(entity);
+        mapper.insert(entity);
         clearByClientId(entity.getClientId());
         return entity.getId();
     }
@@ -51,40 +51,40 @@ public class SystemOAuth2ClientServiceImpl implements SystemOAuth2ClientService 
     @Override
     public void update(SystemOAuth2ClientUpdateReqDTO reqDTO) {
         // id对应的数据存在
-        if (clientMapper.selectById(reqDTO.getId()) == null) {
+        if (mapper.selectById(reqDTO.getId()) == null) {
             throw new ServiceException(SystemErrorCode.OAUTH2_CLIENT_NOT_EXISTS);
         }
         // clientId 不能重复
-        SystemOAuth2ClientEntity clientIdCompare = clientMapper.selectOne(SystemOAuth2ClientEntity::getClientId, reqDTO.getClientId());
+        SystemOAuth2ClientEntity clientIdCompare = mapper.selectByClientId(reqDTO.getClientId());
         if (clientIdCompare != null && clientIdCompare
                 .getId()
                 .compareTo(reqDTO.getId()) != 0) {
             throw new ServiceException(SystemErrorCode.OAUTH2_CLIENT_EXIST);
         }
         SystemOAuth2ClientEntity entity = SystemOAuth2ClientConvert.INSTANCE.toEntity(reqDTO);
-        clientMapper.updateById(entity);
+        mapper.updateById(entity);
         clearByClientId(entity.getClientId());
     }
 
     @Override
     public void delete(Long id) {
-        SystemOAuth2ClientEntity entity = clientMapper.selectById(id);
+        SystemOAuth2ClientEntity entity = mapper.selectById(id);
         if (entity == null) {
             throw new ServiceException(SystemErrorCode.OAUTH2_CLIENT_NOT_EXISTS);
         }
-        clientMapper.deleteById(id);
+        mapper.deleteById(id);
         clearByClientId(entity.getClientId());
     }
 
     @Override
     public SystemOAuth2ClientDomain get(Long id) {
-        SystemOAuth2ClientEntity entity = clientMapper.selectById(id);
+        SystemOAuth2ClientEntity entity = mapper.selectById(id);
         return SystemOAuth2ClientConvert.INSTANCE.toDomain(entity);
     }
 
     @Override
     public PageResult<SystemOAuth2ClientDomain> list(SystemOAuth2ClientPageReqDTO reqDTO) {
-        PageResult<SystemOAuth2ClientEntity> pageResult = clientMapper.selectPage(reqDTO, new MyBatisLambdaQueryWrapper<SystemOAuth2ClientEntity>()
+        PageResult<SystemOAuth2ClientEntity> pageResult = mapper.selectPage(reqDTO, new MyBatisLambdaQueryWrapper<SystemOAuth2ClientEntity>()
                 .like(SystemOAuth2ClientEntity::getName, reqDTO.getName())
                 .eq(SystemOAuth2ClientEntity::getStatus, reqDTO.getStatus()));
         return CollectionUtils.funcPage(pageResult, SystemOAuth2ClientConvert.INSTANCE::toDomain);
@@ -93,19 +93,19 @@ public class SystemOAuth2ClientServiceImpl implements SystemOAuth2ClientService 
 
     @Override
     public SystemOAuth2ClientDomain getByClientId(String clientId) {
-        SystemOAuth2ClientDomain domain = redisRepository.get(REDIS_SYSTEM_OAUTH2_CLIENT_KEY, clientId, REDIS_SYSTEM_OAUTH2_CLIENT_TYPE);
+        SystemOAuth2ClientDomain domain = repository.get(REDIS_SYSTEM_OAUTH2_CLIENT_KEY, clientId, REDIS_SYSTEM_OAUTH2_CLIENT_TYPE);
         if (domain == null) {
-            SystemOAuth2ClientEntity entity = clientMapper.selectOne(SystemOAuth2ClientEntity::getClientId, clientId);
+            SystemOAuth2ClientEntity entity = mapper.selectByClientId(clientId);
             if (entity == null) {
                 throw new ServiceException(SystemErrorCode.OAUTH2_CLIENT_NOT_EXISTS);
             }
             domain = SystemOAuth2ClientConvert.INSTANCE.toDomain(entity);
-            redisRepository.save(REDIS_SYSTEM_OAUTH2_CLIENT_KEY, new RedisDomainDefine<>(clientId, domain, 1, TimeUnit.DAYS));
+            repository.save(REDIS_SYSTEM_OAUTH2_CLIENT_KEY, new RedisDomainDefine<>(clientId, domain, 1, TimeUnit.DAYS));
         }
         return domain;
     }
 
     public void clearByClientId(String clientId) {
-        redisRepository.delete(REDIS_SYSTEM_OAUTH2_CLIENT_KEY, clientId);
+        repository.delete(REDIS_SYSTEM_OAUTH2_CLIENT_KEY, clientId);
     }
 }

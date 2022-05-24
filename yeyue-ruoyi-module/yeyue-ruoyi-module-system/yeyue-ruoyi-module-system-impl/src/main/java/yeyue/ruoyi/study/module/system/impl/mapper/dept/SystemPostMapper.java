@@ -13,13 +13,15 @@ import java.util.Collection;
  */
 public interface SystemPostMapper extends MyBatisMapper<SystemPostEntity> {
 
-    @Update("<script>" +
-            "update ruoyi_system_post set status = #{status} where deleted = false and id in " +
-            "<foreach item='id' index='index' collection='ids' open='(' separator=',' close=')'>" +
-            "#{id}" +
-            "</foreach>" +
-            "</script>")
+    @Update("<script>" + "update ruoyi_system_post set status = #{status} where deleted = false and id in " + "<foreach item='id' index='index' collection='ids' open='(' separator=',' close=')'>" + "#{id}" + "</foreach>" + "</script>")
     @Deprecated
     int updateStatus(@Param("ids") Collection<Long> ids, @Param("status") Integer status);
 
+    default SystemPostEntity selectByName(String name) {
+        return selectOne(SystemPostEntity::getName, name);
+    }
+
+    default SystemPostEntity selectByCode(String code) {
+        return selectOne(SystemPostEntity::getCode, code);
+    }
 }

@@ -29,7 +29,7 @@ public class SystemPostDomain implements Serializable {
     @ApiModelProperty(value = "排序")
     private Integer sort;
 
-    @ApiModelProperty(value = "指定序号")
+    @ApiModelProperty(value = "备注")
     private String remark;
 
     @ApiModelProperty(value = "状态")

@@ -30,41 +30,42 @@ import java.util.Objects;
 public class SystemRoleServiceImpl implements SystemRoleService {
 
     @Resource
-    SystemRoleMapper roleMapper;
+    SystemRoleMapper mapper;
 
     @Override
     public Long create(SystemRoleCreateReqDTO reqDTO) {
         // 角色编码校验
-        if (roleMapper.selectOne(SystemRoleEntity::getCode, reqDTO.getCode()) != null) {
+        if (mapper.selectByCode(reqDTO.getCode()) != null) {
             throw new ServiceException(SystemErrorCode.ROLE_CODE_DUPLICATE);
         }
         // 角色名称校验
-        if (roleMapper.selectOne(SystemRoleEntity::getName, reqDTO.getName()) != null) {
+        if (mapper.selectByName(reqDTO.getName()) != null) {
             throw new ServiceException(SystemErrorCode.ROLE_NAME_DUPLICATE);
         }
         SystemRoleEntity entity = SystemRoleConvert.INSTANCE.toEntity(reqDTO);
-        entity.setDataScope(DataScopeEnum.ALL.getScope());
-        roleMapper.insert(entity);
+        // TODO: 2022/5/24 初始化数据权限为自身
+        entity.setDataScope(DataScopeEnum.SELF.getScope());
+        mapper.insert(entity);
         return entity.getId();
     }
 
     @Override
     public void update(SystemRoleUpdateReqDTO reqDTO) {
-        if (roleMapper.selectById(reqDTO.getId()) == null) {
+        if (mapper.selectById(reqDTO.getId()) == null) {
             throw new ServiceException(SystemErrorCode.ROLE_NOT_EXISTS);
         }
-        SystemRoleEntity nameCompare = roleMapper.selectOne(SystemRoleEntity::getName, reqDTO.getName());
+        SystemRoleEntity nameCompare = mapper.selectByName(reqDTO.getName());
         if (nameCompare != null && !Objects.equals(nameCompare.getId(), reqDTO.getId())) {
             throw new ServiceException(SystemErrorCode.ROLE_NAME_DUPLICATE);
         }
         SystemRoleEntity entity = SystemRoleConvert.INSTANCE.toEntity(reqDTO);
-        roleMapper.updateById(entity);
+        mapper.updateById(entity);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void delete(Long id) {
-        SystemRoleEntity entity = roleMapper.selectById(id);
+        SystemRoleEntity entity = mapper.selectById(id);
         if (entity == null) {
             throw new ServiceException(SystemErrorCode.ROLE_NOT_EXISTS);
         }
@@ -74,19 +75,19 @@ public class SystemRoleServiceImpl implements SystemRoleService {
         if (EnumUtils.equals(RoleTypeEnum.SYSTEM, RoleTypeEnum::getType, entity.getType())) {
             throw new ServiceException(SystemErrorCode.ROLE_CAN_NOT_UPDATE_SYSTEM_TYPE_ROLE);
         }
-        roleMapper.deleteById(id);
+        mapper.deleteById(id);
         // TODO: 2022/5/24 删除相关数据
     }
 
     @Override
     public SystemRoleDomain get(Long id) {
-        SystemRoleEntity entity = roleMapper.selectById(id);
+        SystemRoleEntity entity = mapper.selectById(id);
         return SystemRoleConvert.INSTANCE.toDomain(entity);
     }
 
     @Override
     public List<SystemRoleDomain> list(SystemRoleListReqDTO reqDTO) {
-        List<SystemRoleEntity> list = roleMapper.selectList(new MyBatisLambdaQueryWrapper<SystemRoleEntity>()
+        List<SystemRoleEntity> list = mapper.selectList(new MyBatisLambdaQueryWrapper<SystemRoleEntity>()
                 .in(SystemRoleEntity::getId, reqDTO.getIds())
                 .eq(SystemRoleEntity::getStatus, reqDTO.getStatus()));
         return CollectionUtils.funcList(list, SystemRoleConvert.INSTANCE::toDomain);
@@ -94,7 +95,7 @@ public class SystemRoleServiceImpl implements SystemRoleService {
 
     @Override
     public PageResult<SystemRoleDomain> list(SystemRolePageReqDTO reqDTO) {
-        PageResult<SystemRoleEntity> pageResult = roleMapper.list(reqDTO);
+        PageResult<SystemRoleEntity> pageResult = mapper.list(reqDTO);
         return CollectionUtils.funcPage(pageResult, SystemRoleConvert.INSTANCE::toDomain);
     }
 }

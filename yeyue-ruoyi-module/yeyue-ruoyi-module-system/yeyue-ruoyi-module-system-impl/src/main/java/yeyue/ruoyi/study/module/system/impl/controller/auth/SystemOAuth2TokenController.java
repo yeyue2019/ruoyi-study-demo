@@ -2,7 +2,6 @@ package yeyue.ruoyi.study.module.system.impl.controller.auth;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import yeyue.ruoyi.study.framework.common.pojo.core.CommonResult;
 import yeyue.ruoyi.study.module.system.api.domain.auth.SystemOAuth2AccessTokenDomain;
@@ -18,7 +17,6 @@ import javax.validation.Valid;
  * @date 2022-05-17 20:29:47
  */
 @Api(tags = "OAuth2协议管理")
-@Validated
 @RestController
 @RequestMapping("/web/sys/oauth2/token")
 public class SystemOAuth2TokenController {

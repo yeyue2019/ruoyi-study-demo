@@ -13,7 +13,7 @@ import java.io.Serializable;
  * @date 2022-05-23 17:38:08
  */
 @Data
-@ApiModel(description = "部门列表查询")
+@ApiModel(description = "部门查询")
 public class SystemDeptListReqDTO implements Serializable {
 
     @ApiModelProperty(value = "上级部门Id")

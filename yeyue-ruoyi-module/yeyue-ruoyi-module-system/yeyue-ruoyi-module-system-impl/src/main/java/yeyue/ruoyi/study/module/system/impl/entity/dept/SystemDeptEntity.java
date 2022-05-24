@@ -44,19 +44,9 @@ public class SystemDeptEntity extends MyBatisEntity {
     private Long leaderUserId;
 
     /**
-     * 电话区号
+     * 说明
      */
-    private String areaCode;
-
-    /**
-     * 联系电话
-     */
-    private String mobile;
-
-    /**
-     * 邮箱
-     */
-    private String email;
+    private String remark;
 
     /**
      * 状态

@@ -18,8 +18,9 @@ public class SecurityConfiguration {
         return new AuthorizeRequestsCustomizer() {
             @Override
             public void customize(ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry) {
-                // registry
-                //         .antMatchers("/ruoyi/test/security/login").permitAll();
+                registry
+                        .antMatchers("/web/sys/**")
+                        .permitAll();
             }
         };
     }

@@ -54,7 +54,7 @@ public class SystemOAuth2TokenServiceImpl implements SystemOAuth2TokenService {
         // 1. 校验客户端
         SystemOAuth2ClientDomain client = clientService.getByClientId(reqDTO.getClientId());
         // 2. 获取刷新令牌
-        SystemOAuth2RefreshTokenEntity refreshToken = refreshTokenMapper.selectOne(SystemOAuth2RefreshTokenEntity::getRefreshToken, reqDTO.getRefreshToken());
+        SystemOAuth2RefreshTokenEntity refreshToken = refreshTokenMapper.selectByRefreshToken(reqDTO.getRefreshToken());
         if (refreshToken == null) {
             throw new ServiceException(SystemErrorCode.OAUTH2_REFRESH_TOKEN_NOT_EXISTS);
         }
@@ -74,7 +74,7 @@ public class SystemOAuth2TokenServiceImpl implements SystemOAuth2TokenService {
     @Override
     public SystemOAuth2AccessTokenDomain get(String accessToken) {
         // 1. 获取访问令牌
-        SystemOAuth2AccessTokenEntity entity = accessTokenMapper.selectOne(SystemOAuth2AccessTokenEntity::getAccessToken, accessToken);
+        SystemOAuth2AccessTokenEntity entity = accessTokenMapper.selectByAccessToken(accessToken);
         if (entity == null) {
             throw new ServiceException(SystemErrorCode.OAUTH2_ACCESS_TOKEN_NOT_EXISTS);
         }
@@ -90,14 +90,14 @@ public class SystemOAuth2TokenServiceImpl implements SystemOAuth2TokenService {
     @Transactional(rollbackFor = Exception.class)
     public SystemOAuth2AccessTokenDomain remove(String accessToken) {
         // 1. 获取访问令牌
-        SystemOAuth2AccessTokenEntity entity = accessTokenMapper.selectOne(SystemOAuth2AccessTokenEntity::getAccessToken, accessToken);
+        SystemOAuth2AccessTokenEntity entity = accessTokenMapper.selectByAccessToken(accessToken);
         // 2. 移除访问令牌
         if (entity == null) {
             return null;
         }
         accessTokenMapper.deleteById(entity);
         // 3. 移除刷新令牌
-        SystemOAuth2RefreshTokenEntity refreshToken = refreshTokenMapper.selectOne(SystemOAuth2RefreshTokenEntity::getRefreshToken, entity.getRefreshToken());
+        SystemOAuth2RefreshTokenEntity refreshToken = refreshTokenMapper.selectByRefreshToken(entity.getRefreshToken());
         if (refreshToken != null) {
             refreshTokenMapper.deleteById(refreshToken);
         }

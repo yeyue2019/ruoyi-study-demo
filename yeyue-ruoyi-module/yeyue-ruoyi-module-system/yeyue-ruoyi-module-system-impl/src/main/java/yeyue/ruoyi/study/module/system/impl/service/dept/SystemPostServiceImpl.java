@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
-import yeyue.ruoyi.study.framework.common.pojo.pageable.SortedParam;
 import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
 import yeyue.ruoyi.study.framework.mybatis.core.query.MyBatisLambdaQueryWrapper;
 import yeyue.ruoyi.study.module.system.api.domain.dept.SystemPostDomain;
@@ -27,68 +26,67 @@ import javax.annotation.Resource;
 public class SystemPostServiceImpl implements SystemPostService {
 
     @Resource
-    SystemPostMapper postMapper;
+    SystemPostMapper mapper;
 
     @Override
     public Long create(SystemPostCreateReqDTO reqDTO) {
         // 岗位名称不能重复
-        if (postMapper.selectOne(SystemPostEntity::getName, reqDTO.getName()) != null) {
+        if (mapper.selectByName(reqDTO.getName()) != null) {
             throw new ServiceException(SystemErrorCode.POST_NAME_DUPLICATE);
         }
         // 岗位编码不能重复
-        if (postMapper.selectOne(SystemPostEntity::getCode, reqDTO.getCode()) != null) {
+        if (mapper.selectByCode(reqDTO.getCode()) != null) {
             throw new ServiceException(SystemErrorCode.POST_CODE_DUPLICATE);
         }
         SystemPostEntity entity = SystemPostConvert.INSTANCE.toEntity(reqDTO);
-        postMapper.insert(entity);
+        mapper.insert(entity);
         return entity.getId();
     }
 
     @Override
     public void update(SystemPostUpdateReqDTO reqDTO) {
         // 岗位名称是否存在
-        if (postMapper.selectById(reqDTO.getId()) == null) {
+        if (mapper.selectById(reqDTO.getId()) == null) {
             throw new ServiceException(SystemErrorCode.POST_NOT_FOUND);
         }
         // 岗位名称不能重复
-        SystemPostEntity nameCompare = postMapper.selectOne(SystemPostEntity::getName, reqDTO.getName());
+        SystemPostEntity nameCompare = mapper.selectByName(reqDTO.getName());
         if (nameCompare != null && nameCompare
                 .getId()
                 .compareTo(reqDTO.getId()) != 0) {
             throw new ServiceException(SystemErrorCode.POST_NAME_DUPLICATE);
         }
         // 岗位编码不能重复
-        SystemPostEntity codeCompare = postMapper.selectOne(SystemPostEntity::getCode, reqDTO.getCode());
+        SystemPostEntity codeCompare = mapper.selectByCode(reqDTO.getCode());
         if (codeCompare != null && codeCompare
                 .getId()
                 .compareTo(reqDTO.getId()) != 0) {
             throw new ServiceException(SystemErrorCode.POST_CODE_DUPLICATE);
         }
         SystemPostEntity entity = SystemPostConvert.INSTANCE.toEntity(reqDTO);
-        postMapper.updateById(entity);
+        mapper.updateById(entity);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int updateStatus(SystemPostStatusUpdateReqDTO reqDTO) {
-        return postMapper.updateBatchColumnByIds(SystemPostConvert.INSTANCE.toEntity(reqDTO), reqDTO.getIds());
+        return mapper.updateBatchColumnByIds(SystemPostConvert.INSTANCE.toEntity(reqDTO), reqDTO.getIds());
     }
 
     @Override
     public void delete(Long id) {
-        postMapper.deleteById(id);
+        mapper.deleteById(id);
     }
 
     @Override
     public SystemPostDomain get(Long id) {
-        SystemPostEntity entity = postMapper.selectById(id);
+        SystemPostEntity entity = mapper.selectById(id);
         return SystemPostConvert.INSTANCE.toDomain(entity);
     }
 
     @Override
     public PageResult<SystemPostDomain> list(SystemPostPageReqDTO reqDTO) {
-        reqDTO.addSortParam(SortedParam.asc("sort"));
-        PageResult<SystemPostEntity> pageResult = postMapper.selectPage(reqDTO, new MyBatisLambdaQueryWrapper<SystemPostEntity>()
+        PageResult<SystemPostEntity> pageResult = mapper.selectPage(reqDTO, new MyBatisLambdaQueryWrapper<SystemPostEntity>()
                 .like(SystemPostEntity::getCode, reqDTO.getCode())
                 .like(SystemPostEntity::getName, reqDTO.getName())
                 .eq(SystemPostEntity::getStatus, reqDTO.getStatus()));

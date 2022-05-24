@@ -10,7 +10,7 @@ import yeyue.ruoyi.study.framework.common.pojo.pageable.PageParam;
  * @date 2022-05-17 21:32:31
  */
 @Data
-@ApiModel(description = "部门信息查询")
+@ApiModel(description = "部门查询")
 public class SystemDeptPageReqDTO extends PageParam {
 
     @ApiModelProperty(value = "是否返回下级部门")

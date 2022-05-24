@@ -12,6 +12,14 @@ import yeyue.ruoyi.study.module.system.impl.entity.permission.SystemRoleEntity;
  */
 public interface SystemRoleMapper extends MyBatisMapper<SystemRoleEntity> {
 
+    default SystemRoleEntity selectByCode(String code) {
+        return selectOne(SystemRoleEntity::getCode, code);
+    }
+
+    default SystemRoleEntity selectByName(String name) {
+        return selectOne(SystemRoleEntity::getName, name);
+    }
+
     default PageResult<SystemRoleEntity> list(SystemRolePageReqDTO reqDTO) {
         return selectPage(reqDTO, new MyBatisLambdaQueryWrapper<SystemRoleEntity>()
                 .eq(SystemRoleEntity::getStatus, reqDTO.getStatus())

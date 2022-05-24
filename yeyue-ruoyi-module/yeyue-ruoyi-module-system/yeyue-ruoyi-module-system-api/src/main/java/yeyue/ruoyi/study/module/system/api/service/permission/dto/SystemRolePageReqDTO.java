@@ -12,16 +12,16 @@ import yeyue.ruoyi.study.framework.common.validation.annotation.InEnum;
  * @date 2022-05-24 15:52:27
  */
 @Data
-@ApiModel(description = "角色分页查询")
+@ApiModel(description = "角色查询")
 public class SystemRolePageReqDTO extends PageParam {
 
     @ApiModelProperty(value = "状态")
     @InEnum(value = CommonStatusEnum.class, message = "状态枚举错误")
     private Integer status;
 
-    @ApiModelProperty(value = "名称模糊查询")
+    @ApiModelProperty(value = "名称", notes = "模糊查询")
     private String name;
 
-    @ApiModelProperty(value = "code匹配")
+    @ApiModelProperty(value = "code", notes = "查找")
     private String code;
 }

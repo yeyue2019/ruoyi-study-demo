@@ -21,6 +21,7 @@
         <module>yeyue-ruoyi-server</module>
         <module>yeyue-ruoyi-framework</module>
         <module>yeyue-ruoyi-module</module>
+        <module>yeyue-ruoyi-java</module>
     </modules>
 
     <properties>

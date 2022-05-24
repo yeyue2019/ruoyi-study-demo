@@ -43,6 +43,7 @@ public class SystemMenuEntity extends MyBatisEntity {
     /**
      * 菜单类型 {@link MenuTypeEnum}
      */
+    @TableField(updateStrategy = FieldStrategy.NEVER)
     private Integer type;
 
     /**

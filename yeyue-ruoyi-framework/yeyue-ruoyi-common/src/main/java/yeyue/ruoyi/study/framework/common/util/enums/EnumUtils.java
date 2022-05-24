@@ -90,10 +90,7 @@ public abstract class EnumUtils {
 
     @SafeVarargs
     public static <E extends Enum<E>, C> boolean containsNone(C value, Function<E, C> func, E... source) {
-        if (value == null || source == null) {
-            return false;
-        }
-        return Arrays.stream(source).map(func).anyMatch(c -> Objects.equals(value, c));
+        return !containsAny(value, func, source);
     }
 
 }

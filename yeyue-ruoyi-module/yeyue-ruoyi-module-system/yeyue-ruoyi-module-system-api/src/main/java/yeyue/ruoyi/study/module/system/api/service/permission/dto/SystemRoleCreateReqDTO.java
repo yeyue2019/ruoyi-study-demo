@@ -4,12 +4,10 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import yeyue.ruoyi.study.framework.common.validation.annotation.InEnum;
-import yeyue.ruoyi.study.module.system.api.enums.permission.DataScopeEnum;
 import yeyue.ruoyi.study.module.system.api.enums.permission.RoleTypeEnum;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
-import java.util.Set;
 
 /**
  * @author yeyue
@@ -40,12 +38,4 @@ public class SystemRoleCreateReqDTO implements Serializable {
     @InEnum(value = RoleTypeEnum.class, message = "角色类型错误")
     @NotNull(message = "角色类型不能为空")
     private Integer type;
-
-    @ApiModelProperty(value = "数据范围", required = true, example = "1", notes = "参见 DataScopeEnum 枚举类")
-    @NotNull(message = "数据范围不可为空")
-    @InEnum(value = DataScopeEnum.class, message = "数据范围不在可选范围内")
-    private Integer dataScope;
-
-    @ApiModelProperty(value = "数据范围(指定部门数组)", example = "1")
-    private Set<Long> dataScopeDeptIds;
 }

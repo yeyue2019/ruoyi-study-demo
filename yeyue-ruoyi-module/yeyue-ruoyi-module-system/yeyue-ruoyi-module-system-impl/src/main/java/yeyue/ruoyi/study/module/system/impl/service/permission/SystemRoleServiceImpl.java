@@ -9,8 +9,7 @@ import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
 import yeyue.ruoyi.study.framework.common.util.enums.EnumUtils;
 import yeyue.ruoyi.study.framework.mybatis.core.query.MyBatisLambdaQueryWrapper;
 import yeyue.ruoyi.study.module.system.api.domain.permission.SystemRoleDomain;
-import yeyue.ruoyi.study.module.system.api.enums.permission.RoleCodeEnum;
-import yeyue.ruoyi.study.module.system.api.enums.permission.RoleTypeEnum;
+import yeyue.ruoyi.study.module.system.api.enums.permission.*;
 import yeyue.ruoyi.study.module.system.api.service.permission.SystemRoleService;
 import yeyue.ruoyi.study.module.system.api.service.permission.dto.*;
 import yeyue.ruoyi.study.module.system.impl.entity.permission.SystemRoleEntity;
@@ -44,6 +43,7 @@ public class SystemRoleServiceImpl implements SystemRoleService {
             throw new ServiceException(SystemErrorCode.ROLE_NAME_DUPLICATE);
         }
         SystemRoleEntity entity = SystemRoleConvert.INSTANCE.toEntity(reqDTO);
+        entity.setDataScope(DataScopeEnum.ALL.getScope());
         roleMapper.insert(entity);
         return entity.getId();
     }

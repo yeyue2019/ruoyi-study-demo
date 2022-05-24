@@ -19,7 +19,7 @@ public class SystemUserRoleEntity extends MyBatisEntity {
     /**
      * 系统Id
      */
-    @TableId(type = IdType.ASSIGN_ID)
+    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**

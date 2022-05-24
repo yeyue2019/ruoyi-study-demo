@@ -52,6 +52,46 @@ CREATE TABLE `ruoyi_system_role`
     COLLATE=utf8mb4_unicode_ci
     COMMENT='系统角色信息表';
 -- ----------------------------
+-- Table structure for ruoyi_system_role_menu
+-- ----------------------------
+DROP TABLE IF EXISTS `ruoyi_system_role_menu`;
+CREATE TABLE `ruoyi_system_role_menu`
+(
+    `id`         bigint   NOT NULL AUTO_INCREMENT COMMENT '自增编号',
+    `roleId`     bigint   NOT NULL COMMENT '角色ID',
+    `menuId`     bigint   NOT NULL COMMENT '菜单ID',
+    `creator`    varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT '创建者',
+    `createTime` datetime NOT NULL                                            DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `updater`    varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT '更新者',
+    `updateTime` datetime NOT NULL                                            DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    `deleted`    bit(1)   NOT NULL                                            DEFAULT b'0' COMMENT '是否删除',
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB
+    AUTO_INCREMENT=100
+    DEFAULT CHARSET=utf8mb4
+    COLLATE=utf8mb4_unicode_ci
+    COMMENT='系统角色和菜单关联表';
+-- ----------------------------
+-- Table structure for system_user_role
+-- ----------------------------
+DROP TABLE IF EXISTS `ruoyi_system_user_role`;
+CREATE TABLE `ruoyi_system_user_role`
+(
+    `id`         bigint NOT NULL AUTO_INCREMENT COMMENT '自增编号',
+    `userId`     bigint NOT NULL COMMENT '用户ID',
+    `roleId`     bigint NOT NULL COMMENT '角色ID',
+    `creator`    varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT '创建者',
+    `createTime` datetime                                                     DEFAULT NULL COMMENT '创建时间',
+    `updater`    varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT '更新者',
+    `updateTime` datetime                                                     DEFAULT NULL COMMENT '更新时间',
+    `deleted`    bit(1)                                                       DEFAULT b'0' COMMENT '是否删除',
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB
+    AUTO_INCREMENT=100
+    DEFAULT CHARSET=utf8mb4
+    COLLATE=utf8mb4_unicode_ci
+    COMMENT='用户和角色关联表';
+-- ----------------------------
 -- Table structure for ruoyi_system_post
 -- ----------------------------
 DROP TABLE IF EXISTS `ruoyi_system_post`;
@@ -100,6 +140,35 @@ CREATE TABLE `ruoyi_system_dept`
     DEFAULT CHARSET=utf8mb4
     COLLATE=utf8mb4_unicode_ci
     COMMENT='系统部门表';
+-- ----------------------------
+-- Records of ruoyi_system_dept
+-- ----------------------------
+BEGIN;
+INSERT INTO `ruoyi_system_dept` (`id`, `name`, `parentId`, `sort`, `leaderUserId`, `areaCode`, `mobile`, `email`,
+                                 `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
+VALUES (1, '总部', 0, 0, 1, '86', '15888888888', 'ry@qq.com', 0, '1', '2021-01-05 17:03:47', '1',
+        '2022-01-14 01:04:05', b'0');
+INSERT INTO `ruoyi_system_dept` (`id`, `name`, `parentId`, `sort`, `leaderUserId`, `areaCode`, `mobile`, `email`,
+                                 `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
+VALUES (2, '研发部门', 1, 2, 1, '86', '15888888888', 'ry@qq.com', 0, '1', '2021-01-05 17:03:47', '1',
+        '2022-01-14 01:04:14', b'0');
+INSERT INTO `ruoyi_system_dept` (`id`, `name`, `parentId`, `sort`, `leaderUserId`, `areaCode`, `mobile`, `email`,
+                                 `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
+VALUES (3, '市场部门', 1, 3, 1, '86', '15888888888', 'ry@qq.com', 0, '1', '2021-01-05 17:03:47', '1',
+        '2021-12-15 05:01:38', b'0');
+INSERT INTO `ruoyi_system_dept` (`id`, `name`, `parentId`, `sort`, `leaderUserId`, `areaCode`, `mobile`, `email`,
+                                 `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
+VALUES (4, '测试部门', 1, 4, 1, '86', '15888888888', 'ry@qq.com', 0, '1', '2021-01-05 17:03:47', '1',
+        '2021-12-15 05:01:37', b'0');
+INSERT INTO `ruoyi_system_dept` (`id`, `name`, `parentId`, `sort`, `leaderUserId`, `areaCode`, `mobile`, `email`,
+                                 `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
+VALUES (5, '财务部门', 1, 5, 1, '86', '15888888888', 'ry@qq.com', 0, '1', '2021-01-05 17:03:47', '1',
+        '2022-01-15 21:32:22', b'0');
+INSERT INTO `ruoyi_system_dept` (`id`, `name`, `parentId`, `sort`, `leaderUserId`, `areaCode`, `mobile`, `email`,
+                                 `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
+VALUES (6, '运维部门', 1, 6, 1, '86', '15888888888', 'ry@qq.com', 0, '1', '2021-01-05 17:03:47', '1',
+        '2021-12-15 05:01:33', b'0');
+COMMIT;
 -- ----------------------------
 -- Table structure for ruoyi_system_oauth2_client
 -- ----------------------------
@@ -239,41 +308,3 @@ CREATE TABLE `ruoyi_system_user`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci
     COMMENT ='系统用户表';
--- ----------------------------
--- Table structure for ruoyi_system_role_menu
--- ----------------------------
-DROP TABLE IF EXISTS `ruoyi_system_role_menu`;
-CREATE TABLE `ruoyi_system_role_menu`
-(
-    `id`         bigint   NOT NULL AUTO_INCREMENT COMMENT '自增编号',
-    `roleId`     bigint   NOT NULL COMMENT '角色ID',
-    `menuId`     bigint   NOT NULL COMMENT '菜单ID',
-    `creator`    varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT '创建者',
-    `createTime` datetime NOT NULL                                            DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `updater`    varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT '更新者',
-    `updateTime` datetime NOT NULL                                            DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-    `deleted`    bit(1)   NOT NULL                                            DEFAULT b'0' COMMENT '是否删除',
-    PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB
-    DEFAULT CHARSET=utf8mb4
-    COLLATE=utf8mb4_unicode_ci
-    COMMENT='系统角色和菜单关联表';
--- ----------------------------
--- Table structure for system_user_role
--- ----------------------------
-DROP TABLE IF EXISTS `ruoyi_system_user_role`;
-CREATE TABLE `ruoyi_system_user_role`
-(
-    `id`         bigint NOT NULL AUTO_INCREMENT COMMENT '自增编号',
-    `userId`     bigint NOT NULL COMMENT '用户ID',
-    `roleId`     bigint NOT NULL COMMENT '角色ID',
-    `creator`    varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT '创建者',
-    `createTime` datetime                                                     DEFAULT NULL COMMENT '创建时间',
-    `updater`    varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT '更新者',
-    `updateTime` datetime                                                     DEFAULT NULL COMMENT '更新时间',
-    `deleted`    bit(1)                                                       DEFAULT b'0' COMMENT '是否删除',
-    PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB
-    DEFAULT CHARSET=utf8mb4
-    COLLATE=utf8mb4_unicode_ci
-    COMMENT='用户和角色关联表';

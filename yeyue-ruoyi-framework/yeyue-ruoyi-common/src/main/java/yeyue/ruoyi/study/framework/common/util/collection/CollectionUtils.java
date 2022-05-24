@@ -81,7 +81,7 @@ public abstract class CollectionUtils extends org.springframework.util.Collectio
 
     public static <T, R> List<R> funcList(Collection<T> from, Function<T, R> func) {
         if (isEmpty(from)) {
-            return new ArrayList<>();
+            return Collections.emptyList();
         }
         return from
                 .stream()
@@ -106,30 +106,21 @@ public abstract class CollectionUtils extends org.springframework.util.Collectio
         return new PageResult<>(funcList(from.getList(), func), from.getTotal());
     }
 
-    public static <T> Set<T> convertSet(List<T> list) {
-        return new HashSet<>(list);
+    public static <T> Set<T> funcSet(Collection<T> source) {
+        if (isEmpty(source)) {
+            return Collections.emptySet();
+        }
+        return new HashSet<>(source);
     }
 
-    /**
-     * 判断是否是子节点
-     *
-     * @param tree   树
-     * @param func   树转换函数
-     * @param parent 父节点
-     * @param child  子节点
-     * @param <K>    节点值
-     * @param <V>    存放节点的对象
-     * @return 结果
-     */
-    public static <K, V> boolean ifChild(final Map<K, List<V>> tree, Function<V, K> func, K parent, K child) {
-        List<V> children = tree.get(parent);
-        if (isEmpty(children)) {
-            return false;
+    public static <T, R> Set<R> funcSet(Collection<T> source, Function<T, R> func) {
+        if (isEmpty(source)) {
+            return Collections.emptySet();
         }
-        return children
+        return source
                 .stream()
                 .map(func)
-                .anyMatch(c -> Objects.equals(c, child));
+                .collect(Collectors.toSet());
     }
 
     /**
@@ -143,7 +134,7 @@ public abstract class CollectionUtils extends org.springframework.util.Collectio
     public static <T> List<List<T>> subList(List<T> from, int childrenSize) {
         Assert.isTrue(childrenSize > 0, "分割的大小必须大于0!");
         if (isEmpty(from)) {
-            return new ArrayList<>();
+            return Collections.emptyList();
         }
         int listSize = from.size();
         int n = listSize % childrenSize != 0 ? listSize / childrenSize + 1 : listSize / childrenSize;

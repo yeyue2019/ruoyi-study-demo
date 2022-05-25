@@ -3,11 +3,7 @@ package yeyue.ruoyi.study.module.system.impl.entity.permission;
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 import yeyue.ruoyi.study.framework.mybatis.core.entity.MyBatisEntity;
-import yeyue.ruoyi.study.framework.mybatis.core.type.JsonLongSetTypeHandler;
-import yeyue.ruoyi.study.module.system.api.enums.permission.DataScopeEnum;
 import yeyue.ruoyi.study.module.system.api.enums.permission.RoleTypeEnum;
-
-import java.util.Set;
 
 import static yeyue.ruoyi.study.module.system.impl.constants.SystemTableConstants.SYSTEM_ROLE;
 
@@ -58,16 +54,4 @@ public class SystemRoleEntity extends MyBatisEntity {
      * 备注
      */
     private String remark;
-
-    /**
-     * 数据范围 {@link DataScopeEnum}
-     */
-    private Integer dataScope;
-
-    /**
-     * 数据范围(指定部门数组)
-     * 适用于 {@link #dataScope} 的值为 {@link DataScopeEnum#DEPT_CUSTOM} 时
-     */
-    @TableField(typeHandler = JsonLongSetTypeHandler.class)
-    private Set<Long> dataScopeDeptIds;
 }

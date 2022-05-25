@@ -4,6 +4,7 @@ import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
 import yeyue.ruoyi.study.module.system.api.domain.permission.SystemRoleDomain;
 import yeyue.ruoyi.study.module.system.api.service.permission.dto.*;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -57,4 +58,12 @@ public interface SystemRoleService {
      * @return 结果
      */
     PageResult<SystemRoleDomain> list(SystemRolePageReqDTO reqDTO);
+
+    /**
+     * 角色列表中是否包含超级管理员
+     *
+     * @param roleIds 角色集合
+     * @return 结果
+     */
+    Boolean hasAnySuperAdmin(Collection<Long> roleIds);
 }

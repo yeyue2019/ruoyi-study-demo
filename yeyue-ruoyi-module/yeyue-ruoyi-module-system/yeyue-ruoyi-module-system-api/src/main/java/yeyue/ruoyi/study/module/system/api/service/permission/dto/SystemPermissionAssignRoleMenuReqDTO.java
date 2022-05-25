@@ -14,7 +14,7 @@ import java.util.Set;
  */
 @Data
 @ApiModel(description = "角色权限赋予")
-public class SystemPermissionAssignMenuReqDTO implements Serializable {
+public class SystemPermissionAssignRoleMenuReqDTO implements Serializable {
 
     @ApiModelProperty(value = "角色编号", required = true, example = "1")
     @NotNull(message = "角色编号不能为空")

@@ -6,7 +6,6 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Set;
 
 /**
  * @author yeyue
@@ -36,12 +35,6 @@ public class SystemRoleDomain implements Serializable {
 
     @ApiModelProperty(value = "备注")
     private String remark;
-
-    @ApiModelProperty(value = "数据范围")
-    private Integer dataScope;
-
-    @ApiModelProperty(value = "数据范围(指定部门数组)")
-    private Set<Long> dataScopeDeptIds;
 
     @ApiModelProperty(value = "创建时间")
     private LocalDateTime createTime;

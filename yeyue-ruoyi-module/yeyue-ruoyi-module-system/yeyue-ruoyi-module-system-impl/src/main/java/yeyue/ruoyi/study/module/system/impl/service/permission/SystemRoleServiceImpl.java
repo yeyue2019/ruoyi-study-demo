@@ -6,10 +6,9 @@ import org.springframework.transaction.annotation.Transactional;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
 import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
-import yeyue.ruoyi.study.framework.common.util.enums.EnumUtils;
 import yeyue.ruoyi.study.framework.mybatis.core.query.MyBatisLambdaQueryWrapper;
 import yeyue.ruoyi.study.module.system.api.domain.permission.SystemRoleDomain;
-import yeyue.ruoyi.study.module.system.api.enums.permission.*;
+import yeyue.ruoyi.study.module.system.api.enums.permission.RoleCodeEnum;
 import yeyue.ruoyi.study.module.system.api.service.permission.SystemRoleService;
 import yeyue.ruoyi.study.module.system.api.service.permission.dto.*;
 import yeyue.ruoyi.study.module.system.impl.entity.permission.SystemRoleEntity;
@@ -18,8 +17,7 @@ import yeyue.ruoyi.study.module.system.impl.framework.exception.SystemErrorCode;
 import yeyue.ruoyi.study.module.system.impl.mapper.permission.SystemRoleMapper;
 
 import javax.annotation.Resource;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * @author yeyue
@@ -43,17 +41,13 @@ public class SystemRoleServiceImpl implements SystemRoleService {
             throw new ServiceException(SystemErrorCode.ROLE_NAME_DUPLICATE);
         }
         SystemRoleEntity entity = SystemRoleConvert.INSTANCE.toEntity(reqDTO);
-        // TODO: 2022/5/24 初始化数据权限为自身
-        entity.setDataScope(DataScopeEnum.SELF.getScope());
         mapper.insert(entity);
         return entity.getId();
     }
 
     @Override
     public void update(SystemRoleUpdateReqDTO reqDTO) {
-        if (mapper.selectById(reqDTO.getId()) == null) {
-            throw new ServiceException(SystemErrorCode.ROLE_NOT_EXISTS);
-        }
+        this.checkRoleUpdate(reqDTO.getId());
         SystemRoleEntity nameCompare = mapper.selectByName(reqDTO.getName());
         if (nameCompare != null && !Objects.equals(nameCompare.getId(), reqDTO.getId())) {
             throw new ServiceException(SystemErrorCode.ROLE_NAME_DUPLICATE);
@@ -65,16 +59,7 @@ public class SystemRoleServiceImpl implements SystemRoleService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void delete(Long id) {
-        SystemRoleEntity entity = mapper.selectById(id);
-        if (entity == null) {
-            throw new ServiceException(SystemErrorCode.ROLE_NOT_EXISTS);
-        }
-        if (RoleCodeEnum.isSuperAdmin(entity.getCode())) {
-            throw new ServiceException(SystemErrorCode.ROLE_CAN_NOT_UPDATE_CODE_VALUE_SUPER_ADMIN);
-        }
-        if (EnumUtils.equals(RoleTypeEnum.SYSTEM, RoleTypeEnum::getType, entity.getType())) {
-            throw new ServiceException(SystemErrorCode.ROLE_CAN_NOT_UPDATE_SYSTEM_TYPE_ROLE);
-        }
+        this.checkRoleUpdate(id);
         mapper.deleteById(id);
         // TODO: 2022/5/24 删除相关数据
     }
@@ -97,5 +82,26 @@ public class SystemRoleServiceImpl implements SystemRoleService {
     public PageResult<SystemRoleDomain> list(SystemRolePageReqDTO reqDTO) {
         PageResult<SystemRoleEntity> pageResult = mapper.list(reqDTO);
         return CollectionUtils.funcPage(pageResult, SystemRoleConvert.INSTANCE::toDomain);
+    }
+
+    @Override
+    public Boolean hasAnySuperAdmin(Collection<Long> roleIds) {
+        if (CollectionUtils.isEmpty(roleIds)) {
+            return false;
+        }
+        List<SystemRoleEntity> list = mapper.selectBatchIds(roleIds);
+        return list
+                .stream()
+                .anyMatch(role -> RoleCodeEnum.isSuperAdmin(role.getCode()));
+    }
+
+    private void checkRoleUpdate(Long roleId) {
+        SystemRoleEntity entity = mapper.selectById(roleId);
+        if (entity == null) {
+            throw new ServiceException(SystemErrorCode.ROLE_NOT_EXISTS);
+        }
+        if (RoleCodeEnum.isSuperAdmin(entity.getCode())) {
+            throw new ServiceException(SystemErrorCode.ROLE_CAN_NOT_UPDATE_CODE_VALUE_SUPER_ADMIN);
+        }
     }
 }

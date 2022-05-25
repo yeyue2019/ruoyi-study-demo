@@ -4,18 +4,19 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import yeyue.ruoyi.study.framework.common.enums.CommonStatusEnum;
+import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
 import yeyue.ruoyi.study.module.system.api.domain.permission.SystemMenuDomain;
-import yeyue.ruoyi.study.module.system.api.service.permission.SystemMenuService;
-import yeyue.ruoyi.study.module.system.api.service.permission.SystemPermissionService;
-import yeyue.ruoyi.study.module.system.api.service.permission.dto.SystemMenuListReqDTO;
-import yeyue.ruoyi.study.module.system.api.service.permission.dto.SystemPermissionAssignMenuReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.permission.*;
+import yeyue.ruoyi.study.module.system.api.service.permission.dto.*;
 import yeyue.ruoyi.study.module.system.impl.entity.permission.SystemRoleMenuEntity;
-import yeyue.ruoyi.study.module.system.impl.mapper.permission.*;
+import yeyue.ruoyi.study.module.system.impl.entity.permission.SystemUserRoleEntity;
+import yeyue.ruoyi.study.module.system.impl.framework.exception.SystemErrorCode;
+import yeyue.ruoyi.study.module.system.impl.mapper.permission.SystemRoleMenuMapper;
+import yeyue.ruoyi.study.module.system.impl.mapper.permission.SystemUserRoleMapper;
 
 import javax.annotation.Resource;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -27,28 +28,29 @@ import java.util.stream.Collectors;
 public class SystemPermissionServiceImpl implements SystemPermissionService {
 
     @Resource
-    SystemRoleMapper roleMapper;
-    @Resource
     SystemRoleMenuMapper roleMenuMapper;
+    @Resource
+    SystemUserRoleMapper userRoleMapper;
     @Resource
     SystemMenuService menuService;
     @Resource
-    SystemUserRoleMapper userRoleMapper;
+    SystemRoleService roleService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void assignRoleMenu(SystemPermissionAssignMenuReqDTO reqDTO) {
+    public void assignRoleMenu(SystemPermissionAssignRoleMenuReqDTO reqDTO) {
+        if (roleService.hasAnySuperAdmin(Collections.singleton(reqDTO.getRoleId()))) {
+            throw new ServiceException(SystemErrorCode.ROLE_CAN_NOT_UPDATE_CODE_VALUE_SUPER_ADMIN);
+        }
         // 1. 获取全部可用的菜单
-        List<SystemMenuDomain> menus = menuService.list(new SystemMenuListReqDTO().setStatus(CommonStatusEnum.ENABLE.getStatus()));
-        Set<Long> menuIds = CollectionUtils.funcSet(menus, SystemMenuDomain::getId);
+        Set<Long> menuIds = CollectionUtils.funcSet(menuService.list(new SystemMenuListReqDTO().setStatus(CommonStatusEnum.ENABLE.getStatus())), SystemMenuDomain::getId);
         Set<Long> assignIds = reqDTO
                 .getMenuIds()
                 .stream()
                 .filter(menuIds::contains)
                 .collect(Collectors.toSet());
         // 2. 查询角色拥有的菜单编号
-        List<SystemRoleMenuEntity> roleMenus = roleMenuMapper.selectListByRoleId(reqDTO.getRoleId());
-        Set<Long> ruleIds = CollectionUtils.funcSet(roleMenus, SystemRoleMenuEntity::getMenuId);
+        Set<Long> ruleIds = CollectionUtils.funcSet(roleMenuMapper.selectListByRoleId(reqDTO.getRoleId()), SystemRoleMenuEntity::getMenuId);
         // 3. 计算删除和新增的菜单
         Set<Long> deleteIds = ruleIds
                 .stream()
@@ -71,5 +73,55 @@ public class SystemPermissionServiceImpl implements SystemPermissionService {
                 return entity;
             }));
         }
+    }
+
+    @Override
+    public Set<Long> getRoleMenuIds(Long roleId) {
+        if (roleService.hasAnySuperAdmin(Collections.singleton(roleId))) {
+            return CollectionUtils.funcSet(menuService.list(new SystemMenuListReqDTO()), SystemMenuDomain::getId);
+        } else {
+            return CollectionUtils.funcSet(roleMenuMapper.selectListByRoleId(roleId), SystemRoleMenuEntity::getMenuId);
+        }
+    }
+
+    @Override
+    public Set<Long> getRoleMenuIds(Collection<Long> roleIds) {
+        return null;
+    }
+
+    @Override
+    public void assignUserRole(SystemPermissionAssignUserRoleReqDTO reqDTO) {
+        // 1. 获取用户拥有的角色
+        Set<Long> ruleIds = CollectionUtils.funcSet(userRoleMapper.selectListByUserId(reqDTO.getUserId()), SystemUserRoleEntity::getRoleId);
+        // 3. 计算删除和新增的菜单
+        Set<Long> deleteIds = ruleIds
+                .stream()
+                .filter(r -> !reqDTO
+                        .getRoleIds()
+                        .contains(r))
+                .collect(Collectors.toSet());
+        Set<Long> createIds = reqDTO
+                .getRoleIds()
+                .stream()
+                .filter(r -> !ruleIds.contains(r))
+                .collect(Collectors.toSet());
+        // 执行删除和新增的操作
+        if (CollectionUtils.isNotEmpty(deleteIds)) {
+            userRoleMapper.deleteListByUserIdAndRoleIds(reqDTO.getUserId(), deleteIds);
+        }
+        if (CollectionUtils.isNotEmpty(createIds)) {
+            userRoleMapper.insertBatchSomeColumn(CollectionUtils.funcList(createIds, id -> {
+                SystemUserRoleEntity entity = new SystemUserRoleEntity()
+                        .setRoleId(id)
+                        .setUserId(reqDTO.getUserId());
+                entity.setDeleted(false); // insertBatchSomeColumn方法有问题
+                return entity;
+            }));
+        }
+    }
+
+    @Override
+    public Set<Long> getUserRoleIds(Long userId) {
+        return CollectionUtils.funcSet(userRoleMapper.selectListByUserId(userId), SystemUserRoleEntity::getRoleId);
     }
 }

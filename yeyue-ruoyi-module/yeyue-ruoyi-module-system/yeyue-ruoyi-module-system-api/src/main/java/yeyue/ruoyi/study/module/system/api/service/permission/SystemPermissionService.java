@@ -1,6 +1,7 @@
 package yeyue.ruoyi.study.module.system.api.service.permission;
 
-import yeyue.ruoyi.study.module.system.api.service.permission.dto.*;
+import yeyue.ruoyi.study.module.system.api.service.permission.dto.SystemPermissionAssignRoleMenuReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.permission.dto.SystemPermissionAssignUserRoleReqDTO;
 
 import java.util.Collection;
 import java.util.Set;
@@ -48,4 +49,25 @@ public interface SystemPermissionService {
      * @return 角色Id
      */
     Set<Long> getUserRoleIds(Long userId);
+
+    /**
+     * 删除角色时的互联操作
+     *
+     * @param roleId 角色Id
+     */
+    void processRoleDeleted(Long roleId);
+
+    /**
+     * 删除菜单时的互联操作
+     *
+     * @param menuId 菜单Id
+     */
+    void processMenuDeleted(Long menuId);
+
+    /**
+     * 删除用户时的互联操作
+     *
+     * @param userId 用户Id
+     */
+    void processUserDeleted(Long userId);
 }

@@ -18,9 +18,21 @@ public interface SystemRoleMenuMapper extends MyBatisMapper<SystemRoleMenuEntity
         return selectList(new LambdaQueryWrapper<SystemRoleMenuEntity>().eq(SystemRoleMenuEntity::getRoleId, roleId));
     }
 
+    default List<SystemRoleMenuEntity> selectListByRoleIds(Collection<Long> roleIds) {
+        return selectList(new LambdaQueryWrapper<SystemRoleMenuEntity>().in(SystemRoleMenuEntity::getRoleId, roleIds));
+    }
+
     default void deleteListByRoleIdAndMenuIds(Long roleId, Collection<Long> menuIds) {
         delete(new MyBatisLambdaQueryWrapper<SystemRoleMenuEntity>()
                 .eq(SystemRoleMenuEntity::getRoleId, roleId)
                 .in(SystemRoleMenuEntity::getMenuId, menuIds));
+    }
+
+    default void deleteListByRoleId(Long roleId) {
+        delete(new MyBatisLambdaQueryWrapper<SystemRoleMenuEntity>().eq(SystemRoleMenuEntity::getRoleId, roleId));
+    }
+
+    default void deleteListByMenuId(Long menuId) {
+        delete(new MyBatisLambdaQueryWrapper<SystemRoleMenuEntity>().eq(SystemRoleMenuEntity::getMenuId, menuId));
     }
 }

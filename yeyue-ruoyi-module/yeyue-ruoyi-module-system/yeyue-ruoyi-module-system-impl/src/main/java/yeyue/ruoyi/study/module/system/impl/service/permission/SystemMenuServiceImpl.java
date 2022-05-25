@@ -13,6 +13,7 @@ import yeyue.ruoyi.study.module.system.api.domain.permission.SystemMenuDomain;
 import yeyue.ruoyi.study.module.system.api.enums.permission.MenuIdEnum;
 import yeyue.ruoyi.study.module.system.api.enums.permission.MenuTypeEnum;
 import yeyue.ruoyi.study.module.system.api.service.permission.SystemMenuService;
+import yeyue.ruoyi.study.module.system.api.service.permission.SystemPermissionService;
 import yeyue.ruoyi.study.module.system.api.service.permission.dto.*;
 import yeyue.ruoyi.study.module.system.impl.entity.permission.SystemMenuEntity;
 import yeyue.ruoyi.study.module.system.impl.entity.permission.convert.SystemMenuConvert;
@@ -32,6 +33,8 @@ import java.util.Objects;
 public class SystemMenuServiceImpl implements SystemMenuService {
     @Resource
     SystemMenuMapper mapper;
+    @Resource
+    SystemPermissionService permissionService;
 
     @Override
     public Long create(SystemMenuCreateReqDTO reqDTO) {
@@ -91,7 +94,7 @@ public class SystemMenuServiceImpl implements SystemMenuService {
             throw new ServiceException(SystemErrorCode.MENU_EXISTS_CHILDREN);
         }
         mapper.deleteById(id);
-        // TODO: 2022/5/23 角色权限关联表删除
+        permissionService.processMenuDeleted(id);
     }
 
     @Override

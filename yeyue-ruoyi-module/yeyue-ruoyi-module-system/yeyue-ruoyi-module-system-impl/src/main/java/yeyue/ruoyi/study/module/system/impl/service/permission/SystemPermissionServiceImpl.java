@@ -86,7 +86,11 @@ public class SystemPermissionServiceImpl implements SystemPermissionService {
 
     @Override
     public Set<Long> getRoleMenuIds(Collection<Long> roleIds) {
-        return null;
+        if (CollectionUtils.isEmpty(roleIds)) {
+            return Collections.emptySet();
+        } else {
+            return CollectionUtils.funcSet(roleMenuMapper.selectListByRoleIds(roleIds), SystemRoleMenuEntity::getMenuId);
+        }
     }
 
     @Override
@@ -123,5 +127,24 @@ public class SystemPermissionServiceImpl implements SystemPermissionService {
     @Override
     public Set<Long> getUserRoleIds(Long userId) {
         return CollectionUtils.funcSet(userRoleMapper.selectListByUserId(userId), SystemUserRoleEntity::getRoleId);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void processRoleDeleted(Long roleId) {
+        userRoleMapper.deleteListByRoleId(roleId);
+        roleMenuMapper.deleteListByRoleId(roleId);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void processMenuDeleted(Long menuId) {
+        roleMenuMapper.deleteListByMenuId(menuId);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void processUserDeleted(Long userId) {
+        userRoleMapper.deleteListByUserId(userId);
     }
 }

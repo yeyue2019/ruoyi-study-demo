@@ -9,6 +9,7 @@ import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
 import yeyue.ruoyi.study.framework.mybatis.core.query.MyBatisLambdaQueryWrapper;
 import yeyue.ruoyi.study.module.system.api.domain.permission.SystemRoleDomain;
 import yeyue.ruoyi.study.module.system.api.enums.permission.RoleCodeEnum;
+import yeyue.ruoyi.study.module.system.api.service.permission.SystemPermissionService;
 import yeyue.ruoyi.study.module.system.api.service.permission.SystemRoleService;
 import yeyue.ruoyi.study.module.system.api.service.permission.dto.*;
 import yeyue.ruoyi.study.module.system.impl.entity.permission.SystemRoleEntity;
@@ -29,6 +30,8 @@ public class SystemRoleServiceImpl implements SystemRoleService {
 
     @Resource
     SystemRoleMapper mapper;
+    @Resource
+    SystemPermissionService permissionService;
 
     @Override
     public Long create(SystemRoleCreateReqDTO reqDTO) {
@@ -61,7 +64,7 @@ public class SystemRoleServiceImpl implements SystemRoleService {
     public void delete(Long id) {
         this.checkRoleUpdate(id);
         mapper.deleteById(id);
-        // TODO: 2022/5/24 删除相关数据
+        permissionService.processRoleDeleted(id);
     }
 
     @Override

@@ -22,4 +22,12 @@ public interface SystemUserRoleMapper extends MyBatisMapper<SystemUserRoleEntity
                 .eq(SystemUserRoleEntity::getUserId, userId)
                 .in(SystemUserRoleEntity::getRoleId, ruleIds));
     }
+
+    default void deleteListByRoleId(Long roleId) {
+        delete(new MyBatisLambdaQueryWrapper<SystemUserRoleEntity>().eq(SystemUserRoleEntity::getRoleId, roleId));
+    }
+
+    default void deleteListByUserId(Long userId) {
+        delete(new MyBatisLambdaQueryWrapper<SystemUserRoleEntity>().eq(SystemUserRoleEntity::getUserId, userId));
+    }
 }

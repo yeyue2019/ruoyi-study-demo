@@ -107,10 +107,10 @@ public class SystemOAuth2ClientServiceImpl implements SystemOAuth2ClientService 
         if (reqDTO.getAuthorizedGrantType() != null && !client.getAuthorizedGrantTypes().contains(reqDTO.getAuthorizedGrantType())) {
             throw new ServiceException(SystemErrorCode.OAUTH2_CLIENT_AUTHORIZED_GRANT_TYPE_NOT_EXISTS);
         }
-        if (CollectionUtils.containsAll(client.getScopes(), reqDTO.getScopes())) {
+        if (!CollectionUtils.containsAll(client.getScopes(), reqDTO.getScopes())) {
             throw new ServiceException(SystemErrorCode.OAUTH2_CLIENT_SCOPE_OVER);
         }
-        if (reqDTO.getRedirectUri() != null && StringUtils.startsWithAny(reqDTO.getRedirectUri(), CollectionUtils.listToArray(client.getRedirectUris()))) {
+        if (reqDTO.getRedirectUri() != null && !StringUtils.startsWithAny(reqDTO.getRedirectUri(), CollectionUtils.listToArray(client.getRedirectUris(), String.class))) {
             throw new ServiceException(SystemErrorCode.OAUTH2_CLIENT_REDIRECT_URI_NOT_MATCH);
         }
         return client;

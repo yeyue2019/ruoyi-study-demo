@@ -35,18 +35,19 @@ public abstract class EnumUtils {
     /**
      * 根据条件获取枚举集合
      *
-     * @param clazz 枚举类型
-     * @param func  获取函数
-     * @param <E>   枚举类型
-     * @param <C>   结果类型
+     * @param clazz  枚举类型
+     * @param target 目标类型
+     * @param func   获取函数
+     * @param <E>    枚举类型
+     * @param <C>    结果类型
      * @return 数组
      */
-    public static <E extends Enum<E>, C> C[] getArray(Class<E> clazz, Function<E, C> func) {
+    public static <E extends Enum<E>, C> C[] getArray(Class<E> clazz, Class<C> target, Function<E, C> func) {
         final E[] enums = clazz.getEnumConstants();
         if (null == enums) {
             return CollectionUtils.empty();
         }
-        return CollectionUtils.funcArray(enums, func);
+        return CollectionUtils.funcArray(enums, target, func);
     }
 
     /**

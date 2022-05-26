@@ -19,7 +19,7 @@ public class SecurityConfiguration {
             @Override
             public void
             customize(ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry) {
-                registry.antMatchers("/web/sys/**").permitAll();
+//                registry.antMatchers("/web/sys/**").permitAll();
             }
         };
     }

@@ -4,7 +4,6 @@ import org.springframework.util.Assert;
 import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
 
 import java.lang.reflect.Array;
-import java.lang.reflect.ParameterizedType;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -58,11 +57,15 @@ public abstract class CollectionUtils extends org.springframework.util.Collectio
     }
 
     @SuppressWarnings({"unchecked", "rawstype"})
-    public static <T> T[] listToArray(List<T> list) {
+    public static <T> T[] listToArray(List<T> list, Class<T> clazz) {
         if (isEmpty(list)) {
             return empty();
         }
-        return (T[]) Array.newInstance(getListClazz(list), list.size());
+        T[] result = (T[]) Array.newInstance(clazz, list.size());
+        for (int i = 0; i < list.size(); i++) {
+            result[i] = list.get(i);
+        }
+        return result;
     }
 
     /* 带转换函数的集合数组转换 */
@@ -71,8 +74,8 @@ public abstract class CollectionUtils extends org.springframework.util.Collectio
         return funcList(arrayToList(array), func);
     }
 
-    public static <T, R> R[] listToArray(List<T> list, Function<T, R> func) {
-        return funcArray(listToArray(list), func);
+    public static <T, R> R[] listToArray(List<T> list, Class<R> clazz, Function<T, R> func) {
+        return listToArray(funcList(list, func), clazz);
     }
 
     /* 集合类型互转 */
@@ -84,11 +87,16 @@ public abstract class CollectionUtils extends org.springframework.util.Collectio
         return from.stream().map(func).filter(Objects::nonNull).collect(Collectors.toList());
     }
 
-    public static <T, R> R[] funcArray(T[] from, Function<T, R> func) {
+    @SuppressWarnings({"unchecked", "rawstype"})
+    public static <T, R> R[] funcArray(T[] from, Class<R> clazz, Function<T, R> func) {
         if (isEmpty(from)) {
             return empty();
         }
-        return listToArray(Arrays.stream(from).map(func).filter(Objects::nonNull).collect(Collectors.toList()));
+        R[] result = (R[]) Array.newInstance(clazz, from.length);
+        for (int i = 0; i < result.length; i++) {
+            result[i] = func.apply(from[i]);
+        }
+        return result;
     }
 
     public static <T, R> PageResult<R> funcPage(PageResult<T> from, Function<T, R> func) {
@@ -157,18 +165,5 @@ public abstract class CollectionUtils extends org.springframework.util.Collectio
             result.add(value);
         }
         return result;
-    }
-
-    /**
-     * 获取集合的泛型类型
-     *
-     * @param list 集合
-     * @param <T>  集合泛型
-     * @return 泛型类型
-     */
-    @SuppressWarnings("unchecked")
-    public static <T> Class<T> getListClazz(List<T> list) {
-        ParameterizedType parameterizedType = (ParameterizedType) list.getClass().getGenericSuperclass();// 获取当前new对象的泛型的父类类型
-        return (Class<T>) parameterizedType.getActualTypeArguments()[0];
     }
 }

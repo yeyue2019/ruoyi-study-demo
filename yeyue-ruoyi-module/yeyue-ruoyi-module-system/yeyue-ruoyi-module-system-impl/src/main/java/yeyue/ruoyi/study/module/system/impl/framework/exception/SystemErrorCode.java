@@ -37,7 +37,7 @@ public enum SystemErrorCode implements ErrorCode {
     OAUTH2_CLIENT_STATUS_DISABLE("010903", "客户端被禁用"),
     OAUTH2_CLIENT_CLIENT_SECRET_ERROR("010904", "客户端密钥错误"),
     OAUTH2_CLIENT_AUTHORIZED_GRANT_TYPE_NOT_EXISTS("010905", "不支持的授权类型"),
-    OAUTH2_CLIENT_SCOPE_OVER("010906", "授权范围过大"),
+    OAUTH2_CLIENT_SCOPE_OVER("010906", "授权范围错误"),
     OAUTH2_CLIENT_REDIRECT_URI_NOT_MATCH("010907", "回调地址不再范围内"),
     OAUTH2_CODE_EXIST("010908", "授权码已存在"),
     OAUTH2_CODE_NOT_EXISTS("010909", "授权码不存在"),

@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import yeyue.ruoyi.study.framework.common.constants.StringConstants;
+import yeyue.ruoyi.study.framework.common.enums.UserTypeEnum;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.exception.common.GlobalErrorCode;
 import yeyue.ruoyi.study.framework.common.pojo.core.CommonResult;
@@ -56,7 +57,7 @@ public class SystemOAuth2OpenController {
      * 注意，默认需要传递 client_id + client_secret 参数
      */
     @PostMapping("/authenticate")
-    @ApiOperation(value = "授权获取访问令牌")
+    @ApiOperation(value = "授权获取令牌")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "clientId", required = true, value = "客户端Id", example = "yeyue", dataTypeClass = String.class, paramType = "header"),
             @ApiImplicitParam(name = "clientSecret", required = true, value = "客户端密钥", example = "xxx", dataTypeClass = String.class, paramType = "header"),
@@ -78,18 +79,37 @@ public class SystemOAuth2OpenController {
         SystemOAuth2ClientDomain client = clientService.validate(new SystemOAuth2ClientValidateReqDTO()
                 .setClientId(clientId).setSecret(clientSecret).setAuthorizedGrantType(grantType).setScopes(scopes));
         SystemOAuth2AccessTokenDomain result;
+        String userId;
+        Integer userType;
         switch (Objects.requireNonNull(OAuth2GrantTypeEnum.getByGranType(grantType))) {
             case AUTHORIZATION_CODE:
+                if (StringUtils.isBlank(code)) {
+                    throw new ServiceException(GlobalErrorCode.BAD_REQUEST.getCode(), "授权码不能为空");
+                }
                 result = grantService.authorizationCode(code, clientId, client.getAccessTokenValiditySeconds(), client.getRefreshTokenValiditySeconds());
                 break;
             case PASSWORD:
-                result = grantService.password(username, password, clientId, scopes, client.getAccessTokenValiditySeconds(), client.getRefreshTokenValiditySeconds());
+                if (StringUtils.isAnyBlank(username, password)) {
+                    throw new ServiceException(GlobalErrorCode.BAD_REQUEST.getCode(), "账号或密码不能为空");
+                }
+                // TODO: 2022/5/27 用户登录验证
+                userId = "1";
+                userType = UserTypeEnum.ADMIN.getValue();
+                result = grantService.password(userId, userType, clientId, scopes, client.getAccessTokenValiditySeconds(), client.getRefreshTokenValiditySeconds());
                 break;
             case REFRESH_TOKEN:
+                if (StringUtils.isBlank(refreshToken)) {
+                    throw new ServiceException(GlobalErrorCode.BAD_REQUEST.getCode(), "刷新令牌不能为空");
+                }
                 result = grantService.refresh(refreshToken, clientId, client.getAccessTokenValiditySeconds());
                 break;
             case CLIENT_CREDENTIALS:
-                result = grantService.clientCredentials(clientId, scopes, client.getAccessTokenValiditySeconds(), client.getRefreshTokenValiditySeconds());
+                userId = WebSecurityUtils.getLoginUserId();
+                userType = WebSecurityUtils.getLoginUserType();
+                if (StringUtils.isEmpty(userId) || userType == null) {
+                    throw new ServiceException(GlobalErrorCode.UNAUTHORIZED);
+                }
+                result = grantService.clientCredentials(userId, userType, clientId, scopes, client.getAccessTokenValiditySeconds(), client.getRefreshTokenValiditySeconds());
                 break;
             default:
                 throw new ServiceException(GlobalErrorCode.UNSUPPORTED_OPERATION);
@@ -97,7 +117,7 @@ public class SystemOAuth2OpenController {
         return CommonResult.success(result);
     }
 
-    @GetMapping("/authorize")
+    @PostMapping("/authorization")
     @ApiOperation(value = "获得授权信息")
     @ApiImplicitParam(name = "clientId", required = true, value = "客户端编号", example = "yeyue", dataTypeClass = String.class)
     public CommonResult<Set<String>> authorize(@RequestParam String clientId) {
@@ -126,14 +146,14 @@ public class SystemOAuth2OpenController {
             @ApiImplicitParam(name = "clientId", required = true, value = "客户端编号", example = "yeyue", dataTypeClass = String.class),
             @ApiImplicitParam(name = "scope", value = "授权范围", example = "userinfo.read", dataTypeClass = String.class),
             @ApiImplicitParam(name = "redirectUri", required = true, value = "重定向 URI", example = "https://www.iocoder.cn", dataTypeClass = String.class),
-            @ApiImplicitParam(name = "autoApprove", required = true, value = "用户是否接受", example = "true", dataTypeClass = Boolean.class),
+            @ApiImplicitParam(name = "autoApprove", value = "用户是否接受", example = "true", dataTypeClass = Boolean.class),
             @ApiImplicitParam(name = "state", example = "123321", dataTypeClass = String.class)
     })
-    public CommonResult<String> authorize(@RequestParam String responseType,
+    public CommonResult<String> authorize(@RequestParam @InEnum(value = OAuth2GrantTypeEnum.class, message = "授权类型错误") String responseType,
                                           @RequestParam String clientId,
                                           @RequestParam String scope,
                                           @RequestParam String redirectUri,
-                                          @RequestParam Boolean autoApprove,
+                                          @RequestParam(required = false) Boolean autoApprove,
                                           @RequestParam(required = false) String state) {
         List<String> scopes = CollectionUtils.arrayToList(StringUtils.split(scope, StringConstants.SPLIT_JOIN));
         // TODO 芋艿：针对 approved + scopes 在看看 spring security 的实现
@@ -146,7 +166,7 @@ public class SystemOAuth2OpenController {
                 .setClientId(clientId).setAuthorizedGrantType(responseType).setScopes(scopes).setRedirectUri(redirectUri));
 
         // 2.1 假设 approved 为 null，说明是场景一
-        if (autoApprove) {
+        if (Objects.equals(autoApprove, Boolean.TRUE)) {
             // 如果无法自动授权通过，则返回空 url，前端不进行跳转
             if (!approveService.check((SystemOAuth2ApproveCheckReqDTO) new SystemOAuth2ApproveCheckReqDTO()
                     .setScopes(scopes)

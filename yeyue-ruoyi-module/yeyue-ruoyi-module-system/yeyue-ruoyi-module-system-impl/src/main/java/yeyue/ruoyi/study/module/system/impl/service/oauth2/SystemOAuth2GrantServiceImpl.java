@@ -5,7 +5,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
-import yeyue.ruoyi.study.framework.common.servlet.security.WebSecurityUtils;
 import yeyue.ruoyi.study.module.system.api.domain.oauth2.SystemOAuth2AccessTokenDomain;
 import yeyue.ruoyi.study.module.system.api.domain.oauth2.SystemOAuth2CodeDomain;
 import yeyue.ruoyi.study.module.system.api.service.oauth2.SystemOAuth2CodeService;
@@ -71,11 +70,10 @@ public class SystemOAuth2GrantServiceImpl implements SystemOAuth2GrantService {
     }
 
     @Override
-    public SystemOAuth2AccessTokenDomain password(String username, String password, String clientId, List<String> scopes, Integer accessTokenValiditySeconds, Integer refreshTokenValiditySeconds) {
-        // TODO: 2022/5/26 账号密码验证
+    public SystemOAuth2AccessTokenDomain password(String userId, Integer userType, String clientId, List<String> scopes, Integer accessTokenValiditySeconds, Integer refreshTokenValiditySeconds) {
         return tokenService.create(new SystemOAuth2AccessTokenCreateReqDTO()
-//                .setUserId(codeDomain.getUserId())
-//                .setUserType(codeDomain.getUserType())
+                .setUserId(userId)
+                .setUserType(userType)
                 .setClientId(clientId)
                 .setScopes(scopes)
                 .setAccessTokenValiditySeconds(accessTokenValiditySeconds)
@@ -91,10 +89,10 @@ public class SystemOAuth2GrantServiceImpl implements SystemOAuth2GrantService {
     }
 
     @Override
-    public SystemOAuth2AccessTokenDomain clientCredentials(String clientId, List<String> scopes, Integer accessTokenValiditySeconds, Integer refreshTokenValiditySeconds) {
+    public SystemOAuth2AccessTokenDomain clientCredentials(String userId, Integer userType, String clientId, List<String> scopes, Integer accessTokenValiditySeconds, Integer refreshTokenValiditySeconds) {
         return tokenService.create(new SystemOAuth2AccessTokenCreateReqDTO()
-                .setUserId(WebSecurityUtils.getLoginUserId())
-                .setUserType(WebSecurityUtils.getLoginUserType())
+                .setUserId(userId)
+                .setUserType(userType)
                 .setClientId(clientId)
                 .setScopes(scopes)
                 .setAccessTokenValiditySeconds(accessTokenValiditySeconds)

@@ -67,6 +67,6 @@ public class SystemOAuth2ApproveServiceImpl implements SystemOAuth2ApproveServic
     }
 
     private Set<String> getDatabaseApproveScopes(SystemOAuth2ApproveGetReqDTO reqDTO) {
-        return mapper.selectListByUserIdAndUserTypeAndClientId(reqDTO.getUserId(), reqDTO.getUserType(), reqDTO.getClientId()).stream().filter(r -> r.getExpiresTime() != null && r.getExpiresTime().isBefore(LocalDateTime.now())).map(SystemOAuth2ApproveEntity::getScope).collect(Collectors.toSet());
+        return mapper.selectListByUserIdAndUserTypeAndClientId(reqDTO.getUserId(), reqDTO.getUserType(), reqDTO.getClientId()).stream().filter(r -> r.getExpiresTime() != null && r.getExpiresTime().isAfter(LocalDateTime.now())).map(SystemOAuth2ApproveEntity::getScope).collect(Collectors.toSet());
     }
 }

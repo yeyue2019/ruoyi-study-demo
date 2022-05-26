@@ -431,8 +431,9 @@ INSERT INTO `ruoyi_system_oauth2_client` (`id`, `clientId`, `secret`, `name`, `d
                                           `additionalInformation`, `creator`, `createTime`, `updater`,
                                           `updateTime`, `deleted`)
 VALUES (1, 'ruoyi_study_demo', '123456', '夜月', '夜月的应用', 0, 600, 7200, 108000, 108000, '["https://www.baidu.com"]',
-        '["password","authorization_code","implicit","client_credentials","refresh_token"]', '["user_info"]', '[]',
-        '{"version":true}', '1', '2022-05-26 11:18:50', '1', '2022-05-26 11:21:30', b'0');
+        '["password","authorization_code","implicit","client_credentials","refresh_token"]',
+        '["user_info","user_update","order_list"]', '["user_info"]',
+        '{"version":"v1"}', '1', '2022-05-26 11:18:50', '1', '2022-05-26 11:21:30', b'0');
 COMMIT;
 -- ----------------------------
 -- Table structure for ruoyi_system_oauth2_code
@@ -510,6 +511,28 @@ CREATE TABLE `ruoyi_system_oauth2_refresh_token`
     CHARACTER SET = utf8mb4
     COLLATE = utf8mb4_unicode_ci
     COMMENT = 'OAuth2刷新令牌表';
+-- ----------------------------
+-- Table structure for ruoyi_system_oauth2_approve
+-- ----------------------------
+DROP TABLE IF EXISTS `ruoyi_system_oauth2_approve`;
+CREATE TABLE `ruoyi_system_oauth2_approve`
+(
+    `id`          bigint                                                        NOT NULL COMMENT '编号',
+    `userId`      bigint                                                        NOT NULL COMMENT '用户编号',
+    `userType`    tinyint                                                       NOT NULL COMMENT '用户类型',
+    `clientId`    varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '客户端编号',
+    `scope`       varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '授权范围',
+    `expiresTime` datetime NULL COMMENT '过期时间',
+    `creator`     varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '' COMMENT '创建者',
+    `createTime`  datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `updater`     varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '' COMMENT '更新者',
+    `updateTime`  datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    `deleted`     bit(1)                                                        NOT NULL DEFAULT b'0' COMMENT '是否删除',
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB
+    CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_unicode_ci
+    COMMENT = 'OAuth2批准表';
 -- ----------------------------
 -- Table structure for ruoyi_system_user
 -- ----------------------------

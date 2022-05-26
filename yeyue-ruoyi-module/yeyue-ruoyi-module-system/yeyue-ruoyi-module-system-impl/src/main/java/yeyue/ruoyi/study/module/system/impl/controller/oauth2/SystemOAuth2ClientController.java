@@ -1,15 +1,16 @@
 package yeyue.ruoyi.study.module.system.impl.controller.oauth2;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 import yeyue.ruoyi.study.framework.common.pojo.core.CommonResult;
 import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
 import yeyue.ruoyi.study.module.system.api.domain.oauth2.SystemOAuth2ClientDomain;
-import yeyue.ruoyi.study.module.system.api.service.auth.SystemOAuth2ClientService;
-import yeyue.ruoyi.study.module.system.api.service.auth.dto.SystemOAuth2ClientCreateReqDTO;
-import yeyue.ruoyi.study.module.system.api.service.auth.dto.SystemOAuth2ClientPageReqDTO;
-import yeyue.ruoyi.study.module.system.api.service.auth.dto.SystemOAuth2ClientUpdateReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.oauth2.SystemOAuth2ClientService;
+import yeyue.ruoyi.study.module.system.api.service.oauth2.dto.SystemOAuth2ClientCreateReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.oauth2.dto.SystemOAuth2ClientPageReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.oauth2.dto.SystemOAuth2ClientUpdateReqDTO;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -41,6 +42,7 @@ public class SystemOAuth2ClientController {
 
     @ApiOperation(value = "删除客户端")
     @DeleteMapping("/delete")
+    @ApiImplicitParam(name = "id", value = "编号", required = true, example = "1024", dataTypeClass = Long.class)
     public CommonResult<Void> delete(@RequestParam Long id) {
         service.delete(id);
         return CommonResult.success();
@@ -48,14 +50,14 @@ public class SystemOAuth2ClientController {
 
     @ApiOperation(value = "获取客户端")
     @GetMapping("/get")
+    @ApiImplicitParam(name = "id", value = "编号", required = true, example = "1024", dataTypeClass = Long.class)
     public CommonResult<SystemOAuth2ClientDomain> get(@RequestParam Long id) {
         return CommonResult.success(service.get(id));
     }
 
     @ApiOperation(value = "查看客户端")
     @PostMapping("/list")
-    public CommonResult<PageResult<SystemOAuth2ClientDomain>>
-    list(@Valid @RequestBody SystemOAuth2ClientPageReqDTO dto) {
+    public CommonResult<PageResult<SystemOAuth2ClientDomain>> list(@Valid @RequestBody SystemOAuth2ClientPageReqDTO dto) {
         return CommonResult.success(service.list(dto));
     }
 }

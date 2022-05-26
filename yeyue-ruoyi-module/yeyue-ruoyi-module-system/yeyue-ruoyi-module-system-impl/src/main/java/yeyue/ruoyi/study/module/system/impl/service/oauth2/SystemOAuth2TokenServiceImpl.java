@@ -5,13 +5,15 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
+import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
+import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
 import yeyue.ruoyi.study.framework.common.util.ids.IdUtils;
+import yeyue.ruoyi.study.framework.mybatis.core.query.MyBatisLambdaQueryWrapper;
 import yeyue.ruoyi.study.module.system.api.domain.oauth2.SystemOAuth2AccessTokenDomain;
-import yeyue.ruoyi.study.module.system.api.domain.oauth2.SystemOAuth2ClientDomain;
-import yeyue.ruoyi.study.module.system.api.service.auth.SystemOAuth2ClientService;
-import yeyue.ruoyi.study.module.system.api.service.auth.SystemOAuth2TokenService;
-import yeyue.ruoyi.study.module.system.api.service.auth.dto.SystemOAuth2AccessTokenCreateReqDTO;
-import yeyue.ruoyi.study.module.system.api.service.auth.dto.SystemOAuth2AccessTokenRefreshReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.oauth2.SystemOAuth2TokenService;
+import yeyue.ruoyi.study.module.system.api.service.oauth2.dto.SystemOAuth2AccessTokenCreateReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.oauth2.dto.SystemOAuth2AccessTokenPageReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.oauth2.dto.SystemOAuth2AccessTokenRefreshReqDTO;
 import yeyue.ruoyi.study.module.system.impl.entity.oauth2.SystemOAuth2AccessTokenEntity;
 import yeyue.ruoyi.study.module.system.impl.entity.oauth2.SystemOAuth2RefreshTokenEntity;
 import yeyue.ruoyi.study.module.system.impl.entity.oauth2.convert.SystemOAuth2AccessTokenConvert;
@@ -31,8 +33,6 @@ import java.time.LocalDateTime;
 public class SystemOAuth2TokenServiceImpl implements SystemOAuth2TokenService {
 
     @Resource
-    SystemOAuth2ClientService clientService;
-    @Resource
     SystemOAuth2AccessTokenMapper accessTokenMapper;
     @Resource
     SystemOAuth2RefreshTokenMapper refreshTokenMapper;
@@ -40,20 +40,16 @@ public class SystemOAuth2TokenServiceImpl implements SystemOAuth2TokenService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public SystemOAuth2AccessTokenDomain create(SystemOAuth2AccessTokenCreateReqDTO reqDTO) {
-        // 1. 校验客户端
-        SystemOAuth2ClientDomain client = clientService.getByClientId(reqDTO.getClientId());
-        // 2. 生成刷新令牌
-        SystemOAuth2RefreshTokenEntity refreshToken = createRefreshToken(client, reqDTO.getUserId());
-        // 3. 生成访问令牌
-        SystemOAuth2AccessTokenEntity accessToken = createAccessToken(client, refreshToken);
+        // 1. 生成刷新令牌
+        SystemOAuth2RefreshTokenEntity refreshToken = createRefreshToken(reqDTO);
+        // 2. 生成访问令牌
+        SystemOAuth2AccessTokenEntity accessToken = createAccessToken(refreshToken, reqDTO.getAccessTokenValiditySeconds());
         return SystemOAuth2AccessTokenConvert.INSTANCE.toDomain(accessToken);
     }
 
     @Override
     public SystemOAuth2AccessTokenDomain refresh(SystemOAuth2AccessTokenRefreshReqDTO reqDTO) {
-        // 1. 校验客户端
-        SystemOAuth2ClientDomain client = clientService.getByClientId(reqDTO.getClientId());
-        // 2. 获取刷新令牌
+        // 1. 获取刷新令牌
         SystemOAuth2RefreshTokenEntity refreshToken = refreshTokenMapper.selectByRefreshToken(reqDTO.getRefreshToken());
         if (refreshToken == null) {
             throw new ServiceException(SystemErrorCode.OAUTH2_REFRESH_TOKEN_NOT_EXISTS);
@@ -64,8 +60,8 @@ public class SystemOAuth2TokenServiceImpl implements SystemOAuth2TokenService {
         if (refreshToken.getExpiresTime() != null && refreshToken.getExpiresTime().isBefore(LocalDateTime.now())) {
             throw new ServiceException(SystemErrorCode.OAUTH2_REFRESH_TOKEN_EXPIRES);
         }
-        // 3. 创建访问令牌
-        SystemOAuth2AccessTokenEntity accessToken = createAccessToken(client, refreshToken);
+        // 2. 创建访问令牌
+        SystemOAuth2AccessTokenEntity accessToken = createAccessToken(refreshToken, reqDTO.getAccessTokenValiditySeconds());
         return SystemOAuth2AccessTokenConvert.INSTANCE.toDomain(accessToken);
     }
 
@@ -92,35 +88,39 @@ public class SystemOAuth2TokenServiceImpl implements SystemOAuth2TokenService {
             return null;
         }
         accessTokenMapper.deleteById(entity);
-        // 3. 移除刷新令牌
-        SystemOAuth2RefreshTokenEntity refreshToken = refreshTokenMapper.selectByRefreshToken(entity.getRefreshToken());
-        if (refreshToken != null) {
-            refreshTokenMapper.deleteById(refreshToken);
-        }
         return SystemOAuth2AccessTokenConvert.INSTANCE.toDomain(entity);
     }
 
-    private SystemOAuth2RefreshTokenEntity createRefreshToken(SystemOAuth2ClientDomain client, String userId) {
+    @Override
+    public PageResult<SystemOAuth2AccessTokenDomain> list(SystemOAuth2AccessTokenPageReqDTO reqDTO) {
+        PageResult<SystemOAuth2AccessTokenEntity> pageResult = accessTokenMapper.selectPage(reqDTO, new MyBatisLambdaQueryWrapper<>());
+        return CollectionUtils.funcPage(pageResult, SystemOAuth2AccessTokenConvert.INSTANCE::toDomain);
+    }
+
+    private SystemOAuth2RefreshTokenEntity createRefreshToken(SystemOAuth2AccessTokenCreateReqDTO reqDTO) {
         SystemOAuth2RefreshTokenEntity entity = new SystemOAuth2RefreshTokenEntity();
-        entity.setClientId(client.getClientId());
-        entity.setUserId(userId);
+        entity.setClientId(reqDTO.getClientId());
+        entity.setScopes(reqDTO.getScopes());
+        entity.setUserId(reqDTO.getUserId());
+        entity.setUserType(reqDTO.getUserType());
         entity.setRefreshToken(IdUtils.uuid(true));
-        if (client.getRefreshTokenValiditySeconds() != null && client.getRefreshTokenValiditySeconds() > 0) {
-            entity.setExpiresTime(LocalDateTime.now().plusSeconds(client.getRefreshTokenValiditySeconds()));
+        if (reqDTO.getRefreshTokenValiditySeconds() != null && reqDTO.getRefreshTokenValiditySeconds() > 0) {
+            entity.setExpiresTime(LocalDateTime.now().plusSeconds(reqDTO.getRefreshTokenValiditySeconds()));
         }
         refreshTokenMapper.insert(entity);
         return entity;
     }
 
-    private SystemOAuth2AccessTokenEntity createAccessToken(SystemOAuth2ClientDomain client,
-                                                            SystemOAuth2RefreshTokenEntity refreshToken) {
+    private SystemOAuth2AccessTokenEntity createAccessToken(SystemOAuth2RefreshTokenEntity refreshToken, Integer accessTokenValiditySeconds) {
         SystemOAuth2AccessTokenEntity entity = new SystemOAuth2AccessTokenEntity();
-        entity.setClientId(client.getClientId());
+        entity.setClientId(refreshToken.getClientId());
         entity.setUserId(refreshToken.getUserId());
+        entity.setUserType(refreshToken.getUserType());
+        entity.setScopes(refreshToken.getScopes());
         entity.setRefreshToken(refreshToken.getRefreshToken());
         entity.setAccessToken(IdUtils.uuid(true));
-        if (client.getAccessTokenValiditySeconds() != null && client.getAccessTokenValiditySeconds() > 0) {
-            entity.setExpiresTime(LocalDateTime.now().plusSeconds(client.getAccessTokenValiditySeconds()));
+        if (accessTokenValiditySeconds != null && accessTokenValiditySeconds > 0) {
+            entity.setExpiresTime(LocalDateTime.now().plusSeconds(accessTokenValiditySeconds));
         }
         accessTokenMapper.insert(entity);
         return entity;

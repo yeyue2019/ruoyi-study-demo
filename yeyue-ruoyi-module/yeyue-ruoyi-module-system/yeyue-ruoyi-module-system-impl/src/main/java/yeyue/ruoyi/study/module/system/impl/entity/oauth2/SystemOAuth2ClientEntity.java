@@ -7,7 +7,7 @@ import yeyue.ruoyi.study.framework.mybatis.core.entity.MyBatisEntity;
 
 import java.util.List;
 
-import static yeyue.ruoyi.study.module.system.impl.constants.SystemTableConstants.SYSTEM_AUTH_CLIENT;
+import static yeyue.ruoyi.study.module.system.impl.constants.SystemTableConstants.SYSTEM_OAUTH2_CLIENT;
 
 /**
  * OAuth2.0 客户端
@@ -16,7 +16,7 @@ import static yeyue.ruoyi.study.module.system.impl.constants.SystemTableConstant
  * @date 2022-05-16 16:24:05
  */
 @Data
-@TableName(value = SYSTEM_AUTH_CLIENT, autoResultMap = true)
+@TableName(value = SYSTEM_OAUTH2_CLIENT, autoResultMap = true)
 public class SystemOAuth2ClientEntity extends MyBatisEntity {
 
     /**
@@ -62,6 +62,11 @@ public class SystemOAuth2ClientEntity extends MyBatisEntity {
      * 刷新令牌有效期
      */
     private Integer refreshTokenValiditySeconds;
+
+    /**
+     * 同意授权的有效期
+     */
+    private Integer approveValiditySeconds;
 
     /**
      * 状态

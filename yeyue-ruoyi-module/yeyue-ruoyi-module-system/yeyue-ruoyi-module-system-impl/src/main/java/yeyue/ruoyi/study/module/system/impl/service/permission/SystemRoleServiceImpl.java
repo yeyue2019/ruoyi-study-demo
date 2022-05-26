@@ -92,7 +92,7 @@ public class SystemRoleServiceImpl implements SystemRoleService {
     }
 
     @Override
-    public Boolean hasAnySuperAdmin(Collection<Long> roleIds) {
+    public boolean hasAnySuperAdmin(Collection<Long> roleIds) {
         if (CollectionUtils.isEmpty(roleIds)) {
             return false;
         }

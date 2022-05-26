@@ -1,4 +1,4 @@
-package yeyue.ruoyi.study.module.system.api.service.auth.dto;
+package yeyue.ruoyi.study.module.system.api.service.oauth2.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

@@ -31,11 +31,14 @@ public class SystemOAuth2ClientDomain implements Serializable {
     @ApiModelProperty(value = "授权码有效期")
     private Integer codeValiditySeconds;
 
-    @ApiModelProperty(value = "访问令牌的有效期", required = true)
+    @ApiModelProperty(value = "访问令牌的有效期")
     private Integer accessTokenValiditySeconds;
 
-    @ApiModelProperty(value = "刷新令牌的有效期", required = true)
+    @ApiModelProperty(value = "刷新令牌的有效期")
     private Integer refreshTokenValiditySeconds;
+
+    @ApiModelProperty(value = "同意授权的有效期")
+    private Integer approveValiditySeconds;
 
     @ApiModelProperty(value = "可重定向的 URI 地址")
     private List<String> redirectUris;

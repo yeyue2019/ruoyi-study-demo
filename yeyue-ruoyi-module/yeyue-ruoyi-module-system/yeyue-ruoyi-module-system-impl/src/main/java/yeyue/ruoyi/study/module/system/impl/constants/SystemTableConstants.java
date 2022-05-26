@@ -15,9 +15,9 @@ public interface SystemTableConstants {
     String SYSTEM_ROLE = "ruoyi_system_role";
     String SYSTEM_ROLE_MENU = "ruoyi_system_role_menu";
     String SYSTEM_USER_ROLE = "ruoyi_system_user_role";
-
-    String SYSTEM_AUTH_CLIENT = "ruoyi_system_oauth2_client";
-    String SYSTEM_AUTH_CODE = "ruoyi_system_oauth2_code";
-    String SYSTEM_AUTH_ACCESS_TOKEN = "ruoyi_system_oauth2_access_token";
-    String SYSTEM_AUTH_REFRESH_TOKEN = "ruoyi_system_oauth2_refresh_token";
+    String SYSTEM_OAUTH2_CLIENT = "ruoyi_system_oauth2_client";
+    String SYSTEM_OAUTH2_CODE = "ruoyi_system_oauth2_code";
+    String SYSTEM_OAUTH2_APPROVE = "ruoyi_system_oauth2_approve";
+    String SYSTEM_OAUTH2_ACCESS_TOKEN = "ruoyi_system_oauth2_access_token";
+    String SYSTEM_OAUTH2_REFRESH_TOKEN = "ruoyi_system_oauth2_refresh_token";
 }

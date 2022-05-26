@@ -6,36 +6,29 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * @author yeyue
- * @date 2022-05-17 12:29:00
+ * @date 2022-05-26 16:21:37
  */
 @Data
-@ApiModel(description = "OAuth2访问令牌")
-public class SystemOAuth2AccessTokenDomain implements Serializable {
+@ApiModel(description = "用户批准授权")
+public class SystemOAuth2ApproveDomain implements Serializable {
 
     @ApiModelProperty(value = "编号")
     private Long id;
 
-    @ApiModelProperty(value = "访问令牌")
-    private String accessToken;
-
-    @ApiModelProperty(value = "刷新令牌")
-    private String refreshToken;
-
-    @ApiModelProperty(value = "用户id")
+    @ApiModelProperty(value = "用户编号")
     private String userId;
 
     @ApiModelProperty(value = "用户类型")
     private Integer userType;
 
-    @ApiModelProperty(value = "客户端id")
+    @ApiModelProperty(value = "客户端编号")
     private String clientId;
 
     @ApiModelProperty(value = "授权范围")
-    private List<String> scopes;
+    private String scope;
 
     @ApiModelProperty(value = "过期时间")
     private LocalDateTime expiresTime;

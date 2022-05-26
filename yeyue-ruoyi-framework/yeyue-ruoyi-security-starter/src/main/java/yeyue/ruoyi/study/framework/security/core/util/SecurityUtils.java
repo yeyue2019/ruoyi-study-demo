@@ -76,6 +76,7 @@ public abstract class SecurityUtils {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         // 放到common需要的上下文中
         WebSecurityUtils.setLoginUserId(request, loginUser.getId());
+        WebSecurityUtils.setLoginUserType(request, loginUser.getUserType());
     }
 
     /**

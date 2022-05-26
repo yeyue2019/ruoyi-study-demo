@@ -2,18 +2,22 @@ package yeyue.ruoyi.study.module.system.impl.service.oauth2;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
+import yeyue.ruoyi.study.framework.common.enums.CommonStatusEnum;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
 import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
+import yeyue.ruoyi.study.framework.common.util.enums.EnumUtils;
 import yeyue.ruoyi.study.framework.mybatis.core.query.MyBatisLambdaQueryWrapper;
 import yeyue.ruoyi.study.framework.redis.core.RedisRepository;
 import yeyue.ruoyi.study.framework.redis.domain.RedisDomainDefine;
 import yeyue.ruoyi.study.module.system.api.domain.oauth2.SystemOAuth2ClientDomain;
-import yeyue.ruoyi.study.module.system.api.service.auth.SystemOAuth2ClientService;
-import yeyue.ruoyi.study.module.system.api.service.auth.dto.SystemOAuth2ClientCreateReqDTO;
-import yeyue.ruoyi.study.module.system.api.service.auth.dto.SystemOAuth2ClientPageReqDTO;
-import yeyue.ruoyi.study.module.system.api.service.auth.dto.SystemOAuth2ClientUpdateReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.oauth2.SystemOAuth2ClientService;
+import yeyue.ruoyi.study.module.system.api.service.oauth2.dto.SystemOAuth2ClientCreateReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.oauth2.dto.SystemOAuth2ClientPageReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.oauth2.dto.SystemOAuth2ClientUpdateReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.oauth2.dto.SystemOAuth2ClientValidateReqDTO;
 import yeyue.ruoyi.study.module.system.impl.entity.oauth2.SystemOAuth2ClientEntity;
 import yeyue.ruoyi.study.module.system.impl.entity.oauth2.convert.SystemOAuth2ClientConvert;
 import yeyue.ruoyi.study.module.system.impl.framework.exception.SystemErrorCode;
@@ -89,9 +93,31 @@ public class SystemOAuth2ClientServiceImpl implements SystemOAuth2ClientService 
     }
 
     @Override
-    public SystemOAuth2ClientDomain getByClientId(String clientId) {
-        SystemOAuth2ClientDomain domain =
-                repository.get(REDIS_SYSTEM_OAUTH2_CLIENT_KEY, clientId, REDIS_SYSTEM_OAUTH2_CLIENT_TYPE);
+    public SystemOAuth2ClientDomain validate(SystemOAuth2ClientValidateReqDTO reqDTO) {
+        SystemOAuth2ClientDomain client = getByClientId(reqDTO.getClientId());
+        if (client == null) {
+            throw new ServiceException(SystemErrorCode.OAUTH2_CLIENT_NOT_EXISTS);
+        }
+        if (EnumUtils.notEquals(CommonStatusEnum.ENABLE, CommonStatusEnum::getStatus, client.getStatus())) {
+            throw new ServiceException(SystemErrorCode.OAUTH2_CLIENT_STATUS_DISABLE);
+        }
+        if (StringUtils.isNotBlank(reqDTO.getSecret()) && !StringUtils.equals(reqDTO.getSecret(), client.getSecret())) {
+            throw new ServiceException(SystemErrorCode.OAUTH2_CLIENT_CLIENT_SECRET_ERROR);
+        }
+        if (reqDTO.getAuthorizedGrantType() != null && !client.getAuthorizedGrantTypes().contains(reqDTO.getAuthorizedGrantType())) {
+            throw new ServiceException(SystemErrorCode.OAUTH2_CLIENT_AUTHORIZED_GRANT_TYPE_NOT_EXISTS);
+        }
+        if (CollectionUtils.containsAll(client.getScopes(), reqDTO.getScopes())) {
+            throw new ServiceException(SystemErrorCode.OAUTH2_CLIENT_SCOPE_OVER);
+        }
+        if (reqDTO.getRedirectUri() != null && StringUtils.startsWithAny(reqDTO.getRedirectUri(), CollectionUtils.listToArray(client.getRedirectUris()))) {
+            throw new ServiceException(SystemErrorCode.OAUTH2_CLIENT_REDIRECT_URI_NOT_MATCH);
+        }
+        return client;
+    }
+
+    private SystemOAuth2ClientDomain getByClientId(String clientId) {
+        SystemOAuth2ClientDomain domain = repository.get(REDIS_SYSTEM_OAUTH2_CLIENT_KEY, clientId, REDIS_SYSTEM_OAUTH2_CLIENT_TYPE);
         if (domain == null) {
             SystemOAuth2ClientEntity entity = mapper.selectByClientId(clientId);
             if (entity == null) {

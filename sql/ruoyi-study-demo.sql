@@ -402,6 +402,7 @@ CREATE TABLE `ruoyi_system_oauth2_client`
     `codeValiditySeconds`         int                                                           NOT NULL COMMENT '授权码的有效期',
     `accessTokenValiditySeconds`  int                                                           NOT NULL COMMENT '访问令牌的有效期',
     `refreshTokenValiditySeconds` int                                                           NOT NULL COMMENT '刷新令牌的有效期',
+    `approveValiditySeconds`      int                                                           NOT NULL COMMENT '批准授权的有效期',
     `redirectUris`                varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '可重定向的 URI 地址',
     `authorizedGrantTypes`        varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '授权类型',
     `scopes`                      varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '授权范围',
@@ -425,11 +426,11 @@ CREATE TABLE `ruoyi_system_oauth2_client`
 BEGIN;
 INSERT INTO `ruoyi_system_oauth2_client` (`id`, `clientId`, `secret`, `name`, `description`, `status`,
                                           `codeValiditySeconds`, `accessTokenValiditySeconds`,
-                                          `refreshTokenValiditySeconds`, `redirectUris`,
+                                          `refreshTokenValiditySeconds`, `approveValiditySeconds`, `redirectUris`,
                                           `authorizedGrantTypes`, `scopes`, `autoApproveScopes`,
                                           `additionalInformation`, `creator`, `createTime`, `updater`,
                                           `updateTime`, `deleted`)
-VALUES (1, 'ruoyi_study_demo', '123456', '夜月', '夜月的应用', 0, 600, 7200, 108000, '["https://www.baidu.com"]',
+VALUES (1, 'ruoyi_study_demo', '123456', '夜月', '夜月的应用', 0, 600, 7200, 108000, 108000, '["https://www.baidu.com"]',
         '["password","authorization_code","implicit","client_credentials","refresh_token"]', '["user_info"]', '[]',
         '{"version":true}', '1', '2022-05-26 11:18:50', '1', '2022-05-26 11:21:30', b'0');
 COMMIT;
@@ -439,19 +440,20 @@ COMMIT;
 DROP TABLE IF EXISTS `ruoyi_system_oauth2_code`;
 CREATE TABLE `ruoyi_system_oauth2_code`
 (
-    `id`           bigint                                                        NOT NULL COMMENT '编号',
-    `code`         varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '授权码',
-    `accessToken`  varchar(72) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '访问令牌',
-    `refreshToken` varchar(72) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '刷新令牌',
-    `userId`       varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '用户编号',
-    `clientId`     varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '客户端编号',
-    `expiresTime`  datetime NULL COMMENT '过期时间',
-    `status`       tinyint                                                       NOT NULL DEFAULT '0' COMMENT '状态',
-    `creator`      varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '' COMMENT '创建者',
-    `createTime`   datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `updater`      varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '' COMMENT '更新者',
-    `updateTime`   datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-    `deleted`      bit(1)                                                        NOT NULL DEFAULT b'0' COMMENT '是否删除',
+    `id`          bigint                                                        NOT NULL COMMENT '编号',
+    `code`        varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '授权码',
+    `expiresTime` datetime NULL COMMENT '过期时间',
+    `userId`      varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '用户编号',
+    `userType`    tinyint                                                       NOT NULL DEFAULT 0 COMMENT '用户类型',
+    `clientId`    varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '客户端编号',
+    `scopes`      varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '授权范围',
+    `redirectUri` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '可重定向的 URI 地址',
+    `state`       varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '状态值',
+    `creator`     varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '' COMMENT '创建者',
+    `createTime`  datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `updater`     varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '' COMMENT '更新者',
+    `updateTime`  datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    `deleted`     bit(1)                                                        NOT NULL DEFAULT b'0' COMMENT '是否删除',
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE KEY `uk_code` (`code` ASC) USING BTREE
 ) ENGINE = InnoDB
@@ -466,9 +468,11 @@ CREATE TABLE `ruoyi_system_oauth2_access_token`
 (
     `id`           bigint                                                       NOT NULL COMMENT '编号',
     `userId`       varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '用户编号',
+    `userType`     tinyint                                                      NOT NULL DEFAULT 0 COMMENT '用户类型',
     `accessToken`  varchar(72) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '访问令牌',
     `refreshToken` varchar(72) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '刷新令牌',
     `clientId`     varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '客户端编号',
+    `scopes`       varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '授权范围',
     `expiresTime`  datetime NULL COMMENT '过期时间',
     `creator`      varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '' COMMENT '创建者',
     `createTime`   datetime                                                     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -490,8 +494,10 @@ CREATE TABLE `ruoyi_system_oauth2_refresh_token`
 (
     `id`           bigint                                                       NOT NULL COMMENT '编号',
     `userId`       varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '用户编号',
+    `userType`     tinyint                                                      NOT NULL DEFAULT 0 COMMENT '用户类型',
     `refreshToken` varchar(72) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '刷新令牌',
     `clientId`     varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '客户端编号',
+    `scopes`       varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '授权范围',
     `expiresTime`  datetime NULL COMMENT '过期时间',
     `creator`      varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '' COMMENT '创建者',
     `createTime`   datetime                                                     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -499,8 +505,7 @@ CREATE TABLE `ruoyi_system_oauth2_refresh_token`
     `updateTime`   datetime                                                     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     `deleted`      bit(1)                                                       NOT NULL DEFAULT b'0' COMMENT '是否删除',
     PRIMARY KEY (`id`) USING BTREE,
-    UNIQUE KEY `idx_refreshToken`(`refreshToken` ASC) USING BTREE,
-    INDEX          `idx_clientId_userId`(`clientId` ASC, `refreshToken` ASC) USING BTREE
+    UNIQUE KEY `idx_refreshToken`(`refreshToken` ASC) USING BTREE
 ) ENGINE = InnoDB
     CHARACTER SET = utf8mb4
     COLLATE = utf8mb4_unicode_ci

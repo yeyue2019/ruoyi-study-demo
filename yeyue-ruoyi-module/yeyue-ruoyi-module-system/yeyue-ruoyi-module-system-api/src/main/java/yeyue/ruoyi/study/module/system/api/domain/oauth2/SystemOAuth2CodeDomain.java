@@ -6,6 +6,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author yeyue
@@ -21,18 +22,24 @@ public class SystemOAuth2CodeDomain implements Serializable {
     @ApiModelProperty(value = "授权码")
     private String code;
 
+    @ApiModelProperty(value = "过期时间")
+    private LocalDateTime expiresTime;
+
     @ApiModelProperty(value = "客户端Id")
     private String clientId;
 
     @ApiModelProperty(value = "用户Id")
     private String userId;
 
-    @ApiModelProperty(value = "过期时间")
-    private LocalDateTime expiresTime;
+    @ApiModelProperty(value = "用户类型")
+    private Integer userType;
 
-    @ApiModelProperty(value = "访问令牌")
-    private String accessToken;
+    @ApiModelProperty(value = "授权范围")
+    private List<String> scopes;
 
-    @ApiModelProperty(value = "刷新令牌")
-    private String refreshToken;
+    @ApiModelProperty(value = "重定向地址")
+    private String redirectUri;
+
+    @ApiModelProperty(value = "状态")
+    private String state;
 }

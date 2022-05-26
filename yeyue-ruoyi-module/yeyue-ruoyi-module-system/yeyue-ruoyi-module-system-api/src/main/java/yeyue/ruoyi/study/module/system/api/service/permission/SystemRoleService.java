@@ -68,5 +68,5 @@ public interface SystemRoleService {
      * @param roleIds 角色集合
      * @return 结果
      */
-    Boolean hasAnySuperAdmin(Collection<Long> roleIds);
+    boolean hasAnySuperAdmin(Collection<Long> roleIds);
 }

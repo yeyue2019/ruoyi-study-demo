@@ -110,6 +110,25 @@ public abstract class CollectionUtils extends org.springframework.util.Collectio
     }
 
     /**
+     * 集合全包含
+     *
+     * @param source  被比较的集合
+     * @param compare 比较的集合
+     * @param <T>     集合类型
+     * @return 结果
+     */
+    public static <T> boolean containsAll(Collection<T> source, Collection<T> compare) {
+        if (isEmpty(compare)) {
+            return true;
+        }
+        if (isEmpty(source)) {
+            return false;
+        }
+        return new HashSet<>(source).containsAll(compare);
+    }
+
+
+    /**
      * 集合分割处理
      *
      * @param from         源集合

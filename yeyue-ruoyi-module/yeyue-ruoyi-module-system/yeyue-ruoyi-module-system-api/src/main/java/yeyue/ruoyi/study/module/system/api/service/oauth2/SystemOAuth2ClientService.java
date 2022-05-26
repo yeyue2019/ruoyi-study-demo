@@ -1,12 +1,17 @@
-package yeyue.ruoyi.study.module.system.api.service.auth;
+package yeyue.ruoyi.study.module.system.api.service.oauth2;
 
 import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
 import yeyue.ruoyi.study.module.system.api.domain.oauth2.SystemOAuth2ClientDomain;
-import yeyue.ruoyi.study.module.system.api.service.auth.dto.SystemOAuth2ClientCreateReqDTO;
-import yeyue.ruoyi.study.module.system.api.service.auth.dto.SystemOAuth2ClientPageReqDTO;
-import yeyue.ruoyi.study.module.system.api.service.auth.dto.SystemOAuth2ClientUpdateReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.oauth2.dto.SystemOAuth2ClientCreateReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.oauth2.dto.SystemOAuth2ClientPageReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.oauth2.dto.SystemOAuth2ClientUpdateReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.oauth2.dto.SystemOAuth2ClientValidateReqDTO;
 
 /**
+ * OAuth2.0 Client Service 接口
+ * <p>
+ * 从功能上，和 JdbcClientDetailsService 的功能，提供客户端的操作
+ *
  * @author yeyue
  * @date 2022-05-17 09:16:25
  */
@@ -51,10 +56,10 @@ public interface SystemOAuth2ClientService {
     PageResult<SystemOAuth2ClientDomain> list(SystemOAuth2ClientPageReqDTO reqDTO);
 
     /**
-     * 根据缓存获取客户端
+     * 客户端信息校验
      *
-     * @param clientId 客户端Id
-     * @return 结果
+     * @param reqDTO 信息
+     * @return 校验结果
      */
-    SystemOAuth2ClientDomain getByClientId(String clientId);
+    SystemOAuth2ClientDomain validate(SystemOAuth2ClientValidateReqDTO reqDTO);
 }

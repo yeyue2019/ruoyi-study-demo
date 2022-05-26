@@ -1,4 +1,4 @@
-package yeyue.ruoyi.study.module.system.api.service.auth.dto;
+package yeyue.ruoyi.study.module.system.api.service.oauth2.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -19,4 +19,7 @@ public class SystemOAuth2AccessTokenRefreshReqDTO implements Serializable {
 
     @ApiModelProperty(value = "客户端Id")
     private String clientId;
+
+    @ApiModelProperty(value = "访问令牌的有效期")
+    private Integer accessTokenValiditySeconds;
 }

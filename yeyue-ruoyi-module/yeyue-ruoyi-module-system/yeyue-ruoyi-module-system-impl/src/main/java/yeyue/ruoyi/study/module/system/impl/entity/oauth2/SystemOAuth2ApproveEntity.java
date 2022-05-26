@@ -1,26 +1,24 @@
 package yeyue.ruoyi.study.module.system.impl.entity.oauth2;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import lombok.Data;
+import yeyue.ruoyi.study.framework.common.enums.UserTypeEnum;
 import yeyue.ruoyi.study.framework.mybatis.core.entity.MyBatisEntity;
 import yeyue.ruoyi.study.module.system.impl.constants.SystemTableConstants;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
- * OAuth2 刷新令牌
+ * OAuth2 授权批准记录
  *
  * @author yeyue
- * @date 2022-05-17 08:49:28
+ * @date 2022-05-26 16:17:25
  */
 @Data
-@TableName(value = SystemTableConstants.SYSTEM_OAUTH2_REFRESH_TOKEN, autoResultMap = true)
-public class SystemOAuth2RefreshTokenEntity extends MyBatisEntity {
+@TableName(value = SystemTableConstants.SYSTEM_OAUTH2_APPROVE, autoResultMap = true)
+public class SystemOAuth2ApproveEntity extends MyBatisEntity {
 
     /**
      * 编号
@@ -29,30 +27,26 @@ public class SystemOAuth2RefreshTokenEntity extends MyBatisEntity {
     private Long id;
 
     /**
-     * 刷新令牌
-     */
-    private String refreshToken;
-
-    /**
-     * 用户id
+     * 用户编号
      */
     private String userId;
 
     /**
      * 用户类型
+     * <p>
+     * 枚举 {@link UserTypeEnum}
      */
     private Integer userType;
 
     /**
-     * 客户端id
+     * 客户端编号
      */
     private String clientId;
 
     /**
-     * 授权类型
+     * 授权范围
      */
-    @TableField(typeHandler = JacksonTypeHandler.class)
-    private List<String> scopes;
+    private String scope;
 
     /**
      * 过期时间

@@ -1,14 +1,8 @@
 package yeyue.ruoyi.study.module.system.impl.service.oauth2;
 
-import java.util.concurrent.TimeUnit;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Component;
-
 import com.fasterxml.jackson.core.type.TypeReference;
-
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
 import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
@@ -17,11 +11,16 @@ import yeyue.ruoyi.study.framework.redis.core.RedisRepository;
 import yeyue.ruoyi.study.framework.redis.domain.RedisDomainDefine;
 import yeyue.ruoyi.study.module.system.api.domain.oauth2.SystemOAuth2ClientDomain;
 import yeyue.ruoyi.study.module.system.api.service.auth.SystemOAuth2ClientService;
-import yeyue.ruoyi.study.module.system.api.service.auth.dto.*;
+import yeyue.ruoyi.study.module.system.api.service.auth.dto.SystemOAuth2ClientCreateReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.auth.dto.SystemOAuth2ClientPageReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.auth.dto.SystemOAuth2ClientUpdateReqDTO;
 import yeyue.ruoyi.study.module.system.impl.entity.oauth2.SystemOAuth2ClientEntity;
 import yeyue.ruoyi.study.module.system.impl.entity.oauth2.convert.SystemOAuth2ClientConvert;
 import yeyue.ruoyi.study.module.system.impl.framework.exception.SystemErrorCode;
 import yeyue.ruoyi.study.module.system.impl.mapper.oauth2.SystemOAuth2ClientMapper;
+
+import javax.annotation.Resource;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author yeyue
@@ -32,7 +31,8 @@ import yeyue.ruoyi.study.module.system.impl.mapper.oauth2.SystemOAuth2ClientMapp
 public class SystemOAuth2ClientServiceImpl implements SystemOAuth2ClientService {
     public static final String REDIS_SYSTEM_OAUTH2_CLIENT_KEY = "system:oauth2:client";
     public static final TypeReference<SystemOAuth2ClientDomain> REDIS_SYSTEM_OAUTH2_CLIENT_TYPE =
-        new TypeReference<SystemOAuth2ClientDomain>() {};
+            new TypeReference<SystemOAuth2ClientDomain>() {
+            };
 
     @Resource
     SystemOAuth2ClientMapper mapper;
@@ -82,16 +82,16 @@ public class SystemOAuth2ClientServiceImpl implements SystemOAuth2ClientService 
     @Override
     public PageResult<SystemOAuth2ClientDomain> list(SystemOAuth2ClientPageReqDTO reqDTO) {
         PageResult<SystemOAuth2ClientEntity> pageResult = mapper.selectPage(reqDTO,
-            new MyBatisLambdaQueryWrapper<SystemOAuth2ClientEntity>()
-                .like(SystemOAuth2ClientEntity::getName, reqDTO.getName())
-                .eq(SystemOAuth2ClientEntity::getStatus, reqDTO.getStatus()));
+                new MyBatisLambdaQueryWrapper<SystemOAuth2ClientEntity>()
+                        .like(SystemOAuth2ClientEntity::getName, reqDTO.getName())
+                        .eq(SystemOAuth2ClientEntity::getStatus, reqDTO.getStatus()));
         return CollectionUtils.funcPage(pageResult, SystemOAuth2ClientConvert.INSTANCE::toDomain);
     }
 
     @Override
     public SystemOAuth2ClientDomain getByClientId(String clientId) {
         SystemOAuth2ClientDomain domain =
-            repository.get(REDIS_SYSTEM_OAUTH2_CLIENT_KEY, clientId, REDIS_SYSTEM_OAUTH2_CLIENT_TYPE);
+                repository.get(REDIS_SYSTEM_OAUTH2_CLIENT_KEY, clientId, REDIS_SYSTEM_OAUTH2_CLIENT_TYPE);
         if (domain == null) {
             SystemOAuth2ClientEntity entity = mapper.selectByClientId(clientId);
             if (entity == null) {
@@ -99,7 +99,7 @@ public class SystemOAuth2ClientServiceImpl implements SystemOAuth2ClientService 
             }
             domain = SystemOAuth2ClientConvert.INSTANCE.toDomain(entity);
             repository.save(REDIS_SYSTEM_OAUTH2_CLIENT_KEY,
-                new RedisDomainDefine<>(clientId, domain, 1, TimeUnit.DAYS));
+                    new RedisDomainDefine<>(clientId, domain, 1, TimeUnit.DAYS));
         }
         return domain;
     }

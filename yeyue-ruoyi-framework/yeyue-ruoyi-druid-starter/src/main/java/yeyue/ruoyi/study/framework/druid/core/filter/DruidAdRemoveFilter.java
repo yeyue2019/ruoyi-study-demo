@@ -1,15 +1,13 @@
 package yeyue.ruoyi.study.framework.druid.core.filter;
 
-import java.io.IOException;
+import com.alibaba.druid.util.Utils;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.web.filter.OncePerRequestFilter;
-
-import com.alibaba.druid.util.Utils;
+import java.io.IOException;
 
 /**
  * 广告去除过滤器
@@ -26,7 +24,7 @@ public class DruidAdRemoveFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-        throws ServletException, IOException {
+            throws ServletException, IOException {
         filterChain.doFilter(request, response);
         // 重置缓冲区，响应头不会被重置
         response.resetBuffer();

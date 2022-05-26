@@ -22,7 +22,7 @@ public interface SystemRoleMapper extends MyBatisMapper<SystemRoleEntity> {
 
     default PageResult<SystemRoleEntity> list(SystemRolePageReqDTO reqDTO) {
         return selectPage(reqDTO,
-            new MyBatisLambdaQueryWrapper<SystemRoleEntity>().eq(SystemRoleEntity::getStatus, reqDTO.getStatus())
-                .eq(SystemRoleEntity::getCode, reqDTO.getCode()).like(SystemRoleEntity::getName, reqDTO.getName()));
+                new MyBatisLambdaQueryWrapper<SystemRoleEntity>().eq(SystemRoleEntity::getStatus, reqDTO.getStatus())
+                        .eq(SystemRoleEntity::getCode, reqDTO.getCode()).like(SystemRoleEntity::getName, reqDTO.getName()));
     }
 }

@@ -1,13 +1,14 @@
 package yeyue.ruoyi.study.module.system.impl.entity.oauth2;
 
-import static yeyue.ruoyi.study.module.system.impl.constants.SystemTableConstants.SYSTEM_AUTH_CODE;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+import yeyue.ruoyi.study.framework.mybatis.core.entity.MyBatisEntity;
 
 import java.time.LocalDateTime;
 
-import com.baomidou.mybatisplus.annotation.*;
-
-import lombok.Data;
-import yeyue.ruoyi.study.framework.mybatis.core.entity.MyBatisEntity;
+import static yeyue.ruoyi.study.module.system.impl.constants.SystemTableConstants.SYSTEM_AUTH_CODE;
 
 /**
  * OAuth2 授权码

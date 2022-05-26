@@ -1,16 +1,15 @@
 package yeyue.ruoyi.study.framework.common.util.date;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-
-import javax.validation.constraints.NotNull;
-
 import yeyue.ruoyi.study.framework.common.enums.DateTimeFormatterEnum;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.exception.common.GlobalErrorCode;
 import yeyue.ruoyi.study.framework.common.util.object.ObjectUtils;
+
+import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 /**
  * 日期处理工具
@@ -45,7 +44,7 @@ public abstract class DateUtils {
     }
 
     public static String localDateTimeToString(LocalDateTime localDateTime,
-        @NotNull DateTimeFormatterEnum formatterEnum) {
+                                               @NotNull DateTimeFormatterEnum formatterEnum) {
         return ObjectUtils.convert(localDateTime, null, ldt -> ldt.format(formatterEnum.getFormatter()));
     }
 
@@ -134,7 +133,7 @@ public abstract class DateUtils {
     }
 
     public static Long stringToTimeStamp(String string, @NotNull DateTimeFormatterEnum formatterEnum,
-        int timeStampSize) {
+                                         int timeStampSize) {
         return dateToTimeStamp(stringToDate(string, formatterEnum), timeStampSize);
     }
 

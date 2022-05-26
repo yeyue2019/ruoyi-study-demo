@@ -1,13 +1,7 @@
 package yeyue.ruoyi.study.module.system.impl.service.dept;
 
-import java.util.*;
-import java.util.stream.Collectors;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Component;
-
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 import yeyue.ruoyi.study.framework.common.enums.CommonStatusEnum;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
@@ -16,11 +10,17 @@ import yeyue.ruoyi.study.framework.mybatis.core.query.MyBatisLambdaQueryWrapper;
 import yeyue.ruoyi.study.module.system.api.domain.dept.SystemDeptDomain;
 import yeyue.ruoyi.study.module.system.api.enums.dept.DeptIdEnum;
 import yeyue.ruoyi.study.module.system.api.service.dept.SystemDeptService;
-import yeyue.ruoyi.study.module.system.api.service.dept.dto.*;
+import yeyue.ruoyi.study.module.system.api.service.dept.dto.SystemDeptCreateReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.dept.dto.SystemDeptListReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.dept.dto.SystemDeptUpdateReqDTO;
 import yeyue.ruoyi.study.module.system.impl.entity.dept.SystemDeptEntity;
 import yeyue.ruoyi.study.module.system.impl.entity.dept.convert.SystemDeptConvert;
 import yeyue.ruoyi.study.module.system.impl.framework.exception.SystemErrorCode;
 import yeyue.ruoyi.study.module.system.impl.mapper.dept.SystemDeptMapper;
+
+import javax.annotation.Resource;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author yeyue
@@ -90,19 +90,19 @@ public class SystemDeptServiceImpl implements SystemDeptService {
     @Override
     public List<SystemDeptDomain> list(SystemDeptListReqDTO reqDTO) {
         List<SystemDeptEntity> entities = deptMapper.selectList(
-            new MyBatisLambdaQueryWrapper<SystemDeptEntity>().eq(SystemDeptEntity::getStatus, reqDTO.getStatus()));
+                new MyBatisLambdaQueryWrapper<SystemDeptEntity>().eq(SystemDeptEntity::getStatus, reqDTO.getStatus()));
         if (CollectionUtils.isEmpty(entities)) {
             return Collections.emptyList();
         }
         Map<Long, List<SystemDeptDomain>> tree = entities.stream().map(SystemDeptConvert.INSTANCE::toDomain)
-            .collect(Collectors.groupingBy(SystemDeptDomain::getParentId));
+                .collect(Collectors.groupingBy(SystemDeptDomain::getParentId));
         List<SystemDeptDomain> result = new ArrayList<>();
         getDeptByParentId(result, reqDTO.getParentId(), reqDTO.getRecursive() ? Integer.MAX_VALUE : 1, tree);
         return result;
     }
 
     private void getDeptByParentId(List<SystemDeptDomain> result, Long parentId, int recursiveCount,
-        Map<Long, List<SystemDeptDomain>> tree) {
+                                   Map<Long, List<SystemDeptDomain>> tree) {
         // 递归次数为 0，结束！
         if (recursiveCount == 0) {
             return;

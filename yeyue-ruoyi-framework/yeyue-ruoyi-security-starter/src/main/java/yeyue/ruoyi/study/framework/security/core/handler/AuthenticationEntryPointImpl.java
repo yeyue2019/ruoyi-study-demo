@@ -1,18 +1,16 @@
 package yeyue.ruoyi.study.framework.security.core.handler;
 
-import java.io.IOException;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import yeyue.ruoyi.study.framework.common.exception.common.GlobalErrorCode;
+import yeyue.ruoyi.study.framework.common.pojo.core.CommonResult;
+import yeyue.ruoyi.study.framework.common.servlet.util.ServletUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.web.AuthenticationEntryPoint;
-
-import lombok.extern.slf4j.Slf4j;
-import yeyue.ruoyi.study.framework.common.exception.common.GlobalErrorCode;
-import yeyue.ruoyi.study.framework.common.pojo.core.CommonResult;
-import yeyue.ruoyi.study.framework.common.servlet.util.ServletUtils;
+import java.io.IOException;
 
 /**
  * 未登录访问资源的异常处理器
@@ -24,7 +22,7 @@ import yeyue.ruoyi.study.framework.common.servlet.util.ServletUtils;
 public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response,
-        AuthenticationException authException) throws IOException, ServletException {
+                         AuthenticationException authException) throws IOException, ServletException {
         ServletUtils.writeJSON(response, CommonResult.error(GlobalErrorCode.UNAUTHORIZED));
     }
 }

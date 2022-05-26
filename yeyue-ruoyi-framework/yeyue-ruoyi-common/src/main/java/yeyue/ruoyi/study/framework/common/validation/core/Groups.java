@@ -10,15 +10,21 @@ import javax.validation.groups.Default;
  */
 public interface Groups {
 
-    interface Create extends Default {}
+    interface Create extends Default {
+    }
 
-    interface Update extends Default {}
+    interface Update extends Default {
+    }
 
-    interface Get extends Default {}
+    interface Get extends Default {
+    }
 
-    interface Delete extends Default {}
+    interface Delete extends Default {
+    }
 
-    interface List extends Default {}
+    interface List extends Default {
+    }
 
-    interface Other extends Default {}
+    interface Other extends Default {
+    }
 }

@@ -14,7 +14,8 @@ import yeyue.ruoyi.study.framework.common.validation.core.EnumValuable;
 @AllArgsConstructor
 public enum FieldSortedEnum implements EnumValuable<String> {
 
-    ASC("asc"), DESC("desc");
+    ASC("asc"),
+    DESC("desc");
 
     private final String order;
 

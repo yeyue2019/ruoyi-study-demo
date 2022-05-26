@@ -2,7 +2,6 @@ package yeyue.ruoyi.study.module.system.impl.entity.dept.convert;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
-
 import yeyue.ruoyi.study.module.system.api.domain.dept.SystemDeptDomain;
 import yeyue.ruoyi.study.module.system.api.service.dept.dto.SystemDeptCreateReqDTO;
 import yeyue.ruoyi.study.module.system.api.service.dept.dto.SystemDeptUpdateReqDTO;

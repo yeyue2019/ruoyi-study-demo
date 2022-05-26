@@ -1,10 +1,9 @@
 package yeyue.ruoyi.study.framework.common.util.object;
 
-import java.util.function.Function;
-
 import org.apache.commons.lang3.StringUtils;
-
 import yeyue.ruoyi.study.framework.common.constants.StringConstants;
+
+import java.util.function.Function;
 
 /**
  * 对象操作集合
@@ -17,8 +16,8 @@ public abstract class ObjectUtils {
     /**
      * 对象转化
      *
-     * @param function 转换方法
-     * @param source 源对象
+     * @param function      转换方法
+     * @param source        源对象
      * @param defaultResult 源对象为空的默认返回结果
      * @return 结果
      */

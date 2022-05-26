@@ -11,7 +11,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
-
 import yeyue.ruoyi.study.framework.security.core.authorize.AuthorizeRequestsCustomizer;
 import yeyue.ruoyi.study.framework.security.core.context.TransmittableThreadLocalSecurityContextHolderStrategy;
 import yeyue.ruoyi.study.framework.security.core.filter.TokenAuthenticationTokenFilter;
@@ -33,7 +32,7 @@ public class YeyueSecurityAutoConfiguration {
      * Spring Security 加密器 考虑到安全性，这里采用 BCryptPasswordEncoder 加密器
      *
      * @see <a href="http://stackabuse.com/password-encoding-with-spring-security/">Password Encoding with Spring
-     *      Security</a>
+     * Security</a>
      */
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -61,7 +60,7 @@ public class YeyueSecurityAutoConfiguration {
      */
     @Bean
     public TokenAuthenticationTokenFilter authenticationTokenFilter(GlobalExceptionHandler exceptionHandler,
-        SecurityTokenService tokenService) {
+                                                                    SecurityTokenService tokenService) {
         return new TokenAuthenticationTokenFilter(exceptionHandler, tokenService);
     }
 
@@ -83,18 +82,18 @@ public class YeyueSecurityAutoConfiguration {
         return new AuthorizeRequestsCustomizer() {
             @Override
             public void
-                customize(ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry) {
+            customize(ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry) {
                 registry
-                    // 静态资源，可匿名访问
-                    .antMatchers(HttpMethod.GET, "/*.html", "/**/*.html", "/**/*.css", "/**/*.js").permitAll()
-                    // 健康检查放行
-                    .antMatchers("/actuator/**", "/admin-actuator/**").permitAll()
-                    // Swagger放行
-                    .antMatchers(HttpMethod.GET, "/v3/api-docs", "/swagger-resources").permitAll()
-                    // druid放行
-                    .antMatchers("/druid/**").permitAll()
-                    // 系统测试
-                    .antMatchers("/ruoyi/test/security/login").permitAll();
+                        // 静态资源，可匿名访问
+                        .antMatchers(HttpMethod.GET, "/*.html", "/**/*.html", "/**/*.css", "/**/*.js").permitAll()
+                        // 健康检查放行
+                        .antMatchers("/actuator/**", "/admin-actuator/**").permitAll()
+                        // Swagger放行
+                        .antMatchers(HttpMethod.GET, "/v3/api-docs", "/swagger-resources").permitAll()
+                        // druid放行
+                        .antMatchers("/druid/**").permitAll()
+                        // 系统测试
+                        .antMatchers("/ruoyi/test/security/login").permitAll();
             }
         };
     }

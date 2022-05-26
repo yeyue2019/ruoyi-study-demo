@@ -1,17 +1,19 @@
 package yeyue.ruoyi.study.module.system.impl.controller.dept;
 
-import java.util.List;
-
-import javax.annotation.Resource;
-import javax.validation.Valid;
-
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
-
-import io.swagger.annotations.*;
 import yeyue.ruoyi.study.framework.common.pojo.core.CommonResult;
 import yeyue.ruoyi.study.module.system.api.domain.dept.SystemDeptDomain;
 import yeyue.ruoyi.study.module.system.api.service.dept.SystemDeptService;
-import yeyue.ruoyi.study.module.system.api.service.dept.dto.*;
+import yeyue.ruoyi.study.module.system.api.service.dept.dto.SystemDeptCreateReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.dept.dto.SystemDeptListReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.dept.dto.SystemDeptUpdateReqDTO;
+
+import javax.annotation.Resource;
+import javax.validation.Valid;
+import java.util.List;
 
 /**
  * @author yeyue

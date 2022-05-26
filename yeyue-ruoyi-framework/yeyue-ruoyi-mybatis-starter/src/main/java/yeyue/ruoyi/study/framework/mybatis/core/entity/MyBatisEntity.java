@@ -1,11 +1,13 @@
 package yeyue.ruoyi.study.framework.mybatis.core.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.FieldStrategy;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableLogic;
+import lombok.Data;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
-
-import com.baomidou.mybatisplus.annotation.*;
-
-import lombok.Data;
 
 /**
  * 通用数据库实体

@@ -1,25 +1,25 @@
 package yeyue.ruoyi.study.module.system.impl.service.oauth2;
 
-import java.time.LocalDateTime;
-
-import javax.annotation.Resource;
-
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
-import lombok.extern.slf4j.Slf4j;
 import yeyue.ruoyi.study.framework.common.enums.CommonStatusEnum;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.util.enums.EnumUtils;
 import yeyue.ruoyi.study.framework.common.util.ids.IdUtils;
 import yeyue.ruoyi.study.module.system.api.domain.oauth2.SystemOAuth2AccessTokenDomain;
 import yeyue.ruoyi.study.module.system.api.domain.oauth2.SystemOAuth2ClientDomain;
-import yeyue.ruoyi.study.module.system.api.service.auth.*;
+import yeyue.ruoyi.study.module.system.api.service.auth.SystemOAuth2ClientService;
+import yeyue.ruoyi.study.module.system.api.service.auth.SystemOAuth2CodeService;
+import yeyue.ruoyi.study.module.system.api.service.auth.SystemOAuth2TokenService;
 import yeyue.ruoyi.study.module.system.api.service.auth.dto.SystemOAuth2AccessTokenCreateReqDTO;
 import yeyue.ruoyi.study.module.system.api.service.auth.dto.SystemOAuth2CodeCreateReqDTO;
 import yeyue.ruoyi.study.module.system.impl.entity.oauth2.SystemOAuth2CodeEntity;
 import yeyue.ruoyi.study.module.system.impl.framework.exception.SystemErrorCode;
 import yeyue.ruoyi.study.module.system.impl.mapper.oauth2.SystemOAuth2CodeMapper;
+
+import javax.annotation.Resource;
+import java.time.LocalDateTime;
 
 /**
  * @author yeyue
@@ -74,7 +74,7 @@ public class SystemOAuth2CodeServiceImpl implements SystemOAuth2CodeService {
             throw new ServiceException(SystemErrorCode.OAUTH2_CODE_EXPIRES);
         }
         SystemOAuth2AccessTokenDomain accessToken = tokenService.create(
-            new SystemOAuth2AccessTokenCreateReqDTO().setClientId(entity.getClientId()).setUserId(entity.getUserId()));
+                new SystemOAuth2AccessTokenCreateReqDTO().setClientId(entity.getClientId()).setUserId(entity.getUserId()));
         entity.setAccessToken(accessToken.getAccessToken());
         entity.setRefreshToken(accessToken.getRefreshToken());
         entity.setStatus(CommonStatusEnum.DISABLE.getStatus());

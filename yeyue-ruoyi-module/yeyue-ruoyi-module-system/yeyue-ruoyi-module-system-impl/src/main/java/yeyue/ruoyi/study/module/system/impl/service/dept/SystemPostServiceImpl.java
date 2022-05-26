@@ -1,22 +1,24 @@
 package yeyue.ruoyi.study.module.system.impl.service.dept;
 
-import javax.annotation.Resource;
-
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
-import lombok.extern.slf4j.Slf4j;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
 import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
 import yeyue.ruoyi.study.framework.mybatis.core.query.MyBatisLambdaQueryWrapper;
 import yeyue.ruoyi.study.module.system.api.domain.dept.SystemPostDomain;
 import yeyue.ruoyi.study.module.system.api.service.dept.SystemPostService;
-import yeyue.ruoyi.study.module.system.api.service.dept.dto.*;
+import yeyue.ruoyi.study.module.system.api.service.dept.dto.SystemPostCreateReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.dept.dto.SystemPostPageReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.dept.dto.SystemPostStatusUpdateReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.dept.dto.SystemPostUpdateReqDTO;
 import yeyue.ruoyi.study.module.system.impl.entity.dept.SystemPostEntity;
 import yeyue.ruoyi.study.module.system.impl.entity.dept.convert.SystemPostConvert;
 import yeyue.ruoyi.study.module.system.impl.framework.exception.SystemErrorCode;
 import yeyue.ruoyi.study.module.system.impl.mapper.dept.SystemPostMapper;
+
+import javax.annotation.Resource;
 
 /**
  * @author yeyue
@@ -84,8 +86,8 @@ public class SystemPostServiceImpl implements SystemPostService {
     @Override
     public PageResult<SystemPostDomain> list(SystemPostPageReqDTO reqDTO) {
         PageResult<SystemPostEntity> pageResult = mapper.selectPage(reqDTO,
-            new MyBatisLambdaQueryWrapper<SystemPostEntity>().like(SystemPostEntity::getCode, reqDTO.getCode())
-                .like(SystemPostEntity::getName, reqDTO.getName()).eq(SystemPostEntity::getStatus, reqDTO.getStatus()));
+                new MyBatisLambdaQueryWrapper<SystemPostEntity>().like(SystemPostEntity::getCode, reqDTO.getCode())
+                        .like(SystemPostEntity::getName, reqDTO.getName()).eq(SystemPostEntity::getStatus, reqDTO.getStatus()));
         return CollectionUtils.funcPage(pageResult, SystemPostConvert.INSTANCE::toDomain);
     }
 }

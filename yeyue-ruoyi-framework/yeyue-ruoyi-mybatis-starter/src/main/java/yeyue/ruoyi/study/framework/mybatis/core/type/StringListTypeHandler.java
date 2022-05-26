@@ -1,13 +1,18 @@
 package yeyue.ruoyi.study.framework.mybatis.core.type;
 
-import java.sql.*;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.ibatis.type.JdbcType;
+import org.apache.ibatis.type.MappedJdbcTypes;
+import org.apache.ibatis.type.MappedTypes;
+import org.apache.ibatis.type.TypeHandler;
+import yeyue.ruoyi.study.framework.common.constants.StringConstants;
+
+import java.sql.CallableStatement;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-import org.apache.ibatis.type.*;
-
-import yeyue.ruoyi.study.framework.common.constants.StringConstants;
 
 /**
  * 自定义类型转换器 List<String> <-> String
@@ -21,9 +26,9 @@ public class StringListTypeHandler implements TypeHandler<List<String>> {
 
     @Override
     public void setParameter(PreparedStatement preparedStatement, int i, List<String> strings, JdbcType jdbcType)
-        throws SQLException {
+            throws SQLException {
         preparedStatement.setString(i,
-            strings == null ? null : StringUtils.joinWith(StringConstants.SPLIT_JOIN, strings.toArray(new Object[0])));
+                strings == null ? null : StringUtils.joinWith(StringConstants.SPLIT_JOIN, strings.toArray(new Object[0])));
     }
 
     @Override

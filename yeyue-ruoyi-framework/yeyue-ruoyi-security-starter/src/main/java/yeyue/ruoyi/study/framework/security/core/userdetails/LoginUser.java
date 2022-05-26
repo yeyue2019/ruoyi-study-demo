@@ -1,9 +1,11 @@
 package yeyue.ruoyi.study.framework.security.core.userdetails;
 
-import java.io.Serializable;
-import java.util.*;
-
 import lombok.Data;
+
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 登录用户

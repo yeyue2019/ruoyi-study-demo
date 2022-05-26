@@ -1,13 +1,13 @@
 package yeyue.ruoyi.study.framework.mybatis.config;
 
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.context.annotation.*;
-
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
-
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import yeyue.ruoyi.study.framework.mybatis.core.handler.MyBatisFieldAutoFillHandler;
 import yeyue.ruoyi.study.framework.mybatis.core.injector.MyBatisSqlInjector;
 

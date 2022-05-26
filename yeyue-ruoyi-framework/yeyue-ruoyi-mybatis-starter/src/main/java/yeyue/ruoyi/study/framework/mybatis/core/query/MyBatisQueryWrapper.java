@@ -1,13 +1,11 @@
 package yeyue.ruoyi.study.framework.mybatis.core.query;
 
-import java.util.Collection;
-
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
-
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-
 import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
+
+import java.util.Collection;
 
 /**
  * 查询过滤条件
@@ -19,21 +17,21 @@ public class MyBatisQueryWrapper<T> extends QueryWrapper<T> {
 
     @Override
     public MyBatisQueryWrapper<T> eq(String column, Object val) {
-        return (MyBatisQueryWrapper<T>)super.eq(val != null, column, val);
+        return (MyBatisQueryWrapper<T>) super.eq(val != null, column, val);
     }
 
     public MyBatisQueryWrapper<T> like(String column, String val) {
-        return (MyBatisQueryWrapper<T>)super.like(StringUtils.isNotEmpty(val), column, val);
+        return (MyBatisQueryWrapper<T>) super.like(StringUtils.isNotEmpty(val), column, val);
     }
 
     @Override
     public MyBatisQueryWrapper<T> in(String column, Collection<?> coll) {
-        return (MyBatisQueryWrapper<T>)super.in(CollectionUtils.isNotEmpty(coll), column, coll);
+        return (MyBatisQueryWrapper<T>) super.in(CollectionUtils.isNotEmpty(coll), column, coll);
     }
 
     @Override
     public MyBatisQueryWrapper<T> in(String column, Object... values) {
-        return (MyBatisQueryWrapper<T>)super.in(CollectionUtils.isNotNull(values), column, values);
+        return (MyBatisQueryWrapper<T>) super.in(CollectionUtils.isNotNull(values), column, values);
     }
 
     @Override
@@ -42,11 +40,11 @@ public class MyBatisQueryWrapper<T> extends QueryWrapper<T> {
             return this;
         }
         if (ObjectUtils.allNotNull(val1, val2)) {
-            return (MyBatisQueryWrapper<T>)super.between(column, val1, val2);
+            return (MyBatisQueryWrapper<T>) super.between(column, val1, val2);
         }
         if (val1 == null) {
-            return (MyBatisQueryWrapper<T>)super.le(column, val2);
+            return (MyBatisQueryWrapper<T>) super.le(column, val2);
         }
-        return (MyBatisQueryWrapper<T>)super.ge(column, val1);
+        return (MyBatisQueryWrapper<T>) super.ge(column, val1);
     }
 }

@@ -1,19 +1,17 @@
 package yeyue.ruoyi.study.framework.security.core.util;
 
-import java.util.Collections;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.util.StringUtils;
-
 import yeyue.ruoyi.study.framework.common.servlet.constants.ServletConstants;
 import yeyue.ruoyi.study.framework.common.servlet.security.WebSecurityUtils;
 import yeyue.ruoyi.study.framework.security.core.userdetails.LoginUser;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Collections;
 
 /**
  * @author yeyue
@@ -63,14 +61,14 @@ public abstract class SecurityUtils {
         if (authentication == null) {
             return null;
         }
-        return authentication.getPrincipal() instanceof LoginUser ? (LoginUser)authentication.getPrincipal() : null;
+        return authentication.getPrincipal() instanceof LoginUser ? (LoginUser) authentication.getPrincipal() : null;
     }
 
     /**
      * 设置当前用户
      *
      * @param loginUser 当前用户
-     * @param request 请求
+     * @param request   请求
      */
     public static void setLoginUser(LoginUser loginUser, HttpServletRequest request) {
         // 创建 Authentication，并设置到上下文
@@ -86,7 +84,7 @@ public abstract class SecurityUtils {
     private static Authentication buildAuthentication(LoginUser loginUser, HttpServletRequest request) {
         // 创建 UsernamePasswordAuthenticationToken 对象
         UsernamePasswordAuthenticationToken authenticationToken =
-            new UsernamePasswordAuthenticationToken(loginUser, null, Collections.emptyList());
+                new UsernamePasswordAuthenticationToken(loginUser, null, Collections.emptyList());
         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         return authenticationToken;
     }

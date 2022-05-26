@@ -1,10 +1,10 @@
 package yeyue.ruoyi.study.module.system.api.service.dept.dto;
 
-import javax.validation.constraints.NotNull;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * 岗位修改

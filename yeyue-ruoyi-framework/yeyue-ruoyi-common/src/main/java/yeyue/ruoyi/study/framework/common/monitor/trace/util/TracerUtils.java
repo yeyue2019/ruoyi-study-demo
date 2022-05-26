@@ -1,12 +1,10 @@
 package yeyue.ruoyi.study.framework.common.monitor.trace.util;
 
-import org.apache.skywalking.apm.toolkit.opentracing.SkywalkingTracer;
-import org.apache.skywalking.apm.toolkit.trace.TraceContext;
-
 import com.alibaba.fastjson.JSON;
-
 import io.opentracing.Tracer;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.skywalking.apm.toolkit.opentracing.SkywalkingTracer;
+import org.apache.skywalking.apm.toolkit.trace.TraceContext;
 import yeyue.ruoyi.study.framework.common.util.ids.IdUtils;
 
 /**
@@ -40,7 +38,7 @@ public abstract class TracerUtils {
     /**
      * 将标签打入上下文
      *
-     * @param name 标签名
+     * @param name  标签名
      * @param value 标签内容
      */
     public static void tag(String name, Object value) {
@@ -48,11 +46,11 @@ public abstract class TracerUtils {
             return;
         }
         if (value instanceof Boolean) {
-            TRACER.activeSpan().setTag(name, (Boolean)value);
+            TRACER.activeSpan().setTag(name, (Boolean) value);
         } else if (value instanceof Number) {
-            TRACER.activeSpan().setTag(name, (Number)value);
+            TRACER.activeSpan().setTag(name, (Number) value);
         } else if (value instanceof String) {
-            TRACER.activeSpan().setTag(name, (String)value);
+            TRACER.activeSpan().setTag(name, (String) value);
         } else {
             TRACER.activeSpan().setTag(name, JSON.toJSONString(value));
         }

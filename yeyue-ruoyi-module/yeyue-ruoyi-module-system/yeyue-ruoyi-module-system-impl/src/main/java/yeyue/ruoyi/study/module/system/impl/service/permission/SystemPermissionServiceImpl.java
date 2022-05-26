@@ -1,25 +1,29 @@
 package yeyue.ruoyi.study.module.system.impl.service.permission;
 
-import java.util.*;
-import java.util.stream.Collectors;
-
-import javax.annotation.Resource;
-
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
-import lombok.extern.slf4j.Slf4j;
 import yeyue.ruoyi.study.framework.common.enums.CommonStatusEnum;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
 import yeyue.ruoyi.study.module.system.api.domain.permission.SystemMenuDomain;
-import yeyue.ruoyi.study.module.system.api.service.permission.*;
-import yeyue.ruoyi.study.module.system.api.service.permission.dto.*;
+import yeyue.ruoyi.study.module.system.api.service.permission.SystemMenuService;
+import yeyue.ruoyi.study.module.system.api.service.permission.SystemPermissionService;
+import yeyue.ruoyi.study.module.system.api.service.permission.SystemRoleService;
+import yeyue.ruoyi.study.module.system.api.service.permission.dto.SystemMenuListReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.permission.dto.SystemPermissionAssignRoleMenuReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.permission.dto.SystemPermissionAssignUserRoleReqDTO;
 import yeyue.ruoyi.study.module.system.impl.entity.permission.SystemRoleMenuEntity;
 import yeyue.ruoyi.study.module.system.impl.entity.permission.SystemUserRoleEntity;
 import yeyue.ruoyi.study.module.system.impl.framework.exception.SystemErrorCode;
 import yeyue.ruoyi.study.module.system.impl.mapper.permission.SystemRoleMenuMapper;
 import yeyue.ruoyi.study.module.system.impl.mapper.permission.SystemUserRoleMapper;
+
+import javax.annotation.Resource;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author yeyue
@@ -46,12 +50,12 @@ public class SystemPermissionServiceImpl implements SystemPermissionService {
         }
         // 1. 获取全部可用的菜单
         Set<Long> menuIds = CollectionUtils.funcSet(
-            menuService.list(new SystemMenuListReqDTO().setStatus(CommonStatusEnum.ENABLE.getStatus())),
-            SystemMenuDomain::getId);
+                menuService.list(new SystemMenuListReqDTO().setStatus(CommonStatusEnum.ENABLE.getStatus())),
+                SystemMenuDomain::getId);
         Set<Long> assignIds = reqDTO.getMenuIds().stream().filter(menuIds::contains).collect(Collectors.toSet());
         // 2. 查询角色拥有的菜单编号
         Set<Long> ruleIds = CollectionUtils.funcSet(roleMenuMapper.selectListByRoleId(reqDTO.getRoleId()),
-            SystemRoleMenuEntity::getMenuId);
+                SystemRoleMenuEntity::getMenuId);
         // 3. 计算删除和新增的菜单
         Set<Long> deleteIds = ruleIds.stream().filter(r -> !assignIds.contains(r)).collect(Collectors.toSet());
         Set<Long> createIds = assignIds.stream().filter(r -> !ruleIds.contains(r)).collect(Collectors.toSet());
@@ -83,7 +87,7 @@ public class SystemPermissionServiceImpl implements SystemPermissionService {
             return Collections.emptySet();
         } else {
             return CollectionUtils.funcSet(roleMenuMapper.selectListByRoleIds(roleIds),
-                SystemRoleMenuEntity::getMenuId);
+                    SystemRoleMenuEntity::getMenuId);
         }
     }
 
@@ -91,12 +95,12 @@ public class SystemPermissionServiceImpl implements SystemPermissionService {
     public void assignUserRole(SystemPermissionAssignUserRoleReqDTO reqDTO) {
         // 1. 获取用户拥有的角色
         Set<Long> ruleIds = CollectionUtils.funcSet(userRoleMapper.selectListByUserId(reqDTO.getUserId()),
-            SystemUserRoleEntity::getRoleId);
+                SystemUserRoleEntity::getRoleId);
         // 3. 计算删除和新增的菜单
         Set<Long> deleteIds =
-            ruleIds.stream().filter(r -> !reqDTO.getRoleIds().contains(r)).collect(Collectors.toSet());
+                ruleIds.stream().filter(r -> !reqDTO.getRoleIds().contains(r)).collect(Collectors.toSet());
         Set<Long> createIds =
-            reqDTO.getRoleIds().stream().filter(r -> !ruleIds.contains(r)).collect(Collectors.toSet());
+                reqDTO.getRoleIds().stream().filter(r -> !ruleIds.contains(r)).collect(Collectors.toSet());
         // 执行删除和新增的操作
         if (CollectionUtils.isNotEmpty(deleteIds)) {
             userRoleMapper.deleteListByUserIdAndRoleIds(reqDTO.getUserId(), deleteIds);

@@ -1,13 +1,12 @@
 package yeyue.ruoyi.study.framework.web.web.handler;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
-
-import lombok.extern.slf4j.Slf4j;
 import yeyue.ruoyi.study.framework.common.pojo.core.CommonResult;
 
 /**
@@ -33,7 +32,7 @@ public class GlobalResponseHandler implements ResponseBodyAdvice {
 
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType,
-        Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
+                                  Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
         // TODO: 2022/4/20 所有经过该方法处理的都是业务功能接口，如果需要记录操作日志可以在这里记录
         return body;
     }

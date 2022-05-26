@@ -1,13 +1,13 @@
 package yeyue.ruoyi.study.module.system.api.service.permission.dto;
 
-import java.io.Serializable;
-import java.util.Set;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import yeyue.ruoyi.study.framework.common.enums.CommonStatusEnum;
 import yeyue.ruoyi.study.framework.common.validation.annotation.InEnum;
+
+import java.io.Serializable;
+import java.util.Set;
 
 /**
  * @author yeyue

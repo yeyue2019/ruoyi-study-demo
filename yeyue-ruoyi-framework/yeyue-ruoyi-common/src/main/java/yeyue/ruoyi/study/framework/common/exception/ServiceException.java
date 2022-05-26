@@ -19,7 +19,8 @@ public class ServiceException extends RuntimeException implements ErrorCode {
     private String code;
     private String msg;
 
-    public ServiceException() {}
+    public ServiceException() {
+    }
 
     public ServiceException(ErrorCode errorCode) {
         this(errorCode.getCode(), errorCode.getMsg());

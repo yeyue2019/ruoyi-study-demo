@@ -31,7 +31,7 @@ public interface SystemUserService {
     /**
      * 修改用户密码
      *
-     * @param id 用户id
+     * @param id  用户id
      * @param req 密码信息
      */
     void updatePwd(Long id, SystemUserUpdatePwdReq req);
@@ -39,7 +39,7 @@ public interface SystemUserService {
     /**
      * 修改用户状态
      *
-     * @param id 用户Id
+     * @param id     用户Id
      * @param status 状态
      */
     void updateStatus(Long id, Integer status);

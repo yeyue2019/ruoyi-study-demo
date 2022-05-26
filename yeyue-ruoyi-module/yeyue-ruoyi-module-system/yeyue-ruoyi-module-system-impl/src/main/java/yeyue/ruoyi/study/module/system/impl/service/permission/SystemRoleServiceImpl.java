@@ -1,13 +1,8 @@
 package yeyue.ruoyi.study.module.system.impl.service.permission;
 
-import java.util.*;
-
-import javax.annotation.Resource;
-
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
-import lombok.extern.slf4j.Slf4j;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
 import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
@@ -16,11 +11,19 @@ import yeyue.ruoyi.study.module.system.api.domain.permission.SystemRoleDomain;
 import yeyue.ruoyi.study.module.system.api.enums.permission.RoleCodeEnum;
 import yeyue.ruoyi.study.module.system.api.service.permission.SystemPermissionService;
 import yeyue.ruoyi.study.module.system.api.service.permission.SystemRoleService;
-import yeyue.ruoyi.study.module.system.api.service.permission.dto.*;
+import yeyue.ruoyi.study.module.system.api.service.permission.dto.SystemRoleCreateReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.permission.dto.SystemRoleListReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.permission.dto.SystemRolePageReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.permission.dto.SystemRoleUpdateReqDTO;
 import yeyue.ruoyi.study.module.system.impl.entity.permission.SystemRoleEntity;
 import yeyue.ruoyi.study.module.system.impl.entity.permission.convert.SystemRoleConvert;
 import yeyue.ruoyi.study.module.system.impl.framework.exception.SystemErrorCode;
 import yeyue.ruoyi.study.module.system.impl.mapper.permission.SystemRoleMapper;
+
+import javax.annotation.Resource;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * @author yeyue
@@ -78,7 +81,7 @@ public class SystemRoleServiceImpl implements SystemRoleService {
     @Override
     public List<SystemRoleDomain> list(SystemRoleListReqDTO reqDTO) {
         List<SystemRoleEntity> list = mapper.selectList(new MyBatisLambdaQueryWrapper<SystemRoleEntity>()
-            .in(SystemRoleEntity::getId, reqDTO.getIds()).eq(SystemRoleEntity::getStatus, reqDTO.getStatus()));
+                .in(SystemRoleEntity::getId, reqDTO.getIds()).eq(SystemRoleEntity::getStatus, reqDTO.getStatus()));
         return CollectionUtils.funcList(list, SystemRoleConvert.INSTANCE::toDomain);
     }
 

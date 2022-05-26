@@ -1,9 +1,11 @@
 package yeyue.ruoyi.study.module.system.api.service.permission;
 
-import java.util.List;
-
 import yeyue.ruoyi.study.module.system.api.domain.permission.SystemMenuDomain;
-import yeyue.ruoyi.study.module.system.api.service.permission.dto.*;
+import yeyue.ruoyi.study.module.system.api.service.permission.dto.SystemMenuCreateReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.permission.dto.SystemMenuListReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.permission.dto.SystemMenuUpdateReqDTO;
+
+import java.util.List;
 
 /**
  * @author yeyue

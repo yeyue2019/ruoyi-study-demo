@@ -1,15 +1,9 @@
 package yeyue.ruoyi.study.module.system.impl.service.permission;
 
-import java.util.List;
-import java.util.Objects;
-
-import javax.annotation.Resource;
-
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
-import lombok.extern.slf4j.Slf4j;
 import yeyue.ruoyi.study.framework.common.enums.CommonStatusEnum;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
@@ -20,11 +14,17 @@ import yeyue.ruoyi.study.module.system.api.enums.permission.MenuIdEnum;
 import yeyue.ruoyi.study.module.system.api.enums.permission.MenuTypeEnum;
 import yeyue.ruoyi.study.module.system.api.service.permission.SystemMenuService;
 import yeyue.ruoyi.study.module.system.api.service.permission.SystemPermissionService;
-import yeyue.ruoyi.study.module.system.api.service.permission.dto.*;
+import yeyue.ruoyi.study.module.system.api.service.permission.dto.SystemMenuCreateReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.permission.dto.SystemMenuListReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.permission.dto.SystemMenuUpdateReqDTO;
 import yeyue.ruoyi.study.module.system.impl.entity.permission.SystemMenuEntity;
 import yeyue.ruoyi.study.module.system.impl.entity.permission.convert.SystemMenuConvert;
 import yeyue.ruoyi.study.module.system.impl.framework.exception.SystemErrorCode;
 import yeyue.ruoyi.study.module.system.impl.mapper.permission.SystemMenuMapper;
+
+import javax.annotation.Resource;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * @author yeyue
@@ -102,7 +102,7 @@ public class SystemMenuServiceImpl implements SystemMenuService {
     @Override
     public List<SystemMenuDomain> list(SystemMenuListReqDTO reqDTO) {
         List<SystemMenuEntity> list = mapper.selectList(
-            new MyBatisLambdaQueryWrapper<SystemMenuEntity>().eq(SystemMenuEntity::getStatus, reqDTO.getStatus()));
+                new MyBatisLambdaQueryWrapper<SystemMenuEntity>().eq(SystemMenuEntity::getStatus, reqDTO.getStatus()));
         return CollectionUtils.funcList(list, SystemMenuConvert.INSTANCE::toDomain);
     }
 

@@ -1,14 +1,13 @@
 package yeyue.ruoyi.study.module.system.impl.entity.oauth2;
 
-import static yeyue.ruoyi.study.module.system.impl.constants.SystemTableConstants.SYSTEM_AUTH_CLIENT;
+import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
+import lombok.Data;
+import yeyue.ruoyi.study.framework.mybatis.core.entity.MyBatisEntity;
 
 import java.util.List;
 
-import com.baomidou.mybatisplus.annotation.*;
-import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
-
-import lombok.Data;
-import yeyue.ruoyi.study.framework.mybatis.core.entity.MyBatisEntity;
+import static yeyue.ruoyi.study.module.system.impl.constants.SystemTableConstants.SYSTEM_AUTH_CLIENT;
 
 /**
  * OAuth2.0 客户端

@@ -1,8 +1,7 @@
 package yeyue.ruoyi.study.framework.monitor.actuator.admin;
 
-import org.springframework.context.annotation.Configuration;
-
 import de.codecentric.boot.admin.server.config.EnableAdminServer;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * 开启AdminServer的自动配置
@@ -12,4 +11,5 @@ import de.codecentric.boot.admin.server.config.EnableAdminServer;
  */
 @Configuration
 @EnableAdminServer
-public class YeyueAdminServerAutoConfiguration {}
+public class YeyueAdminServerAutoConfiguration {
+}

@@ -1,8 +1,8 @@
 package yeyue.ruoyi.study.framework.redis.domain;
 
-import java.util.concurrent.TimeUnit;
-
 import lombok.Data;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * redis实例定义

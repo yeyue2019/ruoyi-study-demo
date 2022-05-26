@@ -1,18 +1,16 @@
 package yeyue.ruoyi.study.module.system.api.service.auth.dto;
 
-import java.io.Serializable;
-import java.util.List;
-
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.URL;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.hibernate.validator.constraints.URL;
 import yeyue.ruoyi.study.framework.common.validation.annotation.InEnum;
 import yeyue.ruoyi.study.module.system.api.enums.oauth2.OAuth2GrantTypeEnum;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * 创建 OAuth2 客户端请求
@@ -57,7 +55,7 @@ public class SystemOAuth2ClientCreateReqDTO implements Serializable {
     @ApiModelProperty(value = "授权类型", required = true, example = "password", notes = "参见 OAuth2GrantTypeEnum 枚举")
     @NotNull(message = "授权类型不能为空")
     private List<@NotEmpty(message = "授权类型不能为空") @InEnum(value = OAuth2GrantTypeEnum.class,
-        message = "授权类型不在可选范围内") String> authorizedGrantTypes;
+            message = "授权类型不在可选范围内") String> authorizedGrantTypes;
 
     @ApiModelProperty(value = "授权范围", example = "user_info")
     private List<String> scopes;

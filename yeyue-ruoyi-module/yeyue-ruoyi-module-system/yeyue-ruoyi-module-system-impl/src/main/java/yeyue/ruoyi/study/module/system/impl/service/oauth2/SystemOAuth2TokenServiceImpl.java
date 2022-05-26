@@ -1,14 +1,9 @@
 package yeyue.ruoyi.study.module.system.impl.service.oauth2;
 
-import java.time.LocalDateTime;
-
-import javax.annotation.Resource;
-
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
-import lombok.extern.slf4j.Slf4j;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.util.ids.IdUtils;
 import yeyue.ruoyi.study.module.system.api.domain.oauth2.SystemOAuth2AccessTokenDomain;
@@ -23,6 +18,9 @@ import yeyue.ruoyi.study.module.system.impl.entity.oauth2.convert.SystemOAuth2Ac
 import yeyue.ruoyi.study.module.system.impl.framework.exception.SystemErrorCode;
 import yeyue.ruoyi.study.module.system.impl.mapper.oauth2.SystemOAuth2AccessTokenMapper;
 import yeyue.ruoyi.study.module.system.impl.mapper.oauth2.SystemOAuth2RefreshTokenMapper;
+
+import javax.annotation.Resource;
+import java.time.LocalDateTime;
 
 /**
  * @author yeyue
@@ -115,7 +113,7 @@ public class SystemOAuth2TokenServiceImpl implements SystemOAuth2TokenService {
     }
 
     private SystemOAuth2AccessTokenEntity createAccessToken(SystemOAuth2ClientDomain client,
-        SystemOAuth2RefreshTokenEntity refreshToken) {
+                                                            SystemOAuth2RefreshTokenEntity refreshToken) {
         SystemOAuth2AccessTokenEntity entity = new SystemOAuth2AccessTokenEntity();
         entity.setClientId(client.getClientId());
         entity.setUserId(refreshToken.getUserId());

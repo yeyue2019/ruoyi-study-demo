@@ -1,12 +1,12 @@
 package yeyue.ruoyi.study.module.system.api.service.dept.dto;
 
-import javax.validation.constraints.NotNull;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import yeyue.ruoyi.study.framework.common.enums.CommonStatusEnum;
 import yeyue.ruoyi.study.framework.common.validation.annotation.InEnum;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * @author yeyue

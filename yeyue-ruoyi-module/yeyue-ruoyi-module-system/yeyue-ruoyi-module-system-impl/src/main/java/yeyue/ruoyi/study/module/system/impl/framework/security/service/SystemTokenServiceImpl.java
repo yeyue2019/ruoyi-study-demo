@@ -1,8 +1,7 @@
 package yeyue.ruoyi.study.module.system.impl.framework.security.service;
 
-import org.springframework.stereotype.Component;
-
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 import yeyue.ruoyi.study.framework.security.core.service.SecurityTokenService;
 import yeyue.ruoyi.study.framework.security.core.userdetails.LoginUser;
 

@@ -1,12 +1,10 @@
 package yeyue.ruoyi.study.framework.druid.config;
 
+import com.alibaba.druid.spring.boot.autoconfigure.properties.DruidStatProperties;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import com.alibaba.druid.spring.boot.autoconfigure.properties.DruidStatProperties;
-
 import yeyue.ruoyi.study.framework.druid.core.filter.DruidAdRemoveFilter;
 
 /**

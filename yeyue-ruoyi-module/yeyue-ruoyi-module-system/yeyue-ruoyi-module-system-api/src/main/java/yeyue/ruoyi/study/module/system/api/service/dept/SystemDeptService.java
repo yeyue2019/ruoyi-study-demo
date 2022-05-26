@@ -1,9 +1,11 @@
 package yeyue.ruoyi.study.module.system.api.service.dept;
 
-import java.util.List;
-
 import yeyue.ruoyi.study.module.system.api.domain.dept.SystemDeptDomain;
-import yeyue.ruoyi.study.module.system.api.service.dept.dto.*;
+import yeyue.ruoyi.study.module.system.api.service.dept.dto.SystemDeptCreateReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.dept.dto.SystemDeptListReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.dept.dto.SystemDeptUpdateReqDTO;
+
+import java.util.List;
 
 /**
  * @author yeyue

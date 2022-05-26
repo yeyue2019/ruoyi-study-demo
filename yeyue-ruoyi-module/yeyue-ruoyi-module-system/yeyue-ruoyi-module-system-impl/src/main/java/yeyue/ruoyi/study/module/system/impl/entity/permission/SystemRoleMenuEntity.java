@@ -1,11 +1,12 @@
 package yeyue.ruoyi.study.module.system.impl.entity.permission;
 
-import static yeyue.ruoyi.study.module.system.impl.constants.SystemTableConstants.SYSTEM_ROLE_MENU;
-
-import com.baomidou.mybatisplus.annotation.*;
-
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import yeyue.ruoyi.study.framework.mybatis.core.entity.MyBatisEntity;
+
+import static yeyue.ruoyi.study.module.system.impl.constants.SystemTableConstants.SYSTEM_ROLE_MENU;
 
 /**
  * 角色权限关联表

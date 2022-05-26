@@ -1,9 +1,9 @@
 package yeyue.ruoyi.study.framework.common.enums;
 
-import java.time.format.DateTimeFormatter;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+
+import java.time.format.DateTimeFormatter;
 
 /**
  * 时间格式枚举
@@ -15,7 +15,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum DateTimeFormatterEnum {
 
-    LOCAL_DATE_DEFAULT("yyyy-MM-dd HH:mm:ss"), LOCAL_TIME_DEFAULT("HH:mm:ss"),
+    LOCAL_DATE_DEFAULT("yyyy-MM-dd HH:mm:ss"),
+    LOCAL_TIME_DEFAULT("HH:mm:ss"),
     LOCAL_DATE_TIME_DEFAULT("yyyy-MM-dd HH:mm:ss"),
 
     ;

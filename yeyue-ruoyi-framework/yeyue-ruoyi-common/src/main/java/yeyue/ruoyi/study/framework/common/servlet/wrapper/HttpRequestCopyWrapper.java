@@ -1,19 +1,17 @@
 package yeyue.ruoyi.study.framework.common.servlet.wrapper;
 
-import java.io.*;
-import java.nio.charset.Charset;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import yeyue.ruoyi.study.framework.common.exception.ServiceException;
+import yeyue.ruoyi.study.framework.common.exception.common.GlobalErrorCode;
+import yeyue.ruoyi.study.framework.common.servlet.util.ServletUtils;
 
 import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
-
-import org.apache.commons.lang3.StringUtils;
-
-import lombok.extern.slf4j.Slf4j;
-import yeyue.ruoyi.study.framework.common.exception.ServiceException;
-import yeyue.ruoyi.study.framework.common.exception.common.GlobalErrorCode;
-import yeyue.ruoyi.study.framework.common.servlet.util.ServletUtils;
+import java.io.*;
+import java.nio.charset.Charset;
 
 /**
  * 请求拷贝类
@@ -70,7 +68,8 @@ public class HttpRequestCopyWrapper extends HttpServletRequestWrapper {
             }
 
             @Override
-            public void setReadListener(ReadListener readListener) {}
+            public void setReadListener(ReadListener readListener) {
+            }
 
             @Override
             public int available() {

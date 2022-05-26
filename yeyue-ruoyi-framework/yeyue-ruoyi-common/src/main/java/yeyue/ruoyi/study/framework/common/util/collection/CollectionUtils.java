@@ -1,14 +1,13 @@
 package yeyue.ruoyi.study.framework.common.util.collection;
 
+import org.springframework.util.Assert;
+import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
+
 import java.lang.reflect.Array;
 import java.lang.reflect.ParameterizedType;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
-import org.springframework.util.Assert;
-
-import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
 
 /**
  * 集合操作工具类
@@ -46,7 +45,7 @@ public abstract class CollectionUtils extends org.springframework.util.Collectio
 
     @SuppressWarnings("unchecked")
     public static <T> T[] empty() {
-        return (T[])EMPTY_ARRAY;
+        return (T[]) EMPTY_ARRAY;
     }
 
     /* 集合和数组转化 */
@@ -63,7 +62,7 @@ public abstract class CollectionUtils extends org.springframework.util.Collectio
         if (isEmpty(list)) {
             return empty();
         }
-        return (T[])Array.newInstance(getListClazz(list), list.size());
+        return (T[]) Array.newInstance(getListClazz(list), list.size());
     }
 
     /* 带转换函数的集合数组转换 */
@@ -113,9 +112,9 @@ public abstract class CollectionUtils extends org.springframework.util.Collectio
     /**
      * 集合分割处理
      *
-     * @param from 源集合
+     * @param from         源集合
      * @param childrenSize 子集合大小
-     * @param <T> 对象类型
+     * @param <T>          对象类型
      * @return 结果
      */
     public static <T> List<List<T>> subList(List<T> from, int childrenSize) {
@@ -145,12 +144,12 @@ public abstract class CollectionUtils extends org.springframework.util.Collectio
      * 获取集合的泛型类型
      *
      * @param list 集合
-     * @param <T> 集合泛型
+     * @param <T>  集合泛型
      * @return 泛型类型
      */
     @SuppressWarnings("unchecked")
     public static <T> Class<T> getListClazz(List<T> list) {
-        ParameterizedType parameterizedType = (ParameterizedType)list.getClass().getGenericSuperclass();// 获取当前new对象的泛型的父类类型
-        return (Class<T>)parameterizedType.getActualTypeArguments()[0];
+        ParameterizedType parameterizedType = (ParameterizedType) list.getClass().getGenericSuperclass();// 获取当前new对象的泛型的父类类型
+        return (Class<T>) parameterizedType.getActualTypeArguments()[0];
     }
 }

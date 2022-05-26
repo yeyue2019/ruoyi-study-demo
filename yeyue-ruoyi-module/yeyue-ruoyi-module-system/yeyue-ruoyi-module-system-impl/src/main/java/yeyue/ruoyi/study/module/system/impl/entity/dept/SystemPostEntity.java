@@ -1,11 +1,12 @@
 package yeyue.ruoyi.study.module.system.impl.entity.dept;
 
-import static yeyue.ruoyi.study.module.system.impl.constants.SystemTableConstants.SYSTEM_POST;
-
-import com.baomidou.mybatisplus.annotation.*;
-
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import yeyue.ruoyi.study.framework.mybatis.core.entity.MyBatisEntity;
+
+import static yeyue.ruoyi.study.module.system.impl.constants.SystemTableConstants.SYSTEM_POST;
 
 /**
  * 岗位表 ： 目前仅用作用户身份的一个标识

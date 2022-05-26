@@ -1,9 +1,5 @@
 package yeyue.ruoyi.study.framework.security.config;
 
-import java.util.List;
-
-import javax.annotation.Resource;
-
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,9 +11,11 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
 import yeyue.ruoyi.study.framework.security.core.authorize.AuthorizeRequestsCustomizer;
 import yeyue.ruoyi.study.framework.security.core.filter.TokenAuthenticationTokenFilter;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 自定义 Spring Security 适配器
@@ -62,22 +60,22 @@ public class YeyueWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdap
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-            // 跨域 开启
-            .cors().and()
-            // 跨站请求伪造 关闭
-            .csrf().disable()
-            // Session 关闭
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().headers().frameOptions()
-            .disable().and()
-            // 添加自定义的处理器
-            .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint)
-            .accessDeniedHandler(accessDeniedHandler).and()
-            // 添加自定义过滤规则
-            .authorizeRequests(
-                registry -> authorizeRequestsCustomizers.forEach(customizer -> customizer.customize(registry)))
-            // 兜底保证
-            .authorizeRequests().anyRequest().authenticated().and()
-            .addFilterBefore(authenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
+                // 跨域 开启
+                .cors().and()
+                // 跨站请求伪造 关闭
+                .csrf().disable()
+                // Session 关闭
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().headers().frameOptions()
+                .disable().and()
+                // 添加自定义的处理器
+                .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint)
+                .accessDeniedHandler(accessDeniedHandler).and()
+                // 添加自定义过滤规则
+                .authorizeRequests(
+                        registry -> authorizeRequestsCustomizers.forEach(customizer -> customizer.customize(registry)))
+                // 兜底保证
+                .authorizeRequests().anyRequest().authenticated().and()
+                .addFilterBefore(authenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
     }
 }

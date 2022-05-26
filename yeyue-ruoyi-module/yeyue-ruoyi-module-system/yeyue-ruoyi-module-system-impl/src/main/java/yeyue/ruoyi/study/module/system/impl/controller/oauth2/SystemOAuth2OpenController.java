@@ -1,11 +1,17 @@
 package yeyue.ruoyi.study.module.system.impl.controller.oauth2;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.web.bind.annotation.*;
-
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import yeyue.ruoyi.study.framework.common.pojo.core.CommonResult;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author yeyue
@@ -24,25 +30,25 @@ public class SystemOAuth2OpenController {
      * <p>
      * 注意，默认需要传递 client_id + client_secret 参数
      */
-    @PostMapping("/token")
-    @ApiOperation(value = "获得访问令牌", notes = "适合 code 授权码模式，或者 implicit 简化模式；在 sso.vue 单点登录界面被【获取】调用")
+    @PostMapping("/authorize")
+    @ApiOperation(value = "授权")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "grant_type", required = true, value = "授权类型", example = "code",
-            dataTypeClass = String.class),
-        @ApiImplicitParam(name = "code", value = "授权范围", example = "userinfo.read", dataTypeClass = String.class),
-        @ApiImplicitParam(name = "redirect_uri", value = "重定向 URI", example = "https://www.iocoder.cn",
-            dataTypeClass = String.class),
-        @ApiImplicitParam(name = "username", example = "tudou", dataTypeClass = String.class),
-        @ApiImplicitParam(name = "password", example = "cai", dataTypeClass = String.class), // 多个使用空格分隔
-        @ApiImplicitParam(name = "scope", example = "user_info", dataTypeClass = String.class)})
-    public CommonResult<OAuth2OpenAccessTokenRespVO> postAccessToken(HttpServletRequest request,
-        @RequestParam("grant_type") String grantType, @RequestParam(value = "code", required = false) String code, // 授权码模式
-        @RequestParam(value = "redirect_uri", required = false) String redirectUri, // 授权码模式
-        @RequestParam(value = "state", required = false) String state, // 授权码模式
-        @RequestParam(value = "username", required = false) String username, // 密码模式
-        @RequestParam(value = "password", required = false) String password, // 密码模式
-        @RequestParam(value = "scope", required = false) String scope, // 密码模式
-        @RequestParam(value = "refresh_token", required = false) String refreshToken) { // 刷新模式
-
+            @ApiImplicitParam(name = "grant_type", required = true, value = "授权类型", example = "code", dataTypeClass = String.class),
+            @ApiImplicitParam(name = "code", value = "授权范围", example = "userinfo.read", dataTypeClass = String.class),
+            @ApiImplicitParam(name = "redirect_uri", value = "重定向 URI", example = "https://www.baidu.com", dataTypeClass = String.class),
+            @ApiImplicitParam(name = "username", example = "yeyue", dataTypeClass = String.class),
+            @ApiImplicitParam(name = "password", example = "123456", dataTypeClass = String.class),
+            @ApiImplicitParam(name = "scope", example = "user_info", dataTypeClass = String.class)})
+    public CommonResult<Void> postAccessToken(
+            HttpServletRequest request, @RequestParam("grant_type") String grantType,
+            @RequestParam(value = "code", required = false) String code, // 授权码模式
+            @RequestParam(value = "redirect_uri", required = false) String redirectUri, // 授权码模式
+            @RequestParam(value = "state", required = false) String state, // 授权码模式
+            @RequestParam(value = "username", required = false) String username, // 密码模式
+            @RequestParam(value = "password", required = false) String password, // 密码模式
+            @RequestParam(value = "scope", required = false) String scope, // 密码模式
+            @RequestParam(value = "refresh_token", required = false) String refreshToken
+    ) { // 刷新模式
+        List<String>
     }
 }

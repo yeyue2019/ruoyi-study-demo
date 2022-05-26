@@ -1,8 +1,7 @@
 package yeyue.ruoyi.study.framework.web.doc.swagger.properties;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-
 import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * Swagger Doc配置项

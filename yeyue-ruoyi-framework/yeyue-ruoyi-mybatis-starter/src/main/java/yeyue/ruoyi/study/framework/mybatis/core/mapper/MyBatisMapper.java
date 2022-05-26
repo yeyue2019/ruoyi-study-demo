@@ -1,11 +1,5 @@
 package yeyue.ruoyi.study.framework.mybatis.core.mapper;
 
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.List;
-
-import org.apache.ibatis.annotations.Param;
-
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -13,10 +7,14 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
-
+import org.apache.ibatis.annotations.Param;
 import yeyue.ruoyi.study.framework.common.pojo.pageable.PageParam;
 import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
 import yeyue.ruoyi.study.framework.mybatis.core.util.MyBatisUtils;
+
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * @author yeyue
@@ -27,7 +25,7 @@ public interface MyBatisMapper<T> extends BaseMapper<T> {
     /**
      * 分页查询结果
      *
-     * @param queryParam 分页参数
+     * @param queryParam   分页参数
      * @param queryWrapper 查询条件
      * @return 结果
      */
@@ -137,5 +135,5 @@ public interface MyBatisMapper<T> extends BaseMapper<T> {
      * @return 保存成功的数量
      */
     int updateBatchColumnByIds(@Param(Constants.ENTITY) T entity,
-        @Param(Constants.COLLECTION) Collection<? extends Serializable> idList);
+                               @Param(Constants.COLLECTION) Collection<? extends Serializable> idList);
 }

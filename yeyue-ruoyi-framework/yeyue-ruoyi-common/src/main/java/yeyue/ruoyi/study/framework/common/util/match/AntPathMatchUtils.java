@@ -1,8 +1,8 @@
 package yeyue.ruoyi.study.framework.common.util.match;
 
-import java.util.Arrays;
-
 import org.springframework.util.AntPathMatcher;
+
+import java.util.Arrays;
 
 /**
  * Ant路径匹配
@@ -16,7 +16,7 @@ public abstract class AntPathMatchUtils {
     /**
      * 单独匹配
      *
-     * @param path 路径
+     * @param path    路径
      * @param pattern 匹配的格式
      * @return 结果
      */
@@ -27,7 +27,7 @@ public abstract class AntPathMatchUtils {
     /**
      * 任一匹配
      *
-     * @param path 路径
+     * @param path     路径
      * @param patterns 匹配的格式
      * @return 结果
      */
@@ -41,7 +41,7 @@ public abstract class AntPathMatchUtils {
     /**
      * 无一匹配
      *
-     * @param path 路径
+     * @param path     路径
      * @param patterns 匹配的格式
      * @return 结果
      */

@@ -1,13 +1,12 @@
 package yeyue.ruoyi.study.framework.mybatis.core.injector;
 
-import java.util.List;
-
 import com.baomidou.mybatisplus.core.injector.AbstractMethod;
 import com.baomidou.mybatisplus.core.injector.DefaultSqlInjector;
 import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import com.baomidou.mybatisplus.extension.injector.methods.InsertBatchSomeColumn;
-
 import yeyue.ruoyi.study.framework.mybatis.core.injector.method.UpdateBatchColumnByIds;
+
+import java.util.List;
 
 /**
  * 添加mybatis对于mysql批量操作的支持

@@ -2,7 +2,10 @@ package yeyue.ruoyi.study.module.system.api.service.dept;
 
 import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
 import yeyue.ruoyi.study.module.system.api.domain.dept.SystemPostDomain;
-import yeyue.ruoyi.study.module.system.api.service.dept.dto.*;
+import yeyue.ruoyi.study.module.system.api.service.dept.dto.SystemPostCreateReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.dept.dto.SystemPostPageReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.dept.dto.SystemPostStatusUpdateReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.dept.dto.SystemPostUpdateReqDTO;
 
 /**
  * @author yeyue

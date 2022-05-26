@@ -1,23 +1,24 @@
 package yeyue.ruoyi.study.framework.redis.core.impl;
 
-import java.util.*;
-
-import org.redisson.api.*;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RBatch;
+import org.redisson.api.RBucketAsync;
+import org.redisson.api.RFuture;
+import org.redisson.api.RedissonClient;
 import org.redisson.client.codec.StringCodec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
-
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import lombok.extern.slf4j.Slf4j;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.exception.common.GlobalErrorCode;
 import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
 import yeyue.ruoyi.study.framework.common.util.object.ObjectUtils;
 import yeyue.ruoyi.study.framework.redis.core.RedisRepository;
 import yeyue.ruoyi.study.framework.redis.domain.RedisDomainDefine;
+
+import java.util.*;
 
 /**
  * @author yeyue
@@ -37,7 +38,7 @@ public class RedisRepositoryImpl implements RedisRepository {
 
     @Autowired
     public RedisRepositoryImpl(RedissonClient redissonClient, ObjectMapper objectMapper,
-        StringRedisTemplate redisTemplate) {
+                               StringRedisTemplate redisTemplate) {
         this.redissonClient = redissonClient;
         this.objectMapper = objectMapper;
         this.redisTemplate = redisTemplate;

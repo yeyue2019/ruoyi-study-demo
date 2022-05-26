@@ -2,8 +2,9 @@ package yeyue.ruoyi.study.framework.monitor.trace.core;
 
 import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.config.plugins.Plugin;
-import org.apache.logging.log4j.core.pattern.*;
-
+import org.apache.logging.log4j.core.pattern.ConverterKeys;
+import org.apache.logging.log4j.core.pattern.LogEventPatternConverter;
+import org.apache.logging.log4j.core.pattern.PatternConverter;
 import yeyue.ruoyi.study.framework.common.monitor.trace.util.TracerUtils;
 
 /**

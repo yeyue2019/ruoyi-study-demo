@@ -1,11 +1,11 @@
 package yeyue.ruoyi.study.module.system.impl.mapper.permission;
 
-import java.util.Collection;
-import java.util.List;
-
 import yeyue.ruoyi.study.framework.mybatis.core.mapper.MyBatisMapper;
 import yeyue.ruoyi.study.framework.mybatis.core.query.MyBatisLambdaQueryWrapper;
 import yeyue.ruoyi.study.module.system.impl.entity.permission.SystemUserRoleEntity;
+
+import java.util.Collection;
+import java.util.List;
 
 /**
  * @author yeyue
@@ -15,12 +15,12 @@ public interface SystemUserRoleMapper extends MyBatisMapper<SystemUserRoleEntity
 
     default List<SystemUserRoleEntity> selectListByUserId(Long userId) {
         return selectList(
-            new MyBatisLambdaQueryWrapper<SystemUserRoleEntity>().eq(SystemUserRoleEntity::getUserId, userId));
+                new MyBatisLambdaQueryWrapper<SystemUserRoleEntity>().eq(SystemUserRoleEntity::getUserId, userId));
     }
 
     default void deleteListByUserIdAndRoleIds(Long userId, Collection<Long> ruleIds) {
         delete(new MyBatisLambdaQueryWrapper<SystemUserRoleEntity>().eq(SystemUserRoleEntity::getUserId, userId)
-            .in(SystemUserRoleEntity::getRoleId, ruleIds));
+                .in(SystemUserRoleEntity::getRoleId, ruleIds));
     }
 
     default void deleteListByRoleId(Long roleId) {

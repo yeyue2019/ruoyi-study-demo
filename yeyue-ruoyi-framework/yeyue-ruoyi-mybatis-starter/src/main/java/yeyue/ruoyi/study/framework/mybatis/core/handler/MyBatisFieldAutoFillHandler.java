@@ -1,14 +1,12 @@
 package yeyue.ruoyi.study.framework.mybatis.core.handler;
 
-import java.time.LocalDateTime;
-import java.util.Objects;
-
-import org.apache.ibatis.reflection.MetaObject;
-
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
-
+import org.apache.ibatis.reflection.MetaObject;
 import yeyue.ruoyi.study.framework.common.servlet.security.WebSecurityUtils;
 import yeyue.ruoyi.study.framework.mybatis.core.entity.MyBatisEntity;
+
+import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * 字段自动填充处理器
@@ -21,7 +19,7 @@ public class MyBatisFieldAutoFillHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
         if (Objects.nonNull(metaObject) && metaObject.getOriginalObject() instanceof MyBatisEntity) {
-            MyBatisEntity entity = (MyBatisEntity)metaObject.getOriginalObject();
+            MyBatisEntity entity = (MyBatisEntity) metaObject.getOriginalObject();
             LocalDateTime current = LocalDateTime.now();
             if (Objects.isNull(entity.getCreateTime())) {
                 entity.setCreateTime(current);
@@ -41,7 +39,7 @@ public class MyBatisFieldAutoFillHandler implements MetaObjectHandler {
     @Override
     public void updateFill(MetaObject metaObject) {
         if (Objects.nonNull(metaObject) && metaObject.getOriginalObject() instanceof MyBatisEntity) {
-            MyBatisEntity entity = (MyBatisEntity)metaObject.getOriginalObject();
+            MyBatisEntity entity = (MyBatisEntity) metaObject.getOriginalObject();
             LocalDateTime current = LocalDateTime.now();
             entity.setUpdateTime(current);
             entity.setUpdater(WebSecurityUtils.getLoginUserId());

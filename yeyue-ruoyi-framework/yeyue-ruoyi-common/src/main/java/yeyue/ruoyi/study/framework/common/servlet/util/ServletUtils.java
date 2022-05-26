@@ -1,20 +1,11 @@
 package yeyue.ruoyi.study.framework.common.servlet.util;
 
-import java.io.*;
-import java.nio.charset.Charset;
-import java.util.*;
-
-import javax.servlet.Filter;
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.web.context.request.*;
-
 import com.alibaba.fastjson.JSON;
-
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.exception.common.GlobalErrorCode;
 import yeyue.ruoyi.study.framework.common.servlet.pojo.HttpRequest;
@@ -24,6 +15,17 @@ import yeyue.ruoyi.study.framework.common.servlet.wrapper.HttpResponseCopyWrappe
 import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
 import yeyue.ruoyi.study.framework.common.util.network.NetworkUtils;
 
+import javax.servlet.Filter;
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.util.*;
+
 /**
  * servlet工具类
  *
@@ -32,8 +34,8 @@ import yeyue.ruoyi.study.framework.common.util.network.NetworkUtils;
  */
 @Slf4j
 public abstract class ServletUtils {
-    public static final String[] HEADERS = new String[] {"X-Forwarded-For", "X-Real-IP", "Proxy-Client-IP",
-        "WL-Proxy-Client-IP", "HTTP_CLIENT_IP", "HTTP_X_FORWARDED_FOR"};
+    public static final String[] HEADERS = new String[]{"X-Forwarded-For", "X-Real-IP", "Proxy-Client-IP",
+            "WL-Proxy-Client-IP", "HTTP_CLIENT_IP", "HTTP_X_FORWARDED_FOR"};
 
     /**
      * 获取当前Http请求
@@ -45,7 +47,7 @@ public abstract class ServletUtils {
         if (!(requestAttributes instanceof ServletRequestAttributes)) {
             return null;
         }
-        ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)requestAttributes;
+        ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) requestAttributes;
         return servletRequestAttributes.getRequest();
     }
 
@@ -53,7 +55,7 @@ public abstract class ServletUtils {
      * 向Response输出JSON
      *
      * @param response 响应
-     * @param object 结果
+     * @param object   结果
      * @throws IOException 异常
      */
     @SuppressWarnings("spellCheckingInspection")
@@ -153,7 +155,7 @@ public abstract class ServletUtils {
     public static String getBodyString(ServletRequest request, String charset) {
         StringBuilder sb = new StringBuilder();
         try (InputStream inputStream = request.getInputStream();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, charset))) {
+             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, charset))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 sb.append(line);
@@ -183,8 +185,8 @@ public abstract class ServletUtils {
     public static HttpRequest getRequest(HttpServletRequest request) {
         if (request instanceof HttpRequestCopyWrapper) {
             return new HttpRequest().setUrl(getUrl(request)).setMethod(getMethod(request))
-                .setHeaders(getHeaderMap(request)).setParams(getParams(request))
-                .setBody(getBodyString((HttpRequestCopyWrapper)request)).setIp(getClientIp(request));
+                    .setHeaders(getHeaderMap(request)).setParams(getParams(request))
+                    .setBody(getBodyString((HttpRequestCopyWrapper) request)).setIp(getClientIp(request));
         }
         return null;
     }
@@ -198,7 +200,7 @@ public abstract class ServletUtils {
     public static HttpResponse getResponse(HttpServletResponse response) {
         if (response instanceof HttpResponseCopyWrapper) {
             return new HttpResponse().setStatus(getStatus(response)).setHeaders(getHeaderMap(response))
-                .setBody(getBodyString((HttpResponseCopyWrapper)response));
+                    .setBody(getBodyString((HttpResponseCopyWrapper) response));
         }
         return null;
     }
@@ -221,7 +223,7 @@ public abstract class ServletUtils {
      * 需要注意的是，使用此方法获取的客户IP地址必须在Http服务器（例如Nginx）中配置头信息，否则容易造成IP伪造。
      * </p>
      *
-     * @param request 请求对象{@link HttpServletRequest}
+     * @param request     请求对象{@link HttpServletRequest}
      * @param headerNames 其他自定义头文件，通常在Http服务器（例如Nginx）中配置
      * @return IP地址
      */
@@ -235,7 +237,7 @@ public abstract class ServletUtils {
             }
         }
         // 再从自定义header里查询
-        if (CollectionUtils.isNotNull((Object[])headerNames)) {
+        if (CollectionUtils.isNotNull((Object[]) headerNames)) {
             for (String header : headerNames) {
                 if (!NetworkUtils.isUnknown(ip = request.getHeader(header))) {
                     return NetworkUtils.getMultistageReverseProxyIp(ip);
@@ -254,8 +256,8 @@ public abstract class ServletUtils {
      * 创建Servlet Filter
      *
      * @param filter 过滤器
-     * @param order 指定过滤顺序
-     * @param <T> 类型
+     * @param order  指定过滤顺序
+     * @param <T>    类型
      * @return 创建成功的bean
      */
     public static <T extends Filter> FilterRegistrationBean<T> createFilterBean(T filter, Integer order) {

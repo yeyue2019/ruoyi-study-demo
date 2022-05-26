@@ -34,10 +34,6 @@
         </dependency>
         <dependency>
             <groupId>yeyue.ruoyi.study.boot</groupId>
-            <artifactId>yeyue-ruoyi-web-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>yeyue.ruoyi.study.boot</groupId>
             <artifactId>yeyue-ruoyi-security-starter</artifactId>
         </dependency>
     </dependencies>

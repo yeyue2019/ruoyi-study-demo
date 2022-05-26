@@ -1,80 +1,50 @@
 package yeyue.ruoyi.study.framework.security.core.userdetails;
 
-import com.alibaba.fastjson.annotation.JSONField;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import yeyue.ruoyi.study.framework.common.enums.CommonStatusEnum;
 
-import java.util.Collection;
-import java.util.HashSet;
+import java.io.Serializable;
+import java.util.*;
 
 /**
- * web登录用户
+ * 登录用户
  *
  * @author yeyue
  * @date 2022-04-19 13:37:09
  */
 @Data
-public class LoginUser implements UserDetails {
+public class LoginUser implements Serializable {
 
-    private Long id;
+    /**
+     * 用户Id
+     */
+    private String id;
 
-    private String username;
+    /**
+     * 用户类型
+     */
+    private Integer userType;
 
-    private String password;
+    /**
+     * 授权范围
+     */
+    private List<String> scopes;
 
-    private Integer status;
+    /**
+     * 上下文字段
+     */
+    private Map<String, Object> context;
 
-    @JsonIgnore
-    @JSONField(serialize = false, deserialize = false)
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return new HashSet<>();
+    public void setContext(String key, Object value) {
+        if (context == null) {
+            context = new HashMap<>(10);
+        }
+        context.put(key, value);
     }
 
-    @JsonIgnore
-    @JSONField(serialize = false, deserialize = false)
-    @Override
-    public String getPassword() {
-        return this.password;
-    }
-
-    @Override
-    public String getUsername() {
-        return this.username;
-    }
-
-    // 不依赖 Security的判断
-
-    @JsonIgnore
-    @JSONField(serialize = false, deserialize = false)
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @JsonIgnore
-    @JSONField(serialize = false, deserialize = false)
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @JsonIgnore
-    @JSONField(serialize = false, deserialize = false)
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @JsonIgnore
-    @JSONField(serialize = false, deserialize = false)
-    @Override
-    public boolean isEnabled() {
-        return CommonStatusEnum.ENABLE
-                .getStatus()
-                .equals(this.status);
+    public Object getContext(String key) {
+        if (context == null) {
+            return null;
+        }
+        return context.get(key);
     }
 }

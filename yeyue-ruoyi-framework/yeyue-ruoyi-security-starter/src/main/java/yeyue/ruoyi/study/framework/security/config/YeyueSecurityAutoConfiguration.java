@@ -11,12 +11,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
-import yeyue.ruoyi.study.framework.security.core.authentication.YeyueUserDetailsAuthenticationProvider;
 import yeyue.ruoyi.study.framework.security.core.authorize.AuthorizeRequestsCustomizer;
 import yeyue.ruoyi.study.framework.security.core.context.TransmittableThreadLocalSecurityContextHolderStrategy;
+import yeyue.ruoyi.study.framework.security.core.filter.TokenAuthenticationTokenFilter;
 import yeyue.ruoyi.study.framework.security.core.handler.AccessDeniedHandlerImpl;
 import yeyue.ruoyi.study.framework.security.core.handler.AuthenticationEntryPointImpl;
-import yeyue.ruoyi.study.framework.security.core.service.SecurityAuthService;
+import yeyue.ruoyi.study.framework.security.core.service.SecurityTokenService;
+import yeyue.ruoyi.study.framework.web.web.handler.GlobalExceptionHandler;
 
 /**
  * Spring Security 自动配置类，主要用于相关组件的配置
@@ -30,6 +31,8 @@ public class YeyueSecurityAutoConfiguration {
     /**
      * Spring Security 加密器
      * 考虑到安全性，这里采用 BCryptPasswordEncoder 加密器
+     *
+     * @see <a href="http://stackabuse.com/password-encoding-with-spring-security/">Password Encoding with Spring Security</a>
      */
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -53,11 +56,11 @@ public class YeyueSecurityAutoConfiguration {
     }
 
     /**
-     * 身份验证的 Provider Bean，通过它实现账号 + 密码的认证
+     * Token 认证过滤器 Bean
      */
     @Bean
-    public YeyueUserDetailsAuthenticationProvider authenticationProvider(SecurityAuthService securityAuthService, PasswordEncoder passwordEncoder) {
-        return new YeyueUserDetailsAuthenticationProvider(securityAuthService, passwordEncoder);
+    public TokenAuthenticationTokenFilter authenticationTokenFilter(GlobalExceptionHandler exceptionHandler, SecurityTokenService tokenService) {
+        return new TokenAuthenticationTokenFilter(exceptionHandler, tokenService);
     }
 
     /**

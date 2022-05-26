@@ -4,16 +4,15 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import yeyue.ruoyi.study.framework.security.core.authentication.YeyueUserDetailsAuthenticationProvider;
 import yeyue.ruoyi.study.framework.security.core.authorize.AuthorizeRequestsCustomizer;
-import yeyue.ruoyi.study.framework.security.core.filter.JwtAuthenticationTokenFilter;
+import yeyue.ruoyi.study.framework.security.core.filter.TokenAuthenticationTokenFilter;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -25,10 +24,8 @@ import java.util.List;
  * @date 2022-04-19 10:28:03
  */
 @Configuration
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class YeyueWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
-
-    @Resource
-    YeyueUserDetailsAuthenticationProvider authenticationProvider;
 
     @Resource
     AuthenticationEntryPoint authenticationEntryPoint;
@@ -37,18 +34,11 @@ public class YeyueWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdap
     AccessDeniedHandler accessDeniedHandler;
 
     @Resource
-    JwtAuthenticationTokenFilter authenticationTokenFilter;
+    TokenAuthenticationTokenFilter authenticationTokenFilter;
 
     @Resource
     List<AuthorizeRequestsCustomizer> authorizeRequestsCustomizers;
 
-    /**
-     * 认证管理器
-     */
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(authenticationProvider);
-    }
 
     /**
      * 由于 Spring Security 创建 AuthenticationManager 对象时，没声明 @Bean 注解，导致无法被注入

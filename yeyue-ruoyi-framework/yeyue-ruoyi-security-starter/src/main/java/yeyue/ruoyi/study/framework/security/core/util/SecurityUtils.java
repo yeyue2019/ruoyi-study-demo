@@ -8,10 +8,10 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.util.StringUtils;
 import yeyue.ruoyi.study.framework.common.servlet.constants.ServletConstants;
 import yeyue.ruoyi.study.framework.common.servlet.security.WebSecurityUtils;
-import yeyue.ruoyi.study.framework.security.core.authentication.YeyueUsernamePasswordAuthenticationToken;
 import yeyue.ruoyi.study.framework.security.core.userdetails.LoginUser;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collections;
 
 /**
  * @author yeyue
@@ -27,6 +27,7 @@ public abstract class SecurityUtils {
      */
     public static String obtainAuthorization(HttpServletRequest request) {
         String authorization = request.getHeader(ServletConstants.AUTHORIZATION_HEADER);
+
         if (!StringUtils.hasText(authorization)) {
             return null;
         }
@@ -34,8 +35,7 @@ public abstract class SecurityUtils {
         if (index == -1) {
             return null;
         }
-        return authorization
-                .substring(index + ServletConstants.AUTHORIZATION_TOKEN_PREFIX.length())
+        return authorization.substring(index + ServletConstants.AUTHORIZATION_TOKEN_PREFIX.length())
                 .trim();
     }
 
@@ -74,11 +74,10 @@ public abstract class SecurityUtils {
     public static void setLoginUser(LoginUser loginUser, HttpServletRequest request) {
         // 创建 Authentication，并设置到上下文
         Authentication authentication = buildAuthentication(loginUser, request);
-        SecurityContextHolder
-                .getContext()
+        SecurityContextHolder.getContext()
                 .setAuthentication(authentication);
         // 放到common需要的上下文中
-        WebSecurityUtils.setLoginUserId(request, String.valueOf(loginUser.getId()));
+        WebSecurityUtils.setLoginUserId(request, loginUser.getId());
     }
 
 
@@ -87,8 +86,7 @@ public abstract class SecurityUtils {
      */
     private static Authentication buildAuthentication(LoginUser loginUser, HttpServletRequest request) {
         // 创建 UsernamePasswordAuthenticationToken 对象
-        UsernamePasswordAuthenticationToken authenticationToken = new YeyueUsernamePasswordAuthenticationToken(
-                loginUser, null, loginUser.getAuthorities());
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginUser, null, Collections.emptyList());
         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         return authenticationToken;
     }

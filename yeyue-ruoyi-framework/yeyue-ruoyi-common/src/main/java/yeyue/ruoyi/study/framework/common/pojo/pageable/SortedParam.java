@@ -1,16 +1,19 @@
 package yeyue.ruoyi.study.framework.common.pojo.pageable;
 
+import java.io.Serializable;
+
+import javax.validation.constraints.NotEmpty;
+
+import org.apache.commons.lang3.StringUtils;
+
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import org.apache.commons.lang3.StringUtils;
 import yeyue.ruoyi.study.framework.common.enums.FieldSortedEnum;
 import yeyue.ruoyi.study.framework.common.validation.annotation.InEnum;
-
-import javax.validation.constraints.NotEmpty;
-import java.io.Serializable;
 
 /**
  * 分页排序参数
@@ -21,7 +24,6 @@ import java.io.Serializable;
 @Data
 @ApiModel
 public class SortedParam implements Serializable {
-
 
     @ApiModelProperty(value = "字段")
     @NotEmpty(message = "查询字段不可为空")

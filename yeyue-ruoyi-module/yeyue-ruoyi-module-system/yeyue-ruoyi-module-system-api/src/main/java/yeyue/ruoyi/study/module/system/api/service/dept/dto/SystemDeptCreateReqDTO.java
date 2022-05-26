@@ -1,11 +1,12 @@
 package yeyue.ruoyi.study.module.system.api.service.dept.dto;
 
+import java.io.Serializable;
+
+import javax.validation.constraints.*;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
-import javax.validation.constraints.*;
-import java.io.Serializable;
 
 /**
  * @author yeyue

@@ -1,7 +1,10 @@
 package yeyue.ruoyi.study.module.system.impl.service.user;
 
-import lombok.extern.slf4j.Slf4j;
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Component;
+
+import lombok.extern.slf4j.Slf4j;
 import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
 import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
 import yeyue.ruoyi.study.module.system.api.domain.user.SystemUserDomain;
@@ -11,8 +14,6 @@ import yeyue.ruoyi.study.module.system.api.service.user.dto.SystemUserUpdatePwdR
 import yeyue.ruoyi.study.module.system.impl.entity.user.SystemUserEntity;
 import yeyue.ruoyi.study.module.system.impl.entity.user.convert.SystemUserConvert;
 import yeyue.ruoyi.study.module.system.impl.mapper.user.SystemUserMapper;
-
-import javax.annotation.Resource;
 
 /**
  * @author yeyue

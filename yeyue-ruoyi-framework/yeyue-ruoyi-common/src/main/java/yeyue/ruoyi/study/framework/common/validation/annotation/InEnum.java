@@ -1,13 +1,14 @@
 package yeyue.ruoyi.study.framework.common.validation.annotation;
 
-import yeyue.ruoyi.study.framework.common.validation.core.EnumValuable;
-import yeyue.ruoyi.study.framework.common.validation.validator.InEnumValidator;
+import static java.lang.annotation.ElementType.*;
+
+import java.lang.annotation.*;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
-import java.lang.annotation.*;
 
-import static java.lang.annotation.ElementType.*;
+import yeyue.ruoyi.study.framework.common.validation.core.EnumValuable;
+import yeyue.ruoyi.study.framework.common.validation.validator.InEnumValidator;
 
 /**
  * 校验枚举

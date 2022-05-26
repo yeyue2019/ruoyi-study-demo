@@ -1,9 +1,10 @@
 package yeyue.ruoyi.study.framework.common.validation.util;
 
-import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
+import java.util.Set;
 
 import javax.validation.*;
-import java.util.Set;
+
+import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
 
 /**
  * @author yeyue
@@ -15,8 +16,8 @@ public abstract class ValidationUtils {
      * validation手动校验
      *
      * @param validator 校验器
-     * @param object    校验对象
-     * @param groups    对象所属分组
+     * @param object 校验对象
+     * @param groups 对象所属分组
      */
     public static void validate(Validator validator, Object object, Class<?>... groups) {
         Set<ConstraintViolation<Object>> constraintViolations = validator.validate(object, groups);

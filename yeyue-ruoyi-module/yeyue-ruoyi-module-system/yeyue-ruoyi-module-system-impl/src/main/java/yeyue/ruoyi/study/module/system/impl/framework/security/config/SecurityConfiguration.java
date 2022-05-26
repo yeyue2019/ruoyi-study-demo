@@ -1,9 +1,10 @@
-package yeyue.ruoyi.study.module.system.impl.framework.security;
+package yeyue.ruoyi.study.module.system.impl.framework.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
+
 import yeyue.ruoyi.study.framework.security.core.authorize.AuthorizeRequestsCustomizer;
 
 /**
@@ -17,10 +18,9 @@ public class SecurityConfiguration {
     public AuthorizeRequestsCustomizer systemAuthorizeRequestsCustomizer() {
         return new AuthorizeRequestsCustomizer() {
             @Override
-            public void customize(ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry) {
-                registry
-                        .antMatchers("/web/sys/**")
-                        .permitAll();
+            public void
+                customize(ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry) {
+                registry.antMatchers("/web/sys/**").permitAll();
             }
         };
     }

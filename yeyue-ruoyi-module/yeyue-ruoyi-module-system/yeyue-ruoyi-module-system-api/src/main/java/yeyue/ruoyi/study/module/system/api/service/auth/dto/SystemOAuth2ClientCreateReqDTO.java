@@ -1,12 +1,18 @@
 package yeyue.ruoyi.study.module.system.api.service.auth.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
+import java.io.Serializable;
+import java.util.List;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
+
+import org.hibernate.validator.constraints.URL;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import yeyue.ruoyi.study.framework.common.validation.annotation.InEnum;
+import yeyue.ruoyi.study.module.system.api.enums.oauth2.OAuth2GrantTypeEnum;
 
 /**
  * 创建 OAuth2 客户端请求
@@ -43,4 +49,22 @@ public class SystemOAuth2ClientCreateReqDTO implements Serializable {
     @ApiModelProperty(value = "刷新令牌的有效期", required = true)
     @NotNull(message = "刷新令牌的有效期不能为空")
     private Integer refreshTokenValiditySeconds;
+
+    @ApiModelProperty(value = "可重定向的 URI 地址", required = true, example = "https://www.iocoder.cn")
+    @NotNull(message = "可重定向的 URI 地址不能为空")
+    private List<@NotEmpty(message = "重定向的 URI 不能为空") @URL(message = "重定向的 URI 格式不正确") String> redirectUris;
+
+    @ApiModelProperty(value = "授权类型", required = true, example = "password", notes = "参见 OAuth2GrantTypeEnum 枚举")
+    @NotNull(message = "授权类型不能为空")
+    private List<@NotEmpty(message = "授权类型不能为空") @InEnum(value = OAuth2GrantTypeEnum.class,
+        message = "授权类型不在可选范围内") String> authorizedGrantTypes;
+
+    @ApiModelProperty(value = "授权范围", example = "user_info")
+    private List<String> scopes;
+
+    @ApiModelProperty(value = "自动通过的授权范围", example = "user_info")
+    private List<String> autoApproveScopes;
+
+    @ApiModelProperty(value = "附加信息", example = "{yunai: true}")
+    private String additionalInformation;
 }

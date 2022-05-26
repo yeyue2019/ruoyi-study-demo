@@ -1,11 +1,12 @@
-package yeyue.ruoyi.study.module.system.api.domain.auth;
+package yeyue.ruoyi.study.module.system.api.domain.oauth2;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.List;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
-import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * @author yeyue
@@ -35,6 +36,21 @@ public class SystemOAuth2ClientDomain implements Serializable {
 
     @ApiModelProperty(value = "刷新令牌的有效期", required = true)
     private Integer refreshTokenValiditySeconds;
+
+    @ApiModelProperty(value = "可重定向的 URI 地址")
+    private List<String> redirectUris;
+
+    @ApiModelProperty(value = "授权类型（模式）")
+    private List<String> authorizedGrantTypes;
+
+    @ApiModelProperty(value = "授权范围")
+    private List<String> scopes;
+
+    @ApiModelProperty(value = "自动授权的 Scope")
+    private List<String> autoApproveScopes;
+
+    @ApiModelProperty(value = "附加信息，JSON 格式")
+    private String additionalInformation;
 
     @ApiModelProperty(value = "状态")
     private Integer status;

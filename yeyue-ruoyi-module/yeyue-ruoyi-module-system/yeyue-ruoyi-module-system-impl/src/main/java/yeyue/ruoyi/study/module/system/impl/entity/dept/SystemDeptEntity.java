@@ -1,10 +1,11 @@
 package yeyue.ruoyi.study.module.system.impl.entity.dept;
 
+import static yeyue.ruoyi.study.module.system.impl.constants.SystemTableConstants.SYSTEM_DEPT;
+
 import com.baomidou.mybatisplus.annotation.*;
+
 import lombok.Data;
 import yeyue.ruoyi.study.framework.mybatis.core.entity.MyBatisEntity;
-
-import static yeyue.ruoyi.study.module.system.impl.constants.SystemTableConstants.SYSTEM_DEPT;
 
 /**
  * 部门

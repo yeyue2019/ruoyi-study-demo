@@ -1,7 +1,8 @@
 package yeyue.ruoyi.study.framework.common.exception.util;
 
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+
+import lombok.extern.slf4j.Slf4j;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.pojo.core.CommonResult;
 import yeyue.ruoyi.study.framework.common.pojo.core.ErrorCode;
@@ -37,9 +38,9 @@ public abstract class ExceptionUtils {
     /**
      * 将错误编号对应的消息使用 params 进行格式化。
      *
-     * @param code           错误编号
+     * @param code 错误编号
      * @param messagePattern 消息模版
-     * @param params         参数
+     * @param params 参数
      * @return 格式化后的提示
      */
     public static String format(String code, String messagePattern, Object... params) {
@@ -72,6 +73,5 @@ public abstract class ExceptionUtils {
         sb.append(messagePattern.substring(i));
         return sb.toString();
     }
-
 
 }

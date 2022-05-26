@@ -1,16 +1,18 @@
 package yeyue.ruoyi.study.module.system.impl.controller.permission;
 
+import java.util.List;
+
+import javax.annotation.Resource;
+import javax.validation.Valid;
+
+import org.springframework.web.bind.annotation.*;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.*;
 import yeyue.ruoyi.study.framework.common.pojo.core.CommonResult;
 import yeyue.ruoyi.study.module.system.api.domain.permission.SystemMenuDomain;
 import yeyue.ruoyi.study.module.system.api.service.permission.SystemMenuService;
 import yeyue.ruoyi.study.module.system.api.service.permission.dto.*;
-
-import javax.annotation.Resource;
-import javax.validation.Valid;
-import java.util.List;
 
 /**
  * @author yeyue

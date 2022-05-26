@@ -1,8 +1,14 @@
 package yeyue.ruoyi.study.module.system.impl.controller.user;
 
-import io.swagger.annotations.*;
+import javax.annotation.Resource;
+import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Positive;
+
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import io.swagger.annotations.*;
 import yeyue.ruoyi.study.framework.common.enums.CommonStatusEnum;
 import yeyue.ruoyi.study.framework.common.pojo.core.CommonResult;
 import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
@@ -12,11 +18,6 @@ import yeyue.ruoyi.study.module.system.api.domain.user.SystemUserDomain;
 import yeyue.ruoyi.study.module.system.api.service.user.SystemUserService;
 import yeyue.ruoyi.study.module.system.api.service.user.dto.SystemUserPageReq;
 import yeyue.ruoyi.study.module.system.api.service.user.dto.SystemUserUpdatePwdReq;
-
-import javax.annotation.Resource;
-import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Positive;
 
 /**
  * @author yeyue
@@ -70,15 +71,18 @@ public class SystemUserController {
 
     @ApiOperation(value = "更改用户密码")
     @PostMapping("/passwd/update")
-    public CommonResult<Void> update(@Positive(message = "用户Id格式错误") @RequestParam Long id, @Valid @RequestBody SystemUserUpdatePwdReq req) {
+    public CommonResult<Void> update(@Positive(message = "用户Id格式错误") @RequestParam Long id,
+        @Valid @RequestBody SystemUserUpdatePwdReq req) {
         service.updatePwd(id, req);
         return CommonResult.success();
     }
 
     @ApiOperation(value = "更改用户状态")
-    @ApiImplicitParams({@ApiImplicitParam(name = "id", value = "用户Id", paramType = "query", dataType = "Long"), @ApiImplicitParam(name = "status", value = "用户状态", paramType = "query", dataType = "Integer"),})
+    @ApiImplicitParams({@ApiImplicitParam(name = "id", value = "用户Id", paramType = "query", dataType = "Long"),
+        @ApiImplicitParam(name = "status", value = "用户状态", paramType = "query", dataType = "Integer"),})
     @PostMapping("/status/update")
-    public CommonResult<Void> update(@Positive(message = "用户Id格式错误") @RequestParam Long id, @InEnum(CommonStatusEnum.class) @RequestParam Integer status) {
+    public CommonResult<Void> update(@Positive(message = "用户Id格式错误") @RequestParam Long id,
+        @InEnum(CommonStatusEnum.class) @RequestParam Integer status) {
         service.updateStatus(id, status);
         return CommonResult.success();
     }

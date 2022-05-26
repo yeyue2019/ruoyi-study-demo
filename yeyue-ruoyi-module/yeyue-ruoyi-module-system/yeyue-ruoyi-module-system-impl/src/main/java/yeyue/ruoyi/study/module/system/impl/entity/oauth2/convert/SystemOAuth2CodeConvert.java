@@ -1,9 +1,10 @@
-package yeyue.ruoyi.study.module.system.impl.entity.auth.convert;
+package yeyue.ruoyi.study.module.system.impl.entity.oauth2.convert;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
-import yeyue.ruoyi.study.module.system.api.domain.auth.SystemOAuth2CodeDomain;
-import yeyue.ruoyi.study.module.system.impl.entity.auth.SystemOAuth2CodeEntity;
+
+import yeyue.ruoyi.study.module.system.api.domain.oauth2.SystemOAuth2CodeDomain;
+import yeyue.ruoyi.study.module.system.impl.entity.oauth2.SystemOAuth2CodeEntity;
 
 /**
  * @author yeyue

@@ -1,8 +1,9 @@
 package yeyue.ruoyi.study.module.system.api.enums.permission;
 
+import org.apache.commons.lang3.StringUtils;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.apache.commons.lang3.StringUtils;
 import yeyue.ruoyi.study.framework.common.validation.core.EnumValuable;
 
 /**

@@ -2,6 +2,7 @@ package yeyue.ruoyi.study.framework.mybatis.core.util;
 
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
 import yeyue.ruoyi.study.framework.common.pojo.pageable.PageParam;
 import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
 
@@ -21,7 +22,8 @@ public abstract class MyBatisUtils {
         Page<T> page = new Page<>(queryParam.getPageNo(), queryParam.getPageSize());
         // 排序字段
         if (CollectionUtils.isNotEmpty(queryParam.getSorts())) {
-            page.addOrder(CollectionUtils.funcList(queryParam.getSorts(), param -> param.isDesc() ? OrderItem.desc(param.getField()) : OrderItem.asc(param.getField())));
+            page.addOrder(CollectionUtils.funcList(queryParam.getSorts(),
+                param -> param.isDesc() ? OrderItem.desc(param.getField()) : OrderItem.asc(param.getField())));
         }
         return page;
     }

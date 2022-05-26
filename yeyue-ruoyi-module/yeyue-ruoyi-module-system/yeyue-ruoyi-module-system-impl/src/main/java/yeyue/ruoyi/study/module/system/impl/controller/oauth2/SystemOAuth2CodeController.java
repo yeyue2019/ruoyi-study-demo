@@ -1,15 +1,16 @@
-package yeyue.ruoyi.study.module.system.impl.controller.auth;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.*;
-import yeyue.ruoyi.study.framework.common.pojo.core.CommonResult;
-import yeyue.ruoyi.study.module.system.api.domain.auth.SystemOAuth2AccessTokenDomain;
-import yeyue.ruoyi.study.module.system.api.service.auth.SystemOAuth2CodeService;
-import yeyue.ruoyi.study.module.system.api.service.auth.dto.SystemOAuth2CodeCreateReqDTO;
+package yeyue.ruoyi.study.module.system.impl.controller.oauth2;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+
+import org.springframework.web.bind.annotation.*;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import yeyue.ruoyi.study.framework.common.pojo.core.CommonResult;
+import yeyue.ruoyi.study.module.system.api.domain.oauth2.SystemOAuth2AccessTokenDomain;
+import yeyue.ruoyi.study.module.system.api.service.auth.SystemOAuth2CodeService;
+import yeyue.ruoyi.study.module.system.api.service.auth.dto.SystemOAuth2CodeCreateReqDTO;
 
 /**
  * @author yeyue

@@ -1,11 +1,11 @@
 package yeyue.ruoyi.study.module.system.api.service.permission;
 
+import java.util.Collection;
+import java.util.List;
+
 import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
 import yeyue.ruoyi.study.module.system.api.domain.permission.SystemRoleDomain;
 import yeyue.ruoyi.study.module.system.api.service.permission.dto.*;
-
-import java.util.Collection;
-import java.util.List;
 
 /**
  * @author yeyue

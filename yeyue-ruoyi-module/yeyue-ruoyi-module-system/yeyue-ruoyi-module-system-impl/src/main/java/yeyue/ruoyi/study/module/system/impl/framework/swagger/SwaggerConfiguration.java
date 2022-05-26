@@ -1,10 +1,12 @@
 package yeyue.ruoyi.study.module.system.impl.framework.swagger;
 
-import com.github.xiaoymin.knife4j.spring.extension.OpenApiExtensionResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import com.github.xiaoymin.knife4j.spring.extension.OpenApiExtensionResolver;
+
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.spring.web.plugins.Docket;
 import yeyue.ruoyi.study.framework.web.doc.swagger.config.YeyueSwaggerAutoConfiguration;
@@ -29,6 +31,8 @@ public class SwaggerConfiguration {
 
     @Bean
     public Docket systemDocket(YeyueSwaggerProperties properties) {
-        return SwaggerUtils.initDocket("system", RequestHandlerSelectors.basePackage("yeyue.ruoyi.study.module.system.impl.controller"), properties, openApiExtensionResolver, SystemErrorCode.values());
+        return SwaggerUtils.initDocket("system",
+            RequestHandlerSelectors.basePackage("yeyue.ruoyi.study.module.system.impl.controller"), properties,
+            openApiExtensionResolver, SystemErrorCode.values());
     }
 }

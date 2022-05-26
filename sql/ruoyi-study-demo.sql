@@ -402,6 +402,11 @@ CREATE TABLE `ruoyi_system_oauth2_client`
     `codeValiditySeconds`         int                                                           NOT NULL COMMENT '授权码的有效期',
     `accessTokenValiditySeconds`  int                                                           NOT NULL COMMENT '访问令牌的有效期',
     `refreshTokenValiditySeconds` int                                                           NOT NULL COMMENT '刷新令牌的有效期',
+    `redirectUris`                varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '可重定向的 URI 地址',
+    `authorizedGrantTypes`        varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '授权类型',
+    `scopes`                      varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '授权范围',
+    `autoApproveScopes`           varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '权限',
+    `additionalInformation`       longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '附加信息',
     `creator`                     varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '' COMMENT '创建者',
     `createTime`                  datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `updater`                     varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '' COMMENT '更新者',
@@ -414,6 +419,20 @@ CREATE TABLE `ruoyi_system_oauth2_client`
     CHARACTER SET = utf8mb4
     COLLATE = utf8mb4_unicode_ci
     COMMENT = 'OAuth2客户端表';
+-- ----------------------------
+-- Records of ruoyi_system_oauth2_client
+-- ----------------------------
+BEGIN;
+INSERT INTO `ruoyi_system_oauth2_client` (`id`, `clientId`, `secret`, `name`, `description`, `status`,
+                                          `codeValiditySeconds`, `accessTokenValiditySeconds`,
+                                          `refreshTokenValiditySeconds`, `redirectUris`,
+                                          `authorizedGrantTypes`, `scopes`, `autoApproveScopes`,
+                                          `additionalInformation`, `creator`, `createTime`, `updater`,
+                                          `updateTime`, `deleted`)
+VALUES (1, 'ruoyi_study_demo', '123456', '夜月', '夜月的应用', 0, 600, 7200, 108000, '["https://www.baidu.com"]',
+        '["password","authorization_code","implicit","client_credentials","refresh_token"]', '["user_info"]', '[]',
+        '{"version":true}', '1', '2022-05-26 11:18:50', '1', '2022-05-26 11:21:30', b'0');
+COMMIT;
 -- ----------------------------
 -- Table structure for ruoyi_system_oauth2_code
 -- ----------------------------

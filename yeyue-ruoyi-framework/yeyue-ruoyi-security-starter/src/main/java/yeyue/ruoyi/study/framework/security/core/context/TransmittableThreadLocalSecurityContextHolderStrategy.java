@@ -1,12 +1,12 @@
 package yeyue.ruoyi.study.framework.security.core.context;
 
-import com.alibaba.ttl.TransmittableThreadLocal;
 import org.springframework.security.core.context.*;
 import org.springframework.util.Assert;
 
+import com.alibaba.ttl.TransmittableThreadLocal;
+
 /**
- * 基于 TransmittableThreadLocal 实现的 Security Context 持有者策略
- * 目的是，避免 @Async 等异步执行时，原生 ThreadLocal 的丢失问题
+ * 基于 TransmittableThreadLocal 实现的 Security Context 持有者策略 目的是，避免 @Async 等异步执行时，原生 ThreadLocal 的丢失问题
  *
  * @author yeyue
  * @date 2022-04-19 14:39:43

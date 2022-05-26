@@ -1,11 +1,12 @@
 package yeyue.ruoyi.study.framework.common.servlet.wrapper;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
 import javax.servlet.ServletOutputStream;
 import javax.servlet.WriteListener;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 
 /**
  * @author yeyue
@@ -32,9 +33,7 @@ public class HttpResponseCopyWrapper extends HttpServletResponseWrapper {
 
             @Override
             public void write(int b) throws IOException {
-                response
-                        .getOutputStream()
-                        .write(b);
+                response.getOutputStream().write(b);
                 byteArrayOutputStream.write(b);
             }
         };

@@ -1,6 +1,7 @@
 package yeyue.ruoyi.study.module.system.impl.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+
 import lombok.Data;
 import yeyue.ruoyi.study.framework.mybatis.core.entity.MyBatisEntity;
 

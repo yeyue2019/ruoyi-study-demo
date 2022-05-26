@@ -1,9 +1,9 @@
 package yeyue.ruoyi.study.framework.security.core.userdetails;
 
-import lombok.Data;
-
 import java.io.Serializable;
 import java.util.*;
+
+import lombok.Data;
 
 /**
  * 登录用户

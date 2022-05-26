@@ -25,7 +25,6 @@ public enum RoleTypeEnum implements EnumValuable<Integer> {
 
     private final Integer type;
 
-
     @Override
     public Integer get() {
         return this.type;

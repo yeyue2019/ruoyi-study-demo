@@ -1,16 +1,17 @@
 package yeyue.ruoyi.study.module.system.impl.controller.dept;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import java.util.List;
+
+import javax.annotation.Resource;
+import javax.validation.Valid;
+
 import org.springframework.web.bind.annotation.*;
+
+import io.swagger.annotations.*;
 import yeyue.ruoyi.study.framework.common.pojo.core.CommonResult;
 import yeyue.ruoyi.study.module.system.api.domain.dept.SystemDeptDomain;
 import yeyue.ruoyi.study.module.system.api.service.dept.SystemDeptService;
 import yeyue.ruoyi.study.module.system.api.service.dept.dto.*;
-
-import javax.annotation.Resource;
-import javax.validation.Valid;
-import java.util.List;
 
 /**
  * @author yeyue
@@ -39,6 +40,7 @@ public class SystemDeptController {
 
     @ApiOperation(value = "删除部门")
     @DeleteMapping("/delete")
+    @ApiImplicitParam(name = "id", value = "编号", required = true, example = "100", dataTypeClass = Long.class)
     public CommonResult<Void> delete(@RequestParam Long id) {
         service.delete(id);
         return CommonResult.success();
@@ -46,6 +48,7 @@ public class SystemDeptController {
 
     @ApiOperation(value = "获取部门")
     @GetMapping("/get")
+    @ApiImplicitParam(name = "id", value = "编号", required = true, example = "100", dataTypeClass = Long.class)
     public CommonResult<SystemDeptDomain> get(@RequestParam Long id) {
         return CommonResult.success(service.get(id));
     }

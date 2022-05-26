@@ -1,13 +1,15 @@
 package yeyue.ruoyi.study.framework.web.doc.swagger.config;
 
-import com.github.xiaoymin.knife4j.spring.extension.OpenApiExtensionResolver;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import com.github.xiaoymin.knife4j.spring.extension.OpenApiExtensionResolver;
+
+import io.swagger.annotations.ApiOperation;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.spring.web.plugins.Docket;
@@ -38,6 +40,7 @@ public class YeyueSwaggerAutoConfiguration {
 
     @Bean
     public Docket globalDocket(YeyueSwaggerProperties properties) {
-        return SwaggerUtils.initDocket(null, RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class), properties, openApiExtensionResolver, GlobalErrorCode.values());
+        return SwaggerUtils.initDocket(null, RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class),
+            properties, openApiExtensionResolver, GlobalErrorCode.values());
     }
 }

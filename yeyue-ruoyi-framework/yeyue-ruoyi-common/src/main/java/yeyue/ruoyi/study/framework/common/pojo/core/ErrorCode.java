@@ -1,12 +1,14 @@
 package yeyue.ruoyi.study.framework.common.pojo.core;
 
-import com.alibaba.fastjson.annotation.JSONField;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.swagger.annotations.ApiModelProperty;
+import java.io.Serializable;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.Assert;
 
-import java.io.Serializable;
+import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * 错误码

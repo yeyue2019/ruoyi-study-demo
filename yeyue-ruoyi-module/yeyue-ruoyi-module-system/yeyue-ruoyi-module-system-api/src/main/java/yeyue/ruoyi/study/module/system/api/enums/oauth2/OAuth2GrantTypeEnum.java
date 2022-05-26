@@ -1,4 +1,4 @@
-package yeyue.ruoyi.study.module.system.api.enums.auth;
+package yeyue.ruoyi.study.module.system.api.enums.oauth2;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

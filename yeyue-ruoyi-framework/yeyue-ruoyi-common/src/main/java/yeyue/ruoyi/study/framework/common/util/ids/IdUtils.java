@@ -1,11 +1,11 @@
 package yeyue.ruoyi.study.framework.common.util.ids;
 
-import org.apache.commons.lang3.*;
+import static yeyue.ruoyi.study.framework.common.constants.StringConstants.REGEX_JOIN;
 
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static yeyue.ruoyi.study.framework.common.constants.StringConstants.REGEX_JOIN;
+import org.apache.commons.lang3.*;
 
 /**
  * Id生成工具类
@@ -33,7 +33,7 @@ public abstract class IdUtils {
     /**
      * 随机字符串
      *
-     * @param count    字符串长度
+     * @param count 字符串长度
      * @param isSimple 是否简化（不含符号）
      * @return 结果
      */
@@ -44,6 +44,5 @@ public abstract class IdUtils {
             return RandomStringUtils.randomAscii(count);
         }
     }
-
 
 }

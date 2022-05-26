@@ -1,10 +1,10 @@
 package yeyue.ruoyi.study.framework.common.util.enums;
 
-import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
-
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.function.Function;
+
+import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
 
 /**
  * 枚举操作工具
@@ -17,11 +17,11 @@ public abstract class EnumUtils {
     /**
      * 枚举条件校验
      *
-     * @param clazz   枚举类型
-     * @param func    枚举获取比较值的方法
+     * @param clazz 枚举类型
+     * @param func 枚举获取比较值的方法
      * @param compare 比较对象
-     * @param <E>     枚举类型
-     * @param <C>     比较类型
+     * @param <E> 枚举类型
+     * @param <C> 比较类型
      * @return 是否符合
      */
     public static <E extends Enum<E>, C> boolean valid(Class<E> clazz, Function<E, C> func, C compare) {
@@ -29,18 +29,16 @@ public abstract class EnumUtils {
         if (null == enums) {
             return false;
         }
-        return Arrays
-                .stream(enums)
-                .anyMatch(e -> Objects.equals(func.apply(e), compare));
+        return Arrays.stream(enums).anyMatch(e -> Objects.equals(func.apply(e), compare));
     }
 
     /**
      * 根据条件获取枚举集合
      *
      * @param clazz 枚举类型
-     * @param func  获取函数
-     * @param <E>   枚举类型
-     * @param <C>   结果类型
+     * @param func 获取函数
+     * @param <E> 枚举类型
+     * @param <C> 结果类型
      * @return 数组
      */
     public static <E extends Enum<E>, C> C[] getArray(Class<E> clazz, Function<E, C> func) {
@@ -54,11 +52,11 @@ public abstract class EnumUtils {
     /**
      * 枚举和对应值的比较
      *
-     * @param source  枚举对象
-     * @param func    转换函数
+     * @param source 枚举对象
+     * @param func 转换函数
      * @param compare 被比较的对象
-     * @param <E>     枚举类型
-     * @param <C>     对象类型
+     * @param <E> 枚举类型
+     * @param <C> 对象类型
      * @return 比较结果
      */
     public static <E extends Enum<E>, C> boolean equals(E source, Function<E, C> func, C compare) {
@@ -76,11 +74,11 @@ public abstract class EnumUtils {
     /**
      * 列举的值是否属于枚举的任一内容
      *
-     * @param value  列举的值
-     * @param func   枚举转换函数
+     * @param value 列举的值
+     * @param func 枚举转换函数
      * @param source 枚举集合
-     * @param <E>    枚举类型
-     * @param <C>    列举类型
+     * @param <E> 枚举类型
+     * @param <C> 列举类型
      * @return 结果
      */
     @SafeVarargs
@@ -88,10 +86,7 @@ public abstract class EnumUtils {
         if (value == null || source == null) {
             return false;
         }
-        return Arrays
-                .stream(source)
-                .map(func)
-                .anyMatch(c -> Objects.equals(value, c));
+        return Arrays.stream(source).map(func).anyMatch(c -> Objects.equals(value, c));
     }
 
     @SafeVarargs

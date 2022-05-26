@@ -1,21 +1,23 @@
 package yeyue.ruoyi.study.framework.redis.core.impl;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.extern.slf4j.Slf4j;
+import java.util.*;
+
 import org.redisson.api.*;
 import org.redisson.client.codec.StringCodec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import lombok.extern.slf4j.Slf4j;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.exception.common.GlobalErrorCode;
 import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
 import yeyue.ruoyi.study.framework.common.util.object.ObjectUtils;
 import yeyue.ruoyi.study.framework.redis.core.RedisRepository;
 import yeyue.ruoyi.study.framework.redis.domain.RedisDomainDefine;
-
-import java.util.*;
 
 /**
  * @author yeyue
@@ -34,7 +36,8 @@ public class RedisRepositoryImpl implements RedisRepository {
     private static final StringCodec STRING_CODEC = new StringCodec();
 
     @Autowired
-    public RedisRepositoryImpl(RedissonClient redissonClient, ObjectMapper objectMapper, StringRedisTemplate redisTemplate) {
+    public RedisRepositoryImpl(RedissonClient redissonClient, ObjectMapper objectMapper,
+        StringRedisTemplate redisTemplate) {
         this.redissonClient = redissonClient;
         this.objectMapper = objectMapper;
         this.redisTemplate = redisTemplate;
@@ -70,13 +73,9 @@ public class RedisRepositoryImpl implements RedisRepository {
             String key = ObjectUtils.indexJoin(name, define.getId());
             String value = objectMapper.writeValueAsString(define.getValue());
             if (define.getTimeout() > 0) {
-                redisTemplate
-                        .opsForValue()
-                        .set(key, value, define.getTimeout(), define.getTimeUnit());
+                redisTemplate.opsForValue().set(key, value, define.getTimeout(), define.getTimeUnit());
             } else {
-                redisTemplate
-                        .opsForValue()
-                        .set(key, value);
+                redisTemplate.opsForValue().set(key, value);
             }
         } catch (Throwable e) {
             log.error("[RedisRepository][save][1]请求失败", e);
@@ -110,9 +109,7 @@ public class RedisRepositoryImpl implements RedisRepository {
     public <T> T get(String name, Object id, TypeReference<T> type) {
         try {
             String key = ObjectUtils.indexJoin(name, id);
-            String value = redisTemplate
-                    .opsForValue()
-                    .get(key);
+            String value = redisTemplate.opsForValue().get(key);
             if (value == null) {
                 return null;
             }
@@ -138,9 +135,7 @@ public class RedisRepositoryImpl implements RedisRepository {
             }
             batch.execute();
             for (Map.Entry<Object, RFuture<String>> entry : futureMap.entrySet()) {
-                String value = entry
-                        .getValue()
-                        .getNow();
+                String value = entry.getValue().getNow();
                 if (value != null) {
                     map.put(entry.getKey(), objectMapper.readValue(value, type));
                 }

@@ -1,13 +1,14 @@
 package yeyue.ruoyi.study.framework.common.servlet.pojo;
 
+import java.io.Serializable;
+import java.util.Map;
+
 import com.alibaba.fastjson.*;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.io.Serializable;
-import java.util.Map;
 
 /**
  * Http请求[不包含文件上传]
@@ -45,9 +46,7 @@ public class HttpRequest implements Serializable {
         json.put("method", this.method);
         json.put("params", this.params);
         json.put("headers", this.headers);
-        json.put("body", JSONValidator
-                .from(this.body)
-                .validate() ? JSON.parse(this.body) : body);
+        json.put("body", JSONValidator.from(this.body).validate() ? JSON.parse(this.body) : body);
         json.put("ip", this.ip);
         return json.toJSONString();
     }

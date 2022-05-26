@@ -1,6 +1,7 @@
 package yeyue.ruoyi.study.module.system.impl.mapper.permission;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+
 import yeyue.ruoyi.study.framework.mybatis.core.mapper.MyBatisMapper;
 import yeyue.ruoyi.study.module.system.impl.entity.permission.SystemMenuEntity;
 
@@ -11,8 +12,7 @@ import yeyue.ruoyi.study.module.system.impl.entity.permission.SystemMenuEntity;
 public interface SystemMenuMapper extends MyBatisMapper<SystemMenuEntity> {
 
     default SystemMenuEntity selectByParentIdAndName(Long parentId, String name) {
-        return selectOne(new LambdaQueryWrapper<SystemMenuEntity>()
-                .eq(SystemMenuEntity::getParentId, parentId)
-                .eq(SystemMenuEntity::getName, name));
+        return selectOne(new LambdaQueryWrapper<SystemMenuEntity>().eq(SystemMenuEntity::getParentId, parentId)
+            .eq(SystemMenuEntity::getName, name));
     }
 }

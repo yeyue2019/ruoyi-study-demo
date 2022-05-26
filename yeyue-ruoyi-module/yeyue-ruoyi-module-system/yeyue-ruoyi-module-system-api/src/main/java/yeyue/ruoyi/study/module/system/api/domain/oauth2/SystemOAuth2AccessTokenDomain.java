@@ -1,11 +1,11 @@
-package yeyue.ruoyi.study.module.system.api.domain.auth;
+package yeyue.ruoyi.study.module.system.api.domain.oauth2;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
-import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * @author yeyue

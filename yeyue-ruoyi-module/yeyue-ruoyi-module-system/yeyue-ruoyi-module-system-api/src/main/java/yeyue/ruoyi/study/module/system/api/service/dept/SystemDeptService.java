@@ -1,9 +1,9 @@
 package yeyue.ruoyi.study.module.system.api.service.dept;
 
+import java.util.List;
+
 import yeyue.ruoyi.study.module.system.api.domain.dept.SystemDeptDomain;
 import yeyue.ruoyi.study.module.system.api.service.dept.dto.*;
-
-import java.util.List;
 
 /**
  * @author yeyue

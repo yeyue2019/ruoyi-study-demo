@@ -1,15 +1,16 @@
 package yeyue.ruoyi.study.framework.common.pojo.pageable;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 分页查询结果
@@ -27,8 +28,7 @@ public class PageResult<T> implements Serializable {
     @ApiModelProperty(value = "总量", required = true)
     private Long total;
 
-    public PageResult() {
-    }
+    public PageResult() {}
 
     public PageResult(List<T> list, Long total) {
         this.list = list;

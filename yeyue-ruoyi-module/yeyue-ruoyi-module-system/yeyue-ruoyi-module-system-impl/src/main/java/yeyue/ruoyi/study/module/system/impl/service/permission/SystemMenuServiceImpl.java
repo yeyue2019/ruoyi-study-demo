@@ -1,9 +1,15 @@
 package yeyue.ruoyi.study.module.system.impl.service.permission;
 
-import lombok.extern.slf4j.Slf4j;
+import java.util.List;
+import java.util.Objects;
+
+import javax.annotation.Resource;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import lombok.extern.slf4j.Slf4j;
 import yeyue.ruoyi.study.framework.common.enums.CommonStatusEnum;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
@@ -19,10 +25,6 @@ import yeyue.ruoyi.study.module.system.impl.entity.permission.SystemMenuEntity;
 import yeyue.ruoyi.study.module.system.impl.entity.permission.convert.SystemMenuConvert;
 import yeyue.ruoyi.study.module.system.impl.framework.exception.SystemErrorCode;
 import yeyue.ruoyi.study.module.system.impl.mapper.permission.SystemMenuMapper;
-
-import javax.annotation.Resource;
-import java.util.List;
-import java.util.Objects;
 
 /**
  * @author yeyue
@@ -99,7 +101,8 @@ public class SystemMenuServiceImpl implements SystemMenuService {
 
     @Override
     public List<SystemMenuDomain> list(SystemMenuListReqDTO reqDTO) {
-        List<SystemMenuEntity> list = mapper.selectList(new MyBatisLambdaQueryWrapper<SystemMenuEntity>().eq(SystemMenuEntity::getStatus, reqDTO.getStatus()));
+        List<SystemMenuEntity> list = mapper.selectList(
+            new MyBatisLambdaQueryWrapper<SystemMenuEntity>().eq(SystemMenuEntity::getStatus, reqDTO.getStatus()));
         return CollectionUtils.funcList(list, SystemMenuConvert.INSTANCE::toDomain);
     }
 

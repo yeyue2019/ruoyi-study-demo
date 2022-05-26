@@ -2,6 +2,7 @@ package yeyue.ruoyi.study.module.system.impl.entity.user.convert;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
+
 import yeyue.ruoyi.study.module.system.api.domain.user.SystemUserDomain;
 import yeyue.ruoyi.study.module.system.impl.entity.user.SystemUserEntity;
 

@@ -1,11 +1,11 @@
 package yeyue.ruoyi.study.framework.common.servlet.security;
 
-import yeyue.ruoyi.study.framework.common.servlet.util.ServletUtils;
+import static yeyue.ruoyi.study.framework.common.servlet.constants.ServletConstants.REQUEST_ATTRIBUTE_SECURITY_USER_ID;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
-import static yeyue.ruoyi.study.framework.common.servlet.constants.ServletConstants.REQUEST_ATTRIBUTE_SECURITY_USER_ID;
+import yeyue.ruoyi.study.framework.common.servlet.util.ServletUtils;
 
 /**
  * web-security 上下文工具类
@@ -29,7 +29,7 @@ public abstract class WebSecurityUtils {
         if (request == null) {
             return null;
         }
-        return (String) request.getAttribute(REQUEST_ATTRIBUTE_SECURITY_USER_ID);
+        return (String)request.getAttribute(REQUEST_ATTRIBUTE_SECURITY_USER_ID);
     }
 
     /**

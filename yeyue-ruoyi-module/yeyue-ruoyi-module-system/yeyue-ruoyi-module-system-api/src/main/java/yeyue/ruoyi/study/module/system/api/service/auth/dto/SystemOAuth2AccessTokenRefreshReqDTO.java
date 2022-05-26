@@ -1,10 +1,10 @@
 package yeyue.ruoyi.study.module.system.api.service.auth.dto;
 
+import java.io.Serializable;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
-import java.io.Serializable;
 
 /**
  * @author yeyue

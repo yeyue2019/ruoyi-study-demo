@@ -1,10 +1,11 @@
 package yeyue.ruoyi.study.framework.mybatis.core.entity;
 
-import com.baomidou.mybatisplus.annotation.*;
-import lombok.Data;
-
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
+import com.baomidou.mybatisplus.annotation.*;
+
+import lombok.Data;
 
 /**
  * 通用数据库实体

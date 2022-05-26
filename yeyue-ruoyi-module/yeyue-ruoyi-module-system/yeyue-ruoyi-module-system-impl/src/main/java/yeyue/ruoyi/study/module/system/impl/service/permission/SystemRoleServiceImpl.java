@@ -1,8 +1,13 @@
 package yeyue.ruoyi.study.module.system.impl.service.permission;
 
-import lombok.extern.slf4j.Slf4j;
+import java.util.*;
+
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import lombok.extern.slf4j.Slf4j;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
 import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
@@ -16,9 +21,6 @@ import yeyue.ruoyi.study.module.system.impl.entity.permission.SystemRoleEntity;
 import yeyue.ruoyi.study.module.system.impl.entity.permission.convert.SystemRoleConvert;
 import yeyue.ruoyi.study.module.system.impl.framework.exception.SystemErrorCode;
 import yeyue.ruoyi.study.module.system.impl.mapper.permission.SystemRoleMapper;
-
-import javax.annotation.Resource;
-import java.util.*;
 
 /**
  * @author yeyue
@@ -76,8 +78,7 @@ public class SystemRoleServiceImpl implements SystemRoleService {
     @Override
     public List<SystemRoleDomain> list(SystemRoleListReqDTO reqDTO) {
         List<SystemRoleEntity> list = mapper.selectList(new MyBatisLambdaQueryWrapper<SystemRoleEntity>()
-                .in(SystemRoleEntity::getId, reqDTO.getIds())
-                .eq(SystemRoleEntity::getStatus, reqDTO.getStatus()));
+            .in(SystemRoleEntity::getId, reqDTO.getIds()).eq(SystemRoleEntity::getStatus, reqDTO.getStatus()));
         return CollectionUtils.funcList(list, SystemRoleConvert.INSTANCE::toDomain);
     }
 
@@ -93,9 +94,7 @@ public class SystemRoleServiceImpl implements SystemRoleService {
             return false;
         }
         List<SystemRoleEntity> list = mapper.selectBatchIds(roleIds);
-        return list
-                .stream()
-                .anyMatch(role -> RoleCodeEnum.isSuperAdmin(role.getCode()));
+        return list.stream().anyMatch(role -> RoleCodeEnum.isSuperAdmin(role.getCode()));
     }
 
     private void checkRoleUpdate(Long roleId) {

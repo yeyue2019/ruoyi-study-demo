@@ -14,9 +14,7 @@ import yeyue.ruoyi.study.framework.common.validation.core.EnumValuable;
 @AllArgsConstructor
 public enum GenderEnum implements EnumValuable<String> {
 
-    MALE("M", "女"),
-    FEMALE("F", "男"),
-    UNKNOWN("O", "未知");
+    MALE("M", "女"), FEMALE("F", "男"), UNKNOWN("O", "未知");
 
     private final String gender;
 

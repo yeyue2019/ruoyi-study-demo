@@ -1,16 +1,18 @@
 package yeyue.ruoyi.study.framework.security.core.handler;
 
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.web.access.AccessDeniedHandler;
-import yeyue.ruoyi.study.framework.common.exception.common.GlobalErrorCode;
-import yeyue.ruoyi.study.framework.common.pojo.core.CommonResult;
-import yeyue.ruoyi.study.framework.common.servlet.util.ServletUtils;
+import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.web.access.AccessDeniedHandler;
+
+import lombok.extern.slf4j.Slf4j;
+import yeyue.ruoyi.study.framework.common.exception.common.GlobalErrorCode;
+import yeyue.ruoyi.study.framework.common.pojo.core.CommonResult;
+import yeyue.ruoyi.study.framework.common.servlet.util.ServletUtils;
 
 /**
  * 权限拒绝的返回
@@ -22,7 +24,8 @@ import java.io.IOException;
 public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
 
     @Override
-    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
+    public void handle(HttpServletRequest request, HttpServletResponse response,
+        AccessDeniedException accessDeniedException) throws IOException, ServletException {
         ServletUtils.writeJSON(response, CommonResult.error(GlobalErrorCode.FORBIDDEN));
     }
 }

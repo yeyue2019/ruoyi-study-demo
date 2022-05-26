@@ -1,15 +1,16 @@
 package yeyue.ruoyi.study.framework.common.util.date;
 
-import yeyue.ruoyi.study.framework.common.enums.DateTimeFormatterEnum;
-import yeyue.ruoyi.study.framework.common.exception.ServiceException;
-import yeyue.ruoyi.study.framework.common.exception.common.GlobalErrorCode;
-import yeyue.ruoyi.study.framework.common.util.object.ObjectUtils;
-
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+
+import javax.validation.constraints.NotNull;
+
+import yeyue.ruoyi.study.framework.common.enums.DateTimeFormatterEnum;
+import yeyue.ruoyi.study.framework.common.exception.ServiceException;
+import yeyue.ruoyi.study.framework.common.exception.common.GlobalErrorCode;
+import yeyue.ruoyi.study.framework.common.util.object.ObjectUtils;
 
 /**
  * 日期处理工具
@@ -26,9 +27,7 @@ public abstract class DateUtils {
     }
 
     public static Date localDateTimeToDate(LocalDateTime localDateTime) {
-        return ObjectUtils.convert(localDateTime, null, dt -> Date.from(dt
-                .atZone(ZoneId.systemDefault())
-                .toInstant()));
+        return ObjectUtils.convert(localDateTime, null, dt -> Date.from(dt.atZone(ZoneId.systemDefault()).toInstant()));
     }
 
     // 字符串 和 LocalDateTime 转化
@@ -45,7 +44,8 @@ public abstract class DateUtils {
         return ObjectUtils.convert(localDateTime, null, ldt -> ldt.format(formatter));
     }
 
-    public static String localDateTimeToString(LocalDateTime localDateTime, @NotNull DateTimeFormatterEnum formatterEnum) {
+    public static String localDateTimeToString(LocalDateTime localDateTime,
+        @NotNull DateTimeFormatterEnum formatterEnum) {
         return ObjectUtils.convert(localDateTime, null, ldt -> ldt.format(formatterEnum.getFormatter()));
     }
 
@@ -71,9 +71,7 @@ public abstract class DateUtils {
 
     public static Date timeStampToDate(Long timeStamp) {
         return ObjectUtils.convert(timeStamp, null, ts -> {
-            int length = String
-                    .valueOf(ts)
-                    .length();
+            int length = String.valueOf(ts).length();
             long target;
             switch (length) {
                 case 10:
@@ -97,9 +95,7 @@ public abstract class DateUtils {
 
     public static Long dateToTimeStamp(Date date, int timeStampSize) {
         return ObjectUtils.convert(date, null, dt -> {
-            long target = dt
-                    .toInstant()
-                    .toEpochMilli();
+            long target = dt.toInstant().toEpochMilli();
             switch (timeStampSize) {
                 case 10:
                     return target / 1000L;
@@ -137,7 +133,8 @@ public abstract class DateUtils {
         return dateToTimeStamp(stringToDate(string, format), timeStampSize);
     }
 
-    public static Long stringToTimeStamp(String string, @NotNull DateTimeFormatterEnum formatterEnum, int timeStampSize) {
+    public static Long stringToTimeStamp(String string, @NotNull DateTimeFormatterEnum formatterEnum,
+        int timeStampSize) {
         return dateToTimeStamp(stringToDate(string, formatterEnum), timeStampSize);
     }
 

@@ -1,8 +1,11 @@
 package yeyue.ruoyi.study.module.system.impl.service.dept;
 
-import lombok.extern.slf4j.Slf4j;
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import lombok.extern.slf4j.Slf4j;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
 import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
@@ -14,8 +17,6 @@ import yeyue.ruoyi.study.module.system.impl.entity.dept.SystemPostEntity;
 import yeyue.ruoyi.study.module.system.impl.entity.dept.convert.SystemPostConvert;
 import yeyue.ruoyi.study.module.system.impl.framework.exception.SystemErrorCode;
 import yeyue.ruoyi.study.module.system.impl.mapper.dept.SystemPostMapper;
-
-import javax.annotation.Resource;
 
 /**
  * @author yeyue
@@ -51,16 +52,12 @@ public class SystemPostServiceImpl implements SystemPostService {
         }
         // 岗位名称不能重复
         SystemPostEntity nameCompare = mapper.selectByName(reqDTO.getName());
-        if (nameCompare != null && nameCompare
-                .getId()
-                .compareTo(reqDTO.getId()) != 0) {
+        if (nameCompare != null && nameCompare.getId().compareTo(reqDTO.getId()) != 0) {
             throw new ServiceException(SystemErrorCode.POST_NAME_DUPLICATE);
         }
         // 岗位编码不能重复
         SystemPostEntity codeCompare = mapper.selectByCode(reqDTO.getCode());
-        if (codeCompare != null && codeCompare
-                .getId()
-                .compareTo(reqDTO.getId()) != 0) {
+        if (codeCompare != null && codeCompare.getId().compareTo(reqDTO.getId()) != 0) {
             throw new ServiceException(SystemErrorCode.POST_CODE_DUPLICATE);
         }
         SystemPostEntity entity = SystemPostConvert.INSTANCE.toEntity(reqDTO);
@@ -86,10 +83,9 @@ public class SystemPostServiceImpl implements SystemPostService {
 
     @Override
     public PageResult<SystemPostDomain> list(SystemPostPageReqDTO reqDTO) {
-        PageResult<SystemPostEntity> pageResult = mapper.selectPage(reqDTO, new MyBatisLambdaQueryWrapper<SystemPostEntity>()
-                .like(SystemPostEntity::getCode, reqDTO.getCode())
-                .like(SystemPostEntity::getName, reqDTO.getName())
-                .eq(SystemPostEntity::getStatus, reqDTO.getStatus()));
+        PageResult<SystemPostEntity> pageResult = mapper.selectPage(reqDTO,
+            new MyBatisLambdaQueryWrapper<SystemPostEntity>().like(SystemPostEntity::getCode, reqDTO.getCode())
+                .like(SystemPostEntity::getName, reqDTO.getName()).eq(SystemPostEntity::getStatus, reqDTO.getStatus()));
         return CollectionUtils.funcPage(pageResult, SystemPostConvert.INSTANCE::toDomain);
     }
 }

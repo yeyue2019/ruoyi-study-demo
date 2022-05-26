@@ -2,6 +2,7 @@ package yeyue.ruoyi.study.module.system.impl.entity.permission.convert;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
+
 import yeyue.ruoyi.study.module.system.api.domain.permission.SystemMenuDomain;
 import yeyue.ruoyi.study.module.system.api.service.permission.dto.SystemMenuCreateReqDTO;
 import yeyue.ruoyi.study.module.system.api.service.permission.dto.SystemMenuUpdateReqDTO;

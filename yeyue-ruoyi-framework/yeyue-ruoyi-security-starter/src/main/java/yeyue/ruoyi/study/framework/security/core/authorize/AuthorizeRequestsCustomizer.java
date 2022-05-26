@@ -10,5 +10,5 @@ import org.springframework.security.config.annotation.web.configurers.Expression
  * @author yeyue
  * @date 2022-04-28 15:57:35
  */
-public abstract class AuthorizeRequestsCustomizer implements Customizer<ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry> {
-}
+public abstract class AuthorizeRequestsCustomizer
+    implements Customizer<ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry> {}

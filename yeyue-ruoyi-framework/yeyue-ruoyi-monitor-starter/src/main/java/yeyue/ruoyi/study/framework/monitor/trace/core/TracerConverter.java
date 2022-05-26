@@ -1,9 +1,9 @@
 package yeyue.ruoyi.study.framework.monitor.trace.core;
 
-
 import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.config.plugins.Plugin;
 import org.apache.logging.log4j.core.pattern.*;
+
 import yeyue.ruoyi.study.framework.common.monitor.trace.util.TracerUtils;
 
 /**
@@ -29,4 +29,3 @@ public class TracerConverter extends LogEventPatternConverter {
         toAppendTo.append(TracerUtils.getTraceId());
     }
 }
-

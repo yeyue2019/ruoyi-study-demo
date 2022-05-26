@@ -1,16 +1,17 @@
-package yeyue.ruoyi.study.module.system.impl.controller.auth;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.*;
-import yeyue.ruoyi.study.framework.common.pojo.core.CommonResult;
-import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
-import yeyue.ruoyi.study.module.system.api.domain.auth.SystemOAuth2ClientDomain;
-import yeyue.ruoyi.study.module.system.api.service.auth.SystemOAuth2ClientService;
-import yeyue.ruoyi.study.module.system.api.service.auth.dto.*;
+package yeyue.ruoyi.study.module.system.impl.controller.oauth2;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+
+import org.springframework.web.bind.annotation.*;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import yeyue.ruoyi.study.framework.common.pojo.core.CommonResult;
+import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
+import yeyue.ruoyi.study.module.system.api.domain.oauth2.SystemOAuth2ClientDomain;
+import yeyue.ruoyi.study.module.system.api.service.auth.SystemOAuth2ClientService;
+import yeyue.ruoyi.study.module.system.api.service.auth.dto.*;
 
 /**
  * @author yeyue
@@ -52,7 +53,8 @@ public class SystemOAuth2ClientController {
 
     @ApiOperation(value = "查看客户端")
     @PostMapping("/list")
-    public CommonResult<PageResult<SystemOAuth2ClientDomain>> list(@Valid @RequestBody SystemOAuth2ClientPageReqDTO dto) {
+    public CommonResult<PageResult<SystemOAuth2ClientDomain>>
+        list(@Valid @RequestBody SystemOAuth2ClientPageReqDTO dto) {
         return CommonResult.success(service.list(dto));
     }
 }

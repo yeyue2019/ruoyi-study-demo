@@ -1,17 +1,17 @@
 package yeyue.ruoyi.study.module.system.impl.controller.dept;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import javax.annotation.Resource;
+import javax.validation.Valid;
+
 import org.springframework.web.bind.annotation.*;
+
+import io.swagger.annotations.*;
 import yeyue.ruoyi.study.framework.common.pojo.core.CommonResult;
 import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
 import yeyue.ruoyi.study.framework.common.pojo.pageable.SortedParam;
 import yeyue.ruoyi.study.module.system.api.domain.dept.SystemPostDomain;
 import yeyue.ruoyi.study.module.system.api.service.dept.SystemPostService;
 import yeyue.ruoyi.study.module.system.api.service.dept.dto.*;
-
-import javax.annotation.Resource;
-import javax.validation.Valid;
 
 /**
  * @author yeyue
@@ -38,7 +38,7 @@ public class SystemPostController {
         return CommonResult.success();
     }
 
-    @ApiOperation(value = "修改岗位状态")
+    @ApiOperation(value = "修改岗位状态", notes = "批量修改")
     @PostMapping("/update/status")
     public CommonResult<Integer> update(@Valid @RequestBody SystemPostStatusUpdateReqDTO dto) {
         return CommonResult.success(service.updateStatus(dto));
@@ -46,6 +46,7 @@ public class SystemPostController {
 
     @ApiOperation(value = "删除系统岗位")
     @DeleteMapping("/delete")
+    @ApiImplicitParam(name = "id", value = "编号", required = true, example = "100", dataTypeClass = Long.class)
     public CommonResult<Void> delete(@RequestParam Long id) {
         service.delete(id);
         return CommonResult.success();
@@ -53,6 +54,7 @@ public class SystemPostController {
 
     @ApiOperation(value = "获取系统岗位")
     @GetMapping("/get")
+    @ApiImplicitParam(name = "id", value = "编号", required = true, example = "100", dataTypeClass = Long.class)
     public CommonResult<SystemPostDomain> get(@RequestParam Long id) {
         return CommonResult.success(service.get(id));
     }

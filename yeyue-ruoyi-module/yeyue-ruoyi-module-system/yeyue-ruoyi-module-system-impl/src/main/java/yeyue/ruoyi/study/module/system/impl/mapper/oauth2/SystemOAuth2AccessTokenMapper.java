@@ -1,7 +1,7 @@
-package yeyue.ruoyi.study.module.system.impl.mapper.auth;
+package yeyue.ruoyi.study.module.system.impl.mapper.oauth2;
 
 import yeyue.ruoyi.study.framework.mybatis.core.mapper.MyBatisMapper;
-import yeyue.ruoyi.study.module.system.impl.entity.auth.SystemOAuth2AccessTokenEntity;
+import yeyue.ruoyi.study.module.system.impl.entity.oauth2.SystemOAuth2AccessTokenEntity;
 
 /**
  * @author yeyue

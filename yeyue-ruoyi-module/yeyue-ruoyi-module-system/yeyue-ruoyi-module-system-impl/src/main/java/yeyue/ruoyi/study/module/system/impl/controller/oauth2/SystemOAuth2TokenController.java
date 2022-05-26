@@ -1,16 +1,17 @@
-package yeyue.ruoyi.study.module.system.impl.controller.auth;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.*;
-import yeyue.ruoyi.study.framework.common.pojo.core.CommonResult;
-import yeyue.ruoyi.study.module.system.api.domain.auth.SystemOAuth2AccessTokenDomain;
-import yeyue.ruoyi.study.module.system.api.service.auth.SystemOAuth2TokenService;
-import yeyue.ruoyi.study.module.system.api.service.auth.dto.SystemOAuth2AccessTokenCreateReqDTO;
-import yeyue.ruoyi.study.module.system.api.service.auth.dto.SystemOAuth2AccessTokenRefreshReqDTO;
+package yeyue.ruoyi.study.module.system.impl.controller.oauth2;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+
+import org.springframework.web.bind.annotation.*;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import yeyue.ruoyi.study.framework.common.pojo.core.CommonResult;
+import yeyue.ruoyi.study.module.system.api.domain.oauth2.SystemOAuth2AccessTokenDomain;
+import yeyue.ruoyi.study.module.system.api.service.auth.SystemOAuth2TokenService;
+import yeyue.ruoyi.study.module.system.api.service.auth.dto.SystemOAuth2AccessTokenCreateReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.auth.dto.SystemOAuth2AccessTokenRefreshReqDTO;
 
 /**
  * @author yeyue
@@ -26,13 +27,15 @@ public class SystemOAuth2TokenController {
 
     @ApiOperation(value = "生成访问令牌")
     @PutMapping("/create")
-    public CommonResult<SystemOAuth2AccessTokenDomain> create(@Valid @RequestBody SystemOAuth2AccessTokenCreateReqDTO dto) {
+    public CommonResult<SystemOAuth2AccessTokenDomain>
+        create(@Valid @RequestBody SystemOAuth2AccessTokenCreateReqDTO dto) {
         return CommonResult.success(service.create(dto));
     }
 
     @ApiOperation(value = "刷新访问令牌")
     @PostMapping("/refresh")
-    public CommonResult<SystemOAuth2AccessTokenDomain> refresh(@Valid @RequestBody SystemOAuth2AccessTokenRefreshReqDTO dto) {
+    public CommonResult<SystemOAuth2AccessTokenDomain>
+        refresh(@Valid @RequestBody SystemOAuth2AccessTokenRefreshReqDTO dto) {
         return CommonResult.success(service.refresh(dto));
     }
 

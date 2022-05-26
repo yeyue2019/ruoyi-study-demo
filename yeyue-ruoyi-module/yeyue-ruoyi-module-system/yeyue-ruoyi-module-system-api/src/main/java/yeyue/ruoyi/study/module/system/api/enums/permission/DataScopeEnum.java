@@ -36,7 +36,6 @@ public enum DataScopeEnum implements EnumValuable<Integer> {
 
     private final Integer scope;
 
-
     @Override
     public Integer get() {
         return this.scope;

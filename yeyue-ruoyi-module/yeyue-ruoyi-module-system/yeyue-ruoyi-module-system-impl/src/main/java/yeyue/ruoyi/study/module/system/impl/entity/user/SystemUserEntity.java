@@ -1,15 +1,16 @@
 package yeyue.ruoyi.study.module.system.impl.entity.user;
 
-import com.baomidou.mybatisplus.annotation.*;
-import lombok.Data;
-import yeyue.ruoyi.study.framework.mybatis.core.type.JsonLongSetTypeHandler;
-import yeyue.ruoyi.study.module.system.api.enums.user.GenderEnum;
-import yeyue.ruoyi.study.module.system.impl.entity.SystemEntity;
+import static yeyue.ruoyi.study.module.system.impl.constants.SystemTableConstants.SYSTEM_USER;
 
 import java.time.LocalDate;
 import java.util.Set;
 
-import static yeyue.ruoyi.study.module.system.impl.constants.SystemTableConstants.SYSTEM_USER;
+import com.baomidou.mybatisplus.annotation.*;
+
+import lombok.Data;
+import yeyue.ruoyi.study.framework.mybatis.core.type.JsonLongSetTypeHandler;
+import yeyue.ruoyi.study.module.system.api.enums.user.GenderEnum;
+import yeyue.ruoyi.study.module.system.impl.entity.SystemEntity;
 
 /**
  * 系统用户实体

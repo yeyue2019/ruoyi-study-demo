@@ -1,11 +1,12 @@
-package yeyue.ruoyi.study.module.system.impl.entity.auth;
+package yeyue.ruoyi.study.module.system.impl.entity.oauth2;
+
+import java.time.LocalDateTime;
 
 import com.baomidou.mybatisplus.annotation.*;
+
 import lombok.Data;
 import yeyue.ruoyi.study.framework.mybatis.core.entity.MyBatisEntity;
 import yeyue.ruoyi.study.module.system.impl.constants.SystemTableConstants;
-
-import java.time.LocalDateTime;
 
 /**
  * OAuth2 访问令牌

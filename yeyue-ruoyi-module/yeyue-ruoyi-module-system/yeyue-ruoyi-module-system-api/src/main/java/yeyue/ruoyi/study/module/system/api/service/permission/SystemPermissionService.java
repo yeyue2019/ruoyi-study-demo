@@ -1,10 +1,10 @@
 package yeyue.ruoyi.study.module.system.api.service.permission;
 
-import yeyue.ruoyi.study.module.system.api.service.permission.dto.SystemPermissionAssignRoleMenuReqDTO;
-import yeyue.ruoyi.study.module.system.api.service.permission.dto.SystemPermissionAssignUserRoleReqDTO;
-
 import java.util.Collection;
 import java.util.Set;
+
+import yeyue.ruoyi.study.module.system.api.service.permission.dto.SystemPermissionAssignRoleMenuReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.permission.dto.SystemPermissionAssignUserRoleReqDTO;
 
 /**
  * @author yeyue

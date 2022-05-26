@@ -1,7 +1,7 @@
 package yeyue.ruoyi.study.module.system.api.service.auth;
 
 import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
-import yeyue.ruoyi.study.module.system.api.domain.auth.SystemOAuth2ClientDomain;
+import yeyue.ruoyi.study.module.system.api.domain.oauth2.SystemOAuth2ClientDomain;
 import yeyue.ruoyi.study.module.system.api.service.auth.dto.*;
 
 /**

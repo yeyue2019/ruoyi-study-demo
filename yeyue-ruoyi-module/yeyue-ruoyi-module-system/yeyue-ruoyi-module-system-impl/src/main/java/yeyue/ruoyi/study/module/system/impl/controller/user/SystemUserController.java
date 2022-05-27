@@ -13,8 +13,8 @@ import yeyue.ruoyi.study.framework.common.validation.annotation.InEnum;
 import yeyue.ruoyi.study.module.system.api.domain.user.SystemUserDomain;
 import yeyue.ruoyi.study.module.system.api.service.user.SystemUserService;
 import yeyue.ruoyi.study.module.system.api.service.user.dto.SystemUserCreateReqDTO;
-import yeyue.ruoyi.study.module.system.api.service.user.dto.SystemUserPageReq;
-import yeyue.ruoyi.study.module.system.api.service.user.dto.SystemUserUpdatePwdReq;
+import yeyue.ruoyi.study.module.system.api.service.user.dto.SystemUserPageReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.user.dto.SystemUserPasswordUpdateReqDTO;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -40,17 +40,10 @@ public class SystemUserController {
         return CommonResult.success(service.create(dto));
     }
 
-    @ApiOperation(value = "修改用户")
-    @PostMapping("/update")
-    public CommonResult<Void> update(@RequestBody SystemUserDomain update) {
-        service.update(update);
-        return CommonResult.success();
-    }
-
     @ApiOperation(value = "获取用户")
     @GetMapping("/get/{id}")
     public CommonResult<SystemUserDomain> get(@Positive(message = "用户Id格式错误") @PathVariable Long id) {
-        return CommonResult.success(service.getById(id));
+        return CommonResult.success(service.get(id));
     }
 
     @ApiOperation(value = "获取用户")
@@ -67,14 +60,14 @@ public class SystemUserController {
 
     @ApiOperation(value = "用户列表")
     @PostMapping("/list")
-    public CommonResult<PageResult<SystemUserDomain>> list(@Valid @RequestBody SystemUserPageReq req) {
+    public CommonResult<PageResult<SystemUserDomain>> list(@Valid @RequestBody SystemUserPageReqDTO req) {
         return CommonResult.success(service.list(req));
     }
 
     @ApiOperation(value = "更改密码")
     @PostMapping("/passwd/update")
     public CommonResult<Void> update(@Positive(message = "用户Id格式错误") @RequestParam Long id,
-                                     @Valid @RequestBody SystemUserUpdatePwdReq req) {
+                                     @Valid @RequestBody SystemUserPasswordUpdateReqDTO req) {
         service.updatePwd(id, req);
         return CommonResult.success();
     }

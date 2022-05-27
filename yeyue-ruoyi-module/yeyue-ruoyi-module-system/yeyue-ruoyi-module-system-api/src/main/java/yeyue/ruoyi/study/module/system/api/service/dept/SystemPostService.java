@@ -7,6 +7,8 @@ import yeyue.ruoyi.study.module.system.api.service.dept.dto.SystemPostPageReqDTO
 import yeyue.ruoyi.study.module.system.api.service.dept.dto.SystemPostStatusUpdateReqDTO;
 import yeyue.ruoyi.study.module.system.api.service.dept.dto.SystemPostUpdateReqDTO;
 
+import java.util.Collection;
+
 /**
  * @author yeyue
  * @date 2022-04-28 16:59:25
@@ -42,6 +44,13 @@ public interface SystemPostService {
      * @param id 岗位编号
      */
     void delete(Long id);
+
+    /**
+     * 岗位校验
+     *
+     * @param ids 岗位编号
+     */
+    void validate(Collection<Long> ids);
 
     /**
      * 获取岗位

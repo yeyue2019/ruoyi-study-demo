@@ -546,7 +546,7 @@ CREATE TABLE `ruoyi_system_user`
     `avatar`      varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci          DEFAULT '' COMMENT '头像地址',
     `gender`      varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci            DEFAULT NULL COMMENT '用户性别',
     `birthDay`    date                                                                   DEFAULT NULL COMMENT '用户生日',
-    `areaCode`    varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci           DEFAULT '86' COMMENT '手机区号',
+    `areaCode`    varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '86' COMMENT '手机区号',
     `mobile`      varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci           DEFAULT '' COMMENT '手机号码',
     `email`       varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci           DEFAULT '' COMMENT '用户邮箱',
     `description` longtext                                                               DEFAULT NULL COMMENT '备注',
@@ -560,7 +560,7 @@ CREATE TABLE `ruoyi_system_user`
     `deleted`     bit(1)                                                        NOT NULL DEFAULT b'0' COMMENT '是否删除',
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE KEY `idx_username` (`username`) USING BTREE,
-    KEY           `idx_mobile` (`areaCode`, `mobile`) USING BTREE
+    KEY           `idx_mobile` (`mobile`) USING BTREE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci

@@ -4,6 +4,9 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 import yeyue.ruoyi.study.module.system.api.domain.user.SystemUserDomain;
 import yeyue.ruoyi.study.module.system.api.service.user.dto.SystemUserCreateReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.user.dto.SystemUserDeptUpdateReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.user.dto.SystemUserProfileUpdateReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.user.dto.SystemUserStatusUpdateReqDTO;
 import yeyue.ruoyi.study.module.system.impl.entity.user.SystemUserEntity;
 
 /**
@@ -17,6 +20,12 @@ public interface SystemUserConvert {
     SystemUserDomain toDomain(SystemUserEntity entity);
 
     SystemUserEntity toEntity(SystemUserCreateReqDTO reqDTO);
+
+    SystemUserEntity toEntity(SystemUserProfileUpdateReqDTO reqDTO);
+
+    SystemUserEntity toEntity(SystemUserDeptUpdateReqDTO reqDTO);
+
+    SystemUserEntity toEntity(SystemUserStatusUpdateReqDTO reqDTO);
 
     SystemUserEntity toEntity(SystemUserDomain domain);
 }

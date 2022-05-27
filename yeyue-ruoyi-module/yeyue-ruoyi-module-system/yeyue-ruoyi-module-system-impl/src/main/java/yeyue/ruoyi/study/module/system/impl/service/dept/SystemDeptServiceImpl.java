@@ -93,7 +93,16 @@ public class SystemDeptServiceImpl implements SystemDeptService {
             return;
         }
         List<SystemDeptEntity> entities = mapper.selectBatchIds(ids);
-
+        Map<Long, SystemDeptEntity> map = CollectionUtils.funcMap(entities, SystemDeptEntity::getId);
+        for (Long id : ids) {
+            SystemDeptEntity entity = map.get(id);
+            if (entity == null) {
+                throw new ServiceException(SystemErrorCode.DEPT_NOT_FOUND);
+            }
+            if (EnumUtils.notEquals(CommonStatusEnum.ENABLE, CommonStatusEnum::getStatus, entity.getStatus())) {
+                throw new ServiceException(SystemErrorCode.DEPT_NOT_ENABLE);
+            }
+        }
     }
 
     @Override

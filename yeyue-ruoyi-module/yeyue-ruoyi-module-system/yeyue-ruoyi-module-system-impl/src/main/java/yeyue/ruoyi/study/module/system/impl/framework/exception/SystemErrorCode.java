@@ -19,7 +19,7 @@ public enum SystemErrorCode implements ErrorCode {
     POST_NAME_DUPLICATE("010101", "岗位名称已存在"),
     POST_CODE_DUPLICATE("010102", "岗位编码已存在"),
     POST_NOT_FOUND("010103", "当前岗位不存在"),
-
+    POST_NOT_ENABLE("010104", "岗位不处于开启状态，不允许选择"),
     /* 部门 */
 
     DEPT_NOT_FOUND("010201", "当前部门不存在"),
@@ -46,10 +46,10 @@ public enum SystemErrorCode implements ErrorCode {
     /* 用户 */
 
     USER_NOT_EXISTS("010501", "用户不存在"),
-
     USER_USERNAME_EXISTS("010502", "用户账号已经存在"),
-
     USER_MOBILE_EXISTS("010503", "手机号已经存在"),
+    USER_EMAIL_EXISTS("010504", "邮箱已经存在"),
+    USER_PASSWORD_FAILED("010505", "用户密码校验失败"),
 
     /* OAuth2 */
 

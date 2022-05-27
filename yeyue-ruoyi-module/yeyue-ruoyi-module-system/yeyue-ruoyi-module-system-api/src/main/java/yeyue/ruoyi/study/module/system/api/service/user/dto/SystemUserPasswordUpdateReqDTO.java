@@ -13,8 +13,8 @@ import java.io.Serializable;
  * @date 2022-04-18 16:05:09
  */
 @Data
-@ApiModel(description = "用户密码修改请求")
-public class SystemUserUpdatePwdReq implements Serializable {
+@ApiModel(description = "用户密码修改")
+public class SystemUserPasswordUpdateReqDTO implements Serializable {
 
     @ApiModelProperty(value = "旧密码", required = true, example = "123456")
     @NotEmpty(message = "旧密码不能为空")

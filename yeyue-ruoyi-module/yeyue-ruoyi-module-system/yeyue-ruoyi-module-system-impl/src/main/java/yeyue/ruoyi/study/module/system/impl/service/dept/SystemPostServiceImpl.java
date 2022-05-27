@@ -3,9 +3,11 @@ package yeyue.ruoyi.study.module.system.impl.service.dept;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import yeyue.ruoyi.study.framework.common.enums.CommonStatusEnum;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
 import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
+import yeyue.ruoyi.study.framework.common.util.enums.EnumUtils;
 import yeyue.ruoyi.study.framework.mybatis.core.query.MyBatisLambdaQueryWrapper;
 import yeyue.ruoyi.study.module.system.api.domain.dept.SystemPostDomain;
 import yeyue.ruoyi.study.module.system.api.service.dept.SystemPostService;
@@ -19,6 +21,9 @@ import yeyue.ruoyi.study.module.system.impl.framework.exception.SystemErrorCode;
 import yeyue.ruoyi.study.module.system.impl.mapper.dept.SystemPostMapper;
 
 import javax.annotation.Resource;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author yeyue
@@ -75,6 +80,24 @@ public class SystemPostServiceImpl implements SystemPostService {
     @Override
     public void delete(Long id) {
         mapper.deleteById(id);
+    }
+
+    @Override
+    public void validate(Collection<Long> ids) {
+        if (CollectionUtils.isEmpty(ids)) {
+            return;
+        }
+        List<SystemPostEntity> entities = mapper.selectBatchIds(ids);
+        Map<Long, SystemPostEntity> map = CollectionUtils.funcMap(entities, SystemPostEntity::getId);
+        for (Long id : ids) {
+            SystemPostEntity entity = map.get(id);
+            if (entity == null) {
+                throw new ServiceException(SystemErrorCode.POST_NOT_FOUND);
+            }
+            if (EnumUtils.notEquals(CommonStatusEnum.ENABLE, CommonStatusEnum::getStatus, entity.getStatus())) {
+                throw new ServiceException(SystemErrorCode.POST_NOT_ENABLE);
+            }
+        }
     }
 
     @Override

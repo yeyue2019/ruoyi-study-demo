@@ -2,9 +2,7 @@ package yeyue.ruoyi.study.module.system.api.service.user;
 
 import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
 import yeyue.ruoyi.study.module.system.api.domain.user.SystemUserDomain;
-import yeyue.ruoyi.study.module.system.api.service.user.dto.SystemUserCreateReqDTO;
-import yeyue.ruoyi.study.module.system.api.service.user.dto.SystemUserPageReq;
-import yeyue.ruoyi.study.module.system.api.service.user.dto.SystemUserUpdatePwdReq;
+import yeyue.ruoyi.study.module.system.api.service.user.dto.*;
 
 /**
  * 用户管理
@@ -23,11 +21,19 @@ public interface SystemUserService {
     Long create(SystemUserCreateReqDTO create);
 
     /**
-     * 修改信息
+     * 修改个人信息
      *
+     * @param id     用户Id
      * @param update 用户信息
      */
-    void update(SystemUserDomain update);
+    void update(Long id, SystemUserProfileUpdateReqDTO update);
+
+    /**
+     * 修改部门信息
+     *
+     * @param update 部门信息
+     */
+    void update(SystemUserDeptUpdateReqDTO update);
 
     /**
      * 修改用户密码
@@ -35,38 +41,36 @@ public interface SystemUserService {
      * @param id  用户id
      * @param req 密码信息
      */
-    void updatePwd(Long id, SystemUserUpdatePwdReq req);
+    void update(Long id, SystemUserPasswordUpdateReqDTO req);
+
+    /**
+     * 重置用户密码
+     *
+     * @param reqDTO 密码信息
+     */
+    void replace(SystemUserPasswordReplaceReqDTO reqDTO);
 
     /**
      * 修改用户状态
      *
-     * @param id     用户Id
-     * @param status 状态
+     * @param reqDTO 用户信息
      */
-    void updateStatus(Long id, Integer status);
+    void update(SystemUserStatusUpdateReqDTO reqDTO);
 
     /**
      * 删除用户
      *
      * @param id 用户Id
      */
-    Integer delete(Long id);
+    void delete(Long id);
 
     /**
-     * 根据用户Id查询用户
+     * 查询用户
      *
-     * @param id 用户Id
+     * @param reqDTO 用户信息
      * @return 结果
      */
-    SystemUserDomain getById(Long id);
-
-    /**
-     * 根据用户账号查询用户
-     *
-     * @param username 用户账号
-     * @return 结果
-     */
-    SystemUserDomain getByUsername(String username);
+    SystemUserDomain get(SystemUserGetReqDTO reqDTO);
 
     /**
      * 用户列表查询
@@ -74,5 +78,5 @@ public interface SystemUserService {
      * @param req 请求
      * @return 结果
      */
-    PageResult<SystemUserDomain> list(SystemUserPageReq req);
+    PageResult<SystemUserDomain> list(SystemUserPageReqDTO req);
 }

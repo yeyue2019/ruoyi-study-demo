@@ -63,6 +63,9 @@ public class SystemUserDomain implements Serializable {
     @ApiModelProperty(value = "岗位编号Id组")
     private Set<Long> postIds;
 
-    @ApiModelProperty(value = "创建时间", accessMode = ApiModelProperty.AccessMode.READ_ONLY)
+    @ApiModelProperty(value = "创建时间")
     private LocalDateTime createTime;
+
+    @ApiModelProperty(value = "更新时间")
+    private LocalDateTime updateTime;
 }

@@ -23,6 +23,10 @@ public class MyBatisLambdaQueryWrapper<T> extends LambdaQueryWrapper<T> {
         return (MyBatisLambdaQueryWrapper<T>) super.like(val != null, column, val);
     }
 
+    public MyBatisLambdaQueryWrapper<T> likeLeft(SFunction<T, ?> column, String val) {
+        return (MyBatisLambdaQueryWrapper<T>) super.likeLeft(val != null, column, val);
+    }
+
     @Override
     public MyBatisLambdaQueryWrapper<T> in(SFunction<T, ?> column, Collection<?> coll) {
         return (MyBatisLambdaQueryWrapper<T>) super.in(coll != null, column, coll);

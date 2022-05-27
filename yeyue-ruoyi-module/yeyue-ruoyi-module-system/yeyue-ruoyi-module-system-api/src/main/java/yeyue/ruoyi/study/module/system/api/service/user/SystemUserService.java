@@ -2,6 +2,7 @@ package yeyue.ruoyi.study.module.system.api.service.user;
 
 import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
 import yeyue.ruoyi.study.module.system.api.domain.user.SystemUserDomain;
+import yeyue.ruoyi.study.module.system.api.service.user.dto.SystemUserCreateReqDTO;
 import yeyue.ruoyi.study.module.system.api.service.user.dto.SystemUserPageReq;
 import yeyue.ruoyi.study.module.system.api.service.user.dto.SystemUserUpdatePwdReq;
 
@@ -19,7 +20,7 @@ public interface SystemUserService {
      * @param create 用户信息
      * @return 用户Id
      */
-    Long create(SystemUserDomain create);
+    Long create(SystemUserCreateReqDTO create);
 
     /**
      * 修改信息

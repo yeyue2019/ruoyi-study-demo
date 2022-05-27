@@ -22,17 +22,17 @@ public abstract class DateUtils {
     // Date 和 LocalDateTime 转化
 
     public static LocalDateTime dateToLocalDateTime(Date date) {
-        return ObjectUtils.convert(date, null, dt -> LocalDateTime.ofInstant(dt.toInstant(), ZoneId.systemDefault()));
+        return ObjectUtils.funcOrDefault(date, null, dt -> LocalDateTime.ofInstant(dt.toInstant(), ZoneId.systemDefault()));
     }
 
     public static Date localDateTimeToDate(LocalDateTime localDateTime) {
-        return ObjectUtils.convert(localDateTime, null, dt -> Date.from(dt.atZone(ZoneId.systemDefault()).toInstant()));
+        return ObjectUtils.funcOrDefault(localDateTime, null, dt -> Date.from(dt.atZone(ZoneId.systemDefault()).toInstant()));
     }
 
     // 字符串 和 LocalDateTime 转化
 
     public static LocalDateTime stringToLocalDateTime(String string, @NotNull DateTimeFormatter format) {
-        return ObjectUtils.convert(string, null, str -> LocalDateTime.parse(str, format));
+        return ObjectUtils.funcOrDefault(string, null, str -> LocalDateTime.parse(str, format));
     }
 
     public static LocalDateTime stringToLocalDateTime(String string, @NotNull DateTimeFormatterEnum formatterEnum) {
@@ -40,12 +40,12 @@ public abstract class DateUtils {
     }
 
     public static String localDateTimeToString(LocalDateTime localDateTime, @NotNull DateTimeFormatter formatter) {
-        return ObjectUtils.convert(localDateTime, null, ldt -> ldt.format(formatter));
+        return ObjectUtils.funcOrDefault(localDateTime, null, ldt -> ldt.format(formatter));
     }
 
     public static String localDateTimeToString(LocalDateTime localDateTime,
                                                @NotNull DateTimeFormatterEnum formatterEnum) {
-        return ObjectUtils.convert(localDateTime, null, ldt -> ldt.format(formatterEnum.getFormatter()));
+        return ObjectUtils.funcOrDefault(localDateTime, null, ldt -> ldt.format(formatterEnum.getFormatter()));
     }
 
     // Date 和 字符串 转化
@@ -69,7 +69,7 @@ public abstract class DateUtils {
     // 时间戳 和 Date 转化
 
     public static Date timeStampToDate(Long timeStamp) {
-        return ObjectUtils.convert(timeStamp, null, ts -> {
+        return ObjectUtils.funcOrDefault(timeStamp, null, ts -> {
             int length = String.valueOf(ts).length();
             long target;
             switch (length) {
@@ -93,7 +93,7 @@ public abstract class DateUtils {
     }
 
     public static Long dateToTimeStamp(Date date, int timeStampSize) {
-        return ObjectUtils.convert(date, null, dt -> {
+        return ObjectUtils.funcOrDefault(date, null, dt -> {
             long target = dt.toInstant().toEpochMilli();
             switch (timeStampSize) {
                 case 10:

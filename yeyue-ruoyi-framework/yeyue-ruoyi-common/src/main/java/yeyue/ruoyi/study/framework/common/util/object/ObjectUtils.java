@@ -21,7 +21,7 @@ public abstract class ObjectUtils {
      * @param defaultResult 源对象为空的默认返回结果
      * @return 结果
      */
-    public static <T, R> R convert(T source, R defaultResult, Function<T, R> function) {
+    public static <T, R> R funcOrDefault(T source, R defaultResult, Function<T, R> function) {
         return source == null ? defaultResult : function.apply(source);
     }
 

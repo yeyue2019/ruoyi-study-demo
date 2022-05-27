@@ -5,6 +5,7 @@ import yeyue.ruoyi.study.module.system.api.service.dept.dto.SystemDeptCreateReqD
 import yeyue.ruoyi.study.module.system.api.service.dept.dto.SystemDeptListReqDTO;
 import yeyue.ruoyi.study.module.system.api.service.dept.dto.SystemDeptUpdateReqDTO;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -42,6 +43,13 @@ public interface SystemDeptService {
      * @param id 部门编号
      */
     void delete(Long id);
+
+    /**
+     * 部门校验
+     *
+     * @param ids 部门信息
+     */
+    void validate(Collection<Long> ids);
 
     /**
      * 部门集合

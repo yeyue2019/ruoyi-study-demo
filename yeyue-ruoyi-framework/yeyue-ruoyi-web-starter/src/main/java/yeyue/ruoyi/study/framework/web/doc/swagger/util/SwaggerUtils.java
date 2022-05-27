@@ -60,9 +60,7 @@ public abstract class SwaggerUtils {
      */
     private static List<Response> globalResponses(ErrorCode[] codes) {
         return Arrays.stream(codes)
-                .map(
-                        errorEnums -> new ResponseBuilder().code(errorEnums.getCode()).description(errorEnums.getMsg()).build())
-                .collect(Collectors.toList());
+                .map(errorEnums -> new ResponseBuilder().code(errorEnums.getCode()).description(errorEnums.getMsg()).build()).collect(Collectors.toList());
     }
 
     /**

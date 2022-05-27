@@ -3,6 +3,7 @@ package yeyue.ruoyi.study.module.system.impl.entity.user.convert;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 import yeyue.ruoyi.study.module.system.api.domain.user.SystemUserDomain;
+import yeyue.ruoyi.study.module.system.api.service.user.dto.SystemUserCreateReqDTO;
 import yeyue.ruoyi.study.module.system.impl.entity.user.SystemUserEntity;
 
 /**
@@ -13,7 +14,9 @@ import yeyue.ruoyi.study.module.system.impl.entity.user.SystemUserEntity;
 public interface SystemUserConvert {
     SystemUserConvert INSTANCE = Mappers.getMapper(SystemUserConvert.class);
 
-    SystemUserDomain convert(SystemUserEntity entity);
+    SystemUserDomain toDomain(SystemUserEntity entity);
 
-    SystemUserEntity convert(SystemUserDomain domain);
+    SystemUserEntity toEntity(SystemUserCreateReqDTO reqDTO);
+
+    SystemUserEntity toEntity(SystemUserDomain domain);
 }

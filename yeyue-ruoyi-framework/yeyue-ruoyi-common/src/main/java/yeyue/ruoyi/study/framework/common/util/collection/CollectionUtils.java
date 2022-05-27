@@ -2,10 +2,12 @@ package yeyue.ruoyi.study.framework.common.util.collection;
 
 import org.springframework.util.Assert;
 import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
+import yeyue.ruoyi.study.framework.common.util.function.FunctionUtils;
 
 import java.lang.reflect.Array;
 import java.util.*;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -68,6 +70,13 @@ public abstract class CollectionUtils extends org.springframework.util.Collectio
         return result;
     }
 
+    public static <T> Set<T> toSet(Collection<T> source) {
+        if (isEmpty(source)) {
+            return Collections.emptySet();
+        }
+        return new HashSet<>(source);
+    }
+
     /* 带转换函数的集合数组转换 */
 
     public static <T, R> List<R> arrayToList(T[] array, Function<T, R> func) {
@@ -103,18 +112,41 @@ public abstract class CollectionUtils extends org.springframework.util.Collectio
         return new PageResult<>(funcList(from.getList(), func), from.getTotal());
     }
 
-    public static <T> Set<T> funcSet(Collection<T> source) {
-        if (isEmpty(source)) {
-            return Collections.emptySet();
-        }
-        return new HashSet<>(source);
-    }
-
     public static <T, R> Set<R> funcSet(Collection<T> source, Function<T, R> func) {
         if (isEmpty(source)) {
             return Collections.emptySet();
         }
         return source.stream().map(func).collect(Collectors.toSet());
+    }
+
+    public static <K, V> Map<K, V> funcMap(Collection<V> source, Function<V, K> func) {
+        if (isEmpty(source)) {
+            return Collections.emptyMap();
+        }
+        return source.stream().collect(Collectors.toMap(func, FunctionUtils.selfFunc(), FunctionUtils.mergeEnd()));
+    }
+
+    public static <T> Set<T> filterSet(Collection<T> collection, Predicate<T> pred) {
+        if (isEmpty(collection)) {
+            return Collections.emptySet();
+        }
+        return collection.stream().filter(pred).collect(Collectors.toSet());
+    }
+
+
+    public static <T> boolean contains(T[] source, T compare) {
+        if (compare == null || isEmpty(source)) {
+            return false;
+        }
+        return Arrays.asList(source).contains(compare);
+    }
+
+    public static <T, C> boolean contains(T[] source, Function<T, C> func, C compare) {
+        return Arrays.stream(source).anyMatch(s -> Objects.equals(func.apply(s), compare));
+    }
+
+    public static <T> boolean contains(T[] source, Predicate<T> pred) {
+        return Arrays.stream(source).anyMatch(pred);
     }
 
     /**

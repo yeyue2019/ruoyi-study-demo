@@ -3,9 +3,8 @@ package yeyue.ruoyi.study.module.system.api.domain.user;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import yeyue.ruoyi.study.framework.common.validation.core.Groups;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.Email;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -21,20 +20,13 @@ import java.util.Set;
 @ApiModel(description = "系统用户")
 public class SystemUserDomain implements Serializable {
 
-    @ApiModelProperty(value = "Id")
-    @Null(groups = Groups.Create.class, message = "创建时不需要传入Id")
-    @NotNull(groups = Groups.Update.class, message = "用户Id不能为空")
+    @ApiModelProperty(value = "用户Id")
     private Long id;
 
     @ApiModelProperty(value = "账号", required = true, example = "yeyue")
-    @NotBlank(message = "用户账号不能为空")
-    @Size(min = 4, max = 30, message = "用户账号长度为4-30个字符")
-    @Pattern(regexp = "^[a-zA-Z0-9]{4,30}$", message = "用户账号由 数字、字母 组成")
     private String username;
 
-    @ApiModelProperty(value = "密码:只有创建时需要传入")
-    @NotEmpty(groups = Groups.Create.class, message = "用户密码不能为空")
-    @Size(min = 6, max = 16, groups = Groups.Create.class, message = "密码长度为6-16位")
+    @ApiModelProperty(value = "密码")
     private String password;
 
     @ApiModelProperty(value = "昵称")

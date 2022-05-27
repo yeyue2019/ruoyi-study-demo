@@ -1,12 +1,12 @@
 package yeyue.ruoyi.study.module.system.impl.entity.user;
 
-import com.baomidou.mybatisplus.annotation.FieldStrategy;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import yeyue.ruoyi.study.framework.mybatis.core.entity.MyBatisEntity;
 import yeyue.ruoyi.study.framework.mybatis.core.type.JsonLongSetTypeHandler;
-import yeyue.ruoyi.study.module.system.api.enums.user.GenderEnum;
-import yeyue.ruoyi.study.module.system.impl.entity.SystemEntity;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -21,7 +21,13 @@ import static yeyue.ruoyi.study.module.system.impl.constants.SystemTableConstant
  */
 @Data
 @TableName(value = SYSTEM_USER, autoResultMap = true)
-public class SystemUserEntity extends SystemEntity {
+public class SystemUserEntity extends MyBatisEntity {
+
+    /**
+     * 系统Id
+     */
+    @TableId(type = IdType.ASSIGN_ID)
+    protected Long id;
 
     /**
      * 账号
@@ -31,7 +37,6 @@ public class SystemUserEntity extends SystemEntity {
     /**
      * 密码
      */
-    @TableField(updateStrategy = FieldStrategy.NEVER)
     private String password;
 
     /**
@@ -47,7 +52,7 @@ public class SystemUserEntity extends SystemEntity {
     /**
      * 性别
      */
-    private GenderEnum gender;
+    private Integer gender;
 
     /**
      * 生日
@@ -84,4 +89,9 @@ public class SystemUserEntity extends SystemEntity {
      */
     @TableField(typeHandler = JsonLongSetTypeHandler.class)
     private Set<Long> postIds;
+
+    /**
+     * 状态
+     */
+    protected Integer status;
 }

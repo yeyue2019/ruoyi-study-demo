@@ -26,7 +26,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 /**
  * @author yeyue
@@ -53,12 +52,12 @@ public class SystemPermissionServiceImpl implements SystemPermissionService {
         }
         // 1. 获取全部可用的菜单
         Set<Long> menuIds = CollectionUtils.funcSet(menuService.list(new SystemMenuListReqDTO().setStatus(CommonStatusEnum.ENABLE.getStatus())), SystemMenuDomain::getId);
-        Set<Long> assignIds = reqDTO.getMenuIds().stream().filter(menuIds::contains).collect(Collectors.toSet());
+        Set<Long> assignIds = CollectionUtils.filterSet(reqDTO.getMenuIds(), menuIds::contains);
         // 2. 查询角色拥有的菜单编号
         Set<Long> hasIds = CollectionUtils.funcSet(roleMenuMapper.selectListByRoleId(reqDTO.getRoleId()), SystemRoleMenuEntity::getMenuId);
         // 3. 计算删除和新增的菜单
-        Set<Long> deleteIds = hasIds.stream().filter(r -> !assignIds.contains(r)).collect(Collectors.toSet());
-        Set<Long> createIds = assignIds.stream().filter(r -> !hasIds.contains(r)).collect(Collectors.toSet());
+        Set<Long> deleteIds = CollectionUtils.filterSet(hasIds, r -> !assignIds.contains(r));
+        Set<Long> createIds = CollectionUtils.filterSet(assignIds, r -> !hasIds.contains(r));
         // 执行删除和新增的操作
         if (CollectionUtils.isNotEmpty(deleteIds)) {
             roleMenuMapper.deleteListByRoleIdAndMenuIds(reqDTO.getRoleId(), deleteIds);
@@ -78,7 +77,7 @@ public class SystemPermissionServiceImpl implements SystemPermissionService {
         if (!roleService.hasAnySuperAdmin(Collections.singleton(roleId))) {
             menuIds = CollectionUtils.funcSet(roleMenuMapper.selectListByRoleId(roleId), SystemRoleMenuEntity::getMenuId);
         }
-        return CollectionUtils.funcSet(menuService.list(new SystemMenuListReqDTO().setIds(menuIds).setStatus(status)));
+        return CollectionUtils.toSet(menuService.list(new SystemMenuListReqDTO().setIds(menuIds).setStatus(status)));
     }
 
     @Override
@@ -90,7 +89,7 @@ public class SystemPermissionServiceImpl implements SystemPermissionService {
             if (!roleService.hasAnySuperAdmin(roleIds)) {
                 menuIds = CollectionUtils.funcSet(roleMenuMapper.selectListByRoleIds(roleIds), SystemRoleMenuEntity::getMenuId);
             }
-            return CollectionUtils.funcSet(menuService.list(new SystemMenuListReqDTO().setIds(menuIds).setStatus(status)));
+            return CollectionUtils.toSet(menuService.list(new SystemMenuListReqDTO().setIds(menuIds).setStatus(status)));
         }
     }
 
@@ -98,13 +97,13 @@ public class SystemPermissionServiceImpl implements SystemPermissionService {
     public void assignUserRole(SystemPermissionAssignUserRoleReqDTO reqDTO) {
         // 1. 获取当前可用的角色
         Set<Long> roleIds = CollectionUtils.funcSet(roleService.list(new SystemRoleListReqDTO().setStatus(CommonStatusEnum.ENABLE.getStatus())), SystemRoleDomain::getId);
-        Set<Long> assignIds = reqDTO.getRoleIds().stream().filter(roleIds::contains).collect(Collectors.toSet());
+        Set<Long> assignIds = CollectionUtils.filterSet(reqDTO.getRoleIds(), roleIds::contains);
         // 2. 获取用户拥有的角色
         Set<Long> hasIds = CollectionUtils.funcSet(userRoleMapper.selectListByUserId(reqDTO.getUserId()),
                 SystemUserRoleEntity::getRoleId);
         // 3. 计算删除和新增的菜单
-        Set<Long> deleteIds = hasIds.stream().filter(r -> !assignIds.contains(r)).collect(Collectors.toSet());
-        Set<Long> createIds = assignIds.stream().filter(r -> !hasIds.contains(r)).collect(Collectors.toSet());
+        Set<Long> deleteIds = CollectionUtils.filterSet(hasIds, r -> !assignIds.contains(r));
+        Set<Long> createIds = CollectionUtils.filterSet(assignIds, r -> !hasIds.contains(r));
         // 4. 执行删除和新增的操作
         if (CollectionUtils.isNotEmpty(deleteIds)) {
             userRoleMapper.deleteListByUserIdAndRoleIds(reqDTO.getUserId(), deleteIds);
@@ -121,7 +120,7 @@ public class SystemPermissionServiceImpl implements SystemPermissionService {
     @Override
     public Set<SystemRoleDomain> getUserRoleIds(Long userId, Integer status) {
         Set<Long> roleIds = CollectionUtils.funcSet(userRoleMapper.selectListByUserId(userId), SystemUserRoleEntity::getRoleId);
-        return CollectionUtils.funcSet(roleService.list(new SystemRoleListReqDTO().setStatus(status).setIds(roleIds)));
+        return CollectionUtils.toSet(roleService.list(new SystemRoleListReqDTO().setStatus(status).setIds(roleIds)));
     }
 
     @Override

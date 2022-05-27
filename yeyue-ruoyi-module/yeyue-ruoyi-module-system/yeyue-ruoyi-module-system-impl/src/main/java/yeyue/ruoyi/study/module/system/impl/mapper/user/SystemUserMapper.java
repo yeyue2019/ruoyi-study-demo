@@ -18,6 +18,14 @@ public interface SystemUserMapper extends MyBatisMapper<SystemUserEntity> {
         return selectPage(req, new MyBatisLambdaQueryWrapper<>());
     }
 
+    default SystemUserEntity selectByUsername(String username) {
+        return selectOne(SystemUserEntity::getUsername, username);
+    }
+
+    default SystemUserEntity selectByMobile(String mobile) {
+        return selectOne(SystemUserEntity::getMobile, mobile);
+    }
+
     @Update("update system_admin_user set password = #{password},updateTime = now() where deleted = false and id = #{id}")
     void updatePwd(@Param("id") Long id, @Param("password") String passwd);
 

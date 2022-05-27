@@ -1,6 +1,7 @@
 package yeyue.ruoyi.study.framework.common.monitor.trace.util;
 
 import com.alibaba.fastjson.JSON;
+import io.opentracing.ActiveSpan;
 import io.opentracing.Tracer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.skywalking.apm.toolkit.opentracing.SkywalkingTracer;
@@ -45,14 +46,16 @@ public abstract class TracerUtils {
         if (value == null) {
             return;
         }
-        if (value instanceof Boolean) {
-            TRACER.activeSpan().setTag(name, (Boolean) value);
-        } else if (value instanceof Number) {
-            TRACER.activeSpan().setTag(name, (Number) value);
-        } else if (value instanceof String) {
-            TRACER.activeSpan().setTag(name, (String) value);
-        } else {
-            TRACER.activeSpan().setTag(name, JSON.toJSONString(value));
+        try (ActiveSpan span = TRACER.activeSpan()) {
+            if (value instanceof Boolean) {
+                span.setTag(name, (Boolean) value);
+            } else if (value instanceof Number) {
+                span.setTag(name, (Number) value);
+            } else if (value instanceof String) {
+                span.setTag(name, (String) value);
+            } else {
+                span.setTag(name, JSON.toJSONString(value));
+            }
         }
     }
 }

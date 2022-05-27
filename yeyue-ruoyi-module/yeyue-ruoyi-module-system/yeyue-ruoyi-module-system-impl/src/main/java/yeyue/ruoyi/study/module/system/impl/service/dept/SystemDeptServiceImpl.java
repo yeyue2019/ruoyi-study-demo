@@ -31,18 +31,18 @@ import java.util.stream.Collectors;
 public class SystemDeptServiceImpl implements SystemDeptService {
 
     @Resource
-    SystemDeptMapper deptMapper;
+    SystemDeptMapper mapper;
 
     @Override
     public Long create(SystemDeptCreateReqDTO reqDTO) {
         // 名称校验
-        if (deptMapper.selectByParentIdAndName(reqDTO.getParentId(), reqDTO.getName()) != null) {
+        if (mapper.selectByParentIdAndName(reqDTO.getParentId(), reqDTO.getName()) != null) {
             throw new ServiceException(SystemErrorCode.DEPT_NAME_DUPLICATE);
         }
         // 上级岗位校验
         if (EnumUtils.notEquals(DeptIdEnum.ROOT, DeptIdEnum::getId, reqDTO.getParentId())) {
             // 父岗位不存在
-            SystemDeptEntity dept = deptMapper.selectById(reqDTO.getParentId());
+            SystemDeptEntity dept = mapper.selectById(reqDTO.getParentId());
             if (dept == null) {
                 throw new ServiceException(SystemErrorCode.DEPT_PARENT_NOT_EXITS);
             }
@@ -52,50 +52,58 @@ public class SystemDeptServiceImpl implements SystemDeptService {
             }
         }
         SystemDeptEntity entity = SystemDeptConvert.INSTANCE.toEntity(reqDTO);
-        deptMapper.insert(entity);
+        mapper.insert(entity);
         return entity.getId();
     }
 
     @Override
     public void update(SystemDeptUpdateReqDTO reqDTO) {
-        if (deptMapper.selectById(reqDTO.getId()) == null) {
+        if (mapper.selectById(reqDTO.getId()) == null) {
             throw new ServiceException(SystemErrorCode.DEPT_NOT_FOUND);
         }
         // TODO: 2022/5/24 这里最好用数据库查询出来的parentId
-        SystemDeptEntity nameCompare = deptMapper.selectByParentIdAndName(reqDTO.getParentId(), reqDTO.getName());
+        SystemDeptEntity nameCompare = mapper.selectByParentIdAndName(reqDTO.getParentId(), reqDTO.getName());
         if (nameCompare != null && !Objects.equals(nameCompare.getId(), reqDTO.getId())) {
             throw new ServiceException(SystemErrorCode.DEPT_NAME_DUPLICATE);
         }
         SystemDeptEntity entity = SystemDeptConvert.INSTANCE.toEntity(reqDTO);
-        deptMapper.updateById(entity);
+        mapper.updateById(entity);
     }
 
     @Override
     public SystemDeptDomain get(Long id) {
-        SystemDeptEntity entity = deptMapper.selectById(id);
+        SystemDeptEntity entity = mapper.selectById(id);
         return SystemDeptConvert.INSTANCE.toDomain(entity);
     }
 
     @Override
     public void delete(Long id) {
-        if (deptMapper.selectById(id) == null) {
+        if (mapper.selectById(id) == null) {
             throw new ServiceException(SystemErrorCode.DEPT_NOT_FOUND);
         }
-        if (deptMapper.selectCount(SystemDeptEntity::getParentId, id) > 0) {
+        if (mapper.selectCount(SystemDeptEntity::getParentId, id) > 0) {
             throw new ServiceException(SystemErrorCode.DEPT_EXITS_CHILDREN);
         }
-        deptMapper.deleteById(id);
+        mapper.deleteById(id);
+    }
+
+    @Override
+    public void validate(Collection<Long> ids) {
+        if (CollectionUtils.isEmpty(ids)) {
+            return;
+        }
+        List<SystemDeptEntity> entities = mapper.selectBatchIds(ids);
+
     }
 
     @Override
     public List<SystemDeptDomain> list(SystemDeptListReqDTO reqDTO) {
-        List<SystemDeptEntity> entities = deptMapper.selectList(
-                new MyBatisLambdaQueryWrapper<SystemDeptEntity>().eq(SystemDeptEntity::getStatus, reqDTO.getStatus()));
+        List<SystemDeptEntity> entities = mapper.selectList(new MyBatisLambdaQueryWrapper<SystemDeptEntity>()
+                .eq(SystemDeptEntity::getStatus, reqDTO.getStatus()));
         if (CollectionUtils.isEmpty(entities)) {
             return Collections.emptyList();
         }
-        Map<Long, List<SystemDeptDomain>> tree = entities.stream().map(SystemDeptConvert.INSTANCE::toDomain)
-                .collect(Collectors.groupingBy(SystemDeptDomain::getParentId));
+        Map<Long, List<SystemDeptDomain>> tree = entities.stream().map(SystemDeptConvert.INSTANCE::toDomain).collect(Collectors.groupingBy(SystemDeptDomain::getParentId));
         List<SystemDeptDomain> result = new ArrayList<>();
         getDeptByParentId(result, reqDTO.getParentId(), reqDTO.getRecursive() ? Integer.MAX_VALUE : 1, tree);
         return result;

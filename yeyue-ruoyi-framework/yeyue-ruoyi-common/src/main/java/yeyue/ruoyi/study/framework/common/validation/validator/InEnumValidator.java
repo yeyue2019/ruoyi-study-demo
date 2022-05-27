@@ -26,7 +26,7 @@ public class InEnumValidator implements ConstraintValidator<InEnum, Object> {
         if (values == null) {
             this.values = Collections.emptySet();
         } else {
-            this.values = CollectionUtils.funcSet(CollectionUtils.arrayToList(values, EnumValuable::get));
+            this.values = CollectionUtils.toSet(CollectionUtils.arrayToList(values, EnumValuable::get));
         }
     }
 

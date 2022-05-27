@@ -86,8 +86,10 @@ public class SystemPostServiceImpl implements SystemPostService {
     @Override
     public PageResult<SystemPostDomain> list(SystemPostPageReqDTO reqDTO) {
         PageResult<SystemPostEntity> pageResult = mapper.selectPage(reqDTO,
-                new MyBatisLambdaQueryWrapper<SystemPostEntity>().like(SystemPostEntity::getCode, reqDTO.getCode())
-                        .like(SystemPostEntity::getName, reqDTO.getName()).eq(SystemPostEntity::getStatus, reqDTO.getStatus()));
+                new MyBatisLambdaQueryWrapper<SystemPostEntity>()
+                        .like(SystemPostEntity::getCode, reqDTO.getCode())
+                        .like(SystemPostEntity::getName, reqDTO.getName())
+                        .eq(SystemPostEntity::getStatus, reqDTO.getStatus()));
         return CollectionUtils.funcPage(pageResult, SystemPostConvert.INSTANCE::toDomain);
     }
 }

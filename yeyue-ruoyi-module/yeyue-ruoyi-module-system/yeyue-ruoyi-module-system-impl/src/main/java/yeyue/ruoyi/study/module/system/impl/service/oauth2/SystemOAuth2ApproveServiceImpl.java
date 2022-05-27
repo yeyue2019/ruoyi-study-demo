@@ -50,7 +50,7 @@ public class SystemOAuth2ApproveServiceImpl implements SystemOAuth2ApproveServic
         mapper.deleteByByUserIdAndUserTypeAndClientId(reqDTO.getUserId(), reqDTO.getUserType(), reqDTO.getClientId());
         if (CollectionUtils.isNotEmpty(reqDTO.getScopes())) {
             // 更新授权信息
-            List<SystemOAuth2ApproveEntity> entities = reqDTO.getScopes().stream().map(scope -> {
+            List<SystemOAuth2ApproveEntity> entities = CollectionUtils.funcList(reqDTO.getScopes(), scope -> {
                 SystemOAuth2ApproveEntity entity = new SystemOAuth2ApproveEntity();
                 entity.setClientId(reqDTO.getClientId());
                 entity.setScope(scope);
@@ -61,12 +61,16 @@ public class SystemOAuth2ApproveServiceImpl implements SystemOAuth2ApproveServic
                 }
                 entity.setDeleted(false);
                 return entity;
-            }).collect(Collectors.toList());
+            });
             mapper.insertBatchSomeColumn(entities);
         }
     }
 
     private Set<String> getDatabaseApproveScopes(SystemOAuth2ApproveGetReqDTO reqDTO) {
-        return mapper.selectListByUserIdAndUserTypeAndClientId(reqDTO.getUserId(), reqDTO.getUserType(), reqDTO.getClientId()).stream().filter(r -> r.getExpiresTime() != null && r.getExpiresTime().isAfter(LocalDateTime.now())).map(SystemOAuth2ApproveEntity::getScope).collect(Collectors.toSet());
+        return mapper.selectListByUserIdAndUserTypeAndClientId(reqDTO.getUserId(), reqDTO.getUserType(), reqDTO.getClientId())
+                .stream()
+                .filter(r -> r.getExpiresTime() != null && r.getExpiresTime().isAfter(LocalDateTime.now()))
+                .map(SystemOAuth2ApproveEntity::getScope)
+                .collect(Collectors.toSet());
     }
 }

@@ -3,8 +3,6 @@ package yeyue.ruoyi.study.framework.mybatis.core.query;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import org.apache.commons.lang3.ObjectUtils;
-import org.apache.commons.lang3.StringUtils;
-import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
 
 import java.util.Collection;
 
@@ -22,17 +20,23 @@ public class MyBatisLambdaQueryWrapper<T> extends LambdaQueryWrapper<T> {
     }
 
     public MyBatisLambdaQueryWrapper<T> like(SFunction<T, ?> column, String val) {
-        return (MyBatisLambdaQueryWrapper<T>) super.like(StringUtils.isNotEmpty(val), column, val);
+        return (MyBatisLambdaQueryWrapper<T>) super.like(val != null, column, val);
     }
 
     @Override
     public MyBatisLambdaQueryWrapper<T> in(SFunction<T, ?> column, Collection<?> coll) {
-        return (MyBatisLambdaQueryWrapper<T>) super.in(CollectionUtils.isNotEmpty(coll), column, coll);
+        return (MyBatisLambdaQueryWrapper<T>) super.in(coll != null, column, coll);
     }
 
     @Override
     public MyBatisLambdaQueryWrapper<T> in(SFunction<T, ?> column, Object... values) {
-        return (MyBatisLambdaQueryWrapper<T>) super.in(CollectionUtils.isNotNull(values), column, values);
+        return (MyBatisLambdaQueryWrapper<T>) super.in(values != null, column, values);
+    }
+
+
+    @Override
+    public MyBatisLambdaQueryWrapper<T> exists(boolean condition, String existsSql, Object... values) {
+        return (MyBatisLambdaQueryWrapper<T>) super.exists(condition, existsSql, values);
     }
 
     @Override

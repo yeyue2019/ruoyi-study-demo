@@ -102,7 +102,9 @@ public class SystemMenuServiceImpl implements SystemMenuService {
     @Override
     public List<SystemMenuDomain> list(SystemMenuListReqDTO reqDTO) {
         List<SystemMenuEntity> list = mapper.selectList(
-                new MyBatisLambdaQueryWrapper<SystemMenuEntity>().eq(SystemMenuEntity::getStatus, reqDTO.getStatus()));
+                new MyBatisLambdaQueryWrapper<SystemMenuEntity>()
+                        .eq(SystemMenuEntity::getStatus, reqDTO.getStatus())
+                        .in(SystemMenuEntity::getId, reqDTO.getIds()));
         return CollectionUtils.funcList(list, SystemMenuConvert.INSTANCE::toDomain);
     }
 

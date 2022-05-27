@@ -15,7 +15,9 @@ public interface SystemUserRoleMapper extends MyBatisMapper<SystemUserRoleEntity
 
     default List<SystemUserRoleEntity> selectListByUserId(Long userId) {
         return selectList(
-                new MyBatisLambdaQueryWrapper<SystemUserRoleEntity>().eq(SystemUserRoleEntity::getUserId, userId));
+                new MyBatisLambdaQueryWrapper<SystemUserRoleEntity>()
+                        .eq(SystemUserRoleEntity::getUserId, userId)
+        );
     }
 
     default void deleteListByUserIdAndRoleIds(Long userId, Collection<Long> ruleIds) {

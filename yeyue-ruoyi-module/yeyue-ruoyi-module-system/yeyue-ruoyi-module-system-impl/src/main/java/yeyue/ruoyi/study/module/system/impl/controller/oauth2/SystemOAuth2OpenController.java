@@ -8,13 +8,13 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import yeyue.ruoyi.study.framework.common.constants.StringConstants;
-import yeyue.ruoyi.study.framework.common.enums.UserTypeEnum;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.exception.common.GlobalErrorCode;
 import yeyue.ruoyi.study.framework.common.pojo.core.CommonResult;
-import yeyue.ruoyi.study.framework.common.servlet.security.WebSecurityUtils;
 import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
 import yeyue.ruoyi.study.framework.common.validation.annotation.InEnum;
+import yeyue.ruoyi.study.framework.security.core.service.SecurityAuthService;
+import yeyue.ruoyi.study.framework.security.core.userdetails.LoginUser;
 import yeyue.ruoyi.study.module.system.api.domain.oauth2.SystemOAuth2AccessTokenDomain;
 import yeyue.ruoyi.study.module.system.api.domain.oauth2.SystemOAuth2ClientDomain;
 import yeyue.ruoyi.study.module.system.api.enums.oauth2.OAuth2GrantTypeEnum;
@@ -41,6 +41,8 @@ import java.util.Set;
 @RequestMapping("/web/sys/oauth2/open")
 public class SystemOAuth2OpenController {
 
+    @Resource
+    SecurityAuthService authService;
     @Resource
     SystemOAuth2ClientService clientService;
     @Resource
@@ -79,8 +81,7 @@ public class SystemOAuth2OpenController {
         SystemOAuth2ClientDomain client = clientService.validate(new SystemOAuth2ClientValidateReqDTO()
                 .setClientId(clientId).setSecret(clientSecret).setAuthorizedGrantType(grantType).setScopes(scopes));
         SystemOAuth2AccessTokenDomain result;
-        String userId;
-        Integer userType;
+        LoginUser loginUser;
         switch (Objects.requireNonNull(OAuth2GrantTypeEnum.getByGranType(grantType))) {
             case AUTHORIZATION_CODE:
                 if (StringUtils.isBlank(code)) {
@@ -92,10 +93,8 @@ public class SystemOAuth2OpenController {
                 if (StringUtils.isAnyBlank(username, password)) {
                     throw new ServiceException(GlobalErrorCode.BAD_REQUEST.getCode(), "账号或密码不能为空");
                 }
-                // TODO: 2022/5/27 用户登录验证
-                userId = "1";
-                userType = UserTypeEnum.ADMIN.getValue();
-                result = grantService.password(userId, userType, clientId, scopes, client.getAccessTokenValiditySeconds(), client.getRefreshTokenValiditySeconds());
+                loginUser = authService.get();
+                result = grantService.password(loginUser.getId(), loginUser.getUserType(), clientId, scopes, client.getAccessTokenValiditySeconds(), client.getRefreshTokenValiditySeconds());
                 break;
             case REFRESH_TOKEN:
                 if (StringUtils.isBlank(refreshToken)) {
@@ -104,12 +103,8 @@ public class SystemOAuth2OpenController {
                 result = grantService.refresh(refreshToken, clientId, client.getAccessTokenValiditySeconds());
                 break;
             case CLIENT_CREDENTIALS:
-                userId = WebSecurityUtils.getLoginUserId();
-                userType = WebSecurityUtils.getLoginUserType();
-                if (StringUtils.isEmpty(userId) || userType == null) {
-                    throw new ServiceException(GlobalErrorCode.UNAUTHORIZED);
-                }
-                result = grantService.clientCredentials(userId, userType, clientId, scopes, client.getAccessTokenValiditySeconds(), client.getRefreshTokenValiditySeconds());
+                loginUser = authService.get();
+                result = grantService.clientCredentials(loginUser.getId(), loginUser.getUserType(), clientId, scopes, client.getAccessTokenValiditySeconds(), client.getRefreshTokenValiditySeconds());
                 break;
             default:
                 throw new ServiceException(GlobalErrorCode.UNSUPPORTED_OPERATION);
@@ -117,17 +112,22 @@ public class SystemOAuth2OpenController {
         return CommonResult.success(result);
     }
 
+    // TODO: 2022/5/27 接口需要授权
+
     @PostMapping("/authorization")
     @ApiOperation(value = "获得授权信息")
     @ApiImplicitParam(name = "clientId", required = true, value = "客户端编号", example = "yeyue", dataTypeClass = String.class)
     public CommonResult<Set<String>> authorize(@RequestParam String clientId) {
+        LoginUser loginUser = authService.get();
         SystemOAuth2ClientDomain client = clientService.validate(new SystemOAuth2ClientValidateReqDTO()
                 .setClientId(clientId));
         SystemOAuth2ApproveGetReqDTO reqDTO = new SystemOAuth2ApproveGetReqDTO()
                 .setClientId(clientId).setAutoApproveScopes(client.getAutoApproveScopes())
-                .setUserType(WebSecurityUtils.getLoginUserType()).setUserId(WebSecurityUtils.getLoginUserId());
+                .setUserType(loginUser.getUserType()).setUserId(loginUser.getId());
         return CommonResult.success(approveService.get(reqDTO));
     }
+
+    // TODO: 2022/5/27 接口需要授权
 
     /**
      * 对应 Spring Security OAuth 的 AuthorizationEndpoint 类的 approveOrDeny 方法
@@ -140,7 +140,7 @@ public class SystemOAuth2OpenController {
      * 因为前后端分离，Axios 无法很好的处理 302 重定向，所以和 Spring Security OAuth 略有不同，返回结果是重定向的 URL，剩余交给前端处理
      */
     @PostMapping("/authorize")
-    @ApiOperation(value = "申请授权", notes = "适合 code 授权码模式，或者 implicit 简化模式")
+    @ApiOperation(value = "发起授权申请", notes = "适合 code 授权码模式，或者 implicit 简化模式")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "responseType", required = true, value = "响应类型", example = "code", dataTypeClass = String.class),
             @ApiImplicitParam(name = "clientId", required = true, value = "客户端编号", example = "yeyue", dataTypeClass = String.class),
@@ -156,10 +156,8 @@ public class SystemOAuth2OpenController {
                                           @RequestParam(required = false) Boolean autoApprove,
                                           @RequestParam(required = false) String state) {
         List<String> scopes = CollectionUtils.arrayToList(StringUtils.split(scope, StringConstants.SPLIT_JOIN));
-        // TODO 芋艿：针对 approved + scopes 在看看 spring security 的实现
         // 0. 校验用户已经登录。通过 Spring Security 实现
-        String userId = WebSecurityUtils.getLoginUserId();
-        Integer userType = WebSecurityUtils.getLoginUserType();
+        LoginUser loginUser = authService.get();
 
         // 1. 校验 redirectUri 重定向域名是否合法 + 校验 scope 是否在 Client 授权范围内
         SystemOAuth2ClientDomain client = clientService.validate(new SystemOAuth2ClientValidateReqDTO()
@@ -170,8 +168,8 @@ public class SystemOAuth2OpenController {
             // 如果无法自动授权通过，则返回空 url，前端不进行跳转
             if (!approveService.check((SystemOAuth2ApproveCheckReqDTO) new SystemOAuth2ApproveCheckReqDTO()
                     .setScopes(scopes)
-                    .setUserId(userId)
-                    .setUserType(userType)
+                    .setUserId(loginUser.getId())
+                    .setUserType(loginUser.getUserType())
                     .setClientId(clientId)
                     .setAutoApproveScopes(client.getAutoApproveScopes()))) {
                 return CommonResult.error(SystemErrorCode.OAUTH2_GRANT_SCOPE_HAS_NOT_APPROVE);
@@ -182,15 +180,15 @@ public class SystemOAuth2OpenController {
                     .setScopes(scopes)
                     .setApproveValiditySeconds(client.getApproveValiditySeconds())
                     .setClientId(clientId)
-                    .setUserId(userId)
-                    .setUserType(userType));
+                    .setUserId(loginUser.getId())
+                    .setUserType(loginUser.getUserType()));
         }
         switch (Objects.requireNonNull(OAuth2GrantTypeEnum.getByGranType(responseType))) {
             case AUTHORIZATION_CODE:
-                String code = grantService.authorizationCode(userId, userType, clientId, scopes, redirectUri, state, client.getCodeValiditySeconds());
+                String code = grantService.authorizationCode(loginUser.getId(), loginUser.getUserType(), clientId, scopes, redirectUri, state, client.getCodeValiditySeconds());
                 return CommonResult.success(String.format("%s?code=%s&state=%s", redirectUri, code, state));
             case IMPLICIT:
-                SystemOAuth2AccessTokenDomain accessTokenDomain = grantService.implicit(userId, userType, clientId, scopes, client.getAccessTokenValiditySeconds(), client.getRefreshTokenValiditySeconds());
+                SystemOAuth2AccessTokenDomain accessTokenDomain = grantService.implicit(loginUser.getId(), loginUser.getUserType(), clientId, scopes, client.getAccessTokenValiditySeconds(), client.getRefreshTokenValiditySeconds());
                 return CommonResult.success(JSON.toJSONString(accessTokenDomain));
             default:
                 throw new ServiceException(GlobalErrorCode.UNSUPPORTED_OPERATION);

@@ -7,12 +7,14 @@ import yeyue.ruoyi.study.framework.common.enums.CommonStatusEnum;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
 import yeyue.ruoyi.study.module.system.api.domain.permission.SystemMenuDomain;
+import yeyue.ruoyi.study.module.system.api.domain.permission.SystemRoleDomain;
 import yeyue.ruoyi.study.module.system.api.service.permission.SystemMenuService;
 import yeyue.ruoyi.study.module.system.api.service.permission.SystemPermissionService;
 import yeyue.ruoyi.study.module.system.api.service.permission.SystemRoleService;
 import yeyue.ruoyi.study.module.system.api.service.permission.dto.SystemMenuListReqDTO;
 import yeyue.ruoyi.study.module.system.api.service.permission.dto.SystemPermissionAssignRoleMenuReqDTO;
 import yeyue.ruoyi.study.module.system.api.service.permission.dto.SystemPermissionAssignUserRoleReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.permission.dto.SystemRoleListReqDTO;
 import yeyue.ruoyi.study.module.system.impl.entity.permission.SystemRoleMenuEntity;
 import yeyue.ruoyi.study.module.system.impl.entity.permission.SystemUserRoleEntity;
 import yeyue.ruoyi.study.module.system.impl.framework.exception.SystemErrorCode;
@@ -23,6 +25,7 @@ import javax.annotation.Resource;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -49,16 +52,13 @@ public class SystemPermissionServiceImpl implements SystemPermissionService {
             throw new ServiceException(SystemErrorCode.ROLE_CAN_NOT_UPDATE_CODE_VALUE_SUPER_ADMIN);
         }
         // 1. 获取全部可用的菜单
-        Set<Long> menuIds = CollectionUtils.funcSet(
-                menuService.list(new SystemMenuListReqDTO().setStatus(CommonStatusEnum.ENABLE.getStatus())),
-                SystemMenuDomain::getId);
+        Set<Long> menuIds = CollectionUtils.funcSet(menuService.list(new SystemMenuListReqDTO().setStatus(CommonStatusEnum.ENABLE.getStatus())), SystemMenuDomain::getId);
         Set<Long> assignIds = reqDTO.getMenuIds().stream().filter(menuIds::contains).collect(Collectors.toSet());
         // 2. 查询角色拥有的菜单编号
-        Set<Long> ruleIds = CollectionUtils.funcSet(roleMenuMapper.selectListByRoleId(reqDTO.getRoleId()),
-                SystemRoleMenuEntity::getMenuId);
+        Set<Long> hasIds = CollectionUtils.funcSet(roleMenuMapper.selectListByRoleId(reqDTO.getRoleId()), SystemRoleMenuEntity::getMenuId);
         // 3. 计算删除和新增的菜单
-        Set<Long> deleteIds = ruleIds.stream().filter(r -> !assignIds.contains(r)).collect(Collectors.toSet());
-        Set<Long> createIds = assignIds.stream().filter(r -> !ruleIds.contains(r)).collect(Collectors.toSet());
+        Set<Long> deleteIds = hasIds.stream().filter(r -> !assignIds.contains(r)).collect(Collectors.toSet());
+        Set<Long> createIds = assignIds.stream().filter(r -> !hasIds.contains(r)).collect(Collectors.toSet());
         // 执行删除和新增的操作
         if (CollectionUtils.isNotEmpty(deleteIds)) {
             roleMenuMapper.deleteListByRoleIdAndMenuIds(reqDTO.getRoleId(), deleteIds);
@@ -73,35 +73,39 @@ public class SystemPermissionServiceImpl implements SystemPermissionService {
     }
 
     @Override
-    public Set<Long> getRoleMenuIds(Long roleId) {
-        if (roleService.hasAnySuperAdmin(Collections.singleton(roleId))) {
-            return CollectionUtils.funcSet(menuService.list(new SystemMenuListReqDTO()), SystemMenuDomain::getId);
-        } else {
-            return CollectionUtils.funcSet(roleMenuMapper.selectListByRoleId(roleId), SystemRoleMenuEntity::getMenuId);
+    public Set<SystemMenuDomain> getRoleMenuIds(Long roleId, Integer status) {
+        Set<Long> menuIds = null;
+        if (!roleService.hasAnySuperAdmin(Collections.singleton(roleId))) {
+            menuIds = CollectionUtils.funcSet(roleMenuMapper.selectListByRoleId(roleId), SystemRoleMenuEntity::getMenuId);
         }
+        return CollectionUtils.funcSet(menuService.list(new SystemMenuListReqDTO().setIds(menuIds).setStatus(status)));
     }
 
     @Override
-    public Set<Long> getRoleMenuIds(Collection<Long> roleIds) {
+    public Set<SystemMenuDomain> getRoleMenuIds(Collection<Long> roleIds, Integer status) {
         if (CollectionUtils.isEmpty(roleIds)) {
             return Collections.emptySet();
         } else {
-            return CollectionUtils.funcSet(roleMenuMapper.selectListByRoleIds(roleIds),
-                    SystemRoleMenuEntity::getMenuId);
+            Set<Long> menuIds = null;
+            if (!roleService.hasAnySuperAdmin(roleIds)) {
+                menuIds = CollectionUtils.funcSet(roleMenuMapper.selectListByRoleIds(roleIds), SystemRoleMenuEntity::getMenuId);
+            }
+            return CollectionUtils.funcSet(menuService.list(new SystemMenuListReqDTO().setIds(menuIds).setStatus(status)));
         }
     }
 
     @Override
     public void assignUserRole(SystemPermissionAssignUserRoleReqDTO reqDTO) {
-        // 1. 获取用户拥有的角色
-        Set<Long> ruleIds = CollectionUtils.funcSet(userRoleMapper.selectListByUserId(reqDTO.getUserId()),
+        // 1. 获取当前可用的角色
+        Set<Long> roleIds = CollectionUtils.funcSet(roleService.list(new SystemRoleListReqDTO().setStatus(CommonStatusEnum.ENABLE.getStatus())), SystemRoleDomain::getId);
+        Set<Long> assignIds = reqDTO.getRoleIds().stream().filter(roleIds::contains).collect(Collectors.toSet());
+        // 2. 获取用户拥有的角色
+        Set<Long> hasIds = CollectionUtils.funcSet(userRoleMapper.selectListByUserId(reqDTO.getUserId()),
                 SystemUserRoleEntity::getRoleId);
         // 3. 计算删除和新增的菜单
-        Set<Long> deleteIds =
-                ruleIds.stream().filter(r -> !reqDTO.getRoleIds().contains(r)).collect(Collectors.toSet());
-        Set<Long> createIds =
-                reqDTO.getRoleIds().stream().filter(r -> !ruleIds.contains(r)).collect(Collectors.toSet());
-        // 执行删除和新增的操作
+        Set<Long> deleteIds = hasIds.stream().filter(r -> !assignIds.contains(r)).collect(Collectors.toSet());
+        Set<Long> createIds = assignIds.stream().filter(r -> !hasIds.contains(r)).collect(Collectors.toSet());
+        // 4. 执行删除和新增的操作
         if (CollectionUtils.isNotEmpty(deleteIds)) {
             userRoleMapper.deleteListByUserIdAndRoleIds(reqDTO.getUserId(), deleteIds);
         }
@@ -115,8 +119,9 @@ public class SystemPermissionServiceImpl implements SystemPermissionService {
     }
 
     @Override
-    public Set<Long> getUserRoleIds(Long userId) {
-        return CollectionUtils.funcSet(userRoleMapper.selectListByUserId(userId), SystemUserRoleEntity::getRoleId);
+    public Set<SystemRoleDomain> getUserRoleIds(Long userId, Integer status) {
+        Set<Long> roleIds = CollectionUtils.funcSet(userRoleMapper.selectListByUserId(userId), SystemUserRoleEntity::getRoleId);
+        return CollectionUtils.funcSet(roleService.list(new SystemRoleListReqDTO().setStatus(status).setIds(roleIds)));
     }
 
     @Override
@@ -136,5 +141,24 @@ public class SystemPermissionServiceImpl implements SystemPermissionService {
     @Transactional(rollbackFor = Exception.class)
     public void processUserDeleted(Long userId) {
         userRoleMapper.deleteListByUserId(userId);
+    }
+
+    @Override
+    public boolean hasPermissions(Long userId, boolean all, String... permissions) {
+        if (CollectionUtils.isEmpty(permissions)) {
+            return true;
+        }
+        // 根据用户查角色
+        Set<SystemRoleDomain> roles = getUserRoleIds(userId, CommonStatusEnum.ENABLE.getStatus());
+        if (CollectionUtils.isEmpty(roles)) {
+            return false;
+        }
+        // 根据角色查菜单
+        Set<SystemMenuDomain> menus = getRoleMenuIds(CollectionUtils.funcSet(roles, SystemRoleDomain::getId), CommonStatusEnum.ENABLE.getStatus());
+        if (CollectionUtils.isEmpty(menus)) {
+            return false;
+        }
+        Predicate<SystemMenuDomain> predicate = menu -> CollectionUtils.contains(menu.getPermission(), permissions);
+        return all ? menus.stream().allMatch(predicate) : menus.stream().anyMatch(predicate);
     }
 }

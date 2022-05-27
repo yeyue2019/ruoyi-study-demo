@@ -5,7 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 import yeyue.ruoyi.study.framework.common.pojo.core.CommonResult;
 import yeyue.ruoyi.study.framework.common.servlet.util.ServletUtils;
-import yeyue.ruoyi.study.framework.security.core.service.SecurityTokenService;
+import yeyue.ruoyi.study.framework.security.core.service.SecurityAuthService;
 import yeyue.ruoyi.study.framework.security.core.userdetails.LoginUser;
 import yeyue.ruoyi.study.framework.security.core.util.SecurityUtils;
 import yeyue.ruoyi.study.framework.web.web.handler.GlobalExceptionHandler;
@@ -27,7 +27,7 @@ public class TokenAuthenticationTokenFilter extends OncePerRequestFilter {
 
     private final GlobalExceptionHandler exceptionHandler;
 
-    private final SecurityTokenService tokenService;
+    private final SecurityAuthService authService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -37,7 +37,7 @@ public class TokenAuthenticationTokenFilter extends OncePerRequestFilter {
         if (StringUtils.isNotEmpty(token)) {
             try {
                 // 根据Token读取用户
-                LoginUser loginUser = tokenService.validation(token);
+                LoginUser loginUser = authService.validation(token);
                 // 用户存在则将其存入上下文
                 if (loginUser != null) {
                     SecurityUtils.setLoginUser(loginUser, request);

@@ -5,8 +5,11 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 import yeyue.ruoyi.study.framework.common.pojo.core.CommonResult;
+import yeyue.ruoyi.study.module.system.api.domain.permission.SystemMenuDomain;
+import yeyue.ruoyi.study.module.system.api.domain.permission.SystemRoleDomain;
 import yeyue.ruoyi.study.module.system.api.service.permission.SystemPermissionService;
 import yeyue.ruoyi.study.module.system.api.service.permission.dto.SystemPermissionAssignRoleMenuReqDTO;
+import yeyue.ruoyi.study.module.system.api.service.permission.dto.SystemPermissionAssignUserRoleReqDTO;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -31,10 +34,24 @@ public class SystemPermissionController {
         return CommonResult.success();
     }
 
-    @ApiOperation("获得角色拥有的菜单编号")
+    @ApiOperation("获得角色菜单")
     @ApiImplicitParam(name = "roleId", value = "角色编号", required = true, dataTypeClass = Long.class)
     @GetMapping("/list-role-resources")
-    public CommonResult<Set<Long>> listRoleMenus(@RequestParam Long roleId) {
-        return CommonResult.success(service.getRoleMenuIds(roleId));
+    public CommonResult<Set<SystemMenuDomain>> listRoleMenus(@RequestParam Long roleId, @RequestParam(required = false) Integer status) {
+        return CommonResult.success(service.getRoleMenuIds(roleId, status));
+    }
+
+    @ApiOperation("赋予用户角色")
+    @PostMapping("/assign-user-role")
+    public CommonResult<Void> assignUserRole(@Valid @RequestBody SystemPermissionAssignUserRoleReqDTO dto) {
+        service.assignUserRole(dto);
+        return CommonResult.success();
+    }
+
+    @ApiOperation("获得用户角色")
+    @ApiImplicitParam(name = "userId", value = "用户编号", required = true, dataTypeClass = Long.class)
+    @GetMapping("/list-user-roles")
+    public CommonResult<Set<SystemRoleDomain>> listAdminRoles(@RequestParam Long userId, @RequestParam(required = false) Integer status) {
+        return CommonResult.success(service.getUserRoleIds(userId, status));
     }
 }

@@ -96,8 +96,11 @@ public class SystemRoleServiceImpl implements SystemRoleService {
         if (CollectionUtils.isEmpty(roleIds)) {
             return false;
         }
-        List<SystemRoleEntity> list = mapper.selectBatchIds(roleIds);
-        return list.stream().anyMatch(role -> RoleCodeEnum.isSuperAdmin(role.getCode()));
+        SystemRoleEntity entity = mapper.selectByCode(RoleCodeEnum.SUPER_ADMIN.getCode());
+        if (entity == null) {
+            return false;
+        }
+        return roleIds.contains(entity.getId());
     }
 
     private void checkRoleUpdate(Long roleId) {

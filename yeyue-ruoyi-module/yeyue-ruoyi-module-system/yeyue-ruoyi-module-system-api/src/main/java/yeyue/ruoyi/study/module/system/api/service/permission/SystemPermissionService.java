@@ -1,5 +1,7 @@
 package yeyue.ruoyi.study.module.system.api.service.permission;
 
+import yeyue.ruoyi.study.module.system.api.domain.permission.SystemMenuDomain;
+import yeyue.ruoyi.study.module.system.api.domain.permission.SystemRoleDomain;
 import yeyue.ruoyi.study.module.system.api.service.permission.dto.SystemPermissionAssignRoleMenuReqDTO;
 import yeyue.ruoyi.study.module.system.api.service.permission.dto.SystemPermissionAssignUserRoleReqDTO;
 
@@ -23,9 +25,10 @@ public interface SystemPermissionService {
      * 获取角色所拥有的菜单
      *
      * @param roleId 角色id
+     * @param status 菜单状态
      * @return 菜单集合
      */
-    Set<Long> getRoleMenuIds(Long roleId);
+    Set<SystemMenuDomain> getRoleMenuIds(Long roleId, Integer status);
 
     /**
      * 获取角色们所拥有的菜单
@@ -33,7 +36,7 @@ public interface SystemPermissionService {
      * @param roleIds 角色集合
      * @return 菜单集合
      */
-    Set<Long> getRoleMenuIds(Collection<Long> roleIds);
+    Set<SystemMenuDomain> getRoleMenuIds(Collection<Long> roleIds, Integer status);
 
     /**
      * 服务用户角色
@@ -48,7 +51,7 @@ public interface SystemPermissionService {
      * @param userId 用户Id
      * @return 角色Id
      */
-    Set<Long> getUserRoleIds(Long userId);
+    Set<SystemRoleDomain> getUserRoleIds(Long userId, Integer status);
 
     /**
      * 删除角色时的互联操作
@@ -70,4 +73,14 @@ public interface SystemPermissionService {
      * @param userId 用户Id
      */
     void processUserDeleted(Long userId);
+
+    /**
+     * 用户是否拥有权限
+     *
+     * @param userId      用户Id
+     * @param all         是否全部权限
+     * @param permissions 权限
+     * @return 结果
+     */
+    boolean hasPermissions(Long userId, boolean all, String... permissions);
 }

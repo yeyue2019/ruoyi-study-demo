@@ -16,7 +16,7 @@ import yeyue.ruoyi.study.framework.security.core.context.TransmittableThreadLoca
 import yeyue.ruoyi.study.framework.security.core.filter.TokenAuthenticationTokenFilter;
 import yeyue.ruoyi.study.framework.security.core.handler.AccessDeniedHandlerImpl;
 import yeyue.ruoyi.study.framework.security.core.handler.AuthenticationEntryPointImpl;
-import yeyue.ruoyi.study.framework.security.core.service.SecurityTokenService;
+import yeyue.ruoyi.study.framework.security.core.service.SecurityAuthService;
 import yeyue.ruoyi.study.framework.web.web.handler.GlobalExceptionHandler;
 
 /**
@@ -59,9 +59,8 @@ public class YeyueSecurityAutoConfiguration {
      * Token 认证过滤器 Bean
      */
     @Bean
-    public TokenAuthenticationTokenFilter authenticationTokenFilter(GlobalExceptionHandler exceptionHandler,
-                                                                    SecurityTokenService tokenService) {
-        return new TokenAuthenticationTokenFilter(exceptionHandler, tokenService);
+    public TokenAuthenticationTokenFilter authenticationTokenFilter(GlobalExceptionHandler exceptionHandler, SecurityAuthService authService) {
+        return new TokenAuthenticationTokenFilter(exceptionHandler, authService);
     }
 
     /**

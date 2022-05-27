@@ -7,6 +7,7 @@ import yeyue.ruoyi.study.framework.common.enums.CommonStatusEnum;
 import yeyue.ruoyi.study.framework.common.validation.annotation.InEnum;
 
 import java.io.Serializable;
+import java.util.Set;
 
 /**
  * @author yeyue
@@ -15,6 +16,9 @@ import java.io.Serializable;
 @Data
 @ApiModel(description = "菜单列表查询")
 public class SystemMenuListReqDTO implements Serializable {
+
+    @ApiModelProperty(value = "菜单编号列表", example = "1,3,5")
+    private Set<Long> ids;
 
     @ApiModelProperty(value = "菜单状态")
     @InEnum(value = CommonStatusEnum.class, message = "状态枚举错误")

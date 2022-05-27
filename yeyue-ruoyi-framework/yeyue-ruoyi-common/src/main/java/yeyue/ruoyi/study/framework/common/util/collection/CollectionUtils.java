@@ -135,6 +135,14 @@ public abstract class CollectionUtils extends org.springframework.util.Collectio
         return new HashSet<>(source).containsAll(compare);
     }
 
+    @SafeVarargs
+    public static <T> boolean contains(T target, T... source) {
+        if (target == null || source == null) {
+            return false;
+        }
+        return Arrays.asList(source).contains(target);
+    }
+
 
     /**
      * 集合分割处理

@@ -24,6 +24,7 @@
         <module>yeyue-ruoyi-druid-starter</module>
         <module>yeyue-ruoyi-monitor-starter</module>
         <module>yeyue-ruoyi-security-starter</module>
+        <module>yeyue-ruoyi-biz-captcha</module>
     </modules>
 
 </project>

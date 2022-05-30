@@ -2,7 +2,9 @@ package yeyue.ruoyi.study.framework.mybatis.core.handler;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import org.apache.ibatis.reflection.MetaObject;
-import yeyue.ruoyi.study.framework.common.servlet.security.WebSecurityUtils;
+import yeyue.ruoyi.study.framework.common.enums.UserTypeEnum;
+import yeyue.ruoyi.study.framework.common.security.WebSecurityUtils;
+import yeyue.ruoyi.study.framework.common.util.object.ObjectUtils;
 import yeyue.ruoyi.study.framework.mybatis.core.entity.MyBatisEntity;
 
 import java.time.LocalDateTime;
@@ -28,10 +30,10 @@ public class MyBatisFieldAutoFillHandler implements MetaObjectHandler {
                 entity.setUpdateTime(current);
             }
             if (Objects.isNull(entity.getCreator())) {
-                entity.setCreator(WebSecurityUtils.getLoginUserId());
+                entity.setCreator(ObjectUtils.defaultIfNull(WebSecurityUtils.getLoginUserId(), UserTypeEnum.SYSTEM.getId()));
             }
             if (Objects.isNull(entity.getUpdater())) {
-                entity.setUpdater(WebSecurityUtils.getLoginUserId());
+                entity.setUpdater(ObjectUtils.defaultIfNull(WebSecurityUtils.getLoginUserId(), UserTypeEnum.SYSTEM.getId()));
             }
         }
     }
@@ -42,7 +44,7 @@ public class MyBatisFieldAutoFillHandler implements MetaObjectHandler {
             MyBatisEntity entity = (MyBatisEntity) metaObject.getOriginalObject();
             LocalDateTime current = LocalDateTime.now();
             entity.setUpdateTime(current);
-            entity.setUpdater(WebSecurityUtils.getLoginUserId());
+            entity.setUpdater(ObjectUtils.defaultIfNull(WebSecurityUtils.getLoginUserId(), UserTypeEnum.SYSTEM.getId()));
         }
     }
 }

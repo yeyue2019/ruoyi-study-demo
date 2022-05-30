@@ -7,6 +7,7 @@ import yeyue.ruoyi.study.module.system.api.service.user.dto.SystemUserCreateReqD
 import yeyue.ruoyi.study.module.system.api.service.user.dto.SystemUserDeptUpdateReqDTO;
 import yeyue.ruoyi.study.module.system.api.service.user.dto.SystemUserProfileUpdateReqDTO;
 import yeyue.ruoyi.study.module.system.api.service.user.dto.SystemUserStatusUpdateReqDTO;
+import yeyue.ruoyi.study.module.system.impl.controller.user.vo.SystemUserRespVO;
 import yeyue.ruoyi.study.module.system.impl.entity.user.SystemUserEntity;
 
 /**
@@ -28,4 +29,6 @@ public interface SystemUserConvert {
     SystemUserEntity toEntity(SystemUserStatusUpdateReqDTO reqDTO);
 
     SystemUserEntity toEntity(SystemUserDomain domain);
+
+    SystemUserRespVO toVo(SystemUserDomain domain);
 }

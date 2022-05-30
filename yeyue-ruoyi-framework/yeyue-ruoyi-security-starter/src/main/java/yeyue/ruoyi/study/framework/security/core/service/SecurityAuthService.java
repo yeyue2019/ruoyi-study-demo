@@ -1,9 +1,6 @@
 package yeyue.ruoyi.study.framework.security.core.service;
 
-import yeyue.ruoyi.study.framework.common.exception.ServiceException;
-import yeyue.ruoyi.study.framework.common.exception.common.GlobalErrorCode;
 import yeyue.ruoyi.study.framework.security.core.userdetails.LoginUser;
-import yeyue.ruoyi.study.framework.security.core.util.SecurityUtils;
 
 /**
  * @author yeyue
@@ -17,18 +14,5 @@ public interface SecurityAuthService {
      * @param token 用户的Token
      * @return 结果
      */
-    LoginUser validation(String token);
-
-    /**
-     * 获取登录后的用户
-     *
-     * @return 用户信息
-     */
-    default LoginUser get() {
-        LoginUser user = SecurityUtils.getLoginUser();
-        if (user == null) {
-            throw new ServiceException(GlobalErrorCode.UNAUTHORIZED);
-        }
-        return user;
-    }
+    LoginUser validate(String token);
 }

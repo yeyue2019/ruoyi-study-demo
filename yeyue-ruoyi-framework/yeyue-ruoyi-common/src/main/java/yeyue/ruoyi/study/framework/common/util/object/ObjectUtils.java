@@ -26,6 +26,17 @@ public abstract class ObjectUtils {
     }
 
     /**
+     * 对象转化
+     *
+     * @param source        源对象
+     * @param defaultResult 源对象为空的默认返回结果
+     * @return 结果
+     */
+    public static <T> T defaultIfNull(T source, T defaultResult) {
+        return source == null ? defaultResult : source;
+    }
+
+    /**
      * 对象组合索引
      *
      * @param args 对象集合

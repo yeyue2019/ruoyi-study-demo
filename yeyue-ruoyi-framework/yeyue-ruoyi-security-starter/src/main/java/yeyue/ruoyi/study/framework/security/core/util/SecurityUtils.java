@@ -7,7 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.util.StringUtils;
 import yeyue.ruoyi.study.framework.common.servlet.constants.ServletConstants;
-import yeyue.ruoyi.study.framework.common.servlet.security.WebSecurityUtils;
+import yeyue.ruoyi.study.framework.common.security.WebSecurityUtils;
 import yeyue.ruoyi.study.framework.security.core.userdetails.LoginUser;
 
 import javax.servlet.http.HttpServletRequest;

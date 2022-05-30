@@ -37,7 +37,7 @@ public class TokenAuthenticationTokenFilter extends OncePerRequestFilter {
         if (StringUtils.isNotEmpty(token)) {
             try {
                 // 根据Token读取用户
-                LoginUser loginUser = authService.validation(token);
+                LoginUser loginUser = authService.validate(token);
                 // 用户存在则将其存入上下文
                 if (loginUser != null) {
                     SecurityUtils.setLoginUser(loginUser, request);

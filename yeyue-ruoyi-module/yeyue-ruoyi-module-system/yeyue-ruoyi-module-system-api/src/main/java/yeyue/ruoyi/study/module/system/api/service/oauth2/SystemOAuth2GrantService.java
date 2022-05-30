@@ -95,13 +95,11 @@ public interface SystemOAuth2GrantService {
      * <p>
      * 对应 Spring Security OAuth2 的 ClientCredentialsTokenGranter 功能
      *
-     * @param userId                      用户Id
-     * @param userType                    用户类型
      * @param clientId                    客户端编号
      * @param scopes                      授权范围
      * @param accessTokenValiditySeconds  访问令牌有效期
      * @param refreshTokenValiditySeconds 刷新令牌有效期
      * @return 访问令牌
      */
-    SystemOAuth2AccessTokenDomain clientCredentials(String userId, Integer userType, String clientId, List<String> scopes, Integer accessTokenValiditySeconds, Integer refreshTokenValiditySeconds);
+    SystemOAuth2AccessTokenDomain clientCredentials(String clientId, List<String> scopes, Integer accessTokenValiditySeconds, Integer refreshTokenValiditySeconds);
 }

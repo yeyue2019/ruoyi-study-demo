@@ -21,7 +21,7 @@ public class SystemSecurityAuthServiceImpl implements SecurityAuthService {
     SystemOAuth2TokenService tokenService;
 
     @Override
-    public LoginUser validation(String token) {
+    public LoginUser validate(String token) {
         SystemOAuth2AccessTokenDomain domain = tokenService.get(token);
         return new LoginUser()
                 .setId(domain.getUserId())

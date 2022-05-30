@@ -1,4 +1,4 @@
-package yeyue.ruoyi.study.framework.common.servlet.security;
+package yeyue.ruoyi.study.framework.common.security;
 
 import yeyue.ruoyi.study.framework.common.servlet.util.ServletUtils;
 

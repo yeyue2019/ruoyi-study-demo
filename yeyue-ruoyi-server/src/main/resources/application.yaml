@@ -102,4 +102,11 @@ spring:
       fail-on-empty-beans: false
     deserialization:
       fail-on-unknown-properties: false
+---
+captcha:
+  width: 200
+  height: 60
+  code-count: 5
+  interfere-count: 150
+  timeout: 5m
 

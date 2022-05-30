@@ -13,7 +13,6 @@ import yeyue.ruoyi.study.framework.common.exception.common.GlobalErrorCode;
 import yeyue.ruoyi.study.framework.common.pojo.core.CommonResult;
 import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
 import yeyue.ruoyi.study.framework.common.validation.annotation.InEnum;
-import yeyue.ruoyi.study.framework.security.core.service.SecurityAuthService;
 import yeyue.ruoyi.study.framework.security.core.userdetails.LoginUser;
 import yeyue.ruoyi.study.module.system.api.domain.oauth2.SystemOAuth2AccessTokenDomain;
 import yeyue.ruoyi.study.module.system.api.domain.oauth2.SystemOAuth2ClientDomain;
@@ -26,6 +25,7 @@ import yeyue.ruoyi.study.module.system.api.service.oauth2.dto.SystemOAuth2Approv
 import yeyue.ruoyi.study.module.system.api.service.oauth2.dto.SystemOAuth2ApproveUpdateReqDTO;
 import yeyue.ruoyi.study.module.system.api.service.oauth2.dto.SystemOAuth2ClientValidateReqDTO;
 import yeyue.ruoyi.study.module.system.impl.framework.exception.SystemErrorCode;
+import yeyue.ruoyi.study.module.system.impl.framework.security.util.SystemSecurityUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -41,8 +41,6 @@ import java.util.Set;
 @RequestMapping("/web/sys/oauth2/open")
 public class SystemOAuth2OpenController {
 
-    @Resource
-    SecurityAuthService authService;
     @Resource
     SystemOAuth2ClientService clientService;
     @Resource
@@ -81,7 +79,6 @@ public class SystemOAuth2OpenController {
         SystemOAuth2ClientDomain client = clientService.validate(new SystemOAuth2ClientValidateReqDTO()
                 .setClientId(clientId).setSecret(clientSecret).setAuthorizedGrantType(grantType).setScopes(scopes));
         SystemOAuth2AccessTokenDomain result;
-        LoginUser loginUser;
         switch (Objects.requireNonNull(OAuth2GrantTypeEnum.getByGranType(grantType))) {
             case AUTHORIZATION_CODE:
                 if (StringUtils.isBlank(code)) {
@@ -93,7 +90,8 @@ public class SystemOAuth2OpenController {
                 if (StringUtils.isAnyBlank(username, password)) {
                     throw new ServiceException(GlobalErrorCode.BAD_REQUEST.getCode(), "账号或密码不能为空");
                 }
-                loginUser = authService.get();
+                // TODO: 2022/5/30 校验方法
+                LoginUser loginUser = SystemSecurityUtils.getLoginUser();
                 result = grantService.password(loginUser.getId(), loginUser.getUserType(), clientId, scopes, client.getAccessTokenValiditySeconds(), client.getRefreshTokenValiditySeconds());
                 break;
             case REFRESH_TOKEN:
@@ -103,8 +101,7 @@ public class SystemOAuth2OpenController {
                 result = grantService.refresh(refreshToken, clientId, client.getAccessTokenValiditySeconds());
                 break;
             case CLIENT_CREDENTIALS:
-                loginUser = authService.get();
-                result = grantService.clientCredentials(loginUser.getId(), loginUser.getUserType(), clientId, scopes, client.getAccessTokenValiditySeconds(), client.getRefreshTokenValiditySeconds());
+                result = grantService.clientCredentials(clientId, scopes, client.getAccessTokenValiditySeconds(), client.getRefreshTokenValiditySeconds());
                 break;
             default:
                 throw new ServiceException(GlobalErrorCode.UNSUPPORTED_OPERATION);
@@ -118,7 +115,7 @@ public class SystemOAuth2OpenController {
     @ApiOperation(value = "获得授权信息")
     @ApiImplicitParam(name = "clientId", required = true, value = "客户端编号", example = "yeyue", dataTypeClass = String.class)
     public CommonResult<Set<String>> authorize(@RequestParam String clientId) {
-        LoginUser loginUser = authService.get();
+        LoginUser loginUser = SystemSecurityUtils.getLoginUser();
         SystemOAuth2ClientDomain client = clientService.validate(new SystemOAuth2ClientValidateReqDTO()
                 .setClientId(clientId));
         SystemOAuth2ApproveGetReqDTO reqDTO = new SystemOAuth2ApproveGetReqDTO()
@@ -146,7 +143,7 @@ public class SystemOAuth2OpenController {
             @ApiImplicitParam(name = "clientId", required = true, value = "客户端编号", example = "yeyue", dataTypeClass = String.class),
             @ApiImplicitParam(name = "scope", value = "授权范围", example = "userinfo.read", dataTypeClass = String.class),
             @ApiImplicitParam(name = "redirectUri", required = true, value = "重定向 URI", example = "https://www.iocoder.cn", dataTypeClass = String.class),
-            @ApiImplicitParam(name = "autoApprove", value = "用户是否接受", example = "true", dataTypeClass = Boolean.class),
+            @ApiImplicitParam(name = "autoApprove", value = "是否自动同意", example = "true", dataTypeClass = Boolean.class),
             @ApiImplicitParam(name = "state", example = "123321", dataTypeClass = String.class)
     })
     public CommonResult<String> authorize(@RequestParam @InEnum(value = OAuth2GrantTypeEnum.class, message = "授权类型错误") String responseType,
@@ -157,7 +154,7 @@ public class SystemOAuth2OpenController {
                                           @RequestParam(required = false) String state) {
         List<String> scopes = CollectionUtils.arrayToList(StringUtils.split(scope, StringConstants.SPLIT_JOIN));
         // 0. 校验用户已经登录。通过 Spring Security 实现
-        LoginUser loginUser = authService.get();
+        LoginUser loginUser = SystemSecurityUtils.getLoginUser();
 
         // 1. 校验 redirectUri 重定向域名是否合法 + 校验 scope 是否在 Client 授权范围内
         SystemOAuth2ClientDomain client = clientService.validate(new SystemOAuth2ClientValidateReqDTO()

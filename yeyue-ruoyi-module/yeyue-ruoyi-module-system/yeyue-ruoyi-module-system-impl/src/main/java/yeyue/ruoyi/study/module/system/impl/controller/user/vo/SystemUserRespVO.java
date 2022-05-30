@@ -1,32 +1,26 @@
-package yeyue.ruoyi.study.module.system.api.domain.user;
+package yeyue.ruoyi.study.module.system.impl.controller.user.vo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 
 /**
- * 管理员用户
- *
  * @author yeyue
- * @date 2022-04-18 13:58:25
+ * @date 2022-05-29 21:45:20
  */
 @Data
-@ApiModel(description = "系统用户")
-public class SystemUserDomain implements Serializable {
+@ApiModel(description = "用户信息")
+public class SystemUserRespVO {
 
     @ApiModelProperty(value = "用户Id")
     private Long id;
 
     @ApiModelProperty(value = "账号", required = true, example = "yeyue")
     private String username;
-
-    @ApiModelProperty(value = "密码")
-    private String password;
 
     @ApiModelProperty(value = "昵称")
     private String nickname;

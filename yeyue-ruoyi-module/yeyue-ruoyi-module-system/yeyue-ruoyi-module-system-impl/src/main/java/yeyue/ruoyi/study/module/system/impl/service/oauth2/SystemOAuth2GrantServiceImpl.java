@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import yeyue.ruoyi.study.framework.common.enums.UserTypeEnum;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.module.system.api.domain.oauth2.SystemOAuth2AccessTokenDomain;
 import yeyue.ruoyi.study.module.system.api.domain.oauth2.SystemOAuth2CodeDomain;
@@ -89,10 +90,10 @@ public class SystemOAuth2GrantServiceImpl implements SystemOAuth2GrantService {
     }
 
     @Override
-    public SystemOAuth2AccessTokenDomain clientCredentials(String userId, Integer userType, String clientId, List<String> scopes, Integer accessTokenValiditySeconds, Integer refreshTokenValiditySeconds) {
+    public SystemOAuth2AccessTokenDomain clientCredentials(String clientId, List<String> scopes, Integer accessTokenValiditySeconds, Integer refreshTokenValiditySeconds) {
         return tokenService.create(new SystemOAuth2AccessTokenCreateReqDTO()
-                .setUserId(userId)
-                .setUserType(userType)
+                .setUserId(clientId)
+                .setUserType(UserTypeEnum.SYSTEM.getValue())
                 .setClientId(clientId)
                 .setScopes(scopes)
                 .setAccessTokenValiditySeconds(accessTokenValiditySeconds)

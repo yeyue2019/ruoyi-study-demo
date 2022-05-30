@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import yeyue.ruoyi.study.framework.common.util.object.ObjectUtils;
 import yeyue.ruoyi.study.framework.druid.core.filter.DruidAdRemoveFilter;
 
 /**
@@ -30,7 +31,7 @@ public class YeyueDruidAutoConfiguration {
         // 获取 druid web 监控页面的参数
         DruidStatProperties.StatViewServlet config = properties.getStatViewServlet();
         // 提取 common.js 的配置路径
-        String pattern = config.getUrlPattern() != null ? config.getUrlPattern() : "/druid/*";
+        String pattern = ObjectUtils.defaultIfNull(config.getUrlPattern(), "/druid/*");
         String commonJsPattern = pattern.replaceAll("\\*", "js/common.js");
         // 创建 DruidAdRemoveFilter Bean
         FilterRegistrationBean<DruidAdRemoveFilter> registrationBean = new FilterRegistrationBean<>();

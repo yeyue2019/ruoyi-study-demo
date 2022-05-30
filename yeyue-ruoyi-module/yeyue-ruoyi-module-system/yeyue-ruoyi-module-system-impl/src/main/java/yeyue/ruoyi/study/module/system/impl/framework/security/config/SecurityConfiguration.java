@@ -19,7 +19,7 @@ public class SecurityConfiguration {
             @Override
             public void
             customize(ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry) {
-                registry.antMatchers("/web/sys/auth/login-password", "/web/sys/oauth2/open/authenticate").permitAll();
+                registry.antMatchers("/web/sys/auth/login-password", "/web/sys/oauth2/open/authenticate", "/web/sys/captcha/get-image").permitAll();
             }
         };
     }

@@ -79,4 +79,13 @@ public interface SystemUserService {
      * @return 结果
      */
     PageResult<SystemUserDomain> list(SystemUserPageReqDTO req);
+
+    /**
+     * 验证账号 + 密码
+     *
+     * @param username 账号
+     * @param password 密码
+     * @return 结果
+     */
+    Long authenticate(String username, String password);
 }

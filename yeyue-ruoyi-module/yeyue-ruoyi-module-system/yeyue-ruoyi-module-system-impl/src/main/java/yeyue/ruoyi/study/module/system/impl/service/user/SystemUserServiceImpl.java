@@ -5,10 +5,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import yeyue.ruoyi.study.framework.common.enums.CommonStatusEnum;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
 import yeyue.ruoyi.study.framework.common.exception.common.GlobalErrorCode;
 import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
 import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
+import yeyue.ruoyi.study.framework.common.util.enums.EnumUtils;
 import yeyue.ruoyi.study.framework.mybatis.core.query.MyBatisLambdaQueryWrapper;
 import yeyue.ruoyi.study.module.system.api.domain.user.SystemUserDomain;
 import yeyue.ruoyi.study.module.system.api.service.dept.SystemDeptService;
@@ -167,5 +169,17 @@ public class SystemUserServiceImpl implements SystemUserService {
                 .eq(SystemUserEntity::getDeptId, req.getDeptId())
                 .eq(SystemUserEntity::getStatus, req.getStatus()));
         return CollectionUtils.funcPage(source, SystemUserConvert.INSTANCE::toDomain);
+    }
+
+    @Override
+    public Long authenticate(String username, String password) {
+        SystemUserDomain user = get(new SystemUserGetReqDTO().setUsername(username));
+        if (user == null || (!StringUtils.equals(passwordEncoder.encode(password), user.getPassword()))) {
+            throw new ServiceException(SystemErrorCode.AUTH_LOGIN_BAD_CREDENTIALS);
+        }
+        if (EnumUtils.notEquals(CommonStatusEnum.ENABLE, CommonStatusEnum::getStatus, user.getStatus())) {
+            throw new ServiceException(SystemErrorCode.AUTH_LOGIN_USER_DISABLED);
+        }
+        return user.getId();
     }
 }

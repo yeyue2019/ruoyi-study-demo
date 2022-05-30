@@ -101,16 +101,16 @@ public class SystemOAuth2ClientServiceImpl implements SystemOAuth2ClientService 
         if (EnumUtils.notEquals(CommonStatusEnum.ENABLE, CommonStatusEnum::getStatus, client.getStatus())) {
             throw new ServiceException(SystemErrorCode.OAUTH2_CLIENT_STATUS_DISABLE);
         }
-        if (StringUtils.isNotBlank(reqDTO.getSecret()) && !StringUtils.equals(reqDTO.getSecret(), client.getSecret())) {
+        if (StringUtils.isNotEmpty(reqDTO.getSecret()) && !StringUtils.equals(reqDTO.getSecret(), client.getSecret())) {
             throw new ServiceException(SystemErrorCode.OAUTH2_CLIENT_CLIENT_SECRET_ERROR);
         }
-        if (reqDTO.getAuthorizedGrantType() != null && !client.getAuthorizedGrantTypes().contains(reqDTO.getAuthorizedGrantType())) {
+        if (StringUtils.isNotEmpty(reqDTO.getAuthorizedGrantType()) && !client.getAuthorizedGrantTypes().contains(reqDTO.getAuthorizedGrantType())) {
             throw new ServiceException(SystemErrorCode.OAUTH2_CLIENT_AUTHORIZED_GRANT_TYPE_NOT_EXISTS);
         }
         if (!CollectionUtils.containsAll(client.getScopes(), reqDTO.getScopes())) {
             throw new ServiceException(SystemErrorCode.OAUTH2_CLIENT_SCOPE_OVER);
         }
-        if (reqDTO.getRedirectUri() != null && !StringUtils.startsWithAny(reqDTO.getRedirectUri(), CollectionUtils.listToArray(client.getRedirectUris(), String.class))) {
+        if (StringUtils.isNotEmpty(reqDTO.getRedirectUri()) && !StringUtils.startsWithAny(reqDTO.getRedirectUri(), CollectionUtils.listToArray(client.getRedirectUris(), String.class))) {
             throw new ServiceException(SystemErrorCode.OAUTH2_CLIENT_REDIRECT_URI_NOT_MATCH);
         }
         return client;

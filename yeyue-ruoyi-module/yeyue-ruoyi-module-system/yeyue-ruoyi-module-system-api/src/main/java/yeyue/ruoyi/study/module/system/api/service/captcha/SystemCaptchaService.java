@@ -6,7 +6,7 @@ import yeyue.ruoyi.study.module.system.api.service.captcha.dto.CaptchaImageRespD
  * @author yeyue
  * @date 2022-05-29 23:03:21
  */
-public interface CaptchaService {
+public interface SystemCaptchaService {
 
     /**
      * 获得验证码图片

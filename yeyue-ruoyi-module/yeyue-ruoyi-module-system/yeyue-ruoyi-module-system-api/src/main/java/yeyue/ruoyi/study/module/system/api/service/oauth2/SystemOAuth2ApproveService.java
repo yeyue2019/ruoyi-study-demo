@@ -1,9 +1,8 @@
 package yeyue.ruoyi.study.module.system.api.service.oauth2;
 
-import yeyue.ruoyi.study.module.system.api.service.oauth2.dto.SystemOAuth2ApproveCheckReqDTO;
-import yeyue.ruoyi.study.module.system.api.service.oauth2.dto.SystemOAuth2ApproveGetReqDTO;
-import yeyue.ruoyi.study.module.system.api.service.oauth2.dto.SystemOAuth2ApproveUpdateReqDTO;
+import yeyue.ruoyi.study.module.system.api.domain.oauth2.SystemOAuth2ClientDomain;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -15,23 +14,34 @@ public interface SystemOAuth2ApproveService {
     /**
      * 获取用户的批准列表
      *
-     * @param reqDTO 用户信息
+     * @param userId   用户id
+     * @param userType 用户类型
+     * @param clientId 客户端Id
+     * @param client   客户端
      * @return 批准列表
      */
-    Set<String> get(SystemOAuth2ApproveGetReqDTO reqDTO);
+    Set<String> get(String userId, Integer userType, String clientId, SystemOAuth2ClientDomain client);
 
     /**
      * 校验用户申请的权限列表
      *
-     * @param reqDTO 校验信息
+     * @param userId   用户id
+     * @param userType 用户类型
+     * @param clientId 客户端Id
+     * @param scopes   申请的权限列表
+     * @param client   客户端
      * @return 结果
      */
-    boolean check(SystemOAuth2ApproveCheckReqDTO reqDTO);
+    boolean check(String userId, Integer userType, String clientId, List<String> scopes, SystemOAuth2ClientDomain client);
 
     /**
      * 用户申请授权
      *
-     * @param reqDTO 权限信息
+     * @param userId   用户id
+     * @param userType 用户类型
+     * @param clientId 客户端Id
+     * @param scopes   申请的权限列表
+     * @param client   客户端
      */
-    void update(SystemOAuth2ApproveUpdateReqDTO reqDTO);
+    void update(String userId, Integer userType, String clientId, List<String> scopes, SystemOAuth2ClientDomain client);
 }

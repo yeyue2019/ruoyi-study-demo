@@ -6,12 +6,14 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.util.StringUtils;
-import yeyue.ruoyi.study.framework.common.servlet.constants.ServletConstants;
 import yeyue.ruoyi.study.framework.common.security.WebSecurityUtils;
+import yeyue.ruoyi.study.framework.common.servlet.constants.ServletConstants;
+import yeyue.ruoyi.study.framework.common.servlet.util.ServletUtils;
 import yeyue.ruoyi.study.framework.security.core.userdetails.LoginUser;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
+import java.util.Objects;
 
 /**
  * @author yeyue
@@ -36,6 +38,10 @@ public abstract class SecurityUtils {
             return null;
         }
         return authorization.substring(index + ServletConstants.AUTHORIZATION_TOKEN_PREFIX.length()).trim();
+    }
+
+    public static String obtainAuthorization() {
+        return obtainAuthorization(Objects.requireNonNull(ServletUtils.withRequest()));
     }
 
     /**

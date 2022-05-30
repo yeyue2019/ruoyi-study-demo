@@ -51,6 +51,14 @@ public enum SystemErrorCode implements ErrorCode {
     USER_EMAIL_EXISTS("010504", "邮箱已经存在"),
     USER_PASSWORD_FAILED("010505", "用户密码校验失败"),
 
+    /* 登录 */
+
+    AUTH_LOGIN_BAD_CREDENTIALS("010601", "登录失败，账号密码不正确"),
+    AUTH_LOGIN_USER_DISABLED("010602", "登录失败，账号被禁用"),
+
+    AUTH_LOGIN_CAPTCHA_NOT_FOUND("010603", "登录失败，验证码不存在或已过期"),
+    AUTH_LOGIN_CAPTCHA_CODE_ERROR("010604", "验证码错误"),
+
     /* OAuth2 */
 
     OAUTH2_CLIENT_EXIST("010901", "客户端编号已存在"),

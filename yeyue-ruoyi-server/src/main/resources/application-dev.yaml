@@ -86,9 +86,9 @@ spring:
           url: jdbc:mysql://127.0.0.1:3306/${spring.datasource.dynamic.datasource.master.name}?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&serverTimezone=Asia/Shanghai&useSSL=false
           username: root
           password: 123456
-        slave:
-          name: ruoyi_study_demo
-          url: jdbc:mysql://127.0.0.1:3306/${spring.datasource.dynamic.datasource.slave.name}?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&serverTimezone=Asia/Shanghai&useSSL=false
+        quartz:
+          name: ruoyi_study_demo_quartz
+          url: jdbc:mysql://127.0.0.1:3306/${spring.datasource.dynamic.datasource.quartz.name}?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&serverTimezone=Asia/Shanghai&useSSL=false
           username: root
           password: 123456
 ---
@@ -97,3 +97,27 @@ spring:
   redis:
     password: 123456
     database: 0
+---
+# Quartz
+spring:
+  quartz:
+    scheduler-name: yeyue-cluster-scheduler
+    job-store-type: jdbc
+    wait-for-jobs-to-complete-on-shutdown: true
+    overwrite-existing-jobs: false
+    jdbc:
+      initialize-schema: never
+    properties:
+      org:
+        quartz:
+          scheduler:
+            instanceName: yeyue-cluster-scheduler
+            instanceId: AUTO
+          jobStore:
+            isClustered: true # 是集群模式
+            clusterCheckinInterval: 15000 # 集群检查频率，单位：毫秒。默认为 15000，即 15 秒
+            misfireThreshold: 60000 # misfire 阀值，单位：毫秒
+          threadPool:
+            threadCount: 25 # 线程池大小。默认为 10 。
+            threadPriority: 5 # 线程优先级
+            class: org.quartz.simpl.SimpleThreadPool # 线程池类型

@@ -3,6 +3,7 @@ package yeyue.ruoyi.study.module.system.impl.controller.oauth2;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import yeyue.ruoyi.study.framework.common.pojo.core.CommonResult;
 import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
@@ -27,6 +28,7 @@ public class SystemOAuth2TokenController {
 
     @ApiOperation(value = "删除访问令牌")
     @DeleteMapping("/delete")
+    @PreAuthorize("@ss.hasPermission('system:oauth2:token-delete')")
     @ApiImplicitParam(name = "accessToken", value = "访问令牌", required = true, dataTypeClass = String.class, example = "xxx")
     public CommonResult<SystemOAuth2AccessTokenDomain> remove(@RequestParam String accessToken) {
         return CommonResult.success(service.remove(accessToken));
@@ -34,6 +36,7 @@ public class SystemOAuth2TokenController {
 
     @ApiOperation(value = "查看访问令牌")
     @PostMapping("/list")
+    @PreAuthorize("@ss.hasPermission('system:oauth2:token-list')")
     public CommonResult<PageResult<SystemOAuth2AccessTokenDomain>> list(@Valid @RequestBody SystemOAuth2AccessTokenPageReqDTO dto) {
         return CommonResult.success(service.list(dto));
     }

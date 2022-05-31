@@ -2,6 +2,7 @@ package yeyue.ruoyi.study.module.system.impl.controller.permission;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import yeyue.ruoyi.study.framework.common.pojo.core.CommonResult;
 import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
@@ -28,12 +29,14 @@ public class SystemRoleController {
 
     @ApiOperation(value = "新增角色")
     @PutMapping("/create")
+    @PreAuthorize("@ss.hasPermission('system:role:create')")
     public CommonResult<Long> create(@Valid @RequestBody SystemRoleCreateReqDTO dto) {
         return CommonResult.success(service.create(dto));
     }
 
     @ApiOperation(value = "修改角色")
     @PostMapping("/update")
+    @PreAuthorize("@ss.hasPermission('system:role:update')")
     public CommonResult<Void> update(@Valid @RequestBody SystemRoleUpdateReqDTO dto) {
         service.update(dto);
         return CommonResult.success();
@@ -41,6 +44,7 @@ public class SystemRoleController {
 
     @ApiOperation(value = "删除角色")
     @DeleteMapping("/delete")
+    @PreAuthorize("@ss.hasPermission('system:role:delete')")
     public CommonResult<Void> delete(@RequestParam Long id) {
         service.delete(id);
         return CommonResult.success();
@@ -48,12 +52,14 @@ public class SystemRoleController {
 
     @ApiOperation(value = "获取角色")
     @GetMapping("/get")
+    @PreAuthorize("@ss.hasPermission('system:role:get')")
     public CommonResult<SystemRoleDomain> get(@RequestParam Long id) {
         return CommonResult.success(service.get(id));
     }
 
     @ApiOperation(value = "查询角色")
     @PostMapping("/list")
+    @PreAuthorize("@ss.hasPermission('system:role:list')")
     public CommonResult<PageResult<SystemRoleDomain>> list(@Valid @RequestBody SystemRolePageReqDTO dto) {
         return CommonResult.success(service.list(dto));
     }

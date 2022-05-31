@@ -20,11 +20,11 @@ CREATE TABLE `ruoyi_system_menu`
     `updateTime` datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     `deleted`    bit(1)                                                        NOT NULL DEFAULT b'0' COMMENT '是否删除',
     PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB
-    AUTO_INCREMENT=100
-    DEFAULT CHARSET=utf8mb4
-    COLLATE=utf8mb4_unicode_ci
-    COMMENT='系统菜单权限表';
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 100
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci
+    COMMENT ='系统菜单权限表';
 -- ----------------------------
 -- Records of ruoyi_system_menu
 -- ----------------------------
@@ -43,27 +43,29 @@ VALUES (3, '用户管理', 'system:user:list', 2, 1, 1, 'user', 'user', 'system/
         '2022-05-25 15:50:18', b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (4, '角色管理', '', 2, 2, 1, 'role', 'peoples', 'system/role/index', 0, '1', '2021-01-05 17:03:48', '1',
+VALUES (4, '角色管理', 'system:role:list', 2, 2, 1, 'role', 'peoples', 'system/role/index', 0, '1', '2021-01-05 17:03:48',
+        '1',
         '2022-05-25 15:50:18', b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (5, '菜单管理', '', 2, 3, 1, 'menu', 'tree-table', 'system/menu/index', 0, '1', '2021-01-05 17:03:48', '1',
+VALUES (5, '菜单管理', 'system:menu:list', 2, 3, 1, 'menu', 'tree-table', 'system/menu/index', 0, '1',
+        '2021-01-05 17:03:48', '1',
         '2022-05-25 15:50:18', b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (6, '部门管理', '', 2, 4, 1, 'dept', 'tree', 'system/dept/index', 0, '1', '2021-01-05 17:03:48', '1',
+VALUES (6, '部门管理', 'system:dept:list', 2, 4, 1, 'dept', 'tree', 'system/dept/index', 0, '1', '2021-01-05 17:03:48', '1',
         '2022-05-25 15:50:18', b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (7, '岗位管理', '', 2, 5, 1, 'post', 'post', 'system/post/index', 0, '1', '2021-01-05 17:03:48', '1',
+VALUES (7, '岗位管理', 'system:post:list', 2, 5, 1, 'post', 'post', 'system/post/index', 0, '1', '2021-01-05 17:03:48', '1',
         '2022-05-25 15:50:18', b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (8, '字典管理', '', 2, 6, 1, 'dict', 'dict', 'system/dict/index', 0, '1', '2021-01-05 17:03:48', '1',
+VALUES (8, '字典管理', 'system:dict:list', 2, 6, 1, 'dict', 'dict', 'system/dict/index', 0, '1', '2021-01-05 17:03:48', '1',
         '2022-05-25 15:50:18', b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (9, 'OAuth 2.0', '', 1, 10, 1, 'oauth2', 'people', null, 0, '1', '2022-05-09 23:38:17', '1',
+VALUES (9, 'OAuth 2.0', 'system:oauth2:list', 1, 10, 1, 'oauth2', 'people', null, 0, '1', '2022-05-09 23:38:17', '1',
         '2022-05-25 15:50:18', b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
@@ -79,7 +81,7 @@ VALUES (12, '应用管理', '', 2, 0, 9, 'oauth2/application', 'tool', 'system/o
         '2022-05-10 16:26:33', '1', '2022-05-25 15:51:14', b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (13, '用户查询', 'system:user:query', 3, 1, 3, '', '#', '', 0, '1', '2021-01-05 17:03:48', '1',
+VALUES (13, '用户查询', 'system:user:get', 3, 1, 3, '', '#', '', 0, '1', '2021-01-05 17:03:48', '1',
         '2022-05-25 15:51:54', b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
@@ -87,151 +89,207 @@ VALUES (14, '用户新增', 'system:user:create', 3, 2, 3, '', '', '', 0, '1', '
         '2022-05-25 15:51:54', b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (15, '用户修改', 'system:user:update', 3, 3, 3, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
+VALUES (15, '用户部门修改', 'system:user:update-dept', 3, 3, 3, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
         '2022-05-25 15:51:54', b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (16, '用户删除', 'system:user:delete', 3, 4, 3, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
+VALUES (16, '用户状态修改', 'system:user:update-status', 3, 3, 3, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
         '2022-05-25 15:51:54', b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (17, '设置角色菜单权限', 'system:permission:assign-role-menu', 3, 6, 4, '', '', '', 0, '1', '2021-01-06 17:53:44', '1',
+VALUES (17, '用户密码重置', 'system:user:replace-password', 3, 3, 3, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
+        '2022-05-25 15:51:54', b'0');
+INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
+                                 `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
+VALUES (18, '用户删除', 'system:user:delete', 3, 4, 3, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
+        '2022-05-25 15:51:54', b'0');
+INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
+                                 `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
+VALUES (19, '用户列表', 'system:user:list', 3, 4, 3, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
+        '2022-05-25 15:51:54', b'0');
+INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
+                                 `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
+VALUES (20, '赋予角色菜单', 'system:permission:assign-role-menu', 3, 6, 4, '', '', '', 0, '1', '2021-01-06 17:53:44', '1',
         '2022-05-25 15:53:59', b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (18, '设置角色数据权限', 'system:permission:assign-role-data-scope', 3, 7, 4, '', '', '', 0, '1', '2021-01-06 17:56:31',
-        '1', '2022-05-25 15:53:59', b'0');
-INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
-                                 `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (19, '设置用户角色', 'system:permission:assign-user-role', 3, 8, 4, '', '', '', 0, '1', '2021-01-07 10:23:28', '1',
+VALUES (21, '赋予用户角色', 'system:permission:assign-user-role', 3, 8, 4, '', '', '', 0, '1', '2021-01-07 10:23:28', '1',
         '2022-05-25 15:53:59', b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (20, '角色查询', 'system:role:query', 3, 1, 4, '', '#', '', 0, '1', '2021-01-05 17:03:48', '1',
+VALUES (22, '获取角色菜单', 'system:permission:list-role-menus', 3, 6, 4, '', '', '', 0, '1', '2021-01-06 17:53:44', '1',
         '2022-05-25 15:53:59', b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (21, '角色新增', 'system:role:create', 3, 2, 4, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
+VALUES (23, '获取用户角色', 'system:permission:list-user-roles', 3, 8, 4, '', '', '', 0, '1', '2021-01-07 10:23:28', '1',
         '2022-05-25 15:53:59', b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (22, '角色修改', 'system:role:update', 3, 3, 4, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
+VALUES (24, '角色查询', 'system:role:get', 3, 1, 4, '', '#', '', 0, '1', '2021-01-05 17:03:48', '1',
         '2022-05-25 15:53:59', b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (23, '角色删除', 'system:role:delete', 3, 4, 4, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
+VALUES (25, '角色新增', 'system:role:create', 3, 2, 4, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
         '2022-05-25 15:53:59', b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (24, '菜单查询', 'system:menu:query', 3, 1, 5, '', '#', '', 0, '1', '2021-01-05 17:03:48', '1',
+VALUES (26, '角色修改', 'system:role:update', 3, 3, 4, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
+        '2022-05-25 15:53:59', b'0');
+INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
+                                 `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
+VALUES (27, '角色删除', 'system:role:delete', 3, 4, 4, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
+        '2022-05-25 15:53:59', b'0');
+INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
+                                 `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
+VALUES (28, '角色列表', 'system:role:list', 3, 4, 4, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
+        '2022-05-25 15:53:59', b'0');
+INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
+                                 `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
+VALUES (29, '菜单查询', 'system:menu:get', 3, 1, 5, '', '#', '', 0, '1', '2021-01-05 17:03:48', '1',
         '2022-05-25 15:54:32', b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (25, '菜单新增', 'system:menu:create', 3, 2, 5, '', '#', '', 0, '1', '2021-01-05 17:03:48', '1',
+VALUES (30, '菜单新增', 'system:menu:create', 3, 2, 5, '', '#', '', 0, '1', '2021-01-05 17:03:48', '1',
         '2022-05-25 15:54:32', b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (26, '菜单修改', 'system:menu:update', 3, 3, 5, '', '#', '', 0, '1', '2021-01-05 17:03:48', '1',
+VALUES (31, '菜单修改', 'system:menu:update', 3, 3, 5, '', '#', '', 0, '1', '2021-01-05 17:03:48', '1',
         '2022-05-25 15:54:32', b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (27, '菜单删除', 'system:menu:delete', 3, 4, 5, '', '#', '', 0, '1', '2021-01-05 17:03:48', '1',
+VALUES (32, '菜单删除', 'system:menu:delete', 3, 4, 5, '', '#', '', 0, '1', '2021-01-05 17:03:48', '1',
         '2022-05-25 15:54:32', b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (28, '部门查询', 'system:dept:query', 3, 1, 6, '', '#', '', 0, '1', '2021-01-05 17:03:48', '1',
+VALUES (33, '菜单列表', 'system:menu:list', 3, 4, 5, '', '#', '', 0, '1', '2021-01-05 17:03:48', '1',
         '2022-05-25 15:54:32', b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (29, '部门新增', 'system:dept:create', 3, 2, 6, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
+VALUES (34, '部门查询', 'system:dept:get', 3, 1, 6, '', '#', '', 0, '1', '2021-01-05 17:03:48', '1',
         '2022-05-25 15:54:32', b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (30, '部门修改', 'system:dept:update', 3, 3, 6, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
+VALUES (35, '部门新增', 'system:dept:create', 3, 2, 6, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
         '2022-05-25 15:54:32', b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (31, '部门删除', 'system:dept:delete', 3, 4, 6, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
+VALUES (36, '部门修改', 'system:dept:update', 3, 3, 6, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
         '2022-05-25 15:54:32', b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (32, '岗位删除', 'system:post:delete', 3, 4, 7, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
+VALUES (37, '部门删除', 'system:dept:delete', 3, 4, 6, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
         '2022-05-25 15:54:32', b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (33, '岗位查询', 'system:post:query', 3, 1, 7, '', '#', '', 0, '1', '2021-01-05 17:03:48', '1',
+VALUES (38, '部门列表', 'system:dept:list', 3, 4, 6, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
         '2022-05-25 15:54:32', b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (34, '岗位新增', 'system:post:create', 3, 2, 7, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
+VALUES (39, '岗位删除', 'system:post:delete', 3, 4, 7, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
         '2022-05-25 15:54:32', b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (35, '岗位修改', 'system:post:update', 3, 3, 7, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
+VALUES (40, '岗位查询', 'system:post:get', 3, 1, 7, '', '#', '', 0, '1', '2021-01-05 17:03:48', '1',
+        '2022-05-25 15:54:32', b'0');
+INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
+                                 `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
+VALUES (41, '岗位新增', 'system:post:create', 3, 2, 7, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
+        '2022-05-25 15:54:32', b'0');
+INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
+                                 `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
+VALUES (42, '岗位修改', 'system:post:update', 3, 3, 7, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
         '2022-05-25 15:55:05', b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (36, '字典查询', 'system:dict:query', 3, 1, 8, '#', '#', '', 0, '1', '2021-01-05 17:03:48', '1',
+VALUES (43, '岗位状态修改', 'system:post:update-status', 3, 3, 7, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
         '2022-05-25 15:55:05', b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (37, '字典新增', 'system:dict:create', 3, 2, 8, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
+VALUES (44, '岗位列表', 'system:post:list', 3, 3, 7, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
         '2022-05-25 15:55:05', b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (38, '字典修改', 'system:dict:update', 3, 3, 8, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
+VALUES (45, '字典查询', 'system:dict:get', 3, 1, 8, '#', '#', '', 0, '1', '2021-01-05 17:03:48', '1',
         '2022-05-25 15:55:05', b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (39, '字典删除', 'system:dict:delete', 3, 4, 8, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
+VALUES (46, '字典新增', 'system:dict:create', 3, 2, 8, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
         '2022-05-25 15:55:05', b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (40, '客户端查询', 'system:oauth2-client:query', 3, 1, 12, '', '', '', 0, '1', '2022-05-10 16:26:33', '1',
+VALUES (47, '字典修改', 'system:dict:update', 3, 3, 8, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
+        '2022-05-25 15:55:05', b'0');
+INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
+                                 `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
+VALUES (48, '字典删除', 'system:dict:delete', 3, 4, 8, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
+        '2022-05-25 15:55:05', b'0');
+INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
+                                 `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
+VALUES (49, '客户端查询', 'system:oauth2:client-get', 3, 1, 12, '', '', '', 0, '1', '2022-05-10 16:26:33', '1',
         '2022-05-25 15:56:06', b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (41, '客户端创建', 'system:oauth2-client:create', 3, 2, 12, '', '', '', 0, '1', '2022-05-10 16:26:33', '1',
+VALUES (50, '客户端创建', 'system:oauth2:client-create', 3, 2, 12, '', '', '', 0, '1', '2022-05-10 16:26:33', '1',
         '2022-05-25 15:56:06', b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (42, '客户端更新', 'system:oauth2-client:update', 3, 3, 12, '', '', '', 0, '1', '2022-05-10 16:26:33', '1',
+VALUES (51, '客户端更新', 'system:oauth2:client-update', 3, 3, 12, '', '', '', 0, '1', '2022-05-10 16:26:33', '1',
         '2022-05-25 15:56:06', b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (43, '客户端删除', 'system:oauth2-client:delete', 3, 4, 12, '', '', '', 0, '1', '2022-05-10 16:26:33', '1',
+VALUES (52, '客户端删除', 'system:oauth2:client-delete', 3, 4, 12, '', '', '', 0, '1', '2022-05-10 16:26:33', '1',
         '2022-05-25 15:56:06', b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (44, '配置查询', 'infra:config:query', 3, 1, 10, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
+VALUES (53, '客户端列表', 'system:oauth2:client-list', 3, 4, 12, '', '', '', 0, '1', '2022-05-10 16:26:33', '1',
         '2022-05-25 15:56:06', b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (45, '配置新增', 'infra:config:create', 3, 2, 10, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
+VALUES (54, '令牌列表', 'system:oauth2:token-list', 3, 4, 12, '', '', '', 0, '1', '2022-05-10 16:26:33', '1',
         '2022-05-25 15:56:06', b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (46, '配置修改', 'infra:config:update', 3, 3, 10, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
+VALUES (55, '令牌删除', 'system:oauth2:token-delete', 3, 4, 12, '', '', '', 0, '1', '2022-05-10 16:26:33', '1',
         '2022-05-25 15:56:06', b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (47, '配置删除', 'infra:config:delete', 3, 4, 10, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
+VALUES (56, '配置查询', 'infra:config:get', 3, 1, 10, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
         '2022-05-25 15:56:06', b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (48, '任务新增', 'infra:job:create', 3, 1, 11, '', '', '', 0, '1', '2021-01-05 17:03:48', '1', '2022-05-25 15:56:23',
+VALUES (57, '配置新增', 'infra:config:create', 3, 2, 10, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
+        '2022-05-25 15:56:06', b'0');
+INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
+                                 `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
+VALUES (58, '配置修改', 'infra:config:update', 3, 3, 10, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
+        '2022-05-25 15:56:06', b'0');
+INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
+                                 `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
+VALUES (59, '配置删除', 'infra:config:delete', 3, 4, 10, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
+        '2022-05-25 15:56:06', b'0');
+INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
+                                 `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
+VALUES (60, '配置列表', 'infra:config:list', 3, 1, 10, '', '', '', 0, '1', '2021-01-05 17:03:48', '1',
+        '2022-05-25 15:56:06', b'0');
+INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
+                                 `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
+VALUES (61, '任务新增', 'infra:job:create', 3, 1, 11, '', '', '', 0, '1', '2021-01-05 17:03:48', '1', '2022-05-25 15:56:23',
         b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (49, '任务修改', 'infra:job:update', 3, 2, 11, '', '', '', 0, '1', '2021-01-05 17:03:48', '1', '2022-05-25 15:56:23',
+VALUES (62, '任务修改', 'infra:job:update', 3, 2, 11, '', '', '', 0, '1', '2021-01-05 17:03:48', '1', '2022-05-25 15:56:23',
         b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (50, '任务删除', 'infra:job:delete', 3, 3, 11, '', '', '', 0, '1', '2021-01-05 17:03:48', '1', '2022-05-25 15:56:23',
+VALUES (63, '任务删除', 'infra:job:delete', 3, 3, 11, '', '', '', 0, '1', '2021-01-05 17:03:48', '1', '2022-05-25 15:56:23',
         b'0');
 INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
                                  `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
-VALUES (51, '任务查询', 'infra:job:query', 3, 4, 11, '', '', '', 0, '1', '2021-03-10 01:26:19', '1', '2022-05-25 15:56:23',
+VALUES (64, '任务查询', 'infra:job:get', 3, 4, 11, '', '', '', 0, '1', '2021-03-10 01:26:19', '1', '2022-05-25 15:56:23',
+        b'0');
+INSERT INTO `ruoyi_system_menu` (`id`, `name`, `permission`, `type`, `sort`, `parentId`, `path`, `icon`, `component`,
+                                 `status`, `creator`, `createTime`, `updater`, `updateTime`, `deleted`)
+VALUES (65, '任务列表', 'infra:job:list', 3, 4, 11, '', '', '', 0, '1', '2021-03-10 01:26:19', '1', '2022-05-25 15:56:23',
         b'0');
 COMMIT;
 -- ----------------------------
@@ -253,11 +311,11 @@ CREATE TABLE `ruoyi_system_role`
     `updateTime` datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     `deleted`    bit(1)                                                        NOT NULL DEFAULT b'0' COMMENT '是否删除',
     PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB
-     AUTO_INCREMENT=100
-    DEFAULT CHARSET=utf8mb4
-    COLLATE=utf8mb4_unicode_ci
-    COMMENT='系统角色信息表';
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 100
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci
+    COMMENT ='系统角色信息表';
 -- ----------------------------
 -- Records of ruoyi_system_role
 -- ----------------------------
@@ -286,11 +344,73 @@ CREATE TABLE `ruoyi_system_role_menu`
     `updateTime` datetime NOT NULL                                            DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     `deleted`    bit(1)   NOT NULL                                            DEFAULT b'0' COMMENT '是否删除',
     PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB
-    AUTO_INCREMENT=100
-    DEFAULT CHARSET=utf8mb4
-    COLLATE=utf8mb4_unicode_ci
-    COMMENT='系统角色和菜单关联表';
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 100
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci
+    COMMENT ='系统角色和菜单关联表';
+-- ----------------------------
+-- Records of ruoyi_system_role_menu
+-- ----------------------------
+BEGIN;
+INSERT INTO `ruoyi_system_role_menu` (`id`, `roleId`, `menuId`, `creator`, `createTime`, `updater`, `updateTime`,
+                                      `deleted`)
+VALUES (1, 2, 1, '1531208623013806082', '2022-05-31 15:00:30', '1531208623013806082', '2022-05-31 15:00:30', b'0');
+INSERT INTO `ruoyi_system_role_menu` (id, roleId, menuId, creator, createTime, updater, updateTime, deleted)
+VALUES (2, 2, 33, '1531208623013806082', '2022-05-31 15:00:30', '1531208623013806082', '2022-05-31 15:00:30', b'0');
+INSERT INTO `ruoyi_system_role_menu` (id, roleId, menuId, creator, createTime, updater, updateTime, deleted)
+VALUES (3, 2, 2, '1531208623013806082', '2022-05-31 15:00:30', '1531208623013806082', '2022-05-31 15:00:30', b'0');
+INSERT INTO `ruoyi_system_role_menu` (id, roleId, menuId, creator, createTime, updater, updateTime, deleted)
+VALUES (4, 2, 34, '1531208623013806082', '2022-05-31 15:00:30', '1531208623013806082', '2022-05-31 15:00:30', b'0');
+INSERT INTO `ruoyi_system_role_menu` (id, roleId, menuId, creator, createTime, updater, updateTime, deleted)
+VALUES (5, 2, 3, '1531208623013806082', '2022-05-31 15:00:30', '1531208623013806082', '2022-05-31 15:00:30', b'0');
+INSERT INTO `ruoyi_system_role_menu` (id, roleId, menuId, creator, createTime, updater, updateTime, deleted)
+VALUES (6, 2, 4, '1531208623013806082', '2022-05-31 15:00:30', '1531208623013806082', '2022-05-31 15:00:30', b'0');
+INSERT INTO `ruoyi_system_role_menu` (id, roleId, menuId, creator, createTime, updater, updateTime, deleted)
+VALUES (7, 2, 5, '1531208623013806082', '2022-05-31 15:00:30', '1531208623013806082', '2022-05-31 15:00:30', b'0');
+INSERT INTO `ruoyi_system_role_menu` (id, roleId, menuId, creator, createTime, updater, updateTime, deleted)
+VALUES (8, 2, 6, '1531208623013806082', '2022-05-31 15:00:30', '1531208623013806082', '2022-05-31 15:00:30', b'0');
+INSERT INTO `ruoyi_system_role_menu` (id, roleId, menuId, creator, createTime, updater, updateTime, deleted)
+VALUES (9, 2, 7, '1531208623013806082', '2022-05-31 15:00:30', '1531208623013806082', '2022-05-31 15:00:30', b'0');
+INSERT INTO `ruoyi_system_role_menu` (id, roleId, menuId, creator, createTime, updater, updateTime, deleted)
+VALUES (10, 2, 8, '1531208623013806082', '2022-05-31 15:00:30', '1531208623013806082', '2022-05-31 15:00:30', b'0');
+INSERT INTO `ruoyi_system_role_menu` (id, roleId, menuId, creator, createTime, updater, updateTime, deleted)
+VALUES (11, 2, 9, '1531208623013806082', '2022-05-31 15:00:30', '1531208623013806082', '2022-05-31 15:00:30', b'0');
+INSERT INTO `ruoyi_system_role_menu` (id, roleId, menuId, creator, createTime, updater, updateTime, deleted)
+VALUES (12, 2, 10, '1531208623013806082', '2022-05-31 15:00:30', '1531208623013806082', '2022-05-31 15:00:30', b'0');
+INSERT INTO `ruoyi_system_role_menu` (id, roleId, menuId, creator, createTime, updater, updateTime, deleted)
+VALUES (13, 2, 11, '1531208623013806082', '2022-05-31 15:00:30', '1531208623013806082', '2022-05-31 15:00:30', b'0');
+INSERT INTO `ruoyi_system_role_menu` (id, roleId, menuId, creator, createTime, updater, updateTime, deleted)
+VALUES (14, 2, 12, '1531208623013806082', '2022-05-31 15:00:30', '1531208623013806082', '2022-05-31 15:00:30', b'0');
+INSERT INTO `ruoyi_system_role_menu` (id, roleId, menuId, creator, createTime, updater, updateTime, deleted)
+VALUES (15, 2, 44, '1531208623013806082', '2022-05-31 15:00:30', '1531208623013806082', '2022-05-31 15:00:30', b'0');
+INSERT INTO `ruoyi_system_role_menu` (id, roleId, menuId, creator, createTime, updater, updateTime, deleted)
+VALUES (16, 2, 13, '1531208623013806082', '2022-05-31 15:00:30', '1531208623013806082', '2022-05-31 15:00:30', b'0');
+INSERT INTO `ruoyi_system_role_menu` (id, roleId, menuId, creator, createTime, updater, updateTime, deleted)
+VALUES (17, 2, 45, '1531208623013806082', '2022-05-31 15:00:30', '1531208623013806082', '2022-05-31 15:00:30', b'0');
+INSERT INTO `ruoyi_system_role_menu` (id, roleId, menuId, creator, createTime, updater, updateTime, deleted)
+VALUES (18, 2, 49, '1531208623013806082', '2022-05-31 15:00:30', '1531208623013806082', '2022-05-31 15:00:30', b'0');
+INSERT INTO `ruoyi_system_role_menu` (id, roleId, menuId, creator, createTime, updater, updateTime, deleted)
+VALUES (19, 2, 19, '1531208623013806082', '2022-05-31 15:00:30', '1531208623013806082', '2022-05-31 15:00:30', b'0');
+INSERT INTO `ruoyi_system_role_menu` (id, roleId, menuId, creator, createTime, updater, updateTime, deleted)
+VALUES (20, 2, 53, '1531208623013806082', '2022-05-31 15:00:30', '1531208623013806082', '2022-05-31 15:00:30', b'0');
+INSERT INTO `ruoyi_system_role_menu` (id, roleId, menuId, creator, createTime, updater, updateTime, deleted)
+VALUES (21, 2, 24, '1531208623013806082', '2022-05-31 15:00:30', '1531208623013806082', '2022-05-31 15:00:30', b'0');
+INSERT INTO `ruoyi_system_role_menu` (id, roleId, menuId, creator, createTime, updater, updateTime, deleted)
+VALUES (22, 2, 28, '1531208623013806082', '2022-05-31 15:00:30', '1531208623013806082', '2022-05-31 15:00:30', b'0');
+INSERT INTO `ruoyi_system_role_menu` (id, roleId, menuId, creator, createTime, updater, updateTime, deleted)
+VALUES (23, 2, 56, '1531208623013806082', '2022-05-31 15:00:30', '1531208623013806082', '2022-05-31 15:00:30', b'0');
+INSERT INTO `ruoyi_system_role_menu` (id, roleId, menuId, creator, createTime, updater, updateTime, deleted)
+VALUES (24, 2, 29, '1531208623013806082', '2022-05-31 15:00:30', '1531208623013806082', '2022-05-31 15:00:30', b'0');
+INSERT INTO `ruoyi_system_role_menu` (id, roleId, menuId, creator, createTime, updater, updateTime, deleted)
+VALUES (25, 2, 54, '1531208623013806082', '2022-05-31 15:00:30', '1531208623013806082', '2022-05-31 15:00:30', b'0');
+INSERT INTO `ruoyi_system_role_menu` (id, roleId, menuId, creator, createTime, updater, updateTime, deleted)
+VALUES (26, 2, 60, '1531208623013806082', '2022-05-31 15:00:30', '1531208623013806082', '2022-05-31 15:00:30', b'0');
+INSERT INTO `ruoyi_system_role_menu` (id, roleId, menuId, creator, createTime, updater, updateTime, deleted)
+VALUES (27, 2, 64, '1531208623013806082', '2022-05-31 15:00:30', '1531208623013806082', '2022-05-31 15:00:30', b'0');
+INSERT INTO `ruoyi_system_role_menu` (id, roleId, menuId, creator, createTime, updater, updateTime, deleted)
+VALUES (28, 2, 65, '1531208623013806082', '2022-05-31 15:00:30', '1531208623013806082', '2022-05-31 15:00:30', b'0');
+COMMIT;
 -- ----------------------------
 -- Table structure for system_user_role
 -- ----------------------------
@@ -306,11 +426,24 @@ CREATE TABLE `ruoyi_system_user_role`
     `updateTime` datetime                                                     DEFAULT NULL COMMENT '更新时间',
     `deleted`    bit(1)                                                       DEFAULT b'0' COMMENT '是否删除',
     PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB
-    AUTO_INCREMENT=100
-    DEFAULT CHARSET=utf8mb4
-    COLLATE=utf8mb4_unicode_ci
-    COMMENT='用户和角色关联表';
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 100
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci
+    COMMENT ='用户和角色关联表';
+-- ----------------------------
+-- Records of ruoyi_system_user_role
+-- ----------------------------
+BEGIN;
+INSERT INTO `ruoyi_system_user_role` (`id`, `userId`, `roleId`, `creator`, `createTime`, `updater`, `updateTime`,
+                                      `deleted`)
+VALUES (1, 1531208623013806082, 1, '1531208623013806082', '2022-05-31 14:19:53', '1531208623013806082',
+        '2022-05-31 14:19:53', b'0');
+INSERT INTO `ruoyi_system_user_role` (`id`, `userId`, `roleId`, `creator`, `createTime`, `updater`, `updateTime`,
+                                      `deleted`)
+VALUES (2, 1531521125220122626, 2, '1531208623013806082', '2022-05-31 14:27:55', '1531208623013806082',
+        '2022-05-31 14:27:55', b'0');
+COMMIT;
 -- ----------------------------
 -- Table structure for ruoyi_system_post
 -- ----------------------------
@@ -329,11 +462,11 @@ CREATE TABLE `ruoyi_system_post`
     `updateTime` datetime                                                     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     `deleted`    bit(1)                                                       NOT NULL DEFAULT b'0' COMMENT '是否删除',
     PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB
-    AUTO_INCREMENT=100
-    DEFAULT CHARSET=utf8mb4
-    COLLATE=utf8mb4_unicode_ci
-    COMMENT='系统岗位表';
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 100
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci
+    COMMENT ='系统岗位表';
 -- ----------------------------
 -- Records of ruoyi_system_post
 -- ----------------------------
@@ -367,11 +500,11 @@ CREATE TABLE `ruoyi_system_dept`
     `updateTime`   datetime                                                     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     `deleted`      bit(1)                                                       NOT NULL DEFAULT b'0' COMMENT '是否删除',
     PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB
-    AUTO_INCREMENT = 100
-    DEFAULT CHARSET=utf8mb4
-    COLLATE=utf8mb4_unicode_ci
-    COMMENT='系统部门表';
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 100
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci
+    COMMENT ='系统部门表';
 -- ----------------------------
 -- Records of ruoyi_system_dept
 -- ----------------------------
@@ -430,12 +563,12 @@ CREATE TABLE `ruoyi_system_user`
     UNIQUE KEY `idx_username` (`username`) USING BTREE,
     KEY           `idx_mobile` (`mobile`) USING BTREE
 ) ENGINE = InnoDB
-    AUTO_INCREMENT = 100
+  AUTO_INCREMENT = 100
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci
     COMMENT ='系统用户表';
 -- ----------------------------
--- Records of ruoyi_system_dept
+-- Records of ruoyi_system_user
 -- ----------------------------
 BEGIN;
 INSERT INTO `ruoyi_system_user` (`id`, `username`, `password`, `nickname`, `avatar`, `gender`, `birthDay`, `areaCode`,
@@ -445,6 +578,15 @@ INSERT INTO `ruoyi_system_user` (`id`, `username`, `password`, `nickname`, `avat
 VALUES (1531208623013806082, 'yeyue', '$2a$10$fyGUgW3hx.WFVSbfzIjN5OVd6i1DlBvu45peuGOGxnWi6DLT7Sx3C', '夜月', '', 'F',
         '1996-10-16', '86', '15065325076', 'yeyue2019@aliyun.com', '', 0, 1, '[1]', 'system', '2022-05-30 17:39:19',
         'system', '2022-05-30 17:43:23', b'0');
+INSERT INTO `ruoyi_system_user` (`id`, `username`, `password`, `nickname`, `avatar`, `gender`, `birthDay`, `areaCode`,
+                                 `mobile`, `email`,
+                                 `description`, `status`, `deptId`, `postIds`, `creator`, `createTime`, `updater`,
+                                 `updateTime`, `deleted`)
+VALUES (1531521125220122626, 'ruoyi', '$2a$10$FxqojTgF67uUrLIoTbE3VOyAJPyCHkRs65RxsFPL/VTvjEawp5VEK', '若依', '', 'M',
+        '2020-01-31', '86', '18864802360', 'ruoyi@163.com', '', 0, 6, '[3]', '1531208623013806082',
+        '2022-05-31 14:21:05', '1531208623013806082',
+        '2022-05-31 14:21:05', b'0');
+
 COMMIT;
 -- ----------------------------
 -- Table structure for ruoyi_system_oauth2_client
@@ -473,11 +615,11 @@ CREATE TABLE `ruoyi_system_oauth2_client`
     `updateTime`                  datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     `deleted`                     bit(1)                                                        NOT NULL DEFAULT b'0' COMMENT '是否删除',
     PRIMARY KEY (`id`) USING BTREE,
-    INDEX                         `idx_clientId`(`clientId` ASC) USING BTREE
+    INDEX                         `idx_clientId` (`clientId` ASC) USING BTREE
 ) ENGINE = InnoDB
-    AUTO_INCREMENT = 100
-    CHARACTER SET = utf8mb4
-    COLLATE = utf8mb4_unicode_ci
+  AUTO_INCREMENT = 100
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci
     COMMENT = 'OAuth2客户端表';
 -- ----------------------------
 -- Records of ruoyi_system_oauth2_client
@@ -517,8 +659,8 @@ CREATE TABLE `ruoyi_system_oauth2_code`
     PRIMARY KEY (`id`) USING BTREE,
     UNIQUE KEY `uk_code` (`code` ASC) USING BTREE
 ) ENGINE = InnoDB
-    CHARACTER SET = utf8mb4
-    COLLATE = utf8mb4_unicode_ci
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci
     COMMENT = 'OAuth2授权码表';
 -- ----------------------------
 -- Table structure for ruoyi_system_oauth2_access_token
@@ -540,11 +682,11 @@ CREATE TABLE `ruoyi_system_oauth2_access_token`
     `updateTime`   datetime                                                     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     `deleted`      bit(1)                                                       NOT NULL DEFAULT b'0' COMMENT '是否删除',
     PRIMARY KEY (`id`) USING BTREE,
-    UNIQUE KEY `idx_accessToken`(`accessToken` ASC) USING BTREE,
-    INDEX          `idx_clientId_userId`(`clientId` ASC, `refreshToken` ASC) USING BTREE
+    UNIQUE KEY `idx_accessToken` (`accessToken` ASC) USING BTREE,
+    INDEX          `idx_clientId_userId` (`clientId` ASC, `refreshToken` ASC) USING BTREE
 ) ENGINE = InnoDB
-    CHARACTER SET = utf8mb4
-    COLLATE = utf8mb4_unicode_ci
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci
     COMMENT = 'OAuth2访问令牌表';
 -- ----------------------------
 -- Table structure for ruoyi_system_oauth2_refresh_token
@@ -565,10 +707,10 @@ CREATE TABLE `ruoyi_system_oauth2_refresh_token`
     `updateTime`   datetime                                                     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     `deleted`      bit(1)                                                       NOT NULL DEFAULT b'0' COMMENT '是否删除',
     PRIMARY KEY (`id`) USING BTREE,
-    UNIQUE KEY `idx_refreshToken`(`refreshToken` ASC) USING BTREE
+    UNIQUE KEY `idx_refreshToken` (`refreshToken` ASC) USING BTREE
 ) ENGINE = InnoDB
-    CHARACTER SET = utf8mb4
-    COLLATE = utf8mb4_unicode_ci
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci
     COMMENT = 'OAuth2刷新令牌表';
 -- ----------------------------
 -- Table structure for ruoyi_system_oauth2_approve
@@ -589,6 +731,6 @@ CREATE TABLE `ruoyi_system_oauth2_approve`
     `deleted`     bit(1)                                                        NOT NULL DEFAULT b'0' COMMENT '是否删除',
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB
-    CHARACTER SET = utf8mb4
-    COLLATE = utf8mb4_unicode_ci
+  CHARACTER SET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci
     COMMENT = 'OAuth2批准表';

@@ -76,6 +76,9 @@ public class SystemPermissionServiceImpl implements SystemPermissionService {
         Set<Long> menuIds = null;
         if (!roleService.hasAnySuperAdmin(Collections.singleton(roleId))) {
             menuIds = CollectionUtils.funcSet(roleMenuMapper.selectListByRoleId(roleId), SystemRoleMenuEntity::getMenuId);
+            if (CollectionUtils.isEmpty(menuIds)) {
+                return Collections.emptySet();
+            }
         }
         return CollectionUtils.toSet(menuService.list(new SystemMenuListReqDTO().setIds(menuIds).setStatus(status)));
     }

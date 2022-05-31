@@ -37,8 +37,8 @@ public class SystemUserController {
     }
 
     @ApiOperation(value = "获取用户")
-    @GetMapping("/get-id")
-    @PreAuthorize("@ss.hasPermission('system:user:query')")
+    @GetMapping("/get")
+    @PreAuthorize("@ss.hasPermission('system:user:get')")
     public CommonResult<SystemUserRespVO> get(@Positive(message = "用户Id格式错误") @RequestParam Long id) {
         SystemUserDomain domain = service.get(new SystemUserGetReqDTO().setId(id));
         return CommonResult.success(SystemUserConvert.INSTANCE.toVo(domain));
@@ -54,7 +54,7 @@ public class SystemUserController {
 
     @ApiOperation(value = "用户列表")
     @PostMapping("/list")
-    @PreAuthorize("@ss.hasPermission('system:user:query')")
+    @PreAuthorize("@ss.hasPermission('system:user:list')")
     public CommonResult<PageResult<SystemUserRespVO>> list(@Valid @RequestBody SystemUserPageReqDTO req) {
         PageResult<SystemUserDomain> pageResult = service.list(req);
         return CommonResult.success(CollectionUtils.funcPage(pageResult, SystemUserConvert.INSTANCE::toVo));

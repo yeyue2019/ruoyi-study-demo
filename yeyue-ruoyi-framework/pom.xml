@@ -25,6 +25,7 @@
         <module>yeyue-ruoyi-monitor-starter</module>
         <module>yeyue-ruoyi-security-starter</module>
         <module>yeyue-ruoyi-captcha-starter</module>
+        <module>yeyue-ruoyi-quartz-starter</module>
     </modules>
 
 </project>

@@ -1,84 +1,10 @@
-server:
-  port: 40080
----
 spring:
   application:
     name: yeyue-ruoyi-server
-  boot:
-    admin:
-      client:
-        enabled: true
-        url: http://127.0.0.1:${server.port}${spring.boot.admin.context-path}
-      context-path: /admin-actuator
-management:
-  endpoints:
-    web:
-      exposure:
-        include: '*'
-  endpoint:
-    health:
-      show-details: always
+  profiles:
+    active: dev
 ---
-knife4j:
-  enable: true
-  setting:
-    enableSwaggerModels: false
-    enableFooter: false
-    enableFooterCustom: true
-    footerCustomContent: Apache License 2.0 | Copyright  2022-[夜月](https://gitee.com/fredyangyeyue/ruoyi-study-demo)
-swagger:
-  enable: true
-  title: 夜月后端接口文档
-  description: 芋艿若依增强脚手架学习接口文档
-  author: 夜月
-  version: 1.0.0
----
-spring:
-  datasource:
-    type: com.alibaba.druid.pool.DruidDataSource
-    druid:
-      name: ruoyi_study_demo
-      url: jdbc:mysql://127.0.0.1:3306/${spring.datasource.druid.name}?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&serverTimezone=Asia/Shanghai&useSSL=false
-      username: root
-      password: 123456
-      initial-size: 5
-      min-idle: 10
-      max-active: 20
-      max-wait: 600000
-      time-between-eviction-runs-millis: 60000
-      min-evictable-idle-time-millis: 300000
-      max-evictable-idle-time-millis: 900000
-      validation-query: SELECT 1 FROM DUAL
-      test-while-idle: true
-      test-on-borrow: false
-      test-on-return: false
-      filters: stat,slf4j,wall
-      filter:
-        stat:
-          enabled: true
-          db-type: mysql
-          merge-sql: true
-          log-slow-sql: true
-          slow-sql-log-level: WARN
-          slow-sql-millis: 100
-        wall:
-          config:
-            truncate-allow: false
-            multi-statement-allow: true
-            drop-table-allow: false
-        slf4j:
-          enabled: true
-          statement-executable-sql-log-enable: true
-          statement-close-after-log-enabled: false
-          statement-create-after-log-enabled: false
-          statement-parameter-set-log-enabled: false
-          statement-parameter-clear-log-enable: false
-          statement-prepare-call-after-log-enabled: false
-          statement-prepare-after-log-enabled: false
-      stat-view-servlet:
-        enabled: true
-        url-pattern: /druid/*
----
+# MyBatis-Plus 配置
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: false
@@ -86,11 +12,7 @@ mybatis-plus:
   global-config:
     banner: false
 ---
-spring:
-  redis:
-    password: 123456
-    database: 0
----
+# Jackson 配置
 spring:
   jackson:
     time-zone: GMT+8
@@ -102,10 +24,10 @@ spring:
     deserialization:
       fail-on-unknown-properties: false
 ---
+# 自定义验证码配置
 captcha:
   width: 200
   height: 60
   code-count: 5
   interfere-count: 150
   timeout: 5m
-

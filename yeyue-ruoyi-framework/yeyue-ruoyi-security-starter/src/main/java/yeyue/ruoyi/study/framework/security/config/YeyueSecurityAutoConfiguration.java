@@ -86,7 +86,7 @@ public class YeyueSecurityAutoConfiguration {
                         // 静态资源，可匿名访问
                         .antMatchers(HttpMethod.GET, "/*.html", "/**/*.html", "/**/*.css", "/**/*.js").permitAll()
                         // 健康检查放行
-                        .antMatchers("/actuator/**", "/admin-actuator/**").permitAll()
+                        .antMatchers("/", "/actuator/**", "/admin-actuator/**").permitAll()
                         // Swagger放行
                         .antMatchers(HttpMethod.GET, "/v3/api-docs", "/swagger-resources").permitAll()
                         // druid放行

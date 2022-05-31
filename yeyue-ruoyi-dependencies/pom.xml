@@ -15,7 +15,7 @@
     </description>
 
     <properties>
-        <demo.version>1.0.1-SNAPSHOT</demo.version>
+        <demo.version>1.0.0</demo.version>
         <spring.boot.version>2.5.10</spring.boot.version>
         <redisson.version>3.16.6</redisson.version>
         <druid.version>1.2.8</druid.version>

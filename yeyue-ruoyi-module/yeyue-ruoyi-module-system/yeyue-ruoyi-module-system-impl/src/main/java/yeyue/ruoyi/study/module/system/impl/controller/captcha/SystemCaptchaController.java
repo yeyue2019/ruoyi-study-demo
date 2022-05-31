@@ -9,6 +9,8 @@ import yeyue.ruoyi.study.framework.common.pojo.core.CommonResult;
 import yeyue.ruoyi.study.module.system.api.service.captcha.SystemCaptchaService;
 import yeyue.ruoyi.study.module.system.api.service.captcha.dto.CaptchaImageRespDTO;
 
+import javax.annotation.Resource;
+
 /**
  * @author yeyue
  * @date 2022-05-30 16:56:42
@@ -18,7 +20,8 @@ import yeyue.ruoyi.study.module.system.api.service.captcha.dto.CaptchaImageRespD
 @RequestMapping("/web/sys/captcha")
 public class SystemCaptchaController {
 
-    private SystemCaptchaService captchaService;
+    @Resource
+    SystemCaptchaService captchaService;
 
     @GetMapping("/get-image")
     @ApiOperation("生成图片验证码")

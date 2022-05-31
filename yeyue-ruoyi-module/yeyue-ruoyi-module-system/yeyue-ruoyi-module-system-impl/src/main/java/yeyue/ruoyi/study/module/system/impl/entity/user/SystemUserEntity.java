@@ -52,7 +52,7 @@ public class SystemUserEntity extends MyBatisEntity {
     /**
      * 性别
      */
-    private Integer gender;
+    private String gender;
 
     /**
      * 生日

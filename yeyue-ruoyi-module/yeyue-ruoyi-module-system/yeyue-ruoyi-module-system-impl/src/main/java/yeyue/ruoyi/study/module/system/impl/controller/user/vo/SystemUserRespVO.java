@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -14,7 +15,7 @@ import java.util.Set;
  */
 @Data
 @ApiModel(description = "用户信息")
-public class SystemUserRespVO {
+public class SystemUserRespVO implements Serializable {
 
     @ApiModelProperty(value = "用户Id")
     private Long id;

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import yeyue.ruoyi.study.framework.common.enums.CommonStatusEnum;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
-import yeyue.ruoyi.study.framework.common.exception.common.GlobalErrorCode;
 import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
 import yeyue.ruoyi.study.framework.common.util.collection.CollectionUtils;
 import yeyue.ruoyi.study.framework.common.util.enums.EnumUtils;
@@ -98,13 +97,13 @@ public class SystemUserServiceImpl implements SystemUserService {
         if (entity == null) {
             throw new ServiceException(SystemErrorCode.USER_NOT_EXISTS);
         }
-        if (!StringUtils.equals(entity.getPassword(), passwordEncoder.encode(req.getOldPassword()))) {
+        if (!passwordEncoder.matches(req.getOldPassword(), entity.getPassword())) {
             throw new ServiceException(SystemErrorCode.USER_PASSWORD_FAILED);
         }
         SystemUserEntity user = new SystemUserEntity();
         user.setId(id);
         user.setPassword(passwordEncoder.encode(req.getNewPassword()));
-        mapper.updateById(entity);
+        mapper.updateById(user);
     }
 
     @Override
@@ -140,9 +139,6 @@ public class SystemUserServiceImpl implements SystemUserService {
 
     @Override
     public SystemUserDomain get(SystemUserGetReqDTO reqDTO) {
-        if (!reqDTO.validate()) {
-            throw new ServiceException(GlobalErrorCode.BAD_REQUEST.getCode(), "用户获取字段不能为空");
-        }
         SystemUserEntity entity;
         if (reqDTO.getId() != null) {
             entity = mapper.selectById(reqDTO.getId());
@@ -174,7 +170,7 @@ public class SystemUserServiceImpl implements SystemUserService {
     @Override
     public Long authenticate(String username, String password) {
         SystemUserDomain user = get(new SystemUserGetReqDTO().setUsername(username));
-        if (user == null || (!StringUtils.equals(passwordEncoder.encode(password), user.getPassword()))) {
+        if (user == null || (!passwordEncoder.matches(password, user.getPassword()))) {
             throw new ServiceException(SystemErrorCode.AUTH_LOGIN_BAD_CREDENTIALS);
         }
         if (EnumUtils.notEquals(CommonStatusEnum.ENABLE, CommonStatusEnum::getStatus, user.getStatus())) {

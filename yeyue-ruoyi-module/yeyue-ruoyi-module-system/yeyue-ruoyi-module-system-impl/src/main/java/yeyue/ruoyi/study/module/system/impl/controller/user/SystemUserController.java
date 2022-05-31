@@ -2,6 +2,7 @@ package yeyue.ruoyi.study.module.system.impl.controller.user;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import yeyue.ruoyi.study.framework.common.pojo.core.CommonResult;
 import yeyue.ruoyi.study.framework.common.pojo.pageable.PageResult;
@@ -30,12 +31,14 @@ public class SystemUserController {
 
     @ApiOperation(value = "新增用户")
     @PutMapping("/create")
+    @PreAuthorize("@ss.hasPermission('system:user:create')")
     public CommonResult<Long> create(@Valid @RequestBody SystemUserCreateReqDTO dto) {
         return CommonResult.success(service.create(dto));
     }
 
     @ApiOperation(value = "获取用户")
     @GetMapping("/get-id")
+    @PreAuthorize("@ss.hasPermission('system:user:query')")
     public CommonResult<SystemUserRespVO> get(@Positive(message = "用户Id格式错误") @RequestParam Long id) {
         SystemUserDomain domain = service.get(new SystemUserGetReqDTO().setId(id));
         return CommonResult.success(SystemUserConvert.INSTANCE.toVo(domain));
@@ -43,6 +46,7 @@ public class SystemUserController {
 
     @ApiOperation(value = "删除用户")
     @DeleteMapping("/delete")
+    @PreAuthorize("@ss.hasPermission('system:user:delete')")
     public CommonResult<Void> delete(@Positive(message = "用户Id格式错误") @RequestParam Long id) {
         service.delete(id);
         return CommonResult.success();
@@ -50,6 +54,7 @@ public class SystemUserController {
 
     @ApiOperation(value = "用户列表")
     @PostMapping("/list")
+    @PreAuthorize("@ss.hasPermission('system:user:query')")
     public CommonResult<PageResult<SystemUserRespVO>> list(@Valid @RequestBody SystemUserPageReqDTO req) {
         PageResult<SystemUserDomain> pageResult = service.list(req);
         return CommonResult.success(CollectionUtils.funcPage(pageResult, SystemUserConvert.INSTANCE::toVo));
@@ -57,6 +62,7 @@ public class SystemUserController {
 
     @ApiOperation(value = "重置密码")
     @PostMapping("/replace-password")
+    @PreAuthorize("@ss.hasPermission('system:user:update')")
     public CommonResult<Void> update(@Valid @RequestBody SystemUserPasswordReplaceReqDTO req) {
         service.replace(req);
         return CommonResult.success();
@@ -64,6 +70,7 @@ public class SystemUserController {
 
     @ApiOperation(value = "更改状态")
     @PostMapping("/update-status")
+    @PreAuthorize("@ss.hasPermission('system:user:update')")
     public CommonResult<Void> update(@Valid @RequestBody SystemUserStatusUpdateReqDTO req) {
         service.update(req);
         return CommonResult.success();
@@ -71,6 +78,7 @@ public class SystemUserController {
 
     @ApiOperation(value = "更改部门")
     @PostMapping("/update-dept")
+    @PreAuthorize("@ss.hasPermission('system:user:update')")
     public CommonResult<Void> update(@Valid @RequestBody SystemUserDeptUpdateReqDTO req) {
         service.update(req);
         return CommonResult.success();

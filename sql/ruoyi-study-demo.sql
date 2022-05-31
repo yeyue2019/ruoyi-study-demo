@@ -335,6 +335,20 @@ CREATE TABLE `ruoyi_system_post`
     COLLATE=utf8mb4_unicode_ci
     COMMENT='系统岗位表';
 -- ----------------------------
+-- Records of ruoyi_system_post
+-- ----------------------------
+BEGIN;
+INSERT INTO `ruoyi_system_post` (`id`, `code`, `name`, `sort`, `status`, `remark`, `creator`, `createTime`, `updater`,
+                                 `updateTime`, `deleted`)
+VALUES (1, 'ceo', '首席执行官', 1, 0, '', 'system', '2022-05-30 17:17:32', 'system', '2022-05-30 17:17:32', b'0');
+INSERT INTO `ruoyi_system_post` (`id`, `code`, `name`, `sort`, `status`, `remark`, `creator`, `createTime`, `updater`,
+                                 `updateTime`, `deleted`)
+VALUES (2, 'cto', '首席架构师', 2, 0, '', 'system', '2022-05-30 17:17:48', 'system', '2022-05-30 17:17:48', b'0');
+INSERT INTO `ruoyi_system_post` (`id`, `code`, `name`, `sort`, `status`, `remark`, `creator`, `createTime`, `updater`,
+                                 `updateTime`, `deleted`)
+VALUES (3, 'be', '后端开发', 3, 0, '', 'system', '2022-05-30 17:17:59', 'system', '2022-05-30 17:17:59', b'0');
+COMMIT;
+-- ----------------------------
 -- Table structure for ruoyi_system_dept
 -- ----------------------------
 DROP TABLE IF EXISTS `ruoyi_system_dept`;
@@ -388,6 +402,51 @@ VALUES (6, '运维部门', 1, 6, 1, '', 0, '1', '2021-01-05 17:03:47', '1',
         '2021-12-15 05:01:33', b'0');
 COMMIT;
 -- ----------------------------
+-- Table structure for ruoyi_system_user
+-- ----------------------------
+DROP TABLE IF EXISTS `ruoyi_system_user`;
+CREATE TABLE `ruoyi_system_user`
+(
+    `id`          bigint                                                        NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+    `username`    varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '用户账号',
+    `password`    varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '密码',
+    `nickname`    varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '' COMMENT '用户昵称',
+    `avatar`      varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '' COMMENT '头像地址',
+    `gender`      varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL COMMENT '用户性别',
+    `birthDay`    date NULL DEFAULT NULL COMMENT '用户生日',
+    `areaCode`    varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '86' COMMENT '手机区号',
+    `mobile`      varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '' COMMENT '手机号码',
+    `email`       varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '' COMMENT '用户邮箱',
+    `description` longtext NULL DEFAULT NULL COMMENT '备注',
+    `status`      tinyint                                                       NOT NULL DEFAULT '0' COMMENT '帐号状态（0正常 1停用）',
+    `deptId`      bigint                                                                 DEFAULT NULL COMMENT '部门ID',
+    `postIds`     varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci          DEFAULT NULL COMMENT '岗位编号数组',
+    `creator`     varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci           DEFAULT '' COMMENT '创建者',
+    `createTime`  datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `updater`     varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci           DEFAULT '' COMMENT '更新者',
+    `updateTime`  datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    `deleted`     bit(1)                                                        NOT NULL DEFAULT b'0' COMMENT '是否删除',
+    PRIMARY KEY (`id`) USING BTREE,
+    UNIQUE KEY `idx_username` (`username`) USING BTREE,
+    KEY           `idx_mobile` (`mobile`) USING BTREE
+) ENGINE = InnoDB
+    AUTO_INCREMENT = 100
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci
+    COMMENT ='系统用户表';
+-- ----------------------------
+-- Records of ruoyi_system_dept
+-- ----------------------------
+BEGIN;
+INSERT INTO `ruoyi_system_user` (`id`, `username`, `password`, `nickname`, `avatar`, `gender`, `birthDay`, `areaCode`,
+                                 `mobile`, `email`,
+                                 `description`, `status`, `deptId`, `postIds`, `creator`, `createTime`, `updater`,
+                                 `updateTime`, `deleted`)
+VALUES (1531208623013806082, 'yeyue', '$2a$10$fyGUgW3hx.WFVSbfzIjN5OVd6i1DlBvu45peuGOGxnWi6DLT7Sx3C', '夜月', '', 'F',
+        '1996-10-16', '86', '15065325076', 'yeyue2019@aliyun.com', '', 0, 1, '[1]', 'system', '2022-05-30 17:39:19',
+        'system', '2022-05-30 17:43:23', b'0');
+COMMIT;
+-- ----------------------------
 -- Table structure for ruoyi_system_oauth2_client
 -- ----------------------------
 DROP TABLE IF EXISTS `ruoyi_system_oauth2_client`;
@@ -432,7 +491,7 @@ INSERT INTO `ruoyi_system_oauth2_client` (`id`, `clientId`, `secret`, `name`, `d
                                           `updateTime`, `deleted`)
 VALUES (1, 'ruoyi_study_demo', '123456', '夜月', '夜月的应用', 0, 600, 7200, 108000, 108000, '["https://www.baidu.com"]',
         '["password","authorization_code","implicit","client_credentials","refresh_token"]',
-        '["user_info","user_update","order_list"]', '["user_info"]',
+        '["user_info","user_update"]', '["user_info"]',
         '{"version":"v1"}', '1', '2022-05-26 11:18:50', '1', '2022-05-26 11:21:30', b'0');
 COMMIT;
 -- ----------------------------
@@ -533,35 +592,3 @@ CREATE TABLE `ruoyi_system_oauth2_approve`
     CHARACTER SET = utf8mb4
     COLLATE = utf8mb4_unicode_ci
     COMMENT = 'OAuth2批准表';
--- ----------------------------
--- Table structure for ruoyi_system_user
--- ----------------------------
-DROP TABLE IF EXISTS `ruoyi_system_user`;
-CREATE TABLE `ruoyi_system_user`
-(
-    `id`          bigint                                                        NOT NULL AUTO_INCREMENT COMMENT '用户ID',
-    `username`    varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '用户账号',
-    `password`    varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '密码',
-    `nickname`    varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci  NOT NULL COMMENT '用户昵称',
-    `avatar`      varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci          DEFAULT '' COMMENT '头像地址',
-    `gender`      varchar(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci            DEFAULT NULL COMMENT '用户性别',
-    `birthDay`    date                                                                   DEFAULT NULL COMMENT '用户生日',
-    `areaCode`    varchar(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT '86' COMMENT '手机区号',
-    `mobile`      varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci           DEFAULT '' COMMENT '手机号码',
-    `email`       varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci           DEFAULT '' COMMENT '用户邮箱',
-    `description` longtext                                                               DEFAULT NULL COMMENT '备注',
-    `status`      tinyint                                                       NOT NULL DEFAULT '0' COMMENT '帐号状态（0正常 1停用）',
-    `deptId`      bigint                                                                 DEFAULT NULL COMMENT '部门ID',
-    `postIds`     varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci          DEFAULT NULL COMMENT '岗位编号数组',
-    `creator`     varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci           DEFAULT '' COMMENT '创建者',
-    `createTime`  datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `updater`     varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci           DEFAULT '' COMMENT '更新者',
-    `updateTime`  datetime                                                      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-    `deleted`     bit(1)                                                        NOT NULL DEFAULT b'0' COMMENT '是否删除',
-    PRIMARY KEY (`id`) USING BTREE,
-    UNIQUE KEY `idx_username` (`username`) USING BTREE,
-    KEY           `idx_mobile` (`mobile`) USING BTREE
-) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4
-  COLLATE = utf8mb4_unicode_ci
-    COMMENT ='系统用户表';

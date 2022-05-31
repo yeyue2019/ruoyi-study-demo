@@ -3,7 +3,6 @@ package yeyue.ruoyi.study.module.system.api.service.user.dto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
 
@@ -29,8 +28,4 @@ public class SystemUserGetReqDTO implements Serializable {
 
     @ApiModelProperty(value = "用户状态")
     private Integer status;
-
-    public boolean validate() {
-        return id != null || StringUtils.isNoneBlank(username, mobile, email);
-    }
 }

@@ -88,6 +88,9 @@ public class SystemPermissionServiceImpl implements SystemPermissionService {
             Set<Long> menuIds = null;
             if (!roleService.hasAnySuperAdmin(roleIds)) {
                 menuIds = CollectionUtils.funcSet(roleMenuMapper.selectListByRoleIds(roleIds), SystemRoleMenuEntity::getMenuId);
+                if (CollectionUtils.isEmpty(menuIds)) {
+                    return Collections.emptySet();
+                }
             }
             return CollectionUtils.toSet(menuService.list(new SystemMenuListReqDTO().setIds(menuIds).setStatus(status)));
         }
@@ -120,6 +123,9 @@ public class SystemPermissionServiceImpl implements SystemPermissionService {
     @Override
     public Set<SystemRoleDomain> getUserRoleIds(Long userId, Integer status) {
         Set<Long> roleIds = CollectionUtils.funcSet(userRoleMapper.selectListByUserId(userId), SystemUserRoleEntity::getRoleId);
+        if (CollectionUtils.isEmpty(roleIds)) {
+            return Collections.emptySet();
+        }
         return CollectionUtils.toSet(roleService.list(new SystemRoleListReqDTO().setStatus(status).setIds(roleIds)));
     }
 

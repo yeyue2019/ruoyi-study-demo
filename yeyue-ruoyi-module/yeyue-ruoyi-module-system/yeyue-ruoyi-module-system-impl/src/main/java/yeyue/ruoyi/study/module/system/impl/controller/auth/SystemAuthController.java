@@ -2,7 +2,6 @@ package yeyue.ruoyi.study.module.system.impl.controller.auth;
 
 import com.github.xiaoymin.knife4j.core.util.StrUtil;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 import yeyue.ruoyi.study.framework.common.enums.CommonStatusEnum;
@@ -69,7 +68,6 @@ public class SystemAuthController {
 
     @ApiOperation(value = "刷新访问令牌")
     @PostMapping("/refresh-token")
-    @ApiImplicitParam(name = "refreshToken", value = "刷新令牌", required = true, dataTypeClass = String.class)
     public CommonResult<SystemAuthLoginRespDTO> refreshToken(@RequestBody @Valid SystemAuthLoginRefreshReqDTO reqDTO) {
         return CommonResult.success(authService.refresh(reqDTO));
     }

@@ -4,12 +4,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import yeyue.ruoyi.study.framework.common.exception.ServiceException;
+import yeyue.ruoyi.study.module.infra.api.service.captcha.InfraCaptchaService;
 import yeyue.ruoyi.study.module.system.api.domain.oauth2.SystemOAuth2AccessTokenDomain;
 import yeyue.ruoyi.study.module.system.api.service.auth.SystemAuthService;
 import yeyue.ruoyi.study.module.system.api.service.auth.dto.SystemAuthLoginByUsernameReqDTO;
 import yeyue.ruoyi.study.module.system.api.service.auth.dto.SystemAuthLoginRefreshReqDTO;
 import yeyue.ruoyi.study.module.system.api.service.auth.dto.SystemAuthLoginRespDTO;
-import yeyue.ruoyi.study.module.system.api.service.captcha.SystemCaptchaService;
 import yeyue.ruoyi.study.module.system.api.service.oauth2.SystemOAuth2GrantService;
 import yeyue.ruoyi.study.module.system.impl.framework.exception.SystemErrorCode;
 
@@ -25,7 +25,7 @@ import java.util.Collections;
 public class SystemAuthServiceImpl implements SystemAuthService {
 
     @Resource
-    SystemCaptchaService captchaService;
+    InfraCaptchaService captchaService;
     @Resource
     SystemOAuth2GrantService grantService;
 

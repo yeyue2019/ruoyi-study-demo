@@ -1,4 +1,4 @@
-package yeyue.ruoyi.study.module.system.impl.framework.swagger;
+package yeyue.ruoyi.study.module.infra.impl.framework.swagger;
 
 import com.github.xiaoymin.knife4j.spring.extension.OpenApiExtensionResolver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +10,13 @@ import springfox.documentation.spring.web.plugins.Docket;
 import yeyue.ruoyi.study.framework.web.doc.swagger.config.YeyueSwaggerAutoConfiguration;
 import yeyue.ruoyi.study.framework.web.doc.swagger.properties.YeyueSwaggerProperties;
 import yeyue.ruoyi.study.framework.web.doc.swagger.util.SwaggerUtils;
-import yeyue.ruoyi.study.module.system.impl.framework.exception.SystemErrorCode;
+import yeyue.ruoyi.study.module.infra.impl.framework.exception.InfraErrorCode;
 
 /**
  * @author yeyue
  * @date 2022-04-28 17:35:00
  */
-@Configuration("systemSwaggerConfiguration")
+@Configuration("infraSwaggerConfiguration")
 @ConditionalOnBean(YeyueSwaggerAutoConfiguration.class)
 public class SwaggerConfiguration {
 
@@ -27,10 +27,10 @@ public class SwaggerConfiguration {
         this.openApiExtensionResolver = openApiExtensionResolver;
     }
 
-    @Bean(name = "systemDocket")
-    public Docket systemDocket(YeyueSwaggerProperties properties) {
-        return SwaggerUtils.initDocket("system",
-                RequestHandlerSelectors.basePackage("yeyue.ruoyi.study.module.system.impl.controller"), properties,
-                openApiExtensionResolver, SystemErrorCode.values());
+    @Bean(name = "infraDocket")
+    public Docket infraDocket(YeyueSwaggerProperties properties) {
+        return SwaggerUtils.initDocket("infra",
+                RequestHandlerSelectors.basePackage("yeyue.ruoyi.study.module.infra.impl.controller"), properties,
+                openApiExtensionResolver, InfraErrorCode.values());
     }
 }

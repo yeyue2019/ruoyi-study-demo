@@ -1,12 +1,12 @@
-package yeyue.ruoyi.study.module.system.api.service.captcha;
+package yeyue.ruoyi.study.module.infra.api.service.captcha;
 
-import yeyue.ruoyi.study.module.system.api.service.captcha.dto.CaptchaImageRespDTO;
+import yeyue.ruoyi.study.module.infra.api.service.captcha.dto.CaptchaImageRespDTO;
 
 /**
  * @author yeyue
  * @date 2022-05-29 23:03:21
  */
-public interface SystemCaptchaService {
+public interface InfraCaptchaService {
 
     /**
      * 获得验证码图片

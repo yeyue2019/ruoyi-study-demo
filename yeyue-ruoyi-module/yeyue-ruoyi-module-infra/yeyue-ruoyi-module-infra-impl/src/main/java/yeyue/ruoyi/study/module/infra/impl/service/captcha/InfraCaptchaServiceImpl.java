@@ -1,11 +1,11 @@
-package yeyue.ruoyi.study.module.system.impl.service.captcha;
+package yeyue.ruoyi.study.module.infra.impl.service.captcha;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import yeyue.ruoyi.study.framework.captcha.core.CaptchaImage;
 import yeyue.ruoyi.study.framework.captcha.service.CaptchaService;
-import yeyue.ruoyi.study.module.system.api.service.captcha.SystemCaptchaService;
-import yeyue.ruoyi.study.module.system.api.service.captcha.dto.CaptchaImageRespDTO;
+import yeyue.ruoyi.study.module.infra.api.service.captcha.InfraCaptchaService;
+import yeyue.ruoyi.study.module.infra.api.service.captcha.dto.CaptchaImageRespDTO;
 
 import javax.annotation.Resource;
 
@@ -15,7 +15,7 @@ import javax.annotation.Resource;
  */
 @Slf4j
 @Component
-public class SystemCaptchaServiceImpl implements SystemCaptchaService {
+public class InfraCaptchaServiceImpl implements InfraCaptchaService {
 
     @Resource
     CaptchaService service;

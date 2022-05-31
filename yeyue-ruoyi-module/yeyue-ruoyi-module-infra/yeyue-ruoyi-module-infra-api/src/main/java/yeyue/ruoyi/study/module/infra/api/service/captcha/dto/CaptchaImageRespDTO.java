@@ -1,4 +1,4 @@
-package yeyue.ruoyi.study.module.system.api.service.captcha.dto;
+package yeyue.ruoyi.study.module.infra.api.service.captcha.dto;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

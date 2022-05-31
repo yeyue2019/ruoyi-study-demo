@@ -3,21 +3,22 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>ruoyi-study-demo</artifactId>
+        <artifactId>yeyue-ruoyi-module</artifactId>
         <groupId>yeyue.ruoyi.study.boot</groupId>
         <version>${demo.version}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>yeyue-ruoyi-module</artifactId>
+    <artifactId>yeyue-ruoyi-module-infra</artifactId>
     <packaging>pom</packaging>
 
     <description>
-        所有业务包的存放位置
+        系统工具类集成包
     </description>
+
     <modules>
-        <module>yeyue-ruoyi-module-system</module>
-        <module>yeyue-ruoyi-module-infra</module>
+        <module>yeyue-ruoyi-module-infra-api</module>
+        <module>yeyue-ruoyi-module-infra-impl</module>
     </modules>
 
 </project>

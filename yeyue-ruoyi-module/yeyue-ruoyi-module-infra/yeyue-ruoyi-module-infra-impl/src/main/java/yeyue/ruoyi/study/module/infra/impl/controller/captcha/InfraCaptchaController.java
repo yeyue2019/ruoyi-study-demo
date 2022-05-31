@@ -1,4 +1,4 @@
-package yeyue.ruoyi.study.module.system.impl.controller.captcha;
+package yeyue.ruoyi.study.module.infra.impl.controller.captcha;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import yeyue.ruoyi.study.framework.common.pojo.core.CommonResult;
-import yeyue.ruoyi.study.module.system.api.service.captcha.SystemCaptchaService;
-import yeyue.ruoyi.study.module.system.api.service.captcha.dto.CaptchaImageRespDTO;
+import yeyue.ruoyi.study.module.infra.api.service.captcha.InfraCaptchaService;
+import yeyue.ruoyi.study.module.infra.api.service.captcha.dto.CaptchaImageRespDTO;
 
 import javax.annotation.Resource;
 
@@ -17,11 +17,11 @@ import javax.annotation.Resource;
  */
 @Api(tags = "验证码")
 @RestController
-@RequestMapping("/web/sys/captcha")
-public class SystemCaptchaController {
+@RequestMapping("/web/infra/captcha")
+public class InfraCaptchaController {
 
     @Resource
-    SystemCaptchaService captchaService;
+    InfraCaptchaService captchaService;
 
     @GetMapping("/get-image")
     @ApiOperation("生成图片验证码")

@@ -1,4 +1,4 @@
-package yeyue.ruoyi.study.module.system.impl.framework.security.config;
+package yeyue.ruoyi.study.module.infra.impl.framework.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,16 +10,16 @@ import yeyue.ruoyi.study.framework.security.core.authorize.AuthorizeRequestsCust
  * @author yeyue
  * @date 2022-04-28 17:23:12
  */
-@Configuration("systemSecurityConfiguration")
+@Configuration("infraSecurityConfiguration")
 public class SecurityConfiguration {
 
-    @Bean("systemAuthorizeRequestsCustomizer")
+    @Bean("infraAuthorizeRequestsCustomizer")
     public AuthorizeRequestsCustomizer systemAuthorizeRequestsCustomizer() {
         return new AuthorizeRequestsCustomizer() {
             @Override
             public void
             customize(ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry) {
-                registry.antMatchers("/web/sys/auth/login-password", "/web/sys/auth/refresh-token", "/web/sys/oauth2/open/authenticate").permitAll();
+                registry.antMatchers("/web/infra/captcha/get-image").permitAll();
             }
         };
     }

@@ -30,7 +30,7 @@ public class CaptchaServiceImpl implements CaptchaService {
 
     @Override
     public CaptchaImage getCaptchaImage() {
-        String uuid = IdUtils.uuid(true);
+        String uuid = IdUtils.uuid(false);
         String code = IdUtils.random(properties.getCodeCount(), true);
         String image = CaptchaUtils.getCaptcha(properties.getWidth(), properties.getHeight(), code, properties.getInterfereCount());
         repository.save(CAPTCHA_CACHE_KEY, new RedisDomainDefine<>(uuid, code, properties.getTimeout().getSeconds(), TimeUnit.SECONDS));

@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>yeyue-ruoyi-biz-captcha</artifactId>
+    <artifactId>yeyue-ruoyi-captcha-starter</artifactId>
     <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>

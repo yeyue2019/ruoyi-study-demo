@@ -191,7 +191,7 @@
             </dependency>
             <dependency>
                 <groupId>yeyue.ruoyi.study.boot</groupId>
-                <artifactId>yeyue-ruoyi-biz-captcha</artifactId>
+                <artifactId>yeyue-ruoyi-captcha-starter</artifactId>
                 <version>${demo.version}</version>
             </dependency>
         </dependencies>

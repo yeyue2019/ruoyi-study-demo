@@ -37,40 +37,42 @@ swagger:
 ---
 # 数据源配置
 spring:
+  autoconfigure:
+    exclude:
+      - com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
   datasource:
-    type: com.alibaba.druid.pool.DruidDataSource
     druid:
-      name: ruoyi_study_demo
-      url: jdbc:mysql://127.0.0.1:3306/${spring.datasource.druid.name}?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&serverTimezone=Asia/Shanghai&useSSL=false
-      username: root
-      password: 123456
-      initial-size: 5
-      min-idle: 10
-      max-active: 20
-      max-wait: 600000
-      time-between-eviction-runs-millis: 60000
-      min-evictable-idle-time-millis: 300000
-      max-evictable-idle-time-millis: 900000
-      validation-query: SELECT 1 FROM DUAL
-      test-while-idle: true
-      test-on-borrow: false
-      test-on-return: false
-      filters: stat,slf4j,wall
-      filter:
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        login-username:
+        login-password:
+    dynamic:
+      primary: master
+      druid:
+        initial-size: 5
+        min-idle: 10
+        max-active: 20
+        max-wait: 600000
+        time-between-eviction-runs-millis: 60000
+        min-evictable-idle-time-millis: 300000
+        max-evictable-idle-time-millis: 900000
+        validation-query: SELECT 1
+        test-while-idle: true
+        test-on-borrow: false
+        test-on-return: false
+        filters: stat,wall,slf4j
         stat:
-          enabled: true
           db-type: mysql
           merge-sql: true
           log-slow-sql: true
           slow-sql-log-level: WARN
           slow-sql-millis: 100
         wall:
-          config:
-            truncate-allow: false
-            multi-statement-allow: true
-            drop-table-allow: false
+          truncate-allow: false
+          multi-statement-allow: true
+          drop-table-allow: false
         slf4j:
-          enabled: true
           statement-executable-sql-log-enable: true
           statement-close-after-log-enabled: false
           statement-create-after-log-enabled: false
@@ -78,9 +80,17 @@ spring:
           statement-parameter-clear-log-enable: false
           statement-prepare-call-after-log-enabled: false
           statement-prepare-after-log-enabled: false
-      stat-view-servlet:
-        enabled: true
-        url-pattern: /druid/*
+      datasource:
+        master:
+          name: ruoyi_study_demo
+          url: jdbc:mysql://127.0.0.1:3306/${spring.datasource.dynamic.datasource.master.name}?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&serverTimezone=Asia/Shanghai&useSSL=false
+          username: root
+          password: 123456
+        slave:
+          name: ruoyi_study_demo
+          url: jdbc:mysql://127.0.0.1:3306/${spring.datasource.dynamic.datasource.slave.name}?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&serverTimezone=Asia/Shanghai&useSSL=false
+          username: root
+          password: 123456
 ---
 # Redis
 spring:

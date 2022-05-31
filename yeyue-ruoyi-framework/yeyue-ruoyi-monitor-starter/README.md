@@ -1,0 +1,1 @@
+-javaagent:/Users/yeyue/project/gitee/ruoyi-study-demo/yeyue-plugins-monitor/skywalking-es7/agent/skywalking-agent.jar

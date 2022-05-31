@@ -3,6 +3,9 @@ spring:
     name: yeyue-ruoyi-server
   profiles:
     active: dev
+  thymeleaf:
+    check-template: false
+    check-template-location: false
 ---
 # MyBatis-Plus 配置
 mybatis-plus:

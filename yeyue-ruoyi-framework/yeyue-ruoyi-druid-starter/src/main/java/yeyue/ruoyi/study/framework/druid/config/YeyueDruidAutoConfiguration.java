@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import yeyue.ruoyi.study.framework.common.util.object.ObjectUtils;
 import yeyue.ruoyi.study.framework.druid.core.filter.DruidAdRemoveFilter;
 
@@ -15,6 +16,7 @@ import yeyue.ruoyi.study.framework.druid.core.filter.DruidAdRemoveFilter;
  * @date 2022-04-10 17:34:19
  */
 @Configuration
+@EnableTransactionManagement(proxyTargetClass = true)
 public class YeyueDruidAutoConfiguration {
 
     // 去掉连接超时后的warn警告

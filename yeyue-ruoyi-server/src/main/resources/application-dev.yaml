@@ -61,7 +61,6 @@ spring:
         test-while-idle: true
         test-on-borrow: false
         test-on-return: false
-        filters: stat,wall,slf4j
         stat:
           db-type: mysql
           merge-sql: true
@@ -82,15 +81,19 @@ spring:
           statement-prepare-after-log-enabled: false
       datasource:
         master:
-          name: ruoyi_study_demo
-          url: jdbc:mysql://127.0.0.1:3306/${spring.datasource.dynamic.datasource.master.name}?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&serverTimezone=Asia/Shanghai&useSSL=false
+          pool-name: ruoyi_study_demo
+          url: jdbc:mysql://127.0.0.1:3306/${spring.datasource.dynamic.datasource.master.pool-name}?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&serverTimezone=Asia/Shanghai&useSSL=false
           username: root
           password: 123456
+          druid:
+            filters: stat,wall,slf4j
         quartz:
-          name: ruoyi_study_demo_quartz
-          url: jdbc:mysql://127.0.0.1:3306/${spring.datasource.dynamic.datasource.quartz.name}?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&serverTimezone=Asia/Shanghai&useSSL=false
+          pool-name: ruoyi_study_demo_quartz
+          url: jdbc:mysql://127.0.0.1:3306/${spring.datasource.dynamic.datasource.quartz.pool-name}?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&serverTimezone=Asia/Shanghai&useSSL=false
           username: root
           password: 123456
+          druid:
+            filters: wall
 ---
 # Redis
 spring:

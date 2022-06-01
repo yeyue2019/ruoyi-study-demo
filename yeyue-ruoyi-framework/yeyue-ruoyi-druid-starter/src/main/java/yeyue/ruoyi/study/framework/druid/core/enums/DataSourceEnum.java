@@ -17,4 +17,9 @@ public interface DataSourceEnum {
      */
     String SLAVE = "slave";
 
+    /**
+     * 定时任务专属库
+     */
+    String QUARTZ = "quartz";
+
 }

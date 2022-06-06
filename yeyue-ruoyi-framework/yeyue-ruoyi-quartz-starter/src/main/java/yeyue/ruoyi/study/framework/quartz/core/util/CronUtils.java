@@ -1,4 +1,4 @@
-package yeyue.ruoyi.study.framework.quartz.core;
+package yeyue.ruoyi.study.framework.quartz.core.util;
 
 
 import org.quartz.CronExpression;

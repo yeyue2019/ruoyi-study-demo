@@ -13,6 +13,7 @@ import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import yeyue.ruoyi.study.framework.common.exception.common.GlobalErrorCode;
+import yeyue.ruoyi.study.framework.web.doc.swagger.core.SpringFoxHandlerProviderBeanPostProcessor;
 import yeyue.ruoyi.study.framework.web.doc.swagger.properties.YeyueSwaggerProperties;
 import yeyue.ruoyi.study.framework.web.doc.swagger.util.SwaggerUtils;
 
@@ -28,6 +29,11 @@ import yeyue.ruoyi.study.framework.web.doc.swagger.util.SwaggerUtils;
 @ConditionalOnProperty(prefix = "swagger", name = "enable", havingValue = "true", matchIfMissing = true)
 @EnableConfigurationProperties(YeyueSwaggerProperties.class)
 public class YeyueSwaggerAutoConfiguration {
+
+    @Bean
+    public SpringFoxHandlerProviderBeanPostProcessor springFoxHandlerProviderBeanPostProcessor() {
+        return new SpringFoxHandlerProviderBeanPostProcessor();
+    }
 
     private final OpenApiExtensionResolver openApiExtensionResolver;
 

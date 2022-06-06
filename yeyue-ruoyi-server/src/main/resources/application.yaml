@@ -3,9 +3,19 @@ spring:
     name: yeyue-ruoyi-server
   profiles:
     active: dev
+  main:
+    allow-circular-references: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  servlet:
+    multipart:
+      max-file-size: 16MB
+      max-request-size: 32MB
   thymeleaf:
     check-template: false
     check-template-location: false
+debug: false
 ---
 # MyBatis-Plus 配置
 mybatis-plus:

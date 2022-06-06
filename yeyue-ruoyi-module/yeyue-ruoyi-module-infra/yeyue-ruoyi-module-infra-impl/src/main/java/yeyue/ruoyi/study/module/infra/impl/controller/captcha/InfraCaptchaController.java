@@ -21,11 +21,11 @@ import javax.annotation.Resource;
 public class InfraCaptchaController {
 
     @Resource
-    InfraCaptchaService captchaService;
+    InfraCaptchaService service;
 
     @GetMapping("/get-image")
     @ApiOperation("生成图片验证码")
     public CommonResult<CaptchaImageRespDTO> getCaptchaImage() {
-        return CommonResult.success(captchaService.getCaptchaImage());
+        return CommonResult.success(service.getCaptchaImage());
     }
 }

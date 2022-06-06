@@ -26,6 +26,7 @@ public enum GlobalErrorCode implements ErrorCode {
     SQL_EXECUTE_BAD("601", "MYSQL执行异常"),
     IO_EXCEPTION("602", "IO操作异常"),
     REDIS_CLIENT_COMMAND_FAIL("603", "REDIS执行异常"),
+    QUARTZ_JOB_EXCEPTION("604", "定时任务异常"),
     DATA_NOT_MATCH_ENUMS("701", "枚举匹配失败"),
     SYSTEM_CODE_SUPPORT_ERROR("702", "不支持的系统编码"),
     UNSUPPORTED_OPERATION("703", "暂不支持的操作");

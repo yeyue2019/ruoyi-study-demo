@@ -1,4 +1,4 @@
-package yeyue.ruoyi.study.module.infra.api.domain.quartz;
+package yeyue.ruoyi.study.module.infra.api.domain.job;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

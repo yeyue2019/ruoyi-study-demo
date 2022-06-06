@@ -19,7 +19,7 @@ public class SecurityConfiguration {
             @Override
             public void
             customize(ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry) {
-                registry.antMatchers("/web/infra/captcha/get-image").permitAll();
+                registry.antMatchers("/web/infra/**").permitAll();
             }
         };
     }

@@ -1,8 +1,6 @@
-package yeyue.ruoyi.study.module.infra.impl.entity.quartz;
+package yeyue.ruoyi.study.module.infra.impl.entity.job;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 import yeyue.ruoyi.study.framework.mybatis.core.entity.MyBatisEntity;
 
@@ -38,6 +36,7 @@ public class InfraJobEntity extends MyBatisEntity {
     /**
      * 处理器的名字
      */
+    @TableField(updateStrategy = FieldStrategy.NEVER)
     private String handlerName;
 
     /**

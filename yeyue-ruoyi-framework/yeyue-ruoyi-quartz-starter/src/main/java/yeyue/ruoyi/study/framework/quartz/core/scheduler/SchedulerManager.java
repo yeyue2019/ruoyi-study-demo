@@ -37,7 +37,7 @@ public class SchedulerManager {
         Trigger trigger = this.buildTrigger(handlerName, handlerParam, cronExpression, retryCount, retryInterval);
         // 修改调度
         try {
-            scheduler.rescheduleJob(new TriggerKey(handlerName), trigger);
+            scheduler.scheduleJob(jobDetail, trigger);
         } catch (SchedulerException e) {
             throw new ServiceException(GlobalErrorCode.QUARTZ_JOB_EXCEPTION, e);
         }
@@ -112,7 +112,7 @@ public class SchedulerManager {
         JobDataMap data = new JobDataMap();
         data.put(QuartzDatabaseKeyConstants.JOB_ID, id);
         data.put(QuartzDatabaseKeyConstants.JOB_HANDLER_NAME, handlerName);
-        data.put(QuartzDatabaseKeyConstants.JOB_HANDLER_PARAM, handlerName);
+        data.put(QuartzDatabaseKeyConstants.JOB_HANDLER_PARAM, handlerParam);
         // 触发任务
         try {
             scheduler.triggerJob(new JobKey(handlerName), data);
@@ -126,7 +126,7 @@ public class SchedulerManager {
         return TriggerBuilder.newTrigger()
                 .withIdentity(handlerName)
                 .withSchedule(CronScheduleBuilder.cronSchedule(cronExpression))
-                .usingJobData(QuartzDatabaseKeyConstants.JOB_HANDLER_NAME, handlerName)
+                .usingJobData(QuartzDatabaseKeyConstants.JOB_HANDLER_PARAM, handlerParam)
                 .usingJobData(QuartzDatabaseKeyConstants.JOB_RETRY_COUNT, retryCount)
                 .usingJobData(QuartzDatabaseKeyConstants.JOB_RETRY_INTERVAL, retryInterval)
                 .build();

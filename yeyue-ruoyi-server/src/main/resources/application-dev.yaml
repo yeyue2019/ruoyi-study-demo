@@ -124,3 +124,10 @@ spring:
             threadCount: 25 # 线程池大小。默认为 10 。
             threadPriority: 5 # 线程优先级
             class: org.quartz.simpl.SimpleThreadPool # 线程池类型
+---
+logging:
+  config: classpath:log4j2-${spring.profiles.active}.xml
+  file:
+    path: logs
+    name: ${spring.application.name}
+

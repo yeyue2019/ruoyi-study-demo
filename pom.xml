@@ -6,7 +6,7 @@
 
     <groupId>yeyue.ruoyi.study.boot</groupId>
     <artifactId>ruoyi-study-demo</artifactId>
-    <version>${demo.version}</version>
+    <version>${reversion}</version>
     <packaging>pom</packaging>
 
     <name>${project.artifactId}</name>
@@ -25,7 +25,7 @@
     </modules>
 
     <properties>
-        <demo.version>1.0.1-SNAPSHOT</demo.version>
+        <reversion>1.0.1-SNAPSHOT</reversion>
         <java.version>1.8</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
@@ -43,7 +43,7 @@
             <dependency>
                 <groupId>yeyue.ruoyi.study.boot</groupId>
                 <artifactId>yeyue-ruoyi-dependencies</artifactId>
-                <version>${demo.version}</version>
+                <version>${reversion}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

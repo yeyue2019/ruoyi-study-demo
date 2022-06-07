@@ -5,12 +5,12 @@
     <parent>
         <artifactId>ruoyi-study-demo</artifactId>
         <groupId>yeyue.ruoyi.study.boot</groupId>
-        <version>${demo.version}</version>
+        <version>${reversion}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>yeyue-ruoyi-server</artifactId>
-    <version>${demo.version}</version>
+    <version>${reversion}</version>
     <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>
@@ -27,12 +27,12 @@
         <dependency>
             <groupId>yeyue.ruoyi.study.boot</groupId>
             <artifactId>yeyue-ruoyi-module-system-impl</artifactId>
-            <version>${demo.version}</version>
+            <version>${reversion}</version>
         </dependency>
         <dependency>
             <groupId>yeyue.ruoyi.study.boot</groupId>
             <artifactId>yeyue-ruoyi-module-infra-impl</artifactId>
-            <version>${demo.version}</version>
+            <version>${reversion}</version>
         </dependency>
         <dependency>
             <groupId>yeyue.ruoyi.study.boot</groupId>

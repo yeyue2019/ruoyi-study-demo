@@ -6,7 +6,7 @@
 
     <groupId>yeyue.ruoyi.study.boot</groupId>
     <artifactId>yeyue-ruoyi-dependencies</artifactId>
-    <version>${demo.version}</version>
+    <version>${reversion}</version>
     <packaging>pom</packaging>
 
     <name>${project.artifactId}</name>
@@ -15,7 +15,7 @@
     </description>
 
     <properties>
-        <demo.version>1.0.1-SNAPSHOT</demo.version>
+        <reversion>1.0.1-SNAPSHOT</reversion>
         <spring.boot.version>2.6.8</spring.boot.version>
         <!-- web -->
         <knife4j.version>3.0.3</knife4j.version>
@@ -170,47 +170,47 @@
             <dependency>
                 <groupId>yeyue.ruoyi.study.boot</groupId>
                 <artifactId>yeyue-ruoyi-common</artifactId>
-                <version>${demo.version}</version>
+                <version>${reversion}</version>
             </dependency>
             <dependency>
                 <groupId>yeyue.ruoyi.study.boot</groupId>
                 <artifactId>yeyue-ruoyi-redis-starter</artifactId>
-                <version>${demo.version}</version>
+                <version>${reversion}</version>
             </dependency>
             <dependency>
                 <groupId>yeyue.ruoyi.study.boot</groupId>
                 <artifactId>yeyue-ruoyi-web-starter</artifactId>
-                <version>${demo.version}</version>
+                <version>${reversion}</version>
             </dependency>
             <dependency>
                 <groupId>yeyue.ruoyi.study.boot</groupId>
                 <artifactId>yeyue-ruoyi-mybatis-starter</artifactId>
-                <version>${demo.version}</version>
+                <version>${reversion}</version>
             </dependency>
             <dependency>
                 <groupId>yeyue.ruoyi.study.boot</groupId>
                 <artifactId>yeyue-ruoyi-druid-starter</artifactId>
-                <version>${demo.version}</version>
+                <version>${reversion}</version>
             </dependency>
             <dependency>
                 <groupId>yeyue.ruoyi.study.boot</groupId>
                 <artifactId>yeyue-ruoyi-monitor-starter</artifactId>
-                <version>${demo.version}</version>
+                <version>${reversion}</version>
             </dependency>
             <dependency>
                 <groupId>yeyue.ruoyi.study.boot</groupId>
                 <artifactId>yeyue-ruoyi-security-starter</artifactId>
-                <version>${demo.version}</version>
+                <version>${reversion}</version>
             </dependency>
             <dependency>
                 <groupId>yeyue.ruoyi.study.boot</groupId>
                 <artifactId>yeyue-ruoyi-captcha-starter</artifactId>
-                <version>${demo.version}</version>
+                <version>${reversion}</version>
             </dependency>
             <dependency>
                 <groupId>yeyue.ruoyi.study.boot</groupId>
                 <artifactId>yeyue-ruoyi-quartz-starter</artifactId>
-                <version>${demo.version}</version>
+                <version>${reversion}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

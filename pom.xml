@@ -33,7 +33,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
         <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
-        <spring.boot.version>2.5.10</spring.boot.version>
+        <spring.boot.version>2.6.8</spring.boot.version>
         <lombok.version>1.18.20</lombok.version>
         <mapstruct.version>1.4.1.Final</mapstruct.version>
     </properties>
